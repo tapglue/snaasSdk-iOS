@@ -33,6 +33,8 @@ static NSString *const TGErrorDomain = @"TapglueErrorDomain";
  */
 typedef NS_ENUM(NSInteger, TGErrorCode) {
     
+    // Client Errors
+    
     /*!
      @abstract An unknown error happened.
      */
@@ -45,10 +47,10 @@ typedef NS_ENUM(NSInteger, TGErrorCode) {
     
     /*!
      @abstract This error occuers when trying to save or delete resources without permission.
-	 @discussion E.g. when attempting to save or delelete other users or other users' events. 
+     @discussion E.g. when attempting to save or delelete other users or other users' events.
      */
     kTGErrorNoPermission = 102,
-
+    
     /*!
      @abstract The current user has no social id set for the given plattform.
      */
@@ -59,223 +61,232 @@ typedef NS_ENUM(NSInteger, TGErrorCode) {
      */
     kTGErrorInconsistentData = 104,
     
-    /*!
-     @abstract An internal server error occured without further information.
-     */
-    kTGErrorInternalServerError = 1000,
+    // Custom Server Errors
+    
+    // Application user errors
     
     /*!
-     @abstract Our service is currently unavailable.
+     @abstract User has not been activated yet.
      */
-    kTGErrorServiceUnavailable = 1003,
+    kTGErrorUserNotActivated          = 1000,
+    /*!
+     @abstract User wasn't found.
+     */
+    kTGErrorUserNotFound              = 1001,
+    /*!
+     @abstract Email address already exists.
+     */
+    kTGErrorUserEmailAlreadyExists    = 1002,
+    /*!
+     @abstract Email address is invalid.
+     */
+    kTGErrorUserEmailInvalid          = 1003,
+    /*!
+     @abstract Size of the first name is invalid.
+     */
+    kTGErrorUserFirstNameSize         = 1004,
+    /*!
+     @abstract UserId is invalid.
+     */
+    kTGErrorUserIDInvalid             = 1005,
+    /*!
+     @abstract Size of the last name is invalid.
+     */
+    kTGErrorUserLastNameSize          = 1006,
+    /*!
+     @abstract Username and Email are empty.
+     */
+    kTGErrorUsernameAndEmailAreEmpty  = 1007,
+    /*!
+     @abstract Username is already in use.
+     */
+    kTGErrorUserUsernameInUse         = 1008,
+    /*!
+     @abstract Search minimum 3 characters.
+     */
+    kTGErrorUserSearchTypeMin3Chars   = 1009,
+    /*!
+     @abstract User URL is invalid.
+     */
+    kTGErrorUserURLInvalid            = 1010,
+    /*!
+     @abstract That username already exists.
+     */
+    kTGErrorUserUsernameAlreadyExists = 1011,
+    /*!
+     @abstract Size of the username is invalid.
+     */
+    kTGErrorUserUsernameSize          = 1012,
+    
+    // Internal application user errors
     
     /*!
-     @abstract The request timed out.
+     @abstract Internal error while creating the user.
      */
-    kTGErrorGatewayTimeout = 1004,
+    kTGErrorInternalApplicationUserCreation        = 1500,
+    /*!
+     @abstract Internal error while retrieving the user.
+     */
+    kTGErrorInternalApplicationUserRead            = 1502,
+    /*!
+     @abstract Internal error while creating the user session.
+     */
+    kTGErrorInternalApplicationUserSessionCreation = 1503,
+    /*!
+     @abstract Internal error while deleting the user session.
+     */
+    kTGErrorInternalApplicationUserSessionDelete   = 1504,
+    /*!
+     @abstract Internal error while updating the user.
+     */
+    kTGErrorInternalApplicationUserUpdate          = 1508,
+    
+    // Connection errors
     
     /*!
-     @abstract Something went during the authentication.
+     @abstract Connection already exists.
      */
-    kTGErrorWrongAuthentication = 2100,
+    kTGErrorConnectionAlreadyExists      = 2000,
     
     /*!
-     @abstract There was no token provided in the request.
+     @abstract Connection was not found.
      */
-    kTGErrorNoToken = 2101,
+    kTGErrorConnectionNotFound           = 2001,
     
     /*!
-     @abstract The provided token is not correct.
+     @abstract Type of connection is wrong.
      */
-    kTGErrorWrongToken = 2102,
+    kTGErrorConnectionTypeIsWrong        = 2002,
+    /*!
+     @abstract User is connecting to itself.
+     */
+    kTGErrorConnectionSelfConnectingUser = 2003,
+    /*!
+     @abstract User is not connected.
+     */
+    kTGErrorConnectionUsersNotConnected  = 2004,
+    
+    // Internal connection errors
     
     /*!
-     @abstract The provided token has been deactivated.
+     @abstract Internal error while connecting the user.
      */
-    kTGErrorTokenDeactivated = 2103,
+    kTGErrorInternalConnectingUsers    = 2500,
+    /*!
+     @abstract Internal error while creating a connection.
+     */
+    kTGErrorInternalConnectionCreation = 2501,
+    /*!
+     @abstract Internal error while retrieving a connection.
+     */
+    kTGErrorInternalConnectionRead     = 2502,
+    /*!
+     @abstract Internal error while updating a connection.
+     */
+    kTGErrorInternalConnectionUpdate   = 2503,
+    
+    // Event errors
     
     /*!
-     @abstract You are not authorized to make the request.
+     @abstract EventId is invalid.
      */
-    kTGErrorNotAuthorized = 2110,
+    kTGErrorEventIDInvalid                  = 3002,
+    /*!
+     @abstract EventId is already set.
+     */
+    kTGErrorEventIDIsAlreadySet             = 3003,
+    /*!
+     @abstract Event visibility is invalid.
+     */
+    kTGErrorEventInvalidVisiblity           = 3004,
+    /*!
+     @abstract Event not found.
+     */
+    kTGErrorEventNotFound                   = 3007,
+    /*!
+     @abstract Size of event type is invalid.
+     */
+    kTGErrorEventTypeSize                   = 3008,
+    
+    // Internal event errors
     
     /*!
-     @abstract The endpoint doesn't exist.
+     @abstract Internal error while event creation.
      */
-    kTGErrorEndpointNotExist = 2200,
+    kTGErrorInternalEventCreation = 3500,
+    /*!
+     @abstract Internal error while retrieving event.
+     */
+    kTGErrorInternalEventRead     = 3501,
+    /*!
+     @abstract Internal error while retrieving events list.
+     */
+    kTGErrorInternalEventsList    = 3502,
+    /*!
+     @abstract Internal error while updating event.
+     */
+    kTGErrorInternalEventUpdate   = 3503,
+    /*!
+     @abstract Internal error while retrieving followers list.
+     */
+    kTGErrorInternalFollowersList = 3504,
+    /*!
+     @abstract Internal error while retrieving following list.
+     */
+    kTGErrorInternalFollowingList = 3505,
+    /*!
+     @abstract Internal error while retrieving friends list.
+     */
+    kTGErrorInternalFriendsList   = 3506,
+    
+    // Authentication errors
     
     /*!
-     @abstract The API Version you are trying to use has been disabled.
+     @abstract General authentication error occured.
      */
-    kTGErrorAPIVersionDisabled = 2210,
+    kTGErrorAuthGeneric                           = 4001,
+    /*!
+     @abstract Username and Email are invalid.
+     */
+    kTGErrorAuthGotBothUsernameAndEmail           = 4002,
+    /*!
+     @abstract No username or email provided.
+     */
+    kTGErrorAuthGotNoUsernameOrEmail              = 4003,
+    /*!
+     @abstract Invalid user credentials.
+     */
+    kTGErrorAuthInvalidApplicationUserCredentials = 4007,
+    /*!
+     @abstract Invalid email address.
+     */
+    kTGErrorAuthInvalidEmailAddress               = 4008,
+    /*!
+     @abstract This method is not supported.
+     */
+    kTGErrorAuthMethodNotSupported                = 4009,
+    /*!
+     @abstract The password was emtpy.
+     */
+    kTGErrorAuthPasswordEmpty                     = 4010,
+    /*!
+     @abstract The password is not correct.
+     */
+    kTGErrorAuthPasswordMismatch                  = 4011,
+    /*!
+     @abstract The session token is not correct.
+     */
+    kTGErrorAuthSessionTokenMismatch              = 4012,
+    
+    // Server errors
     
     /*!
-     @abstract The endpoint you are trying to adress retired.
+     @abstract Image URL is invalid.
      */
-    kTGErrorEndpointRetired = 2220,
-    
-    /*!
-     @abstract The rate limits have been exceeded.
-     */
-    kTGErrorRateLimitExceeded = 2300,
-    
-    /*!
-     @abstract The payload of the request is to large.
-     */
-    kTGErrorRequestBodyToLarge = 2310,
-    
-    /*!
-     @abstract A Wrong query was performed in the request.
-     */
-    kTGErrorWrongQuery = 2320,
-    
-    /*!
-     @abstract The User-Agent was not set.
-     */
-    kTGErrorNoUserAgent = 2410,
-    
-    /*!
-     @abstract A request with unsopported media type was made.
-     */
-    kTGErrorUnsupportedMediaType = 2420,
-    
-    /*!
-     @abstract The payload could be processed properly.
-     */
-    kTGErrorUnprocessableEntity = 2430,
-    
-    /*!
-     @abstract This HTTP Method is not allowed for the endpoint.
-     */
-    kTGErrorMethodNotAllows = 2440,
-    
-    /*!
-     @abstract The username or Email was missing.
-     */
-    kTGErrorMissingUsernameOrEmail = 3100,
-    
-    /*!
-     @abstract The password was missing.
-     */
-    kTGErrorMissingPassword = 3110,
-    
-    /*!
-     @abstract The Username was invalid.
-     */
-    kTGErrorUsernameInvalid = 3120,
-    
-    /*!
-     @abstract The Email was invalid.
-     */
-    kTGErrorEmailInvalid = 3130,
-    
-    /*!
-     @abstract The Password was invalid.
-     */
-    kTGErrorPasswordInvalid = 3140,
-    
-    /*!
-     @abstract The First name was invalid.
-     */
-    kTGErrorFirstNameInvalid = 3150,
-    
-    /*!
-     @abstract The Last name was invalid.
-     */
-    kTGErrorLastNameInvalid = 3160,
-    
-    /*!
-     @abstract The URL was invalid.
-     */
-    kTGErrorURLInvalid = 3170,
-    
-    /*!
-     @abstract The Session was invalid.
-     */
-    kTGErrorInvalidSession = 3200,
-    
-    /*!
-     @abstract The Session already expired.
-     */
-    kTGErrorExpiredSssion = 3210,
-    
-    /*!
-     @abstract The User was not found.
-     */
-    kTGErrorUserNotFound = 3201,
-    
-    /*!
-     @abstract The credentials are invalid.
-     */
-    kTGErrorInvalidCredentials = 3202,
-    
-    /*!
-     @abstract The User already exists.
-     */
-    kTGErrorUserAlreadyExists = 3430,
-    
-    /*!
-     @abstract The User id for creating the connection was invalid.
-     */
-    kTGErrorInvalidUserToId = 4110,
-    
-    /*!
-     @abstract The connection type was invalid.
-     */
-    kTGErrorInvalidConnectionType = 4120,
-    
-    /*!
-     @abstract The connection already exists.
-     */
-    kTGErrorConnectionAlreadyExists = 4130,
-    
-    /*!
-     @abstract The event type was invalid.
-     */
-    kTGErrorInvalidEventType = 5110,
-    
-    /*!
-     @abstract The event language was invalid.
-     */
-    kTGErrorInvalidEventLanguage = 5120,
-    
-    /*!
-     @abstract The event priority was invalid.
-     */
-    kTGErrorInvalidEventPriority = 5130,
-    
-    /*!
-     @abstract The event location was invalid.
-     */
-    kTGErrorInvalidLocation = 5140,
-    
-    /*!
-     @abstract The event longitude was invalid.
-     */
-    kTGErrorInvalidLongitude = 5150,
-    
-    /*!
-     @abstract The event latitude was invalid.
-     */
-    kTGErrorInvalidLatitude = 5160,
-    
-    /*!
-     @abstract The event object was invalid.
-     */
-    kTGErrorInvalidObject = 5170,
-    
-    /*!
-     @abstract The event was not found.
-     */
-    kTGErrorEventNotFound = 5210,
-    
-    /*!
-     @abstract The metadata was invalid.
-     */
-    kTGErrorInvalidMetadata = 6110,
+    kTGErrorInvalidImageURL = 5000,
 };
 
-#pragma mark - Blocks 
+#pragma mark - Blocks
 
 @class TGUser, TGEvent;
 
