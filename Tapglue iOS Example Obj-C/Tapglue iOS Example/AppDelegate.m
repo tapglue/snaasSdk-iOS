@@ -32,7 +32,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [Tapglue setUpWithAppToken:@"1bb5bc5abfc2ebb78c16a74c2ea0a4e0"];
+    [Tapglue setUpWithAppToken:@"<PUT YOUR APP TOKEN HERE>"];
     
     
 //    [[Tapglue sharedInstance] loginWithEmail:@"demouser2@tapglue.com" andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
