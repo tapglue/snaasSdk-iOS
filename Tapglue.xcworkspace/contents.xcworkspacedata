@@ -8,10 +8,10 @@
       location = "group:Tapglue iOS Example/Tapglue iOS Example/../../Classes">
    </FileRef>
    <FileRef
-      location = "group:Tapglue iOS Example/Tapglue iOS Example.xcodeproj">
+      location = "group:/Users/onurakpolat/Github/tapglue-ios/Tapglue iOS Example/Swift Example.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Tapglue Tests/Tapglue Tests.xcodeproj">
+      location = "group:/Users/onurakpolat/Github/tapglue-ios/Tapglue Tests/Tests.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Tapglue Tests/Pods/Pods.xcodeproj">

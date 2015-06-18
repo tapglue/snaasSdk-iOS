@@ -89,8 +89,7 @@
 		786285381B271FC800D91B4F /* NSThread+TGEnsureMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+TGEnsureMainThread.h"; path = "../../Classes/NSThread+TGEnsureMainThread.h"; sourceTree = "<group>"; };
 		786285391B271FC800D91B4F /* NSThread+TGEnsureMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+TGEnsureMainThread.m"; path = "../../Classes/NSThread+TGEnsureMainThread.m"; sourceTree = "<group>"; };
 		7862853E1B272C6300D91B4F /* TGOfflineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGOfflineTests.m; sourceTree = "<group>"; };
-		7878ECA71B2B24D900BA47F6 /* Tapglue Tests copy.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tapglue Tests copy.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7878ECA81B2B24D900BA47F6 /* Tapglue Tests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Tapglue Tests copy-Info.plist"; path = "/Users/marste/Projects/tapglue/Development/ios_sdk/Tapglue Tests/Tapglue Tests copy-Info.plist"; sourceTree = "<absolute>"; };
+		7878ECA71B2B24D900BA47F6 /* Tests copy.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests copy.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		788CD1621B1F00940064E7BC /* TGObjectCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGObjectCache.h; sourceTree = "<group>"; };
 		788CD1631B1F00940064E7BC /* TGObjectCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGObjectCache.m; sourceTree = "<group>"; };
 		788CD1651B1F080A0064E7BC /* TGObjectCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGObjectCacheTests.m; sourceTree = "<group>"; };
@@ -105,7 +104,7 @@
 		788DBF8C1B21E6E40058C1C2 /* TGSetupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGSetupTests.m; sourceTree = "<group>"; };
 		788DBF8E1B21EA9B0058C1C2 /* TGUser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGUser+Private.h"; sourceTree = "<group>"; };
 		788DBF911B21EB1B0058C1C2 /* Tapglue+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Tapglue+Private.h"; path = "../../Classes/Tapglue+Private.h"; sourceTree = "<group>"; };
-		78C2C98C1B1C81AF00055195 /* Tapglue Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tapglue Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		78C2C98C1B1C81AF00055195 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C2C9901B1C81AF00055195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78C2C9911B1C81AF00055195 /* Tapglue_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tapglue_Tests.m; sourceTree = "<group>"; };
 		78C2C99B1B1C82F900055195 /* Tapglue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tapglue.m; path = ../../Classes/Tapglue.m; sourceTree = "<group>"; };
@@ -220,24 +219,23 @@
 		78C2C9811B1C814300055195 = {
 			isa = PBXGroup;
 			children = (
-				78C2C98E1B1C81AF00055195 /* Tapglue Tests */,
+				78C2C98E1B1C81AF00055195 /* Tests */,
 				78C2C98D1B1C81AF00055195 /* Products */,
 				A8C5BA0C3210C8A596A3E6DE /* Pods */,
 				FEBFDB46CCBEE3D260E3BD29 /* Frameworks */,
-				7878ECA81B2B24D900BA47F6 /* Tapglue Tests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
 		78C2C98D1B1C81AF00055195 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				78C2C98C1B1C81AF00055195 /* Tapglue Tests.xctest */,
-				7878ECA71B2B24D900BA47F6 /* Tapglue Tests copy.xctest */,
+				78C2C98C1B1C81AF00055195 /* Tests.xctest */,
+				7878ECA71B2B24D900BA47F6 /* Tests copy.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		78C2C98E1B1C81AF00055195 /* Tapglue Tests */ = {
+		78C2C98E1B1C81AF00055195 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				78C6D1471B1DA44100D94E6A /* TGTestCase.h */,
@@ -249,6 +247,7 @@
 				78C2C98F1B1C81AF00055195 /* Supporting Files */,
 				7878ECA91B2B267A00BA47F6 /* Test Helpers */,
 			);
+			name = Tests;
 			path = "Tapglue Tests";
 			sourceTree = "<group>";
 		};
@@ -394,12 +393,12 @@
 			);
 			name = "Tapglue IntegrationTests";
 			productName = "Tapglue Tests";
-			productReference = 7878ECA71B2B24D900BA47F6 /* Tapglue Tests copy.xctest */;
+			productReference = 7878ECA71B2B24D900BA47F6 /* Tests copy.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		78C2C98B1B1C81AF00055195 /* Tapglue Tests */ = {
+		78C2C98B1B1C81AF00055195 /* Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 78C2C9931B1C81AF00055195 /* Build configuration list for PBXNativeTarget "Tapglue Tests" */;
+			buildConfigurationList = 78C2C9931B1C81AF00055195 /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
 				4A5EC0DD22FDDB6C760663AB /* Check Pods Manifest.lock */,
 				78C2C9881B1C81AF00055195 /* Sources */,
@@ -411,9 +410,9 @@
 			);
 			dependencies = (
 			);
-			name = "Tapglue Tests";
+			name = Tests;
 			productName = "Tapglue Tests";
-			productReference = 78C2C98C1B1C81AF00055195 /* Tapglue Tests.xctest */;
+			productReference = 78C2C98C1B1C81AF00055195 /* Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -429,7 +428,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 78C2C9851B1C814300055195 /* Build configuration list for PBXProject "Tapglue Tests" */;
+			buildConfigurationList = 78C2C9851B1C814300055195 /* Build configuration list for PBXProject "Tests" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -441,7 +440,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				78C2C98B1B1C81AF00055195 /* Tapglue Tests */,
+				78C2C98B1B1C81AF00055195 /* Tests */,
 				7878EC741B2B24D900BA47F6 /* Tapglue IntegrationTests */,
 			);
 		};
@@ -661,7 +660,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "Tapglue Tests copy";
+				PRODUCT_NAME = "Tests copy";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -704,7 +703,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "Tapglue Tests copy";
+				PRODUCT_NAME = "Tests copy";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -767,7 +766,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Tests;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -810,7 +809,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Tests;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -828,7 +827,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		78C2C9851B1C814300055195 /* Build configuration list for PBXProject "Tapglue Tests" */ = {
+		78C2C9851B1C814300055195 /* Build configuration list for PBXProject "Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				78C2C9861B1C814300055195 /* Debug */,
@@ -837,7 +836,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		78C2C9931B1C81AF00055195 /* Build configuration list for PBXNativeTarget "Tapglue Tests" */ = {
+		78C2C9931B1C81AF00055195 /* Build configuration list for PBXNativeTarget "Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				78C2C9941B1C81AF00055195 /* Debug */,
