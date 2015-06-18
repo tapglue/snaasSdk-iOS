@@ -118,7 +118,7 @@
 		788DBFF71B21FA890058C1C2 = {
 			isa = PBXGroup;
 			children = (
-				788DC0021B21FA890058C1C2 /* Tapglue iOS Example */,
+				788DC0021B21FA890058C1C2 /* Swift Example */,
 				788DC0011B21FA890058C1C2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,7 +131,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		788DC0021B21FA890058C1C2 /* Tapglue iOS Example */ = {
+		788DC0021B21FA890058C1C2 /* Swift Example */ = {
 			isa = PBXGroup;
 			children = (
 				788DC0291B21FC6D0058C1C2 /* SDK */,
@@ -146,6 +146,7 @@
 				788DC0031B21FA890058C1C2 /* Supporting Files */,
 				979F693F1B264F470088F78E /* Images.xcassets */,
 			);
+			name = "Swift Example";
 			path = "Tapglue iOS Example";
 			sourceTree = "<group>";
 		};
