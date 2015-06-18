@@ -13,7 +13,6 @@
 		788DC00A1B21FA890058C1C2 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0091B21FA890058C1C2 /* SecondViewController.swift */; };
 		788DC00D1B21FA890058C1C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788DC00B1B21FA890058C1C2 /* Main.storyboard */; };
 		788DC0121B21FA890058C1C2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 788DC0101B21FA890058C1C2 /* LaunchScreen.xib */; };
-		788DC01E1B21FA890058C1C2 /* Tapglue_iOS_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC01D1B21FA890058C1C2 /* Tapglue_iOS_ExampleTests.swift */; };
 		788DC04C1B21FC7F0058C1C2 /* Tapglue.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DC02A1B21FC7F0058C1C2 /* Tapglue.m */; };
 		788DC04D1B21FC7F0058C1C2 /* TGEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DC02B1B21FC7F0058C1C2 /* TGEventManager.m */; };
 		788DC04E1B21FC7F0058C1C2 /* NSDateFormatter+TGISOFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DC02E1B21FC7F0058C1C2 /* NSDateFormatter+TGISOFormatter.m */; };
@@ -41,16 +40,6 @@
 		979F69461B2657750088F78E /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979F69451B2657750088F78E /* CustomCell.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		788DC0181B21FA890058C1C2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 788DBFF81B21FA890058C1C2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 788DBFFF1B21FA890058C1C2;
-			remoteInfo = "Tapglue iOS Example";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		7862853B1B2720F900D91B4F /* NSThread+TGEnsureMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+TGEnsureMainThread.h"; path = "../../Classes/NSThread+TGEnsureMainThread.h"; sourceTree = "<group>"; };
 		7862853C1B2720F900D91B4F /* NSThread+TGEnsureMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+TGEnsureMainThread.m"; path = "../../Classes/NSThread+TGEnsureMainThread.m"; sourceTree = "<group>"; };
@@ -61,9 +50,6 @@
 		788DC0091B21FA890058C1C2 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		788DC00C1B21FA890058C1C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		788DC0111B21FA890058C1C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		788DC0171B21FA890058C1C2 /* Swift ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swift ExampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		788DC01C1B21FA890058C1C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		788DC01D1B21FA890058C1C2 /* Tapglue_iOS_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tapglue_iOS_ExampleTests.swift; sourceTree = "<group>"; };
 		788DC0271B21FC350058C1C2 /* Objective-C-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Objective-C-Bridging-Header.h"; sourceTree = "<group>"; };
 		788DC02A1B21FC7F0058C1C2 /* Tapglue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tapglue.m; path = ../../Classes/Tapglue.m; sourceTree = "<group>"; };
 		788DC02B1B21FC7F0058C1C2 /* TGEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGEventManager.m; path = ../../Classes/TGEventManager.m; sourceTree = "<group>"; };
@@ -126,21 +112,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		788DC0141B21FA890058C1C2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		788DBFF71B21FA890058C1C2 = {
 			isa = PBXGroup;
 			children = (
-				788DC0021B21FA890058C1C2 /* Swift Example */,
-				788DC01A1B21FA890058C1C2 /* Swift ExampleTests */,
+				788DC0021B21FA890058C1C2 /* Tapglue iOS Example */,
 				788DC0011B21FA890058C1C2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -149,12 +127,11 @@
 			isa = PBXGroup;
 			children = (
 				788DC0001B21FA890058C1C2 /* Swift Example.app */,
-				788DC0171B21FA890058C1C2 /* Swift ExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		788DC0021B21FA890058C1C2 /* Swift Example */ = {
+		788DC0021B21FA890058C1C2 /* Tapglue iOS Example */ = {
 			isa = PBXGroup;
 			children = (
 				788DC0291B21FC6D0058C1C2 /* SDK */,
@@ -169,7 +146,6 @@
 				788DC0031B21FA890058C1C2 /* Supporting Files */,
 				979F693F1B264F470088F78E /* Images.xcassets */,
 			);
-			name = "Swift Example";
 			path = "Tapglue iOS Example";
 			sourceTree = "<group>";
 		};
@@ -178,24 +154,6 @@
 			children = (
 				788DC0041B21FA890058C1C2 /* Info.plist */,
 				788DC0271B21FC350058C1C2 /* Objective-C-Bridging-Header.h */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		788DC01A1B21FA890058C1C2 /* Swift ExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				788DC01D1B21FA890058C1C2 /* Tapglue_iOS_ExampleTests.swift */,
-				788DC01B1B21FA890058C1C2 /* Supporting Files */,
-			);
-			name = "Swift ExampleTests";
-			path = "Tapglue iOS ExampleTests";
-			sourceTree = "<group>";
-		};
-		788DC01B1B21FA890058C1C2 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				788DC01C1B21FA890058C1C2 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -294,24 +252,6 @@
 			productReference = 788DC0001B21FA890058C1C2 /* Swift Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		788DC0161B21FA890058C1C2 /* Swift ExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 788DC0241B21FA890058C1C2 /* Build configuration list for PBXNativeTarget "Swift ExampleTests" */;
-			buildPhases = (
-				788DC0131B21FA890058C1C2 /* Sources */,
-				788DC0141B21FA890058C1C2 /* Frameworks */,
-				788DC0151B21FA890058C1C2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				788DC0191B21FA890058C1C2 /* PBXTargetDependency */,
-			);
-			name = "Swift ExampleTests";
-			productName = "Tapglue iOS ExampleTests";
-			productReference = 788DC0171B21FA890058C1C2 /* Swift ExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -323,10 +263,6 @@
 				TargetAttributes = {
 					788DBFFF1B21FA890058C1C2 = {
 						CreatedOnToolsVersion = 6.3.1;
-					};
-					788DC0161B21FA890058C1C2 = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = 788DBFFF1B21FA890058C1C2;
 					};
 				};
 			};
@@ -344,7 +280,6 @@
 			projectRoot = "";
 			targets = (
 				788DBFFF1B21FA890058C1C2 /* Swift Example */,
-				788DC0161B21FA890058C1C2 /* Swift ExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -357,13 +292,6 @@
 				979F69401B264F470088F78E /* Images.xcassets in Resources */,
 				788DC00D1B21FA890058C1C2 /* Main.storyboard in Resources */,
 				788DC0121B21FA890058C1C2 /* LaunchScreen.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		788DC0151B21FA890058C1C2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,23 +333,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		788DC0131B21FA890058C1C2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				788DC01E1B21FA890058C1C2 /* Tapglue_iOS_ExampleTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		788DC0191B21FA890058C1C2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 788DBFFF1B21FA890058C1C2 /* Swift Example */;
-			targetProxy = 788DC0181B21FA890058C1C2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		788DC00B1B21FA890058C1C2 /* Main.storyboard */ = {
@@ -548,40 +460,6 @@
 			};
 			name = Release;
 		};
-		788DC0251B21FA890058C1C2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Tapglue iOS ExampleTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "Swift ExampleTests";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tapglue iOS Example.app/Tapglue iOS Example";
-			};
-			name = Debug;
-		};
-		788DC0261B21FA890058C1C2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Tapglue iOS ExampleTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "Swift ExampleTests";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tapglue iOS Example.app/Tapglue iOS Example";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -599,15 +477,6 @@
 			buildConfigurations = (
 				788DC0221B21FA890058C1C2 /* Debug */,
 				788DC0231B21FA890058C1C2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		788DC0241B21FA890058C1C2 /* Build configuration list for PBXNativeTarget "Swift ExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				788DC0251B21FA890058C1C2 /* Debug */,
-				788DC0261B21FA890058C1C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
