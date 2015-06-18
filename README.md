@@ -11,7 +11,7 @@ The easiest way to install Tapglue into your iOS project is to use [CocoaPods](h
 3. Create a `Podfile` in your Xcode project and add:
 
 ```
-pod `Tapglue`
+pod 'Tapglue'
 ```
 
 4. Run `pod install` in your project directory and Tapglue will be downloaded and installed.
