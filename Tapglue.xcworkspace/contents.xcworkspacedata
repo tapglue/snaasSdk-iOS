@@ -5,10 +5,10 @@
       location = "group:VERSION">
    </FileRef>
    <FileRef
-      location = "group:Tapglue iOS Example/Tapglue iOS Example/../../Classes">
+      location = "group:Swift Example/Swift Example/../../Classes">
    </FileRef>
    <FileRef
-      location = "group:Tapglue iOS Example/Swift Example.xcodeproj">
+      location = "group:Swift Example/Swift Example.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Tapglue Tests/Tests.xcodeproj">
