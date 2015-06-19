@@ -38,10 +38,10 @@ If you don't want to use CocoaPods you download the latest version of [Tapglue f
 
 To start using Tapglue, you must initialise our SDK with your app token first. You can find your app token in the [Tapglue dashboard](https://beta.tapglue.com).
 
-To initialise the library, import `Tapglue.h` and and in your AppDelegate’s -`application:didFinishLaunchingWithOptions:` call `setUpWithAppToken:` with your app token as its argument.
+To initialise the library, import `Tapglue.h` and in your AppDelegate’s -`application:didFinishLaunchingWithOptions:` call `setUpWithAppToken:` with your app token as its argument.
 
 ```objective-c
-#import <Tapglue/Tapglue.h>`
+#import <Tapglue/Tapglue.h>
 
 #define TAPGLUE_TOKEN @"YOUR_APP_TOKEN"
 
@@ -353,7 +353,7 @@ TGConfiguration *customConfig = [TGConfiguration defaultConfiguration];
 customConfig.loggingEnabled = true;
 ```
 
-Setting `loggingEnabled = true` will cause the Tapglue library to log the users, queueing, and uploading of events, and other fine-grained info that's useful for understanding what the library is doing.
+Setting `loggingEnabled = true` will cause the Tapglue library to log the users, queuing, and uploading of events, and other fine-grained info that's useful for understanding what the library is doing.
 
 # Error handling
 
