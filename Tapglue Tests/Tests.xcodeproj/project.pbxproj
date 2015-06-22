@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		783E0E731B298D09009A944E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783E0E721B298D09009A944E /* FBSDKCoreKit.framework */; };
 		782675DC1B30BFA300404353 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 782675DB1B30BFA300404353 /* Secrets.plist */; };
 		782675DD1B30C04500404353 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 782675DB1B30BFA300404353 /* Secrets.plist */; };
 		7862853A1B271FC800D91B4F /* NSThread+TGEnsureMainThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 786285391B271FC800D91B4F /* NSThread+TGEnsureMainThread.m */; };
@@ -76,6 +77,8 @@
 		78DBCC5C1B207FDD009986BA /* TGISOFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DBCC5B1B207FDD009986BA /* TGISOFormatterTests.m */; };
 		78DBCC5F1B20893B009986BA /* NSDictionary+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DBCC5E1B20893B009986BA /* NSDictionary+TGUtilities.m */; };
 		78DBCC621B20AD23009986BA /* TGEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DBCC611B20AD23009986BA /* TGEventManager.m */; };
+		78E17C121B29C129003D8816 /* Tapglue+Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E17C0F1B29C129003D8816 /* Tapglue+Facebook.m */; };
+		78E17C131B29C129003D8816 /* TGFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E17C111B29C129003D8816 /* TGFacebookManager.m */; };
 		78EC5DEA1B283BF80052647C /* NSError+TGError.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DE91B283BF80052647C /* NSError+TGError.m */; };
 		78EC5DF31B28A9540052647C /* UIDevice+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DF21B28A9540052647C /* UIDevice+TGUtilities.m */; };
 		97285B421B1F4AFA00D4CAC7 /* TGEventObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 97285B411B1F4AFA00D4CAC7 /* TGEventObject.m */; };
@@ -85,6 +88,7 @@
 /* Begin PBXFileReference section */
 		1485A1AE17C16949E43E09CC /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55008A2EA5F932829E9AF2D2 /* Pods-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.release.xcconfig"; sourceTree = "<group>"; };
+		783E0E721B298D09009A944E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		782675DB1B30BFA300404353 /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		786285381B271FC800D91B4F /* NSThread+TGEnsureMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+TGEnsureMainThread.h"; path = "../../Classes/NSThread+TGEnsureMainThread.h"; sourceTree = "<group>"; };
 		786285391B271FC800D91B4F /* NSThread+TGEnsureMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+TGEnsureMainThread.m"; path = "../../Classes/NSThread+TGEnsureMainThread.m"; sourceTree = "<group>"; };
@@ -157,6 +161,10 @@
 		78DBCC5E1B20893B009986BA /* NSDictionary+TGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TGUtilities.m"; sourceTree = "<group>"; };
 		78DBCC601B20AD23009986BA /* TGEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGEventManager.h; path = ../../Classes/TGEventManager.h; sourceTree = "<group>"; };
 		78DBCC611B20AD23009986BA /* TGEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGEventManager.m; path = ../../Classes/TGEventManager.m; sourceTree = "<group>"; };
+		78E17C0E1B29C129003D8816 /* Tapglue+Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tapglue+Facebook.h"; sourceTree = "<group>"; };
+		78E17C0F1B29C129003D8816 /* Tapglue+Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tapglue+Facebook.m"; sourceTree = "<group>"; };
+		78E17C101B29C129003D8816 /* TGFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGFacebookManager.h; sourceTree = "<group>"; };
+		78E17C111B29C129003D8816 /* TGFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGFacebookManager.m; sourceTree = "<group>"; };
 		78EC5DE81B283BF80052647C /* NSError+TGError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+TGError.h"; path = "../../Classes/NSError+TGError.h"; sourceTree = "<group>"; };
 		78EC5DE91B283BF80052647C /* NSError+TGError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+TGError.m"; path = "../../Classes/NSError+TGError.m"; sourceTree = "<group>"; };
 		78EC5DF11B28A9540052647C /* UIDevice+TGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+TGUtilities.h"; path = "../../Classes/UIDevice+TGUtilities.h"; sourceTree = "<group>"; };
@@ -181,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B97D0F5637EA6B1C2BB18889 /* libPods-ios.a in Frameworks */,
+				783E0E731B298D09009A944E /* FBSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +272,7 @@
 		78C2C9971B1C82C000055195 /* SDK Classes */ = {
 			isa = PBXGroup;
 			children = (
+				78E17C0D1B29C129003D8816 /* Facebook */,
 				78EC5DF11B28A9540052647C /* UIDevice+TGUtilities.h */,
 				78EC5DF21B28A9540052647C /* UIDevice+TGUtilities.m */,
 				78C6D14A1B1DA4CF00D94E6A /* Model */,
@@ -357,6 +367,18 @@
 			name = IntegrationTests;
 			sourceTree = "<group>";
 		};
+		78E17C0D1B29C129003D8816 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				78E17C0E1B29C129003D8816 /* Tapglue+Facebook.h */,
+				78E17C0F1B29C129003D8816 /* Tapglue+Facebook.m */,
+				78E17C101B29C129003D8816 /* TGFacebookManager.h */,
+				78E17C111B29C129003D8816 /* TGFacebookManager.m */,
+			);
+			name = Facebook;
+			path = ../../Classes/Facebook;
+			sourceTree = "<group>";
+		};
 		A8C5BA0C3210C8A596A3E6DE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +391,7 @@
 		FEBFDB46CCBEE3D260E3BD29 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				783E0E721B298D09009A944E /* FBSDKCoreKit.framework */,
 				1485A1AE17C16949E43E09CC /* libPods-ios.a */,
 			);
 			name = Frameworks;
@@ -586,6 +609,7 @@
 				78EC5DF31B28A9540052647C /* UIDevice+TGUtilities.m in Sources */,
 				78C6D1651B1DBE2100D94E6A /* NSString+TGUtilities.m in Sources */,
 				78CF3D611B25CFF30091B81B /* TGEvent+RandomTestEvent.m in Sources */,
+				78E17C131B29C129003D8816 /* TGFacebookManager.m in Sources */,
 				78C6D15A1B1DA4CF00D94E6A /* NSURL+TGUtilities.m in Sources */,
 				7878ECAC1B2B279500BA47F6 /* TGApiClientMock.m in Sources */,
 				78D7366A1B1F60D000BE194D /* TGEventObjectTests.m in Sources */,
@@ -598,6 +622,7 @@
 				78C6D15F1B1DAA5C00D94E6A /* TGEvent.m in Sources */,
 				78C34FA11B26E9DD00286D78 /* TGConfiguration.m in Sources */,
 				7862853A1B271FC800D91B4F /* NSThread+TGEnsureMainThread.m in Sources */,
+				78E17C121B29C129003D8816 /* Tapglue+Facebook.m in Sources */,
 				788CD1641B1F00940064E7BC /* TGObjectCache.m in Sources */,
 				788DBF801B2187060058C1C2 /* TGEventManagerTests.m in Sources */,
 				78C34FAC1B270DCD00286D78 /* TGUser+Networking.m in Sources */,
@@ -745,6 +770,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					/Users/marste/Documents/FacebookSDK,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -796,6 +822,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					/Users/marste/Documents/FacebookSDK,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;

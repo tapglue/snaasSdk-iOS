@@ -21,6 +21,9 @@
 #import <Foundation/Foundation.h>
 #import "TGModelObject.h"
 
+extern NSString *const TGUserSocialIdFacebookKey;
+extern NSString *const TGUserSocialIdTwitterKey;
+
 /*!
  @abstract `TGUser` The primary model definition of the user object.
  @discussion `TGUser` contains the properties of a TGUser object. Any user send or retrieved from the Tapglue API will be mapped to a TGUser.

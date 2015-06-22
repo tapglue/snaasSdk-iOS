@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		783E0E771B298D96009A944E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783E0E741B298D79009A944E /* FBSDKCoreKit.framework */; };
 		7862853D1B2720F900D91B4F /* NSThread+TGEnsureMainThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 7862853C1B2720F900D91B4F /* NSThread+TGEnsureMainThread.m */; };
 		788DC0061B21FA890058C1C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0051B21FA890058C1C2 /* AppDelegate.swift */; };
 		788DC0081B21FA890058C1C2 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0071B21FA890058C1C2 /* FirstViewController.swift */; };
@@ -30,10 +31,13 @@
 		788DC0601B21FD630058C1C2 /* TGUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DC05D1B21FD630058C1C2 /* TGUserManager.m */; };
 		788DC0621B2206570058C1C2 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0611B2206570058C1C2 /* FeedViewController.swift */; };
 		788DC0641B2211B50058C1C2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0631B2211B50058C1C2 /* BaseViewController.swift */; };
+		78B270611B2992EE0076323F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B270601B2992EE0076323F /* FBSDKLoginKit.framework */; };
 		78C34F9E1B26E5EF00286D78 /* TGLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C34F9D1B26E5EF00286D78 /* TGLogger.m */; };
 		78C34FA41B26EE0300286D78 /* TGConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C34FA31B26EE0300286D78 /* TGConfiguration.m */; };
 		78CF3D581B25A70E0091B81B /* TGUser+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D571B25A70E0091B81B /* TGUser+Networking.m */; };
 		78CF3D5B1B25A9510091B81B /* TGEvent+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D5A1B25A9510091B81B /* TGEvent+Networking.m */; };
+		78E17C0B1B29C117003D8816 /* Tapglue+Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E17C081B29C117003D8816 /* Tapglue+Facebook.m */; };
+		78E17C0C1B29C117003D8816 /* TGFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E17C0A1B29C117003D8816 /* TGFacebookManager.m */; };
 		78EC5DED1B286B020052647C /* NSError+TGError.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DEC1B286B020052647C /* NSError+TGError.m */; };
 		78EC5DF01B2870230052647C /* UIDevice+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DEF1B2870230052647C /* UIDevice+TGUtilities.m */; };
 		979F69401B264F470088F78E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 979F693F1B264F470088F78E /* Images.xcassets */; };
@@ -41,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		783E0E741B298D79009A944E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		7862853B1B2720F900D91B4F /* NSThread+TGEnsureMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+TGEnsureMainThread.h"; path = "../../Classes/NSThread+TGEnsureMainThread.h"; sourceTree = "<group>"; };
 		7862853C1B2720F900D91B4F /* NSThread+TGEnsureMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+TGEnsureMainThread.m"; path = "../../Classes/NSThread+TGEnsureMainThread.m"; sourceTree = "<group>"; };
 		788DC0001B21FA890058C1C2 /* Swift Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +92,7 @@
 		788DC05F1B21FD630058C1C2 /* Tapglue+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Tapglue+Private.h"; path = "../../Classes/Tapglue+Private.h"; sourceTree = "<group>"; };
 		788DC0611B2206570058C1C2 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		788DC0631B2211B50058C1C2 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		78B270601B2992EE0076323F /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		78C34F9C1B26E5EF00286D78 /* TGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGLogger.h; path = ../../Classes/TGLogger.h; sourceTree = "<group>"; };
 		78C34F9D1B26E5EF00286D78 /* TGLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGLogger.m; path = ../../Classes/TGLogger.m; sourceTree = "<group>"; };
 		78C34FA21B26EE0300286D78 /* TGConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGConfiguration.h; path = ../../Classes/TGConfiguration.h; sourceTree = "<group>"; };
@@ -95,6 +101,10 @@
 		78CF3D571B25A70E0091B81B /* TGUser+Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TGUser+Networking.m"; path = "../RestClient/TGUser+Networking.m"; sourceTree = "<group>"; };
 		78CF3D591B25A9510091B81B /* TGEvent+Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TGEvent+Networking.h"; path = "../TGEvent+Networking.h"; sourceTree = "<group>"; };
 		78CF3D5A1B25A9510091B81B /* TGEvent+Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TGEvent+Networking.m"; path = "../TGEvent+Networking.m"; sourceTree = "<group>"; };
+		78E17C071B29C117003D8816 /* Tapglue+Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tapglue+Facebook.h"; sourceTree = "<group>"; };
+		78E17C081B29C117003D8816 /* Tapglue+Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tapglue+Facebook.m"; sourceTree = "<group>"; };
+		78E17C091B29C117003D8816 /* TGFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGFacebookManager.h; sourceTree = "<group>"; };
+		78E17C0A1B29C117003D8816 /* TGFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGFacebookManager.m; sourceTree = "<group>"; };
 		78EC5DEB1B286B020052647C /* NSError+TGError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+TGError.h"; path = "../../Classes/NSError+TGError.h"; sourceTree = "<group>"; };
 		78EC5DEC1B286B020052647C /* NSError+TGError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+TGError.m"; path = "../../Classes/NSError+TGError.m"; sourceTree = "<group>"; };
 		78EC5DEE1B2870230052647C /* UIDevice+TGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+TGUtilities.h"; path = "../../Classes/UIDevice+TGUtilities.h"; sourceTree = "<group>"; };
@@ -109,16 +119,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78B270611B2992EE0076323F /* FBSDKLoginKit.framework in Frameworks */,
+				783E0E771B298D96009A944E /* FBSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		783E0E761B298D81009A944E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				78B270601B2992EE0076323F /* FBSDKLoginKit.framework */,
+				783E0E741B298D79009A944E /* FBSDKCoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		788DBFF71B21FA890058C1C2 = {
 			isa = PBXGroup;
 			children = (
 				788DC0021B21FA890058C1C2 /* Swift Example */,
+				788DC0021B21FA890058C1C2 /* Tapglue iOS Example */,
+				788DC01A1B21FA890058C1C2 /* Tapglue iOS ExampleTests */,
+				783E0E761B298D81009A944E /* Frameworks */,
 				788DC0011B21FA890058C1C2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -161,6 +185,7 @@
 		788DC0291B21FC6D0058C1C2 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				78E17C061B29C117003D8816 /* Facebook */,
 				78EC5DEB1B286B020052647C /* NSError+TGError.h */,
 				78EC5DEC1B286B020052647C /* NSError+TGError.m */,
 				78C34FA21B26EE0300286D78 /* TGConfiguration.h */,
@@ -230,6 +255,18 @@
 			);
 			name = RestClient;
 			path = ../../Classes/RestClient;
+			sourceTree = "<group>";
+		};
+		78E17C061B29C117003D8816 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				78E17C071B29C117003D8816 /* Tapglue+Facebook.h */,
+				78E17C081B29C117003D8816 /* Tapglue+Facebook.m */,
+				78E17C091B29C117003D8816 /* TGFacebookManager.h */,
+				78E17C0A1B29C117003D8816 /* TGFacebookManager.m */,
+			);
+			name = Facebook;
+			path = ../../Classes/Facebook;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,6 +352,8 @@
 				78C34F9E1B26E5EF00286D78 /* TGLogger.m in Sources */,
 				788DC0581B21FC7F0058C1C2 /* NSURL+TGUtilities.m in Sources */,
 				78EC5DED1B286B020052647C /* NSError+TGError.m in Sources */,
+				78E17C0B1B29C117003D8816 /* Tapglue+Facebook.m in Sources */,
+				78E17C0C1B29C117003D8816 /* TGFacebookManager.m in Sources */,
 				788DC0571B21FC7F0058C1C2 /* TGUser.m in Sources */,
 				788DC0531B21FC7F0058C1C2 /* TGModelObject.m in Sources */,
 				788DC05C1B21FD0E0058C1C2 /* TGBaseManager.m in Sources */,

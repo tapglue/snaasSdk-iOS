@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" text="User Name" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="KQZ-1w-vlD">
-                                <rect key="frame" x="209" y="279" width="182.5" height="41.5"/>
+                                <rect key="frame" x="209" y="279" width="183" height="42"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -99,6 +99,14 @@
                                     <action selector="loginAsUser1:" destination="9pv-A4-QxB" eventType="touchUpInside" id="8ZF-wE-SeP"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WgD-y2-K3I" customClass="FBSDKLoginButton">
+                                <rect key="frame" x="230" y="220" width="140" height="50"/>
+                                <color key="backgroundColor" red="0.23137254900000001" green="0.34901960780000002" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="0ju-cd-L8D"/>
+                                    <constraint firstAttribute="width" constant="140" id="hbf-u2-gmm"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -106,10 +114,12 @@
                             <constraint firstItem="TR2-hk-qhP" firstAttribute="top" secondItem="Fok-x7-hyQ" secondAttribute="bottom" constant="10" id="2Db-Se-ErJ"/>
                             <constraint firstItem="EnR-ZG-VHs" firstAttribute="top" secondItem="TSv-k0-did" secondAttribute="bottom" constant="20" id="31Z-nJ-K4m"/>
                             <constraint firstAttribute="centerX" secondItem="Fok-x7-hyQ" secondAttribute="centerX" id="4Kp-Hw-aWe"/>
+                            <constraint firstAttribute="centerX" secondItem="WgD-y2-K3I" secondAttribute="centerX" id="4MH-gz-iXo"/>
                             <constraint firstAttribute="centerX" secondItem="KQZ-1w-vlD" secondAttribute="centerX" id="6BV-lF-sBN"/>
                             <constraint firstAttribute="centerX" secondItem="EnR-ZG-VHs" secondAttribute="centerX" id="6J9-L3-Eqg"/>
                             <constraint firstItem="en8-rH-YBb" firstAttribute="leading" secondItem="TR2-hk-qhP" secondAttribute="trailing" constant="77" id="8nX-bG-LR9"/>
                             <constraint firstItem="f0Z-Sx-lZV" firstAttribute="leading" secondItem="Fok-x7-hyQ" secondAttribute="trailing" constant="40" id="91x-EZ-wCs"/>
+                            <constraint firstItem="WgD-y2-K3I" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="200" id="BGE-sh-edq"/>
                             <constraint firstItem="A5M-7J-77L" firstAttribute="top" secondItem="KQZ-1w-vlD" secondAttribute="bottom" constant="20" id="Etb-R6-vhx"/>
                             <constraint firstItem="w5A-BG-MN5" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="50" id="Ezb-Do-ciU"/>
                             <constraint firstItem="f0Z-Sx-lZV" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="50" id="GdB-s7-M0S"/>
@@ -142,6 +152,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Users" image="user" id="acW-dT-cKf"/>
                     <connections>
+                        <outlet property="facebookLoginButton" destination="WgD-y2-K3I" id="eoM-4Y-oo5"/>
                         <outlet property="firstNameLabel" destination="IS0-mZ-CRv" id="L7u-WJ-QYN"/>
                         <outlet property="firstUserImage" destination="w5A-BG-MN5" id="eyL-7M-cGT"/>
                         <outlet property="lastNameLabel" destination="TSv-k0-did" id="9qr-sa-BWZ"/>

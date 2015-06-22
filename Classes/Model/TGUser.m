@@ -26,6 +26,9 @@
 #import "NSDictionary+TGUtilities.h"
 #import "Tapglue+Private.h"
 
+NSString *const TGUserSocialIdFacebookKey = @"facebook";
+NSString *const TGUserSocialIdTwitterKey = @"twitter";
+
 static NSString *const TGUserCustomIdJsonKey = @"custom_id";
 static NSString *const TGUserUsernameJsonKey = @"user_name";
 static NSString *const TGUserPasswordJsonKey = @"password";

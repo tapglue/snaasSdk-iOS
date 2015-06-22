@@ -20,7 +20,11 @@
 
 import UIKit
 
-class FirstViewController: BaseViewController {
+import FBSDKCoreKit
+import FBSDKLoginKit
+
+
+class FirstViewController: BaseViewController, TGSocialManagerDelegate {
 
     // Labels
     @IBOutlet weak var userNameLabel: UILabel!
@@ -33,16 +37,25 @@ class FirstViewController: BaseViewController {
     @IBOutlet weak var firstUserImage: UIImageView!
     @IBOutlet weak var secondUserImage: UIImageView!
     @IBOutlet weak var thirdUserImage: UIImageView!
-
+    
+    @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
+    
+    lazy var facebookManager = TGFacebookManager()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
-        self.firstUserImage.highlighted = true;
+        
+        self.firstUserImage.highlighted = true
         self.updateUserData()
+        
+        self.facebookLoginButton.readPermissions = self.facebookManager.readPermissions
+        self.facebookLoginButton.delegate = self.facebookManager
+        self.facebookManager.delegate = self
+        
     }
-
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
