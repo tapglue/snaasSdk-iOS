@@ -33,7 +33,8 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 - (instancetype)initWithDictionary:(NSDictionary*)data {
     self = [super init];
     if (self) {
-        _objectId = [data valueForKey:TGModelObjectIdJsonKey];
+        id objIdValue = [data valueForKey:TGModelObjectIdJsonKey];
+        _objectId = [objIdValue isKindOfClass:[NSString class]] ? objIdValue : [objIdValue stringValue];
 
         if ([self respondsToSelector:@selector(jsonMapping)]) {
             [self loadDataFromDictionary:data withMapping:[self jsonMapping]];

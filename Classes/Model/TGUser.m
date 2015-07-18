@@ -51,7 +51,7 @@ static NSString *const TGUserSocialIdsJsonKey = @"social_ids";
 
 + (instancetype)createOrLoadWithDictionary:(NSDictionary*)userData {
     TGObjectCache *cache = [self cache];
-    TGUser *user = [cache objectWithObjectId:[userData valueForKey:TGModelObjectIdJsonKey]];
+    TGUser *user = [cache objectWithObjectId:[[userData valueForKey:TGModelObjectIdJsonKey] stringValue]];
     if (!user) {
         user = [[TGUser alloc] initWithDictionary:userData];
         if (user) { // user will be nil if the userData is invalid
@@ -73,10 +73,8 @@ static NSString *const TGUserSocialIdsJsonKey = @"social_ids";
 }
 
 + (BOOL)isValidUserData:(NSDictionary*)userData {
-    BOOL isValid = YES;
-    isValid &= [userData tg_hasStringValueForKey:TGModelObjectIdJsonKey];
-    isValid &= [userData tg_hasStringValueForKey:TGUserUsernameJsonKey] || [userData tg_hasStringValueForKey:TGUserEmailJsonKey];
-    return isValid;
+    return ([userData tg_hasNumberValueForKey:TGModelObjectIdJsonKey]
+            && ([userData tg_hasStringValueForKey:TGUserUsernameJsonKey] || [userData tg_hasStringValueForKey:TGUserEmailJsonKey]));
 }
 
 #pragma mark - Getter & Setter

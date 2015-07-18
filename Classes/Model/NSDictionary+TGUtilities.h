@@ -23,13 +23,23 @@
 @interface NSDictionary (TGUtilities)
 
 /*!
- @abstract Check if the dictionary has a value for a given key.
+ @abstract Check if the dictionary has a string value for a given key.
 
  @param key The key that should be checked.
 
- @return The result will be true if there is a value or false otherwise.
+ @return The result will be true if there is a value and the value is kind of `NSString` or false otherwise.
  */
 - (BOOL) tg_hasStringValueForKey:(NSString*)key;
+
+
+/*!
+ @abstract Check if the dictionary has a number value for a given key.
+ 
+ @param key The key that should be checked.
+ 
+ @return The result will be true if there is a value and the value is kind of `NSNumber` or false otherwise.
+ */
+- (BOOL) tg_hasNumberValueForKey:(NSString*)key;
 
 @end
 
