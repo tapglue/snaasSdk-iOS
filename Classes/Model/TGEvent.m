@@ -37,7 +37,7 @@ static NSString *const TGEventObjectKey = @"object";
 
 + (instancetype)createOrLoadWithDictionary:(NSDictionary*)eventData {
     TGObjectCache *cache = [self cache];
-    TGEvent *event = [cache objectWithObjectId:[[eventData valueForKey:TGModelObjectIdJsonKey] stringValue]];
+    TGEvent *event = [cache objectWithObjectId:[eventData tg_stringValueForKey:TGModelObjectIdJsonKey]];
     if (!event) {
         event = [[TGEvent alloc] initWithDictionary:eventData];
         if (event) { // user will be nil if the userData is invalid
@@ -54,7 +54,7 @@ static NSString *const TGEventObjectKey = @"object";
     self = [super initWithDictionary:eventData];
     if (self) {
         // all field defined in the mapping are already set by the super class
-        self.user = [TGUser objectWithId:[[eventData valueForKey:TGEventUserIdJsonKey] stringValue]];
+        self.user = [TGUser objectWithId:[eventData tg_stringValueForKey:TGEventUserIdJsonKey]];
         self.object = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"object"]];
     }
     return self;

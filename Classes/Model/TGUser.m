@@ -51,7 +51,7 @@ static NSString *const TGUserSocialIdsJsonKey = @"social_ids";
 
 + (instancetype)createOrLoadWithDictionary:(NSDictionary*)userData {
     TGObjectCache *cache = [self cache];
-    TGUser *user = [cache objectWithObjectId:[[userData valueForKey:TGModelObjectIdJsonKey] stringValue]];
+    TGUser *user = [cache objectWithObjectId:[userData tg_stringValueForKey:TGModelObjectIdJsonKey]];
     if (!user) {
         user = [[TGUser alloc] initWithDictionary:userData];
         if (user) { // user will be nil if the userData is invalid

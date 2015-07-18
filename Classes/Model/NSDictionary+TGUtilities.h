@@ -41,6 +41,10 @@
  */
 - (BOOL) tg_hasNumberValueForKey:(NSString*)key;
 
+
+- (NSString*)tg_stringValueForKey:(NSString*)key;
+
+    
 @end
 
 @interface NSMutableDictionary (TGUtilities)
