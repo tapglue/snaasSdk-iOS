@@ -76,8 +76,8 @@
 }
 
 - (void)testFindObjectUsingPredicate {
-    NSDictionary *eventData = @{ @"id" : @"a47f173d-d996-5ab7-ba02-621e00ff3297",
-                                 @"user_id" : @"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+    NSDictionary *eventData = @{ @"id" : @(47173996570203297),
+                                 @"user_id" : @(85866757785095871),
                                  @"type" : @"like",
                                  @"object" : @{
                                          @"id" : @"o4711",
@@ -104,18 +104,19 @@
 - (void)testUserCaching {
 
     NSDictionary *userData = @{
-                               @"id" : @"a47f173d-d996-5ab7-ba02-621e00ff3297",
+                               @"id" : @(85866757785095871),
                                @"email" : @"testuser@tapglue.com"
                                };
 
     // try loading a not yet created user
-    expect([TGUser objectWithId:@"a47f173d-d996-5ab7-ba02-621e00ff3297"]).to.beNil();
+    expect([TGUser objectWithId:@"85866757785095871"]).to.beNil();
 
     // create a new user
     TGUser *user = [TGUser createOrLoadWithDictionary:userData];
+    expect(user).toNot.beNil();
 
     // the user should now be loadable and return the created user
-    expect([TGUser objectWithId:@"a47f173d-d996-5ab7-ba02-621e00ff3297"]).to.equal(user);
+    expect([TGUser objectWithId:@"85866757785095871"]).to.equal(user);
 
     // calling create user again with the same id should return the already existing instance of the user
     expect([TGUser createOrLoadWithDictionary:userData]).to.equal(user);
@@ -126,24 +127,24 @@
 - (void)testCreateAndCacheMultipleUsersFromDictionaries {
     NSArray *userData =  @[
                            @{
-                               @"id" : @"tpgl1",
+                               @"id" : @(111),
                                @"email" : @"testuser1@tapglue.com"
                                },
 
                            @{
-                               @"id" : @"tpgl2",
+                               @"id" : @(222),
                                @"email" : @"testuser2@tapglue.com"
                                },
                            @{
-                               @"id" : @"tpgl3",
+                               @"id" : @(333),
                                @"email" : @"testuser3@tapglue.com"
                                }
                            ];
 
     [TGUser createAndCacheObjectsFromDictionaries:userData];
-    expect([TGUser objectWithId:@"tpgl1"]).toNot.beNil();
-    expect([TGUser objectWithId:@"tpgl2"]).toNot.beNil();
-    expect([TGUser objectWithId:@"tpgl3"]).toNot.beNil();
+    expect([TGUser objectWithId:@"111"]).toNot.beNil();
+    expect([TGUser objectWithId:@"222"]).toNot.beNil();
+    expect([TGUser objectWithId:@"333"]).toNot.beNil();
 }
 
 
@@ -151,21 +152,22 @@
 - (void)testEventCaching {
 
     NSDictionary *eventData = @{
-                                @"id" : @"a47f173d-d996-5ab7-ba02-621e00ff3297",
-                                @"user_id" : @"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                                @"id" : @(47173996570203297),
+                                @"user_id" : @(85866757785095871),
                                 @"type" : @"like",
                                 @"created_at": @"2015-06-01T08:44:57.144996856Z",
                                 @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
 
 
     // try loading a not yet created user
-    expect([TGEvent objectWithId:@"a47f173d-d996-5ab7-ba02-621e00ff3297"]).to.beNil();
+    expect([TGEvent objectWithId:@"47173996570203297"]).to.beNil();
 
     // create a new user
     TGEvent *event = [TGEvent createOrLoadWithDictionary:eventData];
+    expect(event).toNot.beNil();
 
     // the user should now be loadable and return the created user
-    expect([TGEvent objectWithId:@"a47f173d-d996-5ab7-ba02-621e00ff3297"]).to.equal(event);
+    expect([TGEvent objectWithId:@"47173996570203297"]).to.equal(event);
 
     // calling create user again with the same id should return the already existing instance of the user
     expect([TGEvent createOrLoadWithDictionary:eventData]).to.equal(event);
@@ -176,44 +178,44 @@
 - (void)testCreateAndCacheMultipleEventsFromDictionaries {
     NSArray *eventData =  @[
                             @{
-                                @"id" : @"tpgl1",
-                                @"user_id" : @"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                                @"id" : @(111),
+                                @"user_id" : @(85866757785095871),
                                 @"type" : @"like",
                                 @"created_at": @"2015-06-01T08:44:57.144996856Z",
                                 @"updated_at": @"2014-02-10T06:25:10.144996856Z"                               },
 
                             @{
-                                @"id" : @"tpgl2",
-                                @"user_id" : @"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                                @"id" : @(222),
+                                @"user_id" : @(85866757785095871),
                                 @"type" : @"like",
                                 @"created_at": @"2015-06-01T08:44:57.144996856Z",
                                 @"updated_at": @"2014-02-10T06:25:10.144996856Z"                               },
                             @{
-                                @"id" : @"tpgl3",
-                                @"user_id" : @"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                                @"id" : @(333),
+                                @"user_id" : @(85866757785095871),
                                 @"type" : @"like",
                                 @"created_at": @"2015-06-01T08:44:57.144996856Z",
                                 @"updated_at": @"2014-02-10T06:25:10.144996856Z"                               }
                             ];
 
     [TGEvent createAndCacheObjectsFromDictionaries:eventData];
-    expect([TGEvent objectWithId:@"tpgl1"]).toNot.beNil();
-    expect([TGEvent objectWithId:@"tpgl2"]).toNot.beNil();
-    expect([TGEvent objectWithId:@"tpgl3"]).toNot.beNil();
+    expect([TGEvent objectWithId:@"111"]).toNot.beNil();
+    expect([TGEvent objectWithId:@"222"]).toNot.beNil();
+    expect([TGEvent objectWithId:@"333"]).toNot.beNil();
 }
 
 
 - (void)testCachingUserAndEventWithSameIds {
 
     NSDictionary *eventData = @{
-                                @"id" : @"123",
-                                @"user_id" : @"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                                @"id" : @(123),
+                                @"user_id" : @(8586),
                                 @"type" : @"like",
                                 @"created_at": @"2015-06-01T08:44:57.144996856Z",
                                 @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
 
     NSDictionary *userData = @{
-                               @"id" : @"123",
+                               @"id" : @(123),
                                @"email" : @"testuser@tapglue.com"
                                };
 

@@ -20,6 +20,7 @@
 
 #import "TGObject+Private.h"
 #import "NSDateFormatter+TGISOFormatter.h"
+#import "NSDictionary+TGUtilities.h"
 
 NSString *const TGModelObjectIdJsonKey = @"id";
 
@@ -33,7 +34,7 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 - (instancetype)initWithDictionary:(NSDictionary*)data {
     self = [super init];
     if (self) {
-        _objectId = [data valueForKey:TGModelObjectIdJsonKey];
+        _objectId = [data tg_stringValueForKey:TGModelObjectIdJsonKey];
 
         if ([self respondsToSelector:@selector(jsonMapping)]) {
             [self loadDataFromDictionary:data withMapping:[self jsonMapping]];
