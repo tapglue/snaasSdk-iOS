@@ -26,6 +26,21 @@
     return  [self valueForKey:key] && [[self valueForKey:key] isKindOfClass:[NSString class]];
 }
 
+- (BOOL) tg_hasNumberValueForKey:(NSString*)key {
+    return  [self valueForKey:key] && [[self valueForKey:key] isKindOfClass:[NSNumber class]];
+}
+
+- (NSString*)tg_stringValueForKey:(NSString*)key {
+    id value = [self valueForKey:key];
+    if ([value isKindOfClass:[NSString class]]) {
+        return value;
+    }
+    if ([value respondsToSelector:@selector(stringValue)]) {
+        return [value stringValue];
+    }
+    return nil;
+}
+
 @end
 
 @implementation NSMutableDictionary (TGUtilities)

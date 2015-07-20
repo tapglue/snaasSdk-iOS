@@ -50,7 +50,7 @@
 // [Correct] From JSON to User with all values
 - (void)testInitUserWithDictionaryAll {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                               @"id":@(18446744073709551615),
                                @"custom_id":@"123456abc",
                                @"social_ids":@{
                                    @"abook":@"acc-1-app-1-user-2-abk",
@@ -79,7 +79,7 @@
     expect(user).toNot.beNil();
 
     // Check for correct values
-    expect(user.userId).to.equal(@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee");
+    expect(user.userId).to.equal(@"18446744073709551615");
     expect(user.customId).to.equal(@"123456abc");
     expect(user.socialIds).to.equal(@{
                                       @"abook":@"acc-1-app-1-user-2-abk",
@@ -127,7 +127,7 @@
 // [Correct] From JSON to User with some values
 - (void)testInitUserWithDictionaryAverage {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                               @"id":@(858667),
                                @"user_name":@"acc-1-app-1-user-2",
                                @"first_name":@"acc-1-app-1-user-2-first-name",
                                @"last_name":@"acc-1-app-1-user-2-last-name",
@@ -142,7 +142,7 @@
     expect(user).toNot.beNil();
 
     // Check for correct values
-    expect(user.userId).to.equal(@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee");
+    expect(user.userId).to.equal(@"858667");
     expect(user.username).to.equal(@"acc-1-app-1-user-2");
     expect(user.firstName).to.equal(@"acc-1-app-1-user-2-first-name");
     expect(user.lastName).to.equal(@"acc-1-app-1-user-2-last-name");
@@ -161,7 +161,7 @@
 // [Correct] From JSON to User with only id and username
 - (void)testInitUserWithDictionaryNameAndId {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                               @"id":@(858667),
                                @"user_name":@"acc-1-app-1-user-2"
                                };
 
@@ -172,7 +172,7 @@
     expect(user).toNot.beNil();
 
     // Check for correct values
-    expect(user.userId).to.equal(@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee");
+    expect(user.userId).to.equal(@"858667");
     expect(user.username).to.equal(@"acc-1-app-1-user-2");
 
     // Check for correct types
@@ -184,7 +184,7 @@
 // [Correct] From JSON to User with only id and email
 - (void)testInitUserWithDictionaryEmailAndId {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                               @"id":@(858667),
                                @"email":@"acc-1-app@tapglue.com"
                                };
 
@@ -195,7 +195,7 @@
     expect(user).toNot.beNil();
 
     // Check for correct values
-    expect(user.userId).to.equal(@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee");
+    expect(user.userId).to.equal(@"858667");
     expect(user.email).to.equal(@"acc-1-app@tapglue.com");
 }
 
@@ -203,7 +203,7 @@
 
 // [Correct] From JSON to User with Metadata
 - (void)testMetadataForUserInitWithDictionary {
-    NSDictionary *userData = @{ @"id" : @"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+    NSDictionary *userData = @{ @"id":@(858667),
                                 @"user_name":@"acc-1-app-1-user-2",
                                 @"metadata" : @{
                                         @"foo" : @"bar",
@@ -215,7 +215,7 @@
     TGUser *user = [[TGUser alloc] initWithDictionary:userData];
 
     // Check for correct values
-    expect(user.userId).to.equal(@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee");
+    expect(user.userId).to.equal(@"858667");
     expect(user.username).to.equal(@"acc-1-app-1-user-2");
 
     expect(user.metadata).to.beKindOf([NSDictionary class]);
@@ -235,7 +235,7 @@
 // [Correct] From JSON to User with Social IDs
 - (void)testSocialIdsOnRetrievedObject {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                               @"id":@(858667),
                                @"social_ids":@{
                                        @"abook":@"acc-1-app-1-user-2-abk",
                                        @"facebook":@"acc-1-app-1-user-2-fb",
@@ -247,7 +247,7 @@
     TGUser *user = [[TGUser alloc] initWithDictionary:userData];
 
     // Check for correct values
-    expect(user.userId).to.equal(@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee");
+    expect(user.userId).to.equal(@"858667");
     expect(user.username).to.equal(@"acc-1-app-1-user-2");
 
     expect(user.socialIds).to.equal(@{
@@ -276,7 +276,7 @@
 // [Correct] Set Social IDs From JSON
 - (void)testSetSocialIdOnRetrievedObject {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                               @"id":@(858667),
                                @"social_ids":@{
                                        @"facebook":@"acc-1-app-1-user-2-fb"
                                        },
@@ -308,7 +308,7 @@
 // [Negative] From JSON to User with without username or email
 - (void)testInitUserWithDictionaryNoUsername {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee"
+                               @"id":@(858667)
                                };
 
     expect(userData).toNot.beNil;
@@ -321,7 +321,7 @@
 // [Negative] From JSON to User with wrong username type
 - (void)testInitUserWithDictionaryWrongUsernameType {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                               @"id":@(858667),
                                @"user_name":@123
                                };
 
@@ -340,7 +340,7 @@
 // [Negative] From JSON to User with wrong username key
 - (void)testInitUserWithDictionaryWrongUsernameKey {
     NSDictionary *userData = @{
-                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+                               @"id":@(858667),
                                @"username":@"acc-1-app-1-user-2"
                                };
 
@@ -557,7 +557,7 @@
 //- (void)testArchiveAndLoadCurrentUser {
 //
 //    NSDictionary *userData = @{
-//                               @"id":@"8586b3fe-6c7d-5d77-8509-a8b587c8e1ee",
+//                               @"id":@(858667),
 //                               @"custom_id":@"123456abc",
 //                               @"social_ids":@{
 //                                       @"abook":@"acc-1-app-1-user-2-abk",
