@@ -48,8 +48,8 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 }
 
 - (void)loadDataFromDictionary:(NSDictionary *)data {
-    NSDictionary *mapping = [self addObjectIdToJsonMapping:[self jsonMapping]];
-    [self loadDataFromDictionary:data withMapping:mapping];
+    _objectId = [data tg_stringValueForKey:TGModelObjectIdJsonKey];
+    [self loadDataFromDictionary:data withMapping:[self jsonMapping]];
 }
 
 - (void)loadDataFromDictionary:(NSDictionary*)data withMapping:(NSDictionary*)mapping {

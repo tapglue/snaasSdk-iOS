@@ -290,6 +290,80 @@
     expect([user socialIdForKey:@"facebook"]).to.equal(@"some-new-facebook-id-10234123");
 }
 
+- (void)testLoadDataIntoExistingUserWithDictionaryAll {
+    NSDictionary *userData = @{
+                               @"id":@(18446744073709551615),
+                               @"custom_id":@"123456abc",
+                               @"social_ids":@{
+                                       @"abook":@"acc-1-app-1-user-2-abk",
+                                       @"facebook":@"acc-1-app-1-user-2-fb",
+                                       @"gplus":@"acc-1-app-1-user-2-gpl",
+                                       @"twitter":@"acc-1-app-1-user-2-tw"
+                                       },
+                               @"user_name":@"acc-1-app-1-user-2",
+                               @"first_name":@"acc-1-app-1-user-2-first-name",
+                               @"last_name":@"acc-1-app-1-user-2-last-name",
+                               @"email":@"acc-1-app-1-user-2@tapglue-test.com",
+                               @"url":@"app://tapglue.com/users/1/demouser",
+                               @"metadata" : @{
+                                       @"foo" : @"bar",
+                                       @"amount" : @12,
+                                       @"progress" : @0.95
+                                       },
+                               @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                               @"updated_at": @"2014-02-10T06:25:10.144996856Z"
+                               };
+    
+    TGUser *user = [[TGUser alloc] init];
+    expect(user).toNot.beNil();
+    [user loadDataFromDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"18446744073709551615");
+    expect(user.customId).to.equal(@"123456abc");
+    expect(user.socialIds).to.equal(@{
+                                      @"abook":@"acc-1-app-1-user-2-abk",
+                                      @"facebook":@"acc-1-app-1-user-2-fb",
+                                      @"gplus":@"acc-1-app-1-user-2-gpl",
+                                      @"twitter":@"acc-1-app-1-user-2-tw"
+                                      });
+    expect([user socialIdForKey:@"abook"]).to.equal(@"acc-1-app-1-user-2-abk");
+    expect([user socialIdForKey:@"facebook"]).to.equal(@"acc-1-app-1-user-2-fb");
+    expect([user socialIdForKey:@"gplus"]).to.equal(@"acc-1-app-1-user-2-gpl");
+    expect([user socialIdForKey:@"twitter"]).to.equal(@"acc-1-app-1-user-2-tw");
+    expect([user socialIdForKey:@"undefined-key"]).to.beNil();
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    expect(user.firstName).to.equal(@"acc-1-app-1-user-2-first-name");
+    expect(user.lastName).to.equal(@"acc-1-app-1-user-2-last-name");
+    expect(user.email).to.equal(@"acc-1-app-1-user-2@tapglue-test.com");
+    expect(user.url).to.equal(@"app://tapglue.com/users/1/demouser");
+    expect([user.metadata objectForKey:@"foo"]).to.equal(@"bar");
+    expect([user.metadata objectForKey:@"amount"]).to.equal(12);
+    expect([user.metadata objectForKey:@"progress"]).to.equal(0.95);
+    expect(user.createdAt).to.equal([NSDate dateWithTimeIntervalSince1970:1433148297]);
+    expect(user.updatedAt).to.equal([NSDate dateWithTimeIntervalSince1970:1392013510]);
+    
+    // Check for correct types
+    expect(user.userId).to.beKindOf([NSString class]);
+    expect(user.customId).to.beKindOf([NSString class]);
+    expect(user.socialIds).to.beKindOf([NSDictionary class]);
+    expect([user socialIdForKey:@"abook"]).to.beKindOf([NSString class]);
+    expect([user socialIdForKey:@"facebook"]).to.beKindOf([NSObject class]);
+    expect([user socialIdForKey:@"gplus"]).to.beKindOf([NSObject class]);
+    expect([user socialIdForKey:@"twitter"]).to.beKindOf([NSObject class]);
+    expect(user.username).to.beKindOf([NSString class]);
+    expect(user.firstName).to.beKindOf([NSString class]);
+    expect(user.lastName).to.beKindOf([NSString class]);
+    expect(user.email).to.beKindOf([NSString class]);
+    expect(user.url).to.beKindOf([NSString class]);
+    expect(user.metadata).to.beKindOf([NSDictionary class]);
+    expect([user.metadata objectForKey:@"foo"]).to.beKindOf([NSString class]);
+    expect([user.metadata objectForKey:@"amount"]).to.beKindOf([NSNumber class]);
+    expect([user.metadata objectForKey:@"progress"]).to.beKindOf([NSNumber class]);
+    expect(user.createdAt).to.beKindOf([NSDate class]);
+    expect(user.updatedAt).to.beKindOf([NSDate class]);
+}
+
 #pragma mark - Negative
 
 // [Negative] From JSON to User with without id
