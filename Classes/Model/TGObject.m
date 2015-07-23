@@ -62,7 +62,6 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 }
 
 - (NSMutableDictionary*)dictionaryWithMapping:(NSDictionary*)mapping {
-    mapping = [self addObjectIdToJsonMapping:mapping];
     NSMutableDictionary *dict = [NSMutableDictionary new];
     [mapping enumerateKeysAndObjectsUsingBlock:^(id jsonKey, id objKey, BOOL *stop) {
         id objectValue = [self valueForKey:objKey];
@@ -76,14 +75,13 @@ NSString *const TGModelObjectIdJsonKey = @"id";
             [dict setObject:objectValue forKey:jsonKey];
         }
     }];
+    
+    if (self.objectId) {
+        [dict tg_setValueIfNotNil:[[[NSNumberFormatter alloc] init] numberFromString:self.objectId] forKey:TGModelObjectIdJsonKey];
+    }
+    
     return dict;
 }
 
-- (NSDictionary*)addObjectIdToJsonMapping:(NSDictionary*)jsonMapping {
-    NSMutableDictionary *mapping = [NSMutableDictionary dictionary];
-    [mapping setObject:@"objectId" forKey:TGModelObjectIdJsonKey];
-    [mapping addEntriesFromDictionary:jsonMapping];
-    return mapping;
-}
 
 @end

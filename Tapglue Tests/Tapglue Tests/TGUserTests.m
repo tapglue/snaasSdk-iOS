@@ -433,6 +433,7 @@
 - (void)testUserJsonDictionaryAll {
 
     TGUser *user = [[TGUser alloc] init];
+    user.objectId = @"3242398239823";
     user.customId = @"123456abc";
     [user setSocialId:@"acc-1-app-1-user-2-abk" forKey:@"abook"];
     [user setSocialId:@"acc-1-app-1-user-2-fb" forKey:@"facebook"];
@@ -452,9 +453,10 @@
     NSDictionary *jsonDictionary = user.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
 
-    expect(jsonDictionary.count).to.equal(8);
+    expect(jsonDictionary.count).to.equal(9);
 
     // Check for correct values
+    expect([jsonDictionary valueForKey:@"id"]).to.equal(3242398239823);
     expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
     expect([jsonDictionary valueForKey:@"custom_id"]).to.equal(@"123456abc");
     expect([jsonDictionary valueForKey:@"social_ids"]).to.equal(@{
@@ -575,6 +577,7 @@
 // Helper to validate jsonDictionary types
 - (void)validateDataTypesForUserJsonDictionary:(NSDictionary*)jsonDictionary {
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    expect([jsonDictionary valueForKey:@"id"]).to.beKindOfOrNil([NSNumber class]);
     expect([jsonDictionary valueForKey:@"user_name"]).to.beKindOfOrNil([NSString class]);
     expect([jsonDictionary valueForKey:@"custom_id"]).to.beKindOfOrNil([NSString class]);
     expect([jsonDictionary valueForKey:@"first_name"]).to.beKindOfOrNil([NSString class]);
