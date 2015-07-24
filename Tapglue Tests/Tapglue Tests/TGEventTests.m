@@ -132,6 +132,24 @@
     expect(event.updatedAt).to.beKindOf([NSDate class]);
 }
 
+
+// [Correct] From JSON to Event with object being null
+- (void)testInitEventWithDictionaryWithNullEventObject {
+    NSDictionary *eventData = @{
+                                @"id" : @(471739965702621007),
+                                @"user_id" : @(858667),
+                                @"type" : @"like",
+                                @"object" : [NSNull null],
+                                @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                                @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
+    
+    TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
+    
+    expect(event).toNot.beNil();
+    expect(event.object).to.beNil();
+}
+
+
 // [Correct] From JSON to Event with minimal values
 - (void)testInitEventWithDictionaryMinimum {
     NSDictionary *eventData = @{
@@ -140,8 +158,6 @@
                                 @"type" : @"like",
                                 @"created_at": @"2015-06-01T08:44:57.144996856Z",
                                 @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
-
-    expect(eventData).toNot.beNil();
 
     TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
 

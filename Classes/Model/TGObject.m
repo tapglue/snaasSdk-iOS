@@ -32,6 +32,9 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 
 
 - (instancetype)initWithDictionary:(NSDictionary*)data {
+    if ([data isKindOfClass:[NSNull class]]) {
+        return nil;
+    }
     self = [super init];
     if (self) {
         _objectId = [data tg_stringValueForKey:TGModelObjectIdJsonKey];
