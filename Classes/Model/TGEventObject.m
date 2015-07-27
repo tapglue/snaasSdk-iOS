@@ -19,6 +19,7 @@
 //
 
 #import "TGEventObject.h"
+#import "TGObject+Private.h"
 
 @interface TGEventObject ()
 @property (nonatomic, strong) NSMutableDictionary *displayNames;
@@ -35,6 +36,12 @@
              @"url" : @"url",
              @"display_names" : @"displayNames"
              };
+}
+
+- (NSDictionary*)jsonDictionary {
+    NSMutableDictionary *mapping = self.jsonMapping.mutableCopy;
+    [mapping setValue:@"objectId" forKey:TGModelObjectIdJsonKey];
+    return [self dictionaryWithMapping:mapping];
 }
 
 - (NSMutableDictionary*)displayNames {
