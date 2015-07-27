@@ -132,6 +132,24 @@
     expect(event.updatedAt).to.beKindOf([NSDate class]);
 }
 
+
+// [Correct] From JSON to Event with object being null
+- (void)testInitEventWithDictionaryWithNullEventObject {
+    NSDictionary *eventData = @{
+                                @"id" : @(471739965702621007),
+                                @"user_id" : @(858667),
+                                @"type" : @"like",
+                                @"object" : [NSNull null],
+                                @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                                @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
+    
+    TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
+    
+    expect(event).toNot.beNil();
+    expect(event.object).to.beNil();
+}
+
+
 // [Correct] From JSON to Event with minimal values
 - (void)testInitEventWithDictionaryMinimum {
     NSDictionary *eventData = @{
@@ -140,8 +158,6 @@
                                 @"type" : @"like",
                                 @"created_at": @"2015-06-01T08:44:57.144996856Z",
                                 @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
-
-    expect(eventData).toNot.beNil();
 
     TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
 
@@ -440,6 +456,7 @@
 - (void)testEventJsonDictionaryAll {
 
     TGEvent *event = [TGEvent new];
+    event.objectId = @"487293102930293";
     event.type = @"like";
     event.language = @"en";
     event.priority = @"high";
@@ -466,9 +483,10 @@
     NSDictionary *jsonDictionary = event.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
 
-    expect(jsonDictionary.count).to.equal(9);
+    expect(jsonDictionary.count).to.equal(10);
 
     // Check for correct values
+    expect([jsonDictionary valueForKey:@"id"]).to.equal(487293102930293);
     expect([jsonDictionary valueForKey:@"type"]).to.equal(@"like");
     expect([jsonDictionary valueForKey:@"language"]).to.equal(@"en");
     expect([jsonDictionary valueForKey:@"priority"]).to.equal(@"high");
@@ -647,6 +665,7 @@
 
 // Helper to validate jsonDictionary types
 - (void)validateDataTypesForEventJsonDictionary:(NSDictionary*)jsonDictionary {
+    expect([jsonDictionary valueForKey:@"id"]).to.beKindOfOrNil([NSNumber class]);
     expect([jsonDictionary valueForKey:@"type"]).to.beKindOfOrNil([NSString class]);
     expect([jsonDictionary valueForKey:@"language"]).to.beKindOfOrNil([NSString class]);
     expect([jsonDictionary valueForKey:@"priority"]).to.beKindOfOrNil([NSString class]);

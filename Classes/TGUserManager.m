@@ -264,7 +264,7 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
     }
 
     NSDictionary *connectionData = @{
-                                     @"user_to_id" : toUser.userId,
+                                     @"user_to_id" : [[[NSNumberFormatter alloc] init] numberFromString:toUser.userId] ?: @(0),
                                      @"type" : [self stringFromConnectionType:connectionType]
                                      };
 
