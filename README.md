@@ -118,7 +118,7 @@ In most cases, it makes sense to call this after a signup or login screen and re
 Even though `createAndLogin` will automatically login existing users, it's better to call the login only if you are just showing a login screen for example. You can do it with the following call:
 
 ```objective-c
-[Tapglue loginWithUsernameOrEmail:@"username" andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+[Tapglue loginWithUsernameOrEmail:@"username" andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
         if (success) {
             // Implement success after login.
         } else {
