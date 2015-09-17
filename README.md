@@ -4,7 +4,7 @@
 
 This will help you get started with Tapglue on iOS step by step guide.
 
-A more detailed documentation can be found on our [documentation](http://developers.tapglue.com/page/ios-guide) website.
+A more detailed documentation can be found on our [documentation](http://developers.tapglue.com/docs/ios) website.
 
 ## Get started
 
