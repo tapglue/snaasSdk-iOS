@@ -38,6 +38,7 @@
 		78EC5DF01B2870230052647C /* UIDevice+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DEF1B2870230052647C /* UIDevice+TGUtilities.m */; };
 		979F69401B264F470088F78E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 979F693F1B264F470088F78E /* Images.xcassets */; };
 		979F69461B2657750088F78E /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979F69451B2657750088F78E /* CustomCell.swift */; };
+		97F228781BBB36E70034FCF3 /* TGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F228771BBB36E70034FCF3 /* TGImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 		78EC5DEF1B2870230052647C /* UIDevice+TGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+TGUtilities.m"; path = "../../Classes/UIDevice+TGUtilities.m"; sourceTree = "<group>"; };
 		979F693F1B264F470088F78E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		979F69451B2657750088F78E /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		97F228771BBB36E70034FCF3 /* TGImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TGImage.m; sourceTree = "<group>"; };
 		97F7A6ED1B32EC8100EE908A /* Objective-C-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Objective-C-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,6 +194,7 @@
 		788DC0311B21FC7F0058C1C2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				97F228771BBB36E70034FCF3 /* TGImage.m */,
 				788DC0331B21FC7F0058C1C2 /* NSDictionary+TGUtilities.h */,
 				788DC0341B21FC7F0058C1C2 /* NSDictionary+TGUtilities.m */,
 				788DC0351B21FC7F0058C1C2 /* NSString+TGUtilities.h */,
@@ -302,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97F228781BBB36E70034FCF3 /* TGImage.m in Sources */,
 				979F69461B2657750088F78E /* CustomCell.swift in Sources */,
 				788DC04D1B21FC7F0058C1C2 /* TGEventManager.m in Sources */,
 				7862853D1B2720F900D91B4F /* NSThread+TGEnsureMainThread.m in Sources */,
