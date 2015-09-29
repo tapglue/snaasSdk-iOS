@@ -93,9 +93,24 @@ typedef NS_ENUM(NSInteger, TGEventVisibility) {
 @property (nonatomic, assign) TGEventVisibility visibility;
 
 /*!
+ @abstract Images associated with the user
+ @discussion … Accessing `image` will always return at least and empty NSMutableDictionary which gets lazy initialized. So there is no need to handle `images` being nil befor adding values to it.
+ */
+// TODO: Describe the structions of the images dict in @discussion
+@property (nonatomic, strong) NSMutableDictionary *images;
+
+/*!
  @abstract Object of the event.
  @discussion The object on which an event was performed.
  */
 @property (nonatomic, strong) TGEventObject *object;
+
+/*!
+ @abstract Target of the event.
+ @discussion The target on which an event object was performed.
+ */
+@property (nonatomic, strong) TGEventObject *target;
+
+
 
 @end

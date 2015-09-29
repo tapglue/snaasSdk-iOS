@@ -48,6 +48,11 @@
     expect([object displayNameForLanguage:@"fr"]).to.equal(@"the internet");
 }
 
+- (void)testInitWithDictionaryCalledWithNSNull {
+    id nullDict = [NSNull null];
+    expect([[TGEventObject alloc] initWithDictionary:nullDict]).to.beNil();
+}
+
 - (void)testToJsonDictionary {
     TGEventObject *object = [[TGEventObject alloc] init];
     object.objectId = @"a47f173d-d996-5ab7-ba02-621e00ff3297";

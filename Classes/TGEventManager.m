@@ -24,6 +24,7 @@
 #import "TGApiClient.h"
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
+#import "TGUserManager.h"
 
 @interface TGEventManager ()
 @property (nonatomic, strong, readwrite) NSArray *cachedFeed;
@@ -260,7 +261,7 @@
 
 - (void)retrieveEventsForUser:(TGUser*)user withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     NSString *apiEndpoint = [self endPointForUser:user];
-    apiEndpoint = [apiEndpoint stringByAppendingString:@"events"];
+    apiEndpoint = [apiEndpoint stringByAppendingPathComponent:@"events"];
     [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
@@ -364,7 +365,7 @@
 }
 
 - (NSString*)endPointForUserWithId:(NSString*)userId {
-    return userId ? [@"users" stringByAppendingPathComponent:userId] : @"user";
+    return userId ? [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:userId] : TGUserManagerAPIEndpointCurrentUser;
 }
 
 

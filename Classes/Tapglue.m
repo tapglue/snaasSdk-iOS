@@ -301,7 +301,14 @@ static Tapglue* sharedInstance = nil;
 #pragma mark - Connections
 
 + (void)followUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFollow toUser:user withCompletionBlock:completionBlock];
+    [self followUser:user createEvent:NO withCompletionBlock:completionBlock];
+}
+
++ (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFollow
+                                                       toUser:user
+                                                    withEvent:createEvent
+                                          withCompletionBlock:completionBlock];
 }
 
 + (void)unfollowUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
@@ -309,7 +316,14 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)friendUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFriend toUser:user withCompletionBlock:completionBlock];
+    [self friendUser:user createEvent:NO withCompletionBlock:completionBlock];
+}
+
++ (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFriend
+                                                       toUser:user
+                                                    withEvent:createEvent
+                                          withCompletionBlock:completionBlock];
 }
 
 + (void)unfriendUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
@@ -468,7 +482,7 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (NSString *)version {
-    return @"1.0.0";
+    return @"1.0.2";
 }
 
 

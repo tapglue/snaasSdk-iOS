@@ -27,6 +27,18 @@
  */
 extern NSString *const TapglueUserDefaultsKeySessionToken;
 
+
+/*!
+ @abstract The api endpoint for the current user actions.
+ */
+extern NSString *const TGUserManagerAPIEndpointCurrentUser;
+
+/*!
+ @abstract The api endpoint for the other user actions.
+ */
+extern NSString *const TGUserManagerAPIEndpointUsers;
+
+
 /*!
  @typedef Determines the connection type.
  @constant TGConnectionTypeFriend Specifies a friend connection.
@@ -127,9 +139,11 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
 
  @param connectionType The connection type that should be created.
  @param toUser The user towards which the connection should be created for.
+ @param withEvent Whether an event to appear for the associated user's feed should be created for the new collection.
  */
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
+                     withEvent:(BOOL)withEvent
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
