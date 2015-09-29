@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		783E0E771B298D96009A944E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783E0E741B298D79009A944E /* FBSDKCoreKit.framework */; };
+		783185F51BBAD2850050F9DB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B270601B2992EE0076323F /* FBSDKLoginKit.framework */; };
+		783185F61BBAD2880050F9DB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783E0E741B298D79009A944E /* FBSDKCoreKit.framework */; };
+		783185FA1BBAD3310050F9DB /* TGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 783185F81BBAD3310050F9DB /* TGImage.m */; };
 		7862853D1B2720F900D91B4F /* NSThread+TGEnsureMainThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 7862853C1B2720F900D91B4F /* NSThread+TGEnsureMainThread.m */; };
 		788DC0061B21FA890058C1C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0051B21FA890058C1C2 /* AppDelegate.swift */; };
 		788DC0081B21FA890058C1C2 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0071B21FA890058C1C2 /* FirstViewController.swift */; };
@@ -31,7 +33,6 @@
 		788DC0601B21FD630058C1C2 /* TGUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DC05D1B21FD630058C1C2 /* TGUserManager.m */; };
 		788DC0621B2206570058C1C2 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0611B2206570058C1C2 /* FeedViewController.swift */; };
 		788DC0641B2211B50058C1C2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DC0631B2211B50058C1C2 /* BaseViewController.swift */; };
-		78B270611B2992EE0076323F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B270601B2992EE0076323F /* FBSDKLoginKit.framework */; };
 		78C34F9E1B26E5EF00286D78 /* TGLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C34F9D1B26E5EF00286D78 /* TGLogger.m */; };
 		78C34FA41B26EE0300286D78 /* TGConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C34FA31B26EE0300286D78 /* TGConfiguration.m */; };
 		78CF3D581B25A70E0091B81B /* TGUser+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D571B25A70E0091B81B /* TGUser+Networking.m */; };
@@ -45,6 +46,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		783185F71BBAD3310050F9DB /* TGImage+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGImage+Private.h"; sourceTree = "<group>"; };
+		783185F81BBAD3310050F9DB /* TGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGImage.m; sourceTree = "<group>"; };
+		783185F91BBAD3310050F9DB /* TGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGImage.h; sourceTree = "<group>"; };
 		783E0E741B298D79009A944E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		7862853B1B2720F900D91B4F /* NSThread+TGEnsureMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+TGEnsureMainThread.h"; path = "../../Classes/NSThread+TGEnsureMainThread.h"; sourceTree = "<group>"; };
 		7862853C1B2720F900D91B4F /* NSThread+TGEnsureMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+TGEnsureMainThread.m"; path = "../../Classes/NSThread+TGEnsureMainThread.m"; sourceTree = "<group>"; };
@@ -119,8 +123,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78B270611B2992EE0076323F /* FBSDKLoginKit.framework in Frameworks */,
-				783E0E771B298D96009A944E /* FBSDKCoreKit.framework in Frameworks */,
+				783185F51BBAD2850050F9DB /* FBSDKLoginKit.framework in Frameworks */,
+				783185F61BBAD2880050F9DB /* FBSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,8 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				788DC0021B21FA890058C1C2 /* Swift Example */,
-				788DC0021B21FA890058C1C2 /* Tapglue iOS Example */,
-				788DC01A1B21FA890058C1C2 /* Tapglue iOS ExampleTests */,
 				783E0E761B298D81009A944E /* Frameworks */,
 				788DC0011B21FA890058C1C2 /* Products */,
 			);
@@ -231,6 +233,9 @@
 				788DC03E1B21FC7F0058C1C2 /* TGObject+Private.h */,
 				788DC03F1B21FC7F0058C1C2 /* TGObject.h */,
 				788DC0401B21FC7F0058C1C2 /* TGObject.m */,
+				783185F71BBAD3310050F9DB /* TGImage+Private.h */,
+				783185F81BBAD3310050F9DB /* TGImage.m */,
+				783185F91BBAD3310050F9DB /* TGImage.h */,
 				788DC0411B21FC7F0058C1C2 /* TGObjectCache.h */,
 				788DC0421B21FC7F0058C1C2 /* TGObjectCache.m */,
 				788DC0431B21FC7F0058C1C2 /* TGUser+Private.h */,
@@ -345,6 +350,7 @@
 				788DC04F1B21FC7F0058C1C2 /* NSDictionary+TGUtilities.m in Sources */,
 				788DC0621B2206570058C1C2 /* FeedViewController.swift in Sources */,
 				78C34FA41B26EE0300286D78 /* TGConfiguration.m in Sources */,
+				783185FA1BBAD3310050F9DB /* TGImage.m in Sources */,
 				788DC00A1B21FA890058C1C2 /* SecondViewController.swift in Sources */,
 				788DC0601B21FD630058C1C2 /* TGUserManager.m in Sources */,
 				788DC0641B2211B50058C1C2 /* BaseViewController.swift in Sources */,
@@ -481,6 +487,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/marste/Documents/FacebookSDK,
+				);
 				INFOPLIST_FILE = "Swift Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "Swift Example";
@@ -492,6 +502,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/marste/Documents/FacebookSDK,
+				);
 				INFOPLIST_FILE = "Swift Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "Swift Example";

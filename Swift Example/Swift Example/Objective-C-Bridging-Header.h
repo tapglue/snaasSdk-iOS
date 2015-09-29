@@ -16,3 +16,4 @@
 //
 
 #import "Tapglue.h"
+#import "Tapglue+Facebook.h"
