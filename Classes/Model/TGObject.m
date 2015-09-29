@@ -68,6 +68,10 @@ NSString *const TGModelObjectIdJsonKey = @"id";
     NSMutableDictionary *dict = [NSMutableDictionary new];
     [mapping enumerateKeysAndObjectsUsingBlock:^(id jsonKey, id objKey, BOOL *stop) {
         id objectValue = [self valueForKey:objKey];
+        if ([objectValue isKindOfClass:[NSURL class]]) {
+            NSURL *urlValue = (NSURL*)objectValue;
+            objectValue = urlValue.absoluteString;
+        }
         BOOL addValue = objectValue != nil;
         addValue &= ![objectValue isEqual:@{}];
         if (addValue && [objectValue isKindOfClass:[NSNumber class]]) {

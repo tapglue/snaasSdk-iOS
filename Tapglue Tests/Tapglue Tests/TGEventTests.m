@@ -21,6 +21,7 @@
 #import "TGTestCase.h"
 #import "TGUser.h"
 #import "TGEvent.h"
+#import "TGImage.h"
 #import "TGEventObject.h"
 #import "TGModelObject+Private.h"
 #import "TGEvent+RandomTestEvent.h"
@@ -39,11 +40,15 @@
     [TGUser createOrLoadWithDictionary:@{
                                          @"id" : @(858667),
                                          @"user_name" : @"testuser"
-                                         }];}
+                                         }];
+}
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+#pragma mark - User general -
+
+- (void)testImagesDictionaryIsNotNil {
+    TGEvent *event = [[TGEvent alloc] init];
+    expect(event.images).toNot.beNil();
+    expect(event.images).to.beKindOf([NSMutableDictionary class]);
 }
 
 #pragma mark - JSON to Event -
@@ -147,6 +152,22 @@
     
     expect(event).toNot.beNil();
     expect(event.object).to.beNil();
+}
+
+// [Correct] From JSON to Event with target being null
+- (void)testInitEventWithDictionaryWithNullEventTarget {
+    NSDictionary *eventData = @{
+                                @"id" : @(471739965702621007),
+                                @"user_id" : @(858667),
+                                @"type" : @"like",
+                                @"target" : [NSNull null],
+                                @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                                @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
+    
+    TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
+    
+    expect(event).toNot.beNil();
+    expect(event.target).to.beNil();
 }
 
 
@@ -275,6 +296,29 @@
     expect([event.metadata objectForKey:@"progress"]).to.beKindOf([NSNumber class]);
 }
 
+// [Correct] From JSON to User with Images
+- (void)testImagesForUserInitWithDictionary {
+    NSDictionary *eventData = @{ @"id" : @(471739965702621007),
+                                 @"user_id" : @(858667),
+                                 @"type" : @"like",
+                                @"images" : @{
+                                        @"profile_thumb" : @{@"url": @"http://images.tapglue.com/1/demouser/profile.jpg"}
+                                        }
+                                };
+    
+    TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
+    
+    // Check for correct values
+    expect(event.eventId).to.equal(@"471739965702621007");
+    expect(event.user.userId).to.equal(@"858667");
+    expect(event.type).to.equal(@"like");
+    
+    expect(event.images).to.beKindOf([NSDictionary class]);
+    TGImage *profileImage = [event.images objectForKey:@"profile_thumb"];
+    expect(profileImage).to.beKindOf([TGImage class]);
+    expect(profileImage.url).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+}
+
 // [Correct] From JSON to Event with Object
 - (void)testEventInitWithDictionaryWithObject {
     NSDictionary *eventData = @{ @"id" : @(471739965702621007),
@@ -317,6 +361,50 @@
     expect([event.object displayNameForLanguage:@"en"]).to.beKindOf([NSString class]);
     expect([event.object displayNameForLanguage:@"fr"]).to.beKindOf([NSString class]);
 }
+
+// [Correct] From JSON to Event with Target
+- (void)testEventInitWithDictionaryWithTarget {
+    NSDictionary *eventData = @{ @"id" : @(471739965702621007),
+                                 @"user_id" : @(858667),
+                                 @"type" : @"like",
+                                 @"target" : @{
+                                         @"id" : @"o4711",
+                                         @"type": @"movie",
+                                         @"url": @"app://tapglue.com/targets/1",
+                                         @"display_names" : @{
+                                                 @"de" : @"Beste Filme",
+                                                 @"en" : @"Great Movies",
+                                                 @"fr" : @"Bon Films"
+                                                 },
+                                         }
+                                 };
+    
+    TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
+    
+    // Check for correct values
+    expect(event.eventId).to.equal(@"471739965702621007");
+    expect(event.user.userId).to.equal(@"858667");
+    expect(event.type).to.equal(@"like");
+    expect(event.target.objectId).to.equal(@"o4711");
+    expect(event.target.type).to.equal(@"movie");
+    expect(event.target.url).to.equal(@"app://tapglue.com/targets/1");
+    expect([event.target displayNameForLanguage:@"de"]).to.equal(@"Beste Filme");
+    expect([event.target displayNameForLanguage:@"en"]).to.equal(@"Great Movies");
+    expect([event.target displayNameForLanguage:@"fr"]).to.equal(@"Bon Films");
+    
+    // Check for correct types
+    expect(event.eventId).to.beKindOf([NSString class]);
+    expect(event.user.userId).to.beKindOf([NSString class]);
+    expect(event.type).to.beKindOf([NSString class]);
+    expect(event.target).to.beKindOf([TGEventObject class]);
+    expect(event.target.objectId).to.beKindOf([NSString class]);
+    expect(event.target.type).to.beKindOf([NSString class]);
+    expect(event.target.url).to.beKindOf([NSString class]);
+    expect([event.target displayNameForLanguage:@"de"]).to.beKindOf([NSString class]);
+    expect([event.target displayNameForLanguage:@"en"]).to.beKindOf([NSString class]);
+    expect([event.target displayNameForLanguage:@"fr"]).to.beKindOf([NSString class]);
+}
+
 
 #pragma mark - Negative
 
@@ -555,6 +643,46 @@
     [self validateJsonDictionary:jsonDictionary];
 }
 
+// [Correct] From Event to JSON with all values
+- (void)testEventJsonDictionaryWithTarget {
+    
+    TGEvent *event = [TGEvent new];
+    event.type = @"like";
+    
+    TGEventObject *target = [TGEventObject new];
+    
+    target.objectId = @"a1b2c3";
+    target.type = @"movie collection";
+    target.url = @"app://tapglue.com/targets/1";
+    [target setDisplayName:@"great movies" forLanguage:@"en"];
+    [target setDisplayName:@"beste filme" forLanguage:@"de"];
+    
+    event.target = target;
+    
+    
+    NSDictionary *jsonDictionary = event.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    expect(jsonDictionary.count).to.equal(3);
+    
+    expect([jsonDictionary valueForKey:@"type"]).to.equal(@"like");
+    expect([jsonDictionary valueForKey:@"target"]).toNot.beNil();
+    
+    
+    expect([jsonDictionary valueForKeyPath:@"target.id"]).to.equal(@"a1b2c3");
+    expect([jsonDictionary valueForKeyPath:@"target.type"]).to.equal(@"movie collection");
+    expect([jsonDictionary valueForKeyPath:@"target.url"]).to.equal(@"app://tapglue.com/targets/1");
+    expect([jsonDictionary valueForKeyPath:@"target.display_names"]).to.equal(@{
+                                                                                @"de" : @"beste filme",
+                                                                                @"en" : @"great movies"
+                                                                                });
+    
+    // Check for correct types
+    [self validateDataTypesForEventJsonDictionary:jsonDictionary];
+    
+    [self validateJsonDictionary:jsonDictionary];
+}
+
 // [Correct] From Event to JSON with minimal
 - (void)testEventJsonDictionaryMinimal {
 
@@ -608,6 +736,66 @@
     TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
     expect([event.jsonDictionary objectForKey:@"created_at"]).to.equal(@"2015-06-01T08:44:57Z");
 }
+
+
+// [Correct] From User to JSON with images
+- (void)testJsonDictionaryWithImagesAsNSDictionary {
+    
+    TGEvent *event = [TGEvent new];
+    event.type = @"like";
+    event.images =  @{@"profile_thumb" : @{
+                             @"url": @"http://images.tapglue.com/1/demouser/profile.jpg",
+                             @"type" : @"some type",
+                             @"width" : @800,
+                             @"height" : @600
+                             }
+                     };
+    
+    NSDictionary *jsonDictionary = event.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    NSDictionary *imagesJsonDictionary = [jsonDictionary valueForKey:@"images"];
+    expect(imagesJsonDictionary).to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKey:@"profile_thumb"]).to.to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.url"]).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.type"]).to.equal(@"some type");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.width"]).to.equal(800);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.height"]).to.equal(600);
+    
+    // Check for correct types
+    [self validateDataTypesForEventJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From User to JSON with images
+- (void)testJsonDictionaryWithImagesAsTGImage {
+    
+    TGImage *image = [[TGImage alloc] init];
+    image.url = @"http://images.tapglue.com/1/demouser/profile.jpg";
+    image.type = @"some type";
+    image.size = CGSizeMake(800, 600);
+    
+    TGEvent *event = [TGEvent new];
+    event.type = @"like";
+    event.images =  @{@"profile_thumb" : image};
+    
+    NSDictionary *jsonDictionary = event.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    NSDictionary *imagesJsonDictionary = [jsonDictionary valueForKey:@"images"];
+    expect(imagesJsonDictionary).to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKey:@"profile_thumb"]).to.to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.url"]).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.type"]).to.equal(@"some type");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.width"]).to.equal(800);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.height"]).to.equal(600);
+    
+    // Check for correct types
+    [self validateDataTypesForEventJsonDictionary:jsonDictionary];
+}
+
+
 
 #pragma mark - Negative
 
@@ -691,13 +879,21 @@
 
 - (void)testArchivingEvents {
     TGUser *user = [[TGUser alloc] initWithDictionary:@{@"id" : @"102934", @"email" : @"testuser@tapglue.com"}];
+
+    TGImage *testImage = [[TGImage alloc] init];
+    testImage.url = @"http://images.tapglue.com/1/demouser/profile.jpg";
+    testImage.type = @"thumbnail";
+    testImage.size = CGSizeMake(800,600);
+
     TGEvent *testEvent = [TGEvent randomTestEvent];
     testEvent.user = user;
-
+    [testEvent.images setValue:testImage forKey:@"profile_thumbnail"];
+    
     NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:testEvent];
     TGEvent *unarchivedEvent = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
     expect(unarchivedEvent.type).to.equal(testEvent.type);
     expect(unarchivedEvent.user.userId).to.equal(user.userId);
+    expect(unarchivedEvent.images.allValues.count).to.equal(1);
 }
 
 

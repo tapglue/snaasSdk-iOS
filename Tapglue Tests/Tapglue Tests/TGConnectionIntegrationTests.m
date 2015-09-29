@@ -46,11 +46,12 @@
 
         // Search User
         [Tapglue searchUsersWithTerm:TGSearchTerm andCompletionBlock:^(NSArray *users, NSError *error) {
-            expect(users).toNot.beNil();
             expect(error).to.beNil();
+            expect(users).toNot.beNil();
+            expect(users).toNot.beEmpty();
 
             // Follow User
-            [Tapglue followUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue followUser:users.firstObject createEvent:YES withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
 

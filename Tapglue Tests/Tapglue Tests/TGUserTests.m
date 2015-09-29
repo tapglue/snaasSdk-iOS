@@ -19,6 +19,7 @@
 //
 
 #import "TGTestCase.h"
+#import "TGImage.h"
 #import "TGUser+Private.h"
 #import "TGModelObject+Private.h"
 #import "NSString+TGUtilities.h"
@@ -33,14 +34,12 @@
 
 @implementation TGUserTests
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
+#pragma mark - User general -
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+- (void)testImagesDictionaryIsNotNil {
+    TGUser *user = [[TGUser alloc] init];
+    expect(user.images).toNot.beNil();
+    expect(user.images).to.beKindOf([NSMutableDictionary class]);
 }
 
 #pragma mark - JSON to User -
@@ -230,6 +229,87 @@
     expect([user.metadata objectForKey:@"foo"]).to.beKindOf([NSString class]);
     expect([user.metadata objectForKey:@"amount"]).to.beKindOf([NSNumber class]);
     expect([user.metadata objectForKey:@"progress"]).to.beKindOf([NSNumber class]);
+}
+
+// [Correct] From JSON to User with Images
+- (void)testImagesForUserInitWithDictionary {
+    NSDictionary *userData = @{ @"id":@(858667),
+                                @"user_name":@"acc-1-app-1-user-2",
+                                @"images" : @{
+                                        @"profile_thumb" : @{@"url": @"http://images.tapglue.com/1/demouser/profile.jpg"}
+                                        }
+                                };
+    
+    TGUser *user = [[TGUser alloc] initWithDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"858667");
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    
+    expect(user.images).to.beKindOf([NSDictionary class]);
+    TGImage *profileImage = [user.images objectForKey:@"profile_thumb"];
+    expect(profileImage).to.beKindOf([TGImage class]);
+    expect(profileImage.url).to.equal([NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"]);
+}
+
+// [Correct] From JSON to User with connection counts
+- (void)testConnectionCountsForUserInitWithDictionary {
+    NSDictionary *userData = @{ @"id":@(858667),
+                                @"user_name":@"acc-1-app-1-user-2",
+                                @"friends" : @12,
+                                @"followers" : @123,
+                                @"following" : @57
+                                };
+    
+    TGUser *user = [[TGUser alloc] initWithDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"858667");
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    expect(user.friendsCount).to.equal(12);
+    expect(user.followersCount).to.equal(123);
+    expect(user.followingCount).to.equal(57);
+}
+
+// [Correct] From JSON to User with connection flags
+- (void)testConnectionFlagsForUserInitWithDictionary {
+    // test for true value
+    NSDictionary *userData;
+    TGUser *user;
+    
+    userData = @{ @"id":@(858667),
+                  @"user_name":@"acc-1-app-1-user-2",
+                  @"is_friend" : @YES,
+                  @"is_follower" : @YES,
+                  @"is_followed" : @YES
+                  };
+    
+    user = [[TGUser alloc] initWithDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"858667");
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    expect(user.isFriend).to.beTruthy();
+    expect(user.isFollower).to.beTruthy();
+    expect(user.isFollowed).to.beTruthy();
+    
+
+    // test for false values
+    userData = @{ @"id":@(858667),
+                  @"user_name":@"acc-1-app-1-user-2",
+                  @"is_friend" : @NO,
+                  @"is_follower" : @NO,
+                  @"is_followed" : @NO
+                  };
+    
+    user = [[TGUser alloc] initWithDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"858667");
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    expect(user.isFriend).to.beFalsy();
+    expect(user.isFollower).to.beFalsy();
+    expect(user.isFollowed).to.beFalsy();
 }
 
 // [Correct] From JSON to User with Social IDs
@@ -551,6 +631,138 @@
     expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
     expect([jsonDictionary valueForKey:@"last_login"]).to.beNil();
 
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From User to JSON with images
+- (void)testJsonDictionaryWithImagesAsNSDictionary {
+    
+    TGUser *user = [[TGUser alloc] init];
+    user.username = @"acc-1-app-1-user-2";
+    user.images =  @{@"profile_thumb" : @{
+                             @"url": @"http://images.tapglue.com/1/demouser/profile.jpg",
+                             @"type" : @"some type",
+                             @"width" : @800,
+                             @"height" : @600
+                             }
+                     };
+    
+    NSDictionary *jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    NSDictionary *imagesJsonDictionary = [jsonDictionary valueForKey:@"images"];
+    expect(imagesJsonDictionary).to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKey:@"profile_thumb"]).to.to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.url"]).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.type"]).to.equal(@"some type");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.width"]).to.equal(800);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.height"]).to.equal(600);
+
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From User to JSON with images
+- (void)testJsonDictionaryWithImagesAsTGImage {
+    
+    TGImage *image = [[TGImage alloc] init];
+    image.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    image.type = @"some type";
+    image.size = CGSizeMake(800, 600);
+    
+    TGUser *user = [[TGUser alloc] init];
+    user.username = @"acc-1-app-1-user-2";
+    user.images =  @{@"profile_thumb" : image};
+    
+    NSDictionary *jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    NSDictionary *imagesJsonDictionary = [jsonDictionary valueForKey:@"images"];
+    expect(imagesJsonDictionary).to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKey:@"profile_thumb"]).to.to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.url"]).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.type"]).to.equal(@"some type");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.width"]).to.equal(800);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.height"]).to.equal(600);
+    
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+}
+
+
+
+// [Correct] From User to JSON with connection counts
+- (void)testJsonDictionaryDoesNotIncludeConnectionCounts {
+    // execption: need to create the user with a dictionary as the connection count properties are read only
+    TGUser *user = [[TGUser alloc] initWithDictionary:@{ @"id":@(858667),
+                                                         @"user_name":@"acc-1-app-1-user-2",
+                                                         @"friends" : @12,
+                                                         @"followers" : @123,
+                                                         @"following" : @57
+                                                         }];
+    
+    NSDictionary *jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    expect([jsonDictionary valueForKey:@"friends"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"followers"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"following"]).to.beNil();
+    
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From User to JSON with connection flags
+- (void)testJsonDictionaryDoesNotIncludeConnectionFlags {
+    // execption: need to create the user with a dictionary as the connection flags properties are read only
+    TGUser *user;
+    NSDictionary *jsonDictionary;
+    
+    // test for true value
+
+    user = [[TGUser alloc] initWithDictionary:@{ @"id":@(858667),
+                                                 @"user_name":@"acc-1-app-1-user-2",
+                                                 @"is_friend" : @YES,
+                                                 @"is_follower" : @YES,
+                                                 @"is_followed" : @YES
+                                                 }];
+    jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    expect([jsonDictionary valueForKey:@"is_friend"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"is_follower"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"is_followed"]).to.beNil();
+    
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+
+    
+    // test for false values
+    
+    user = [[TGUser alloc] initWithDictionary:@{ @"id":@(858667),
+                                                 @"user_name":@"acc-1-app-1-user-2",
+                                                 @"is_friend" : @NO,
+                                                 @"is_follower" : @NO,
+                                                 @"is_followed" : @NO
+                                                 }];
+    jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    expect([jsonDictionary valueForKey:@"is_friend"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"is_follower"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"is_followed"]).to.beNil();
+    
     // Check for correct types
     [self validateDataTypesForUserJsonDictionary:jsonDictionary];
 }

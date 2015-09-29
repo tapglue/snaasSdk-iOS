@@ -1,8 +1,8 @@
 //
-//  TGConfiguration.m
+//  TGImage.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 09/06/15.
+//  Created by Martin Stemmle on 29/09/15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,19 +18,24 @@
 //  limitations under the License.
 //
 
-#import "TGConfiguration.h"
+#import <UIKit/UIKit.h>
+#import "TGModelObject.h"
 
-@implementation TGConfiguration
+@interface TGImage : TGModelObject
 
-+ (instancetype)defaultConfiguration {
-    TGConfiguration *config = [[self alloc] init];
-    config.apiBaseUrl = @"https://api.tapglue.com/";
-    config.apiVersion = @"0.3";
-    config.loggingEnabled = NO;
-    config.flushInterval = 10;
-    config.showNetworkActivityIndicator = YES;
-    config.analyticsEnabled = YES;
-    return config;
-}
+/*!
+ @abstract URL or path to the image file.
+ */
+@property (nonatomic, strong) NSString *url;
+
+/*!
+ @abstract Type of the iamge e.g. images/png.
+ */
+@property (nonatomic, strong) NSString *type;
+
+/*!
+ @abstract The pixel size of the image.
+ */
+@property (nonatomic, assign) CGSize size;
 
 @end

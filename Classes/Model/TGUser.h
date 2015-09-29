@@ -72,6 +72,15 @@
 @property (nonatomic, strong) NSString *url;
 
 /*!
+ @abstract Images associated with the user.
+ @discussion
+ The dictionary holds instances of `TGImage` under `NSString` keys.
+ 
+ Accessing `image` will always return at least and empty NSMutableDictionary which gets lazy initialized. So there is no need to handle `images` being nil befor adding values to it.
+ */
+@property (nonatomic, strong) NSMutableDictionary *images;
+
+/*!
  @abstract Last login date of the user.
  @discussion The last login date of the user.
  */
@@ -82,12 +91,6 @@
  @discussion The acticated status of the user determines weather a user account if active or not.
  */
 @property (nonatomic, readonly, getter=isActivated) BOOL activated;
-
-/*!
- @abstract Check for currentUser.
- @discussion The isCurrentUser property checks if there is a current Tapglue User.
- */
-@property (nonatomic, assign, readonly) BOOL isCurrentUser;
 
 /*!
  @abstract List of social Ids.
@@ -128,7 +131,47 @@
 @property (nonatomic, strong, readonly) NSString *hashedPassword;
 + (NSString*)hashPassword:(NSString*)password;
 
+#pragma mark Connection stats
+
+/*!
+ @abstract The number of friends the user has.
+ */
+@property (nonatomic, assign, readonly) NSInteger friendsCount;
+
+/*!
+ @abstract The number of followers the user has.
+ */
+@property (nonatomic, assign, readonly) NSInteger followersCount;
+
+/*!
+ @abstract The number of users following the user.
+ */
+@property (nonatomic, assign, readonly) NSInteger followingCount;
+
+/*!
+ @abstract Indicate if the user is friend with the current user.
+ */
+@property (nonatomic, assign, readonly) BOOL isFriend;
+
+/*!
+ @abstract Indicate if the user is following the current user.
+ */
+@property (nonatomic, assign, readonly) BOOL isFollower;
+
+/*!
+ @abstract Indicate if the user is followed by the current user.
+ */
+@property (nonatomic, assign, readonly) BOOL isFollowed;
+
+
 #pragma mark - Current User
+
+/*!
+ @abstract Check for currentUser.
+ @discussion The isCurrentUser property checks if there is a current Tapglue User.
+ */
+@property (nonatomic, assign, readonly) BOOL isCurrentUser;
+
 
 /*!
  @abstract Gets the currentUser.

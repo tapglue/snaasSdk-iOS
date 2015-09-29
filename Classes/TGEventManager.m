@@ -24,6 +24,10 @@
 #import "TGApiClient.h"
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
+#import "TGUserManager.h"
+
+#define TGEventManagerAPIEndpointCurrentUserEvents [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"events"]
+#define TGEventManagerAPIEndpointCurrentUserFeed [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"feed"]
 
 @interface TGEventManager ()
 @property (nonatomic, strong, readwrite) NSArray *cachedFeed;
@@ -162,7 +166,7 @@
 #pragma mark members
 
 - (void)createEvent:(TGEvent*)event withCompletionBlock:(TGSucessCompletionBlock)completionBlock{
-    [self.client POST:@"user/events" withURLParameters:nil andPayload:event.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client POST:TGEventManagerAPIEndpointCurrentUserEvents withURLParameters:nil andPayload:event.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
 
         [event loadDataFromDictionary:jsonResponse];
 
@@ -177,7 +181,8 @@
 }
 
 - (void)updateEvent:(TGEvent*)event withCompletionBlock:(TGSucessCompletionBlock)completionBlock{
-    [self.client PUT:[@"user/events" stringByAppendingPathComponent:event.eventId] withURLParameters:nil andPayload:event.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    NSString *route = [TGEventManagerAPIEndpointCurrentUserEvents stringByAppendingPathComponent:event.eventId];[TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"events"];
+    [self.client PUT:route withURLParameters:nil andPayload:event.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             completionBlock(error == nil, error);
         }
@@ -212,7 +217,8 @@
 
 
 - (void)deleteEventWithId:(NSString*)eventId withCompletionBlock:(TGSucessCompletionBlock)completionBlock{
-    [self.client DELETE:[@"user/events" stringByAppendingPathComponent:eventId] withCompletionBlock:completionBlock];
+    NSString *route = [TGEventManagerAPIEndpointCurrentUserEvents stringByAppendingPathComponent:eventId];
+    [self.client DELETE:route withCompletionBlock:completionBlock];
 }
 
 - (BOOL)deleteEventSynchronous:(TGEvent*)event {
@@ -278,7 +284,7 @@
 
 - (void)retrieveFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
                          withCompletionBlock:(TGFeedCompletionBlock)completionBlock {
-    NSString *apiEndpoint = @"user/feed";
+    NSString *apiEndpoint = TGEventManagerAPIEndpointCurrentUserFeed;
     if (onlyUnread) {
         apiEndpoint = [apiEndpoint stringByAppendingPathComponent:@"unread"];
     }
@@ -316,8 +322,9 @@
 }
 
 - (void)retrieveFeedUnreadCountForCurrentWithCompletionBlock:(void (^)(NSInteger, NSError *))completionBlock {
-    [self.client GET:@"user/feed/unread/count" withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        if (completionBlock) {
+    NSString *route = [TGEventManagerAPIEndpointCurrentUserFeed stringByAppendingPathComponent:@"unread/count"];
+    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+         if (completionBlock) {
             if (!error) {
                 NSInteger unreadCount = [[jsonResponse valueForKey:@"unread_events_count"] integerValue];
                 completionBlock(unreadCount, nil);
@@ -364,7 +371,7 @@
 }
 
 - (NSString*)endPointForUserWithId:(NSString*)userId {
-    return userId ? [@"users" stringByAppendingPathComponent:userId] : @"user";
+    return userId ? [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:userId] : TGUserManagerAPIEndpointCurrentUser;
 }
 
 

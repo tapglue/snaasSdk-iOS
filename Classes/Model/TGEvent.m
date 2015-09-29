@@ -25,11 +25,13 @@
 #import "NSDictionary+TGUtilities.h"
 #import "TGObjectCache.h"
 #import "NSDateFormatter+TGISOFormatter.h"
+#import "TGImage+Private.h"
 
 static NSString *const TGEventUserIdJsonKey = @"user_id";
 static NSString *const TGEventTypeJsonKey = @"type";
+static NSString *const TGEventImagesJsonKey = @"images";
 static NSString *const TGEventObjectKey = @"object";
-
+static NSString *const TGEventTargetKey = @"target";
 
 @implementation TGEvent
 
@@ -56,6 +58,7 @@ static NSString *const TGEventObjectKey = @"object";
         // all field defined in the mapping are already set by the super class
         self.user = [TGUser objectWithId:[eventData tg_stringValueForKey:TGEventUserIdJsonKey]];
         self.object = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"object"]];
+        self.target = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"target"]];
     }
     return self;
 }
@@ -88,36 +91,66 @@ static NSString *const TGEventObjectKey = @"object";
             ];
 }
 
+
+#pragma mark Images
+
+- (NSMutableDictionary*)images {
+    if (_images==nil) {
+        _images = [NSMutableDictionary dictionary];
+    }
+    return _images;
+}
+
 #pragma mark - JSON Parsing
 
+- (void)loadDataFromDictionary:(NSDictionary *)data withMapping:(NSDictionary *)mapping {
+    [super loadDataFromDictionary:data withMapping:mapping];
+    self.images = [TGImage convertImagesFromDictionary:self.images];
+}
+
 - (NSDictionary*)jsonDictionary {
-    NSMutableDictionary *dictFromMapping = [self dictionaryWithMapping:[self jsonMapping]];
+    NSMutableDictionary *dictFromMapping = [self dictionaryWithMapping:[self jsonMappingForWriting]];
     if (self.object) {  [dictFromMapping tg_setValueOrNull:self.object.jsonDictionary forKey:TGEventObjectKey]; }
+    if (self.target) {  [dictFromMapping tg_setValueOrNull:self.target.jsonDictionary forKey:TGEventTargetKey]; }
     if (self.user) { [dictFromMapping tg_setValueOrNull:self.user.userId forKey:TGEventUserIdJsonKey]; }
     if (self.createdAt) {
         NSDateFormatter *df = [NSDateFormatter tg_isoDateFormatter];
         [dictFromMapping  tg_setValueOrNull:[df stringFromDate:self.createdAt] forKey:TGModelObjectCreatedAtJsonKey];
     }
+    [dictFromMapping tg_setValueIfNotNil:[TGImage jsonDictionaryForImagesDictionary:self.images] forKey:TGEventImagesJsonKey];
     return dictFromMapping;
 }
 
 - (NSDictionary*)jsonMapping {
     static NSDictionary *mapping;
     if (!mapping) {
-        // left side: json attribute name , right side: model property name
-        mapping = @{
-                    @"type" : @"type",
-                    @"language" : @"language",
-                    @"priority" : @"priority",
-                    @"location" : @"location",
-                    @"latitude" : @"latitude",
-                    @"longitude" : @"longitude",
-                    @"visibility" : @"visibility",
-                    @"metadata" : @"metadata"
-                    };
+        mapping = [self jsonMappingForReading];
     }
     return mapping;
 }
+
+- (NSDictionary*)jsonMappingForWriting {
+    // left side: json attribute name , right side: model property name
+    return @{
+             @"type" : @"type",
+             @"language" : @"language",
+             @"priority" : @"priority",
+             @"location" : @"location",
+             @"latitude" : @"latitude",
+             @"longitude" : @"longitude",
+             @"visibility" : @"visibility",
+             @"metadata" : @"metadata"
+             };
+}
+
+- (NSDictionary*)jsonMappingForReading {
+    NSMutableDictionary *mapping = [self jsonMappingForWriting].mutableCopy;
+    [mapping addEntriesFromDictionary:@{
+                                        TGEventImagesJsonKey : @"images"
+                                        }];
+    return mapping;
+}
+
 
 #pragma mark - NSCoding
 
@@ -130,7 +163,9 @@ static NSString *const TGEventObjectKey = @"object";
     [aCoder encodeInteger:self.visibility forKey:@"visibility"];
     [aCoder encodeObject:self.priority];
     [aCoder encodeObject:self.type];
+    [aCoder encodeObject:self.images];
     [aCoder encodeObject:self.object.jsonDictionary forKey:@"object"];
+    [aCoder encodeObject:self.target.jsonDictionary forKey:@"target"];
     [aCoder encodeObject:self.user.jsonDictionary forKey:@"user"];
 }
 
@@ -145,7 +180,9 @@ static NSString *const TGEventObjectKey = @"object";
         self.visibility = [aDecoder decodeIntegerForKey:@"visibility"];
         self.priority = [aDecoder decodeObject];
         self.type = [aDecoder decodeObject];
+        self.images = [aDecoder decodeObject];
         self.object = [[TGEventObject alloc] initWithDictionary:[aDecoder decodeObjectForKey:@"object"]];
+        self.target = [[TGEventObject alloc] initWithDictionary:[aDecoder decodeObjectForKey:@"target"]];
         self.user = [TGUser createOrLoadWithDictionary:[aDecoder decodeObjectForKey:@"user"]];
     }
     return self;
