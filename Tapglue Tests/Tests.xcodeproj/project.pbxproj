@@ -51,6 +51,8 @@
 		788DBF881B21D3100058C1C2 /* TGUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DBF871B21D3100058C1C2 /* TGUserManager.m */; };
 		788DBF8B1B21D4870058C1C2 /* TGBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DBF8A1B21D4870058C1C2 /* TGBaseManager.m */; };
 		788DBF8D1B21E6E40058C1C2 /* TGSetupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DBF8C1B21E6E40058C1C2 /* TGSetupTests.m */; };
+		7891B2281BBA99A6009AFA8E /* TGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2271BBA99A6009AFA8E /* TGImage.m */; };
+		7891B22A1BBA9BBD009AFA8E /* TGImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2291BBA9BBD009AFA8E /* TGImageTests.m */; };
 		78C2C9921B1C81AF00055195 /* Tapglue_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C2C9911B1C81AF00055195 /* Tapglue_Tests.m */; };
 		78C2C9A01B1C82F900055195 /* Tapglue.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C2C99B1B1C82F900055195 /* Tapglue.m */; };
 		78C34F9B1B26E28700286D78 /* TGLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C34F9A1B26E28700286D78 /* TGLogger.m */; };
@@ -104,6 +106,10 @@
 		788DBF8C1B21E6E40058C1C2 /* TGSetupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGSetupTests.m; sourceTree = "<group>"; };
 		788DBF8E1B21EA9B0058C1C2 /* TGUser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGUser+Private.h"; sourceTree = "<group>"; };
 		788DBF911B21EB1B0058C1C2 /* Tapglue+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Tapglue+Private.h"; path = "../../Classes/Tapglue+Private.h"; sourceTree = "<group>"; };
+		7891B2261BBA99A6009AFA8E /* TGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGImage.h; sourceTree = "<group>"; };
+		7891B2271BBA99A6009AFA8E /* TGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGImage.m; sourceTree = "<group>"; };
+		7891B2291BBA9BBD009AFA8E /* TGImageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGImageTests.m; sourceTree = "<group>"; };
+		7891B22B1BBABB1A009AFA8E /* TGImage+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGImage+Private.h"; sourceTree = "<group>"; };
 		78C2C98C1B1C81AF00055195 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C2C9901B1C81AF00055195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78C2C9911B1C81AF00055195 /* Tapglue_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tapglue_Tests.m; sourceTree = "<group>"; };
@@ -313,6 +319,9 @@
 				78C6D15E1B1DAA5C00D94E6A /* TGEvent.m */,
 				97285B401B1F4AFA00D4CAC7 /* TGEventObject.h */,
 				97285B411B1F4AFA00D4CAC7 /* TGEventObject.m */,
+				7891B2261BBA99A6009AFA8E /* TGImage.h */,
+				7891B22B1BBABB1A009AFA8E /* TGImage+Private.h */,
+				7891B2271BBA99A6009AFA8E /* TGImage.m */,
 				78C6D1631B1DBE2100D94E6A /* NSString+TGUtilities.h */,
 				78C6D1641B1DBE2100D94E6A /* NSString+TGUtilities.m */,
 				78DBCC5D1B20893B009986BA /* NSDictionary+TGUtilities.h */,
@@ -340,6 +349,7 @@
 				78C6D1451B1DA35100D94E6A /* TGUserTests.m */,
 				78C6D1601B1DAFF400D94E6A /* TGEventTests.m */,
 				78D736691B1F60D000BE194D /* TGEventObjectTests.m */,
+				7891B2291BBA9BBD009AFA8E /* TGImageTests.m */,
 			);
 			name = ModelTests;
 			sourceTree = "<group>";
@@ -579,6 +589,7 @@
 				78DBCC4F1B2037D4009986BA /* TGObject.m in Sources */,
 				78EC5DEA1B283BF80052647C /* NSError+TGError.m in Sources */,
 				78C34FAD1B270DCD00286D78 /* TGEvent+Networking.m in Sources */,
+				7891B2281BBA99A6009AFA8E /* TGImage.m in Sources */,
 				78C6D15C1B1DA4CF00D94E6A /* NSDateFormatter+TGISOFormatter.m in Sources */,
 				788CD1661B1F080A0064E7BC /* TGObjectCacheTests.m in Sources */,
 				78C6D1461B1DA35100D94E6A /* TGUserTests.m in Sources */,
@@ -606,6 +617,7 @@
 				78CF3D5E1B25CCAF0091B81B /* NSArray+RandomObject.m in Sources */,
 				78C6D1581B1DA4CF00D94E6A /* TGModelObject.m in Sources */,
 				78C2C9A01B1C82F900055195 /* Tapglue.m in Sources */,
+				7891B22A1BBA9BBD009AFA8E /* TGImageTests.m in Sources */,
 				78C6D1591B1DA4CF00D94E6A /* TGUser.m in Sources */,
 				78C6D1491B1DA44100D94E6A /* TGTestCase.m in Sources */,
 				78C6D1611B1DAFF400D94E6A /* TGEventTests.m in Sources */,

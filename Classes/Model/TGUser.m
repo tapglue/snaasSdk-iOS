@@ -25,6 +25,7 @@
 #import "NSString+TGUtilities.h"
 #import "NSDictionary+TGUtilities.h"
 #import "Tapglue+Private.h"
+#import "TGImage+Private.h"
 
 static NSString *const TGUserCustomIdJsonKey = @"custom_id";
 static NSString *const TGUserUsernameJsonKey = @"user_name";
@@ -33,6 +34,7 @@ static NSString *const TGUserFirstNameJsonKey = @"first_name";
 static NSString *const TGUserLastNameJsonKey = @"last_name";
 static NSString *const TGUserEmailJsonKey = @"email";
 static NSString *const TGUserUrlJsonKey = @"url";
+static NSString *const TGUserImagesJsonKey = @"images";
 static NSString *const TGUserActivatedJsonKey = @"activated";
 static NSString *const TGUserLastLoginJsonKey = @"last_login";
 static NSString *const TGUserSocialIdsJsonKey = @"social_ids";
@@ -78,6 +80,11 @@ static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
     return self;
 }
 
+- (void)loadDataFromDictionary:(NSDictionary *)data withMapping:(NSDictionary *)mapping {
+    [super loadDataFromDictionary:data withMapping:mapping];
+    self.images = [TGImage convertImagesFromDictionary:self.images];
+}
+
 + (BOOL)isValidUserData:(NSDictionary*)userData {
     return ([userData tg_hasNumberValueForKey:TGModelObjectIdJsonKey]
             && ([userData tg_hasStringValueForKey:TGUserUsernameJsonKey] || [userData tg_hasStringValueForKey:TGUserEmailJsonKey]));
@@ -99,6 +106,15 @@ static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
 
 + (NSString*)hashPassword:(NSString *)password {
     return [password tg_stringHashedViaPBKDF2];
+}
+
+#pragma mark Images 
+
+- (NSMutableDictionary*)images {
+    if (_images==nil) {
+        _images = [NSMutableDictionary dictionary];
+    }
+    return _images;
 }
 
 #pragma mark Social Ids
@@ -135,6 +151,7 @@ static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
 - (NSDictionary*)jsonDictionary {
     NSMutableDictionary *dictFromMapping = [self dictionaryWithMapping:[self jsonMappingForWriting]];
     if (self.hashedPassword) { [dictFromMapping setObject:self.hashedPassword forKey:TGUserPasswordJsonKey]; }
+    [dictFromMapping tg_setValueIfNotNil:[TGImage jsonDictionaryForImagesDictionary:self.images] forKey:TGUserImagesJsonKey];
     return dictFromMapping ;
 }
 
@@ -164,6 +181,7 @@ static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
     NSMutableDictionary *mapping = [self jsonMappingForWriting].mutableCopy;
     [mapping addEntriesFromDictionary:@{
                                         TGUserActivatedJsonKey : @"activated",
+                                        TGUserImagesJsonKey : @"images",
                                         TGUserFriendsCountJsonKey : @"friendsCount",
                                         TGUserFollowersCountJsonKey : @"followersCount",
                                         TGUserFollowingCountJsonKey : @"followingCount",

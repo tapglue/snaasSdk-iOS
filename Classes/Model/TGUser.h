@@ -72,6 +72,13 @@
 @property (nonatomic, strong) NSString *url;
 
 /*!
+ @abstract Images associated with the user
+ @discussion … Accessing `image` will always return at least and empty NSMutableDictionary which gets lazy initialized. So there is no need to handle `images` being nil befor adding values to it. 
+*/
+// TODO: Describe the structions of the images dict in @discussion
+@property (nonatomic, strong) NSMutableDictionary *images;
+
+/*!
  @abstract Last login date of the user.
  @discussion The last login date of the user.
  */

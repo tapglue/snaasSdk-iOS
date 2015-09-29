@@ -19,6 +19,7 @@
 //
 
 #import "TGTestCase.h"
+#import "TGImage.h"
 #import "TGUser+Private.h"
 #import "TGModelObject+Private.h"
 #import "NSString+TGUtilities.h"
@@ -230,6 +231,27 @@
     expect([user.metadata objectForKey:@"foo"]).to.beKindOf([NSString class]);
     expect([user.metadata objectForKey:@"amount"]).to.beKindOf([NSNumber class]);
     expect([user.metadata objectForKey:@"progress"]).to.beKindOf([NSNumber class]);
+}
+
+// [Correct] From JSON to User with Images
+- (void)testImagesForUserInitWithDictionary {
+    NSDictionary *userData = @{ @"id":@(858667),
+                                @"user_name":@"acc-1-app-1-user-2",
+                                @"images" : @{
+                                        @"profile_thumb" : @{@"url": @"http://images.tapglue.com/1/demouser/profile.jpg"}
+                                        }
+                                };
+    
+    TGUser *user = [[TGUser alloc] initWithDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"858667");
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    
+    expect(user.images).to.beKindOf([NSDictionary class]);
+    TGImage *profileImage = [user.images objectForKey:@"profile_thumb"];
+    expect(profileImage).to.beKindOf([TGImage class]);
+    expect(profileImage.url).to.equal([NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"]);
 }
 
 // [Correct] From JSON to User with connection counts
@@ -614,6 +636,67 @@
     // Check for correct types
     [self validateDataTypesForUserJsonDictionary:jsonDictionary];
 }
+
+// [Correct] From User to JSON with images
+- (void)testJsonDictionaryWithImagesAsNSDictionary {
+    
+    TGUser *user = [[TGUser alloc] init];
+    user.username = @"acc-1-app-1-user-2";
+    user.images =  @{@"profile_thumb" : @{
+                             @"url": @"http://images.tapglue.com/1/demouser/profile.jpg",
+                             @"type" : @"some type",
+                             @"width" : @800,
+                             @"height" : @600
+                             }
+                     };
+    
+    NSDictionary *jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    NSDictionary *imagesJsonDictionary = [jsonDictionary valueForKey:@"images"];
+    expect(imagesJsonDictionary).to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKey:@"profile_thumb"]).to.to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.url"]).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.type"]).to.equal(@"some type");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.width"]).to.equal(800);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.height"]).to.equal(600);
+
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From User to JSON with images
+- (void)testJsonDictionaryWithImagesAsTGImage {
+    
+    TGImage *image = [[TGImage alloc] init];
+    image.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    image.type = @"some type";
+    image.size = CGSizeMake(800, 600);
+    
+    TGUser *user = [[TGUser alloc] init];
+    user.username = @"acc-1-app-1-user-2";
+    user.images =  @{@"profile_thumb" : image};
+    
+    NSDictionary *jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    NSDictionary *imagesJsonDictionary = [jsonDictionary valueForKey:@"images"];
+    expect(imagesJsonDictionary).to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKey:@"profile_thumb"]).to.to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.url"]).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.type"]).to.equal(@"some type");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.width"]).to.equal(800);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.height"]).to.equal(600);
+    
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+}
+
+
 
 // [Correct] From User to JSON with connection counts
 - (void)testJsonDictionaryDoesNotIncludeConnectionCounts {
