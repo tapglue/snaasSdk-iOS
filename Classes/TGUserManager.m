@@ -36,7 +36,7 @@ NSString *const TGUserManagerAPIEndpointUsers = @"users";
 #pragma mark - Current User
 
 - (void)createAndLoginUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client POST:TGUserManagerAPIEndpointUsers withURLParameters:@{@"withLogin" : @"true"} andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client POST:TGUserManagerAPIEndpointUsers withURLParameters:nil andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleLoginResponse:jsonResponse
                         withError:error
                       requestUser:user
