@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		782675DC1B30BFA300404353 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 782675DB1B30BFA300404353 /* Secrets.plist */; };
 		782675DD1B30C04500404353 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 782675DB1B30BFA300404353 /* Secrets.plist */; };
+		783185F41BBAD07E0050F9DB /* TGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2271BBA99A6009AFA8E /* TGImage.m */; };
 		7862853A1B271FC800D91B4F /* NSThread+TGEnsureMainThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 786285391B271FC800D91B4F /* NSThread+TGEnsureMainThread.m */; };
 		7878EC771B2B24D900BA47F6 /* TGApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6D1541B1DA4CF00D94E6A /* TGApiClient.m */; };
 		7878EC781B2B24D900BA47F6 /* TGConnectionIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97285B431B21AE9900D4CAC7 /* TGConnectionIntegrationTests.m */; };
@@ -543,6 +544,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783185F41BBAD07E0050F9DB /* TGImage.m in Sources */,
 				7878EC771B2B24D900BA47F6 /* TGApiClient.m in Sources */,
 				7878EC781B2B24D900BA47F6 /* TGConnectionIntegrationTests.m in Sources */,
 				7878EC791B2B24D900BA47F6 /* TGUserManager.m in Sources */,
