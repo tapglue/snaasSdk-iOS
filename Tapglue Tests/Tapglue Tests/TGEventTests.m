@@ -21,6 +21,7 @@
 #import "TGTestCase.h"
 #import "TGUser.h"
 #import "TGEvent.h"
+#import "TGImage.h"
 #import "TGEventObject.h"
 #import "TGModelObject+Private.h"
 #import "TGEvent+RandomTestEvent.h"
@@ -39,11 +40,15 @@
     [TGUser createOrLoadWithDictionary:@{
                                          @"id" : @(858667),
                                          @"user_name" : @"testuser"
-                                         }];}
+                                         }];
+}
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+#pragma mark - User general -
+
+- (void)testImagesDictionaryIsNotNil {
+    TGEvent *event = [[TGEvent alloc] init];
+    expect(event.images).toNot.beNil();
+    expect(event.images).to.beKindOf([NSMutableDictionary class]);
 }
 
 #pragma mark - JSON to Event -
@@ -289,6 +294,29 @@
     expect([event.metadata objectForKey:@"foo"]).to.beKindOf([NSString class]);
     expect([event.metadata objectForKey:@"amount"]).to.beKindOf([NSNumber class]);
     expect([event.metadata objectForKey:@"progress"]).to.beKindOf([NSNumber class]);
+}
+
+// [Correct] From JSON to User with Images
+- (void)testImagesForUserInitWithDictionary {
+    NSDictionary *eventData = @{ @"id" : @(471739965702621007),
+                                 @"user_id" : @(858667),
+                                 @"type" : @"like",
+                                @"images" : @{
+                                        @"profile_thumb" : @{@"url": @"http://images.tapglue.com/1/demouser/profile.jpg"}
+                                        }
+                                };
+    
+    TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
+    
+    // Check for correct values
+    expect(event.eventId).to.equal(@"471739965702621007");
+    expect(event.user.userId).to.equal(@"858667");
+    expect(event.type).to.equal(@"like");
+    
+    expect(event.images).to.beKindOf([NSDictionary class]);
+    TGImage *profileImage = [event.images objectForKey:@"profile_thumb"];
+    expect(profileImage).to.beKindOf([TGImage class]);
+    expect(profileImage.url).to.equal([NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"]);
 }
 
 // [Correct] From JSON to Event with Object
@@ -709,6 +737,66 @@
     expect([event.jsonDictionary objectForKey:@"created_at"]).to.equal(@"2015-06-01T08:44:57Z");
 }
 
+
+// [Correct] From User to JSON with images
+- (void)testJsonDictionaryWithImagesAsNSDictionary {
+    
+    TGEvent *event = [TGEvent new];
+    event.type = @"like";
+    event.images =  @{@"profile_thumb" : @{
+                             @"url": @"http://images.tapglue.com/1/demouser/profile.jpg",
+                             @"type" : @"some type",
+                             @"width" : @800,
+                             @"height" : @600
+                             }
+                     };
+    
+    NSDictionary *jsonDictionary = event.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    NSDictionary *imagesJsonDictionary = [jsonDictionary valueForKey:@"images"];
+    expect(imagesJsonDictionary).to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKey:@"profile_thumb"]).to.to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.url"]).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.type"]).to.equal(@"some type");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.width"]).to.equal(800);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.height"]).to.equal(600);
+    
+    // Check for correct types
+    [self validateDataTypesForEventJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From User to JSON with images
+- (void)testJsonDictionaryWithImagesAsTGImage {
+    
+    TGImage *image = [[TGImage alloc] init];
+    image.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    image.type = @"some type";
+    image.size = CGSizeMake(800, 600);
+    
+    TGEvent *event = [TGEvent new];
+    event.type = @"like";
+    event.images =  @{@"profile_thumb" : image};
+    
+    NSDictionary *jsonDictionary = event.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    NSDictionary *imagesJsonDictionary = [jsonDictionary valueForKey:@"images"];
+    expect(imagesJsonDictionary).to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKey:@"profile_thumb"]).to.to.beKindOf([NSDictionary class]);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.url"]).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.type"]).to.equal(@"some type");
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.width"]).to.equal(800);
+    expect([imagesJsonDictionary valueForKeyPath:@"profile_thumb.height"]).to.equal(600);
+    
+    // Check for correct types
+    [self validateDataTypesForEventJsonDictionary:jsonDictionary];
+}
+
+
+
 #pragma mark - Negative
 
 // [Negative] From Event to JSON no type
@@ -791,13 +879,21 @@
 
 - (void)testArchivingEvents {
     TGUser *user = [[TGUser alloc] initWithDictionary:@{@"id" : @"102934", @"email" : @"testuser@tapglue.com"}];
+
+    TGImage *testImage = [[TGImage alloc] init];
+    testImage.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    testImage.type = @"thumbnail";
+    testImage.size = CGSizeMake(800,600);
+
     TGEvent *testEvent = [TGEvent randomTestEvent];
     testEvent.user = user;
-
+    [testEvent.images setValue:testImage forKey:@"profile_thumbnail"];
+    
     NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:testEvent];
     TGEvent *unarchivedEvent = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
     expect(unarchivedEvent.type).to.equal(testEvent.type);
     expect(unarchivedEvent.user.userId).to.equal(user.userId);
+    expect(unarchivedEvent.images.allValues.count).to.equal(1);
 }
 
 

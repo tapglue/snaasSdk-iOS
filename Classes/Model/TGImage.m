@@ -62,6 +62,17 @@
     return jsonDictionary;
 }
 
+- (NSString*)description {
+    return [NSString stringWithFormat:@"<%@: url='%@', type='%@', size=%.fx%.f>",
+            NSStringFromClass(self.class),
+            self.url,
+            self.type,
+            self.size.width, self.size.height
+            ];
+}
+
+
+
 #pragma mark - Helper
 
 + (NSMutableDictionary*)convertImagesFromDictionary:(NSDictionary*)dictionary {
@@ -90,5 +101,20 @@
     }
     return imagesJsonDictionary.count == 0 ? nil : imagesJsonDictionary;
 }
+
+#pragma mark - NSCoding
+
+- (void) encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.jsonDictionary forKey:@"jsondict"];
+}
+
+- (id) initWithCoder:(NSCoder *)aDecoder {
+    self = [super init];
+    if (self) {
+        [self loadDataFromDictionary:[aDecoder decodeObjectForKey:@"jsondict"]];
+    }
+    return self;
+}
+
 
 @end

@@ -20,7 +20,7 @@
 
 #import "TGImage.h"
 
-@interface TGImage (Private)
+@interface TGImage (Private) <NSCoding>
 
 + (NSMutableDictionary*)convertImagesFromDictionary:(NSDictionary*)dictionary;
 + (NSDictionary*)jsonDictionaryForImagesDictionary:(NSDictionary*)dictionary;
