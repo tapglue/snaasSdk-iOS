@@ -149,6 +149,22 @@
     expect(event.object).to.beNil();
 }
 
+// [Correct] From JSON to Event with target being null
+- (void)testInitEventWithDictionaryWithNullEventTarget {
+    NSDictionary *eventData = @{
+                                @"id" : @(471739965702621007),
+                                @"user_id" : @(858667),
+                                @"type" : @"like",
+                                @"target" : [NSNull null],
+                                @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                                @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
+    
+    TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
+    
+    expect(event).toNot.beNil();
+    expect(event.target).to.beNil();
+}
+
 
 // [Correct] From JSON to Event with minimal values
 - (void)testInitEventWithDictionaryMinimum {
@@ -317,6 +333,50 @@
     expect([event.object displayNameForLanguage:@"en"]).to.beKindOf([NSString class]);
     expect([event.object displayNameForLanguage:@"fr"]).to.beKindOf([NSString class]);
 }
+
+// [Correct] From JSON to Event with Target
+- (void)testEventInitWithDictionaryWithTarget {
+    NSDictionary *eventData = @{ @"id" : @(471739965702621007),
+                                 @"user_id" : @(858667),
+                                 @"type" : @"like",
+                                 @"target" : @{
+                                         @"id" : @"o4711",
+                                         @"type": @"movie",
+                                         @"url": @"app://tapglue.com/targets/1",
+                                         @"display_names" : @{
+                                                 @"de" : @"Beste Filme",
+                                                 @"en" : @"Great Movies",
+                                                 @"fr" : @"Bon Films"
+                                                 },
+                                         }
+                                 };
+    
+    TGEvent *event = [[TGEvent alloc] initWithDictionary:eventData];
+    
+    // Check for correct values
+    expect(event.eventId).to.equal(@"471739965702621007");
+    expect(event.user.userId).to.equal(@"858667");
+    expect(event.type).to.equal(@"like");
+    expect(event.target.objectId).to.equal(@"o4711");
+    expect(event.target.type).to.equal(@"movie");
+    expect(event.target.url).to.equal(@"app://tapglue.com/targets/1");
+    expect([event.target displayNameForLanguage:@"de"]).to.equal(@"Beste Filme");
+    expect([event.target displayNameForLanguage:@"en"]).to.equal(@"Great Movies");
+    expect([event.target displayNameForLanguage:@"fr"]).to.equal(@"Bon Films");
+    
+    // Check for correct types
+    expect(event.eventId).to.beKindOf([NSString class]);
+    expect(event.user.userId).to.beKindOf([NSString class]);
+    expect(event.type).to.beKindOf([NSString class]);
+    expect(event.target).to.beKindOf([TGEventObject class]);
+    expect(event.target.objectId).to.beKindOf([NSString class]);
+    expect(event.target.type).to.beKindOf([NSString class]);
+    expect(event.target.url).to.beKindOf([NSString class]);
+    expect([event.target displayNameForLanguage:@"de"]).to.beKindOf([NSString class]);
+    expect([event.target displayNameForLanguage:@"en"]).to.beKindOf([NSString class]);
+    expect([event.target displayNameForLanguage:@"fr"]).to.beKindOf([NSString class]);
+}
+
 
 #pragma mark - Negative
 
@@ -552,6 +612,46 @@
     // Check for correct types
     [self validateDataTypesForEventJsonDictionary:jsonDictionary];
 
+    [self validateJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From Event to JSON with all values
+- (void)testEventJsonDictionaryWithTarget {
+    
+    TGEvent *event = [TGEvent new];
+    event.type = @"like";
+    
+    TGEventObject *target = [TGEventObject new];
+    
+    target.objectId = @"a1b2c3";
+    target.type = @"movie collection";
+    target.url = @"app://tapglue.com/targets/1";
+    [target setDisplayName:@"great movies" forLanguage:@"en"];
+    [target setDisplayName:@"beste filme" forLanguage:@"de"];
+    
+    event.target = target;
+    
+    
+    NSDictionary *jsonDictionary = event.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    expect(jsonDictionary.count).to.equal(3);
+    
+    expect([jsonDictionary valueForKey:@"type"]).to.equal(@"like");
+    expect([jsonDictionary valueForKey:@"target"]).toNot.beNil();
+    
+    
+    expect([jsonDictionary valueForKeyPath:@"target.id"]).to.equal(@"a1b2c3");
+    expect([jsonDictionary valueForKeyPath:@"target.type"]).to.equal(@"movie collection");
+    expect([jsonDictionary valueForKeyPath:@"target.url"]).to.equal(@"app://tapglue.com/targets/1");
+    expect([jsonDictionary valueForKeyPath:@"target.display_names"]).to.equal(@{
+                                                                                @"de" : @"beste filme",
+                                                                                @"en" : @"great movies"
+                                                                                });
+    
+    // Check for correct types
+    [self validateDataTypesForEventJsonDictionary:jsonDictionary];
+    
     [self validateJsonDictionary:jsonDictionary];
 }
 

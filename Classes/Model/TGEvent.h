@@ -98,4 +98,12 @@ typedef NS_ENUM(NSInteger, TGEventVisibility) {
  */
 @property (nonatomic, strong) TGEventObject *object;
 
+/*!
+ @abstract Target of the event.
+ @discussion The target on which an event object was performed.
+ */
+@property (nonatomic, strong) TGEventObject *target;
+
+
+
 @end

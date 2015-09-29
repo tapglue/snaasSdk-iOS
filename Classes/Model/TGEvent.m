@@ -29,7 +29,7 @@
 static NSString *const TGEventUserIdJsonKey = @"user_id";
 static NSString *const TGEventTypeJsonKey = @"type";
 static NSString *const TGEventObjectKey = @"object";
-
+static NSString *const TGEventTargetKey = @"target";
 
 @implementation TGEvent
 
@@ -56,6 +56,7 @@ static NSString *const TGEventObjectKey = @"object";
         // all field defined in the mapping are already set by the super class
         self.user = [TGUser objectWithId:[eventData tg_stringValueForKey:TGEventUserIdJsonKey]];
         self.object = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"object"]];
+        self.target = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"target"]];
     }
     return self;
 }
@@ -93,6 +94,7 @@ static NSString *const TGEventObjectKey = @"object";
 - (NSDictionary*)jsonDictionary {
     NSMutableDictionary *dictFromMapping = [self dictionaryWithMapping:[self jsonMapping]];
     if (self.object) {  [dictFromMapping tg_setValueOrNull:self.object.jsonDictionary forKey:TGEventObjectKey]; }
+    if (self.target) {  [dictFromMapping tg_setValueOrNull:self.target.jsonDictionary forKey:TGEventTargetKey]; }
     if (self.user) { [dictFromMapping tg_setValueOrNull:self.user.userId forKey:TGEventUserIdJsonKey]; }
     if (self.createdAt) {
         NSDateFormatter *df = [NSDateFormatter tg_isoDateFormatter];
@@ -131,6 +133,7 @@ static NSString *const TGEventObjectKey = @"object";
     [aCoder encodeObject:self.priority];
     [aCoder encodeObject:self.type];
     [aCoder encodeObject:self.object.jsonDictionary forKey:@"object"];
+    [aCoder encodeObject:self.target.jsonDictionary forKey:@"target"];
     [aCoder encodeObject:self.user.jsonDictionary forKey:@"user"];
 }
 
@@ -146,6 +149,7 @@ static NSString *const TGEventObjectKey = @"object";
         self.priority = [aDecoder decodeObject];
         self.type = [aDecoder decodeObject];
         self.object = [[TGEventObject alloc] initWithDictionary:[aDecoder decodeObjectForKey:@"object"]];
+        self.target = [[TGEventObject alloc] initWithDictionary:[aDecoder decodeObjectForKey:@"target"]];
         self.user = [TGUser createOrLoadWithDictionary:[aDecoder decodeObjectForKey:@"user"]];
     }
     return self;
