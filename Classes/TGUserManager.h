@@ -27,6 +27,18 @@
  */
 extern NSString *const TapglueUserDefaultsKeySessionToken;
 
+
+/*!
+ @abstract The api endpoint for the current user actions.
+ */
+extern NSString *const TGUserManagerAPIEndpointCurrentUser;
+
+/*!
+ @abstract The api endpoint for the other user actions.
+ */
+extern NSString *const TGUserManagerAPIEndpointUsers;
+
+
 /*!
  @typedef Determines the connection type.
  @constant TGConnectionTypeFriend Specifies a friend connection.

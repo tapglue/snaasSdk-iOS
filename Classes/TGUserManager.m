@@ -28,13 +28,15 @@
 #import "TGObjectCache.h"
 
 NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
+NSString *const TGUserManagerAPIEndpointCurrentUser = @"me";
+NSString *const TGUserManagerAPIEndpointUsers = @"users";
 
 @implementation TGUserManager
 
 #pragma mark - Current User
 
 - (void)createAndLoginUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client POST:@"users" withURLParameters:@{@"withLogin" : @"true"} andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client POST:TGUserManagerAPIEndpointUsers withURLParameters:@{@"withLogin" : @"true"} andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleLoginResponse:jsonResponse
                         withError:error
                       requestUser:user
@@ -43,7 +45,7 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 }
 
 - (void)updateUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client PUT:@"user" withURLParameters:nil andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client PUT:TGUserManagerAPIEndpointCurrentUser withURLParameters:nil andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
 
         if (jsonResponse && !error) {
             [user loadDataFromDictionary:jsonResponse];
@@ -56,7 +58,7 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 }
 
 - (void)deleteCurrentUserWithCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client DELETE:@"user" withCompletionBlock:^(BOOL success, NSError *error) {
+    [self.client DELETE:TGUserManagerAPIEndpointCurrentUser withCompletionBlock:^(BOOL success, NSError *error) {
         [self handleLogoutResponse:success withError:error andCompletionBlock:completionBlock];
     }];
 }
@@ -69,7 +71,9 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
     NSDictionary *loginData = @{@"username": usernameOrEmail,
                                 @"password": [TGUser hashPassword:password]};
 
-    [self.client POST:@"user/login" withURLParameters:@{@"withUserDetails" : @"true"} andPayload:loginData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    NSString *route = [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"login"];
+    
+    [self.client POST:route withURLParameters:@{@"withUserDetails" : @"true"} andPayload:loginData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleLoginResponse:jsonResponse
                         withError:error
                       requestUser:nil
@@ -78,13 +82,14 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 }
 
 - (void)retrieveCurrentUserWithCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
-    [self.client GET:@"user" withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client GET:TGUserManagerAPIEndpointCurrentUser withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleSingleUserResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }
 
 - (void)logoutWithCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client DELETE:@"user/logout" withCompletionBlock:^(BOOL success, NSError *error) {
+    NSString *route = [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"logout"];
+    [self.client DELETE:route withCompletionBlock:^(BOOL success, NSError *error) {
         [self handleLogoutResponse:success withError:error andCompletionBlock:completionBlock];
     }];
 }
@@ -92,14 +97,16 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 #pragma mark  - Other users
 
 - (void)retrieveUserWithId:(NSString*)userId withCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
-    [self.client GET:[@"users" stringByAppendingPathComponent:userId] withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    NSString *route = [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:userId];
+    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleSingleUserResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }
 
 - (void)searchUsersWithSearchString:(NSString*)searchString
                  andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
-    [self.client GET:@"users/search" withURLParameters:@{@"q" : searchString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    NSString *route = [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:@"search"];
+    [self.client GET:route withURLParameters:@{@"q" : searchString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }
@@ -187,7 +194,7 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
                                        forUser:(TGUser*)user
                            withCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
 
-    NSString *apiEndpoint = user ? [@"users" stringByAppendingPathComponent:user.userId] : @"user";
+    NSString *apiEndpoint = user ? [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:user.userId] : TGUserManagerAPIEndpointCurrentUser;
 
     switch (connectionType) {
         case TGConnectionTypeFriend:

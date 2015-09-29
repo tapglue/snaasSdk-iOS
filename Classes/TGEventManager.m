@@ -24,6 +24,7 @@
 #import "TGApiClient.h"
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
+#import "TGUserManager.h"
 
 @interface TGEventManager ()
 @property (nonatomic, strong, readwrite) NSArray *cachedFeed;
@@ -364,7 +365,7 @@
 }
 
 - (NSString*)endPointForUserWithId:(NSString*)userId {
-    return userId ? [@"users" stringByAppendingPathComponent:userId] : @"user";
+    return userId ? [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:userId] : TGUserManagerAPIEndpointCurrentUser;
 }
 
 
