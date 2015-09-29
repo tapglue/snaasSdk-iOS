@@ -559,7 +559,7 @@
         expect(error).to.beTruthy();
 
         expect(error.domain).to.equal(TGErrorDomain);
-        expect(error.code).to.equal(kTGErrorMultipleErrors);
+        expect(error.code).to.equal(kTGErrorUserUsernameSize);
         expect(error.userInfo).toNot.beNil();
         expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
 
@@ -651,7 +651,7 @@
             expect(error).to.beTruthy();
 
             expect(error.domain).to.equal(TGErrorDomain);
-            expect(error.code).to.equal(kTGErrorMultipleErrors);
+            expect(error.code).to.equal(kTGErrorUserUsernameSize);
             expect(error.userInfo).toNot.beNil();
             expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
 
