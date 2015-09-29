@@ -40,7 +40,7 @@
     
     TGImage *image = [[TGImage alloc] initWithDictionary:objectData];
     
-    expect(image.url).to.equal([NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"]);
+    expect(image.url).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
     expect(image.type).to.equal(@"thumbnail");
     expect(image.size.height).to.equal(200);
     expect(image.size.width).to.equal(300);
@@ -52,8 +52,7 @@
     
     TGImage *image = [[TGImage alloc] initWithDictionary:objectData];
     
-    expect(image.url).to.beKindOf([NSURL class]);
-    expect(image.url).to.equal([NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"]);
+    expect(image.url).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
     expect(image.type).to.beNil();
     expect(image.size).to.equal(CGSizeZero);
 }
@@ -65,7 +64,7 @@
 
 - (void)testToJsonDictionaryFullData {
     TGImage *image = [[TGImage alloc] init];
-    image.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    image.url = @"http://images.tapglue.com/1/demouser/profile.jpg";
     image.type = @"thumbnail";
     image.size = CGSizeMake(200, 300);
     
@@ -80,7 +79,7 @@
 
 - (void)testToJsonDictionaryNoSize {
     TGImage *image = [[TGImage alloc] init];
-    image.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    image.url = @"http://images.tapglue.com/1/demouser/profile.jpg";
 
     NSDictionary *jsonDictionary = image.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
@@ -92,7 +91,7 @@
 
 - (void)testToJsonDictionaryNoType {
     TGImage *image = [[TGImage alloc] init];
-    image.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    image.url = @"http://images.tapglue.com/1/demouser/profile.jpg";
     
     NSDictionary *jsonDictionary = image.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();

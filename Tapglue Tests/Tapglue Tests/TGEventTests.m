@@ -316,7 +316,7 @@
     expect(event.images).to.beKindOf([NSDictionary class]);
     TGImage *profileImage = [event.images objectForKey:@"profile_thumb"];
     expect(profileImage).to.beKindOf([TGImage class]);
-    expect(profileImage.url).to.equal([NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"]);
+    expect(profileImage.url).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
 }
 
 // [Correct] From JSON to Event with Object
@@ -771,7 +771,7 @@
 - (void)testJsonDictionaryWithImagesAsTGImage {
     
     TGImage *image = [[TGImage alloc] init];
-    image.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    image.url = @"http://images.tapglue.com/1/demouser/profile.jpg";
     image.type = @"some type";
     image.size = CGSizeMake(800, 600);
     
@@ -881,7 +881,7 @@
     TGUser *user = [[TGUser alloc] initWithDictionary:@{@"id" : @"102934", @"email" : @"testuser@tapglue.com"}];
 
     TGImage *testImage = [[TGImage alloc] init];
-    testImage.url = [NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"];
+    testImage.url = @"http://images.tapglue.com/1/demouser/profile.jpg";
     testImage.type = @"thumbnail";
     testImage.size = CGSizeMake(800,600);
 

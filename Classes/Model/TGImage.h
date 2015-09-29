@@ -23,13 +23,19 @@
 
 @interface TGImage : TGModelObject
 
-// TODO: docs
-@property (nonatomic, strong) NSURL *url;
+/*!
+ @abstract URL or path to the image file.
+ */
+@property (nonatomic, strong) NSString *url;
 
-// TODO: docs
+/*!
+ @abstract Type of the iamge e.g. images/png.
+ */
 @property (nonatomic, strong) NSString *type;
 
-// TODO: docs
+/*!
+ @abstract The pixel size of the image.
+ */
 @property (nonatomic, assign) CGSize size;
 
 @end

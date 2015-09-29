@@ -24,18 +24,6 @@
 
 @implementation TGImage
 
-- (void)setUrl:(NSURL *)url {
-    if ([url isKindOfClass:[NSURL class]]) {
-        _url = url;
-    }
-    else if ([url isKindOfClass:[NSString class]]) {
-        _url = [NSURL URLWithString:(NSString*)url];
-    }
-    else {
-        _url = nil;
-    }
-}
-
 - (NSDictionary*)jsonMapping {
     return @{
              @"type" : @"type",

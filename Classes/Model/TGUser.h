@@ -72,10 +72,12 @@
 @property (nonatomic, strong) NSString *url;
 
 /*!
- @abstract Images associated with the user
- @discussion … Accessing `image` will always return at least and empty NSMutableDictionary which gets lazy initialized. So there is no need to handle `images` being nil befor adding values to it. 
-*/
-// TODO: Describe the structions of the images dict in @discussion
+ @abstract Images associated with the user.
+ @discussion
+ The dictionary holds instances of `TGImage` under `NSString` keys.
+ 
+ Accessing `image` will always return at least and empty NSMutableDictionary which gets lazy initialized. So there is no need to handle `images` being nil befor adding values to it.
+ */
 @property (nonatomic, strong) NSMutableDictionary *images;
 
 /*!
@@ -131,22 +133,34 @@
 
 #pragma mark Connection stats
 
-// TODO: docs
+/*!
+ @abstract The number of friends the user has.
+ */
 @property (nonatomic, assign, readonly) NSInteger friendsCount;
 
-// TODO: docs
+/*!
+ @abstract The number of followers the user has.
+ */
 @property (nonatomic, assign, readonly) NSInteger followersCount;
 
-// TODO: docs
+/*!
+ @abstract The number of users following the user.
+ */
 @property (nonatomic, assign, readonly) NSInteger followingCount;
 
-// TODO: docs
+/*!
+ @abstract Indicate if the user is friend with the current user.
+ */
 @property (nonatomic, assign, readonly) BOOL isFriend;
 
-// TODO: docs
+/*!
+ @abstract Indicate if the user is following the current user.
+ */
 @property (nonatomic, assign, readonly) BOOL isFollower;
 
-// TODO: docs
+/*!
+ @abstract Indicate if the user is followed by the current user.
+ */
 @property (nonatomic, assign, readonly) BOOL isFollowed;
 
 
