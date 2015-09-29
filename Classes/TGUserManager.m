@@ -73,7 +73,7 @@ NSString *const TGUserManagerAPIEndpointUsers = @"users";
 
     NSString *route = [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"login"];
     
-    [self.client POST:route withURLParameters:@{@"withUserDetails" : @"true"} andPayload:loginData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client POST:route withURLParameters:nil andPayload:loginData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleLoginResponse:jsonResponse
                         withError:error
                       requestUser:nil
