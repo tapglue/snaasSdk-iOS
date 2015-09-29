@@ -260,6 +260,7 @@ NSString *const TGUserManagerAPIEndpointUsers = @"users";
 
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
+                     withEvent:(BOOL)withEvent
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
 
     if (!toUser.userId) {
@@ -274,8 +275,10 @@ NSString *const TGUserManagerAPIEndpointUsers = @"users";
                                      @"user_to_id" : [[[NSNumberFormatter alloc] init] numberFromString:toUser.userId] ?: @(0),
                                      @"type" : [self stringFromConnectionType:connectionType]
                                      };
+    
+    NSDictionary *urlParams = withEvent ? nil : @{@"with_event" : @"true"};
 
-    [self.client POST:@"user/connections" withURLParameters:nil andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client POST:@"user/connections" withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (jsonResponse && !error) {
                 completionBlock(YES, nil);

@@ -162,7 +162,18 @@
 
  @param user The user object which the currentUser wants to follow.
  */
+// TODO: deprecate this one?
 + (void)followUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+/*!
+ @abstract Follow a user.
+ @discussion This will create a follow connection to another user.
+ 
+ @param user The user object which the currentUser wants to follow.
+ @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
+ */
+// TODO: docu for createEvent & add some details about it to the discussion.
++ (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Unfollow a user.
@@ -178,7 +189,18 @@
 
  @param user The user object which the currentUser wants to become friend with.
  */
+// TODO: deprecate this one?
 + (void)friendUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+/*!
+ @abstract Become friend with a user.
+ @discussion This will create a friend connection to another user.
+ 
+ @param user The user object which the currentUser wants to become friend with.
+ @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
+ */
+// TODO: docu for createEvent & add some details about it to the discussion. 
++ (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Unfriend a user.
