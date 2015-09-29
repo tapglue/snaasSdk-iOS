@@ -84,12 +84,6 @@
 @property (nonatomic, readonly, getter=isActivated) BOOL activated;
 
 /*!
- @abstract Check for currentUser.
- @discussion The isCurrentUser property checks if there is a current Tapglue User.
- */
-@property (nonatomic, assign, readonly) BOOL isCurrentUser;
-
-/*!
  @abstract List of social Ids.
  @discussion The social Ids property contains a list of a users social ids.
  */
@@ -128,7 +122,35 @@
 @property (nonatomic, strong, readonly) NSString *hashedPassword;
 + (NSString*)hashPassword:(NSString*)password;
 
+#pragma mark Connection stats
+
+// TODO: docs
+@property (nonatomic, assign, readonly) NSInteger friendsCount;
+
+// TODO: docs
+@property (nonatomic, assign, readonly) NSInteger followersCount;
+
+// TODO: docs
+@property (nonatomic, assign, readonly) NSInteger followingCount;
+
+// TODO: docs
+@property (nonatomic, assign, readonly) BOOL isFriend;
+
+// TODO: docs
+@property (nonatomic, assign, readonly) BOOL isFollower;
+
+// TODO: docs
+@property (nonatomic, assign, readonly) BOOL isFollowed;
+
+
 #pragma mark - Current User
+
+/*!
+ @abstract Check for currentUser.
+ @discussion The isCurrentUser property checks if there is a current Tapglue User.
+ */
+@property (nonatomic, assign, readonly) BOOL isCurrentUser;
+
 
 /*!
  @abstract Gets the currentUser.

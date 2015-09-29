@@ -36,6 +36,12 @@ static NSString *const TGUserUrlJsonKey = @"url";
 static NSString *const TGUserActivatedJsonKey = @"activated";
 static NSString *const TGUserLastLoginJsonKey = @"last_login";
 static NSString *const TGUserSocialIdsJsonKey = @"social_ids";
+static NSString *const TGUserFriendsCountJsonKey = @"friends";
+static NSString *const TGUserFollowersCountJsonKey = @"followers";
+static NSString *const TGUserFollowingCountJsonKey = @"following";
+static NSString *const TGUserIsFriendJsonKey = @"is_friend";
+static NSString *const TGUserIsFollowerJsonKey = @"is_follower";
+static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
 
 @interface TGUser ()
 @property (nonatomic, strong) NSMutableDictionary *mutableSocialIds;
@@ -158,6 +164,12 @@ static NSString *const TGUserSocialIdsJsonKey = @"social_ids";
     NSMutableDictionary *mapping = [self jsonMappingForWriting].mutableCopy;
     [mapping addEntriesFromDictionary:@{
                                         TGUserActivatedJsonKey : @"activated",
+                                        TGUserFriendsCountJsonKey : @"friendsCount",
+                                        TGUserFollowersCountJsonKey : @"followersCount",
+                                        TGUserFollowingCountJsonKey : @"followingCount",
+                                        TGUserIsFriendJsonKey : @"isFriend",
+                                        TGUserIsFollowerJsonKey : @"isFollower",
+                                        TGUserIsFollowedJsonKey : @"isFollowed",
                                         TGUserLastLoginJsonKey : @"lastLogin"
                                         }];
     return mapping;

@@ -232,6 +232,66 @@
     expect([user.metadata objectForKey:@"progress"]).to.beKindOf([NSNumber class]);
 }
 
+// [Correct] From JSON to User with connection counts
+- (void)testConnectionCountsForUserInitWithDictionary {
+    NSDictionary *userData = @{ @"id":@(858667),
+                                @"user_name":@"acc-1-app-1-user-2",
+                                @"friends" : @12,
+                                @"followers" : @123,
+                                @"following" : @57
+                                };
+    
+    TGUser *user = [[TGUser alloc] initWithDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"858667");
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    expect(user.friendsCount).to.equal(12);
+    expect(user.followersCount).to.equal(123);
+    expect(user.followingCount).to.equal(57);
+}
+
+// [Correct] From JSON to User with connection flags
+- (void)testConnectionFlagsForUserInitWithDictionary {
+    // test for true value
+    NSDictionary *userData;
+    TGUser *user;
+    
+    userData = @{ @"id":@(858667),
+                  @"user_name":@"acc-1-app-1-user-2",
+                  @"is_friend" : @YES,
+                  @"is_follower" : @YES,
+                  @"is_followed" : @YES
+                  };
+    
+    user = [[TGUser alloc] initWithDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"858667");
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    expect(user.isFriend).to.beTruthy();
+    expect(user.isFollower).to.beTruthy();
+    expect(user.isFollowed).to.beTruthy();
+    
+
+    // test for false values
+    userData = @{ @"id":@(858667),
+                  @"user_name":@"acc-1-app-1-user-2",
+                  @"is_friend" : @NO,
+                  @"is_follower" : @NO,
+                  @"is_followed" : @NO
+                  };
+    
+    user = [[TGUser alloc] initWithDictionary:userData];
+    
+    // Check for correct values
+    expect(user.userId).to.equal(@"858667");
+    expect(user.username).to.equal(@"acc-1-app-1-user-2");
+    expect(user.isFriend).to.beFalsy();
+    expect(user.isFollower).to.beFalsy();
+    expect(user.isFollowed).to.beFalsy();
+}
+
 // [Correct] From JSON to User with Social IDs
 - (void)testSocialIdsOnRetrievedObject {
     NSDictionary *userData = @{
@@ -551,6 +611,77 @@
     expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
     expect([jsonDictionary valueForKey:@"last_login"]).to.beNil();
 
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From User to JSON with connection counts
+- (void)testJsonDictionaryDoesNotIncludeConnectionCounts {
+    // execption: need to create the user with a dictionary as the connection count properties are read only
+    TGUser *user = [[TGUser alloc] initWithDictionary:@{ @"id":@(858667),
+                                                         @"user_name":@"acc-1-app-1-user-2",
+                                                         @"friends" : @12,
+                                                         @"followers" : @123,
+                                                         @"following" : @57
+                                                         }];
+    
+    NSDictionary *jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    expect([jsonDictionary valueForKey:@"friends"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"followers"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"following"]).to.beNil();
+    
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+}
+
+// [Correct] From User to JSON with connection flags
+- (void)testJsonDictionaryDoesNotIncludeConnectionFlags {
+    // execption: need to create the user with a dictionary as the connection flags properties are read only
+    TGUser *user;
+    NSDictionary *jsonDictionary;
+    
+    // test for true value
+
+    user = [[TGUser alloc] initWithDictionary:@{ @"id":@(858667),
+                                                 @"user_name":@"acc-1-app-1-user-2",
+                                                 @"is_friend" : @YES,
+                                                 @"is_follower" : @YES,
+                                                 @"is_followed" : @YES
+                                                 }];
+    jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    expect([jsonDictionary valueForKey:@"is_friend"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"is_follower"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"is_followed"]).to.beNil();
+    
+    // Check for correct types
+    [self validateDataTypesForUserJsonDictionary:jsonDictionary];
+
+    
+    // test for false values
+    
+    user = [[TGUser alloc] initWithDictionary:@{ @"id":@(858667),
+                                                 @"user_name":@"acc-1-app-1-user-2",
+                                                 @"is_friend" : @NO,
+                                                 @"is_follower" : @NO,
+                                                 @"is_followed" : @NO
+                                                 }];
+    jsonDictionary = user.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_name"]).to.equal(@"acc-1-app-1-user-2");
+    expect([jsonDictionary valueForKey:@"is_friend"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"is_follower"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"is_followed"]).to.beNil();
+    
     // Check for correct types
     [self validateDataTypesForUserJsonDictionary:jsonDictionary];
 }
