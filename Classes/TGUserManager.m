@@ -30,6 +30,7 @@
 NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 NSString *const TGUserManagerAPIEndpointCurrentUser = @"me";
 NSString *const TGUserManagerAPIEndpointUsers = @"users";
+static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 @implementation TGUserManager
 
@@ -245,8 +246,10 @@ NSString *const TGUserManagerAPIEndpointUsers = @"users";
                                       @"platform_user_id" : ownSocialId,
                                       @"connection_ids" : toSocialUsersIdsAsStrings
                                       };
+    
+    NSString *route = [TGUserManagerAPIEndpointConnections stringByAppendingPathComponent:@"social"];
 
-    [self.client POST:@"user/connections/social" withURLParameters:nil andPayload:connectionsData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client POST:route withURLParameters:nil andPayload:connectionsData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (jsonResponse && !error) {
                 completionBlock(YES, nil);
@@ -277,8 +280,8 @@ NSString *const TGUserManagerAPIEndpointUsers = @"users";
                                      };
     
     NSDictionary *urlParams = withEvent ? nil : @{@"with_event" : @"true"};
-
-    [self.client POST:@"user/connections" withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    
+    [self.client POST:TGUserManagerAPIEndpointConnections withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (jsonResponse && !error) {
                 completionBlock(YES, nil);
@@ -293,7 +296,7 @@ NSString *const TGUserManagerAPIEndpointUsers = @"users";
 - (void)deleteConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client DELETE:[@"user/connections" stringByAppendingPathComponent:toUser.userId]
+    [self.client DELETE:[TGUserManagerAPIEndpointConnections stringByAppendingPathComponent:toUser.userId]
       withURLParameters:@{ @"type" : [self stringFromConnectionType:connectionType] }
      andCompletionBlock:completionBlock];
 }
