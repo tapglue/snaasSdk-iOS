@@ -324,7 +324,7 @@
 - (void)retrieveFeedUnreadCountForCurrentWithCompletionBlock:(void (^)(NSInteger, NSError *))completionBlock {
     NSString *route = [TGEventManagerAPIEndpointCurrentUserFeed stringByAppendingPathComponent:@"unread/count"];
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-         if (completionBlock) {
+        if (completionBlock) {
             if (!error) {
                 NSInteger unreadCount = [[jsonResponse valueForKey:@"unread_events_count"] integerValue];
                 completionBlock(unreadCount, nil);
@@ -335,8 +335,6 @@
         }
     }];
 }
-
-
 
 #pragma mark Helper
 
