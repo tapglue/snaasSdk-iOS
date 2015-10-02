@@ -482,7 +482,7 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (NSString *)version {
-    return @"1.0.31";
+    return @"1.0.3.2";
 }
 
 
