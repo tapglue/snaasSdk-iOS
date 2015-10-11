@@ -322,7 +322,7 @@ static NSString *const TGApiClientAppAndDeviceInfoCarrier = @"carrier";
     NSMutableDictionary *infoDict = [NSMutableDictionary dictionary];
 
     [infoDict tg_setValueIfNotNil:([mainBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleExecutableKey] ?: [mainBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleIdentifierKey]) forKey:TGApiClientAppAndDeviceInfoAppNameKey];
-    [infoDict tg_setValueIfNotNil:([mainBundle objectForInfoDictionaryKey:@"CFBundleIdentifier"]) forKey:TGApiClientAppAndDeviceInfoAppNameKey];
+    [infoDict tg_setValueIfNotNil:([mainBundle objectForInfoDictionaryKey:@"CFBundleIdentifier"]) forKey:TGApiClientAppAndDeviceInfoAppBunldeIdKey];
     [infoDict tg_setValueIfNotNil:([NSString stringWithFormat:@"%@#%@", [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"]]) forKey:TGApiClientAppAndDeviceInfoAppVersionKey];
     [infoDict tg_setValueIfNotNil:([UIDevice currentDevice].identifierForVendor.UUIDString) forKey:TGApiClientAppAndDeviceInfoDeviceID];
     [infoDict tg_setValueIfNotNil:([[UIDevice currentDevice] tg_modelWithVersion]) forKey:TGApiClientAppAndDeviceInfoDeviceModel];
