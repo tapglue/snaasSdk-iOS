@@ -43,16 +43,16 @@ class CustomCell: UITableViewCell {
 
         let duration = Int(elapsedTime)
 
-        var text = String(format: "%@ %@ %@", event.user.firstName, event.user.lastName, event.type)
+        let text = String(format: "%@ %@ %@", event.user.firstName, event.user.lastName, event.type)
 
-        var durationText = String(format: "%d seconds ago", duration)
+        let durationText = String(format: "%d seconds ago", duration)
 
         self.activityLabel.text = text
         self.secondsLabel.text = durationText
 
 
 
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
         dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
         dateFormatter.doesRelativeDateFormatting = true

@@ -27,7 +27,7 @@ class FeedViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var refreshControl = UIRefreshControl()
+        let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "loadFeed", forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = refreshControl
     }
@@ -59,8 +59,8 @@ class FeedViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("FeedEventCell") as! CustomCell
-        var event = self.events[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("FeedEventCell") as! CustomCell
+        let event = self.events[indexPath.row]
         cell.configureWithEvent(event)
         return cell
     }

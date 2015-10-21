@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let tapglueConfig = TGConfiguration.defaultConfiguration()
         tapglueConfig.loggingEnabled = true
-        Tapglue.setUpWithAppToken("<PUT YOUR APP TOKEN HERE>", andConfig: tapglueConfig)
+        Tapglue.setUpWithAppToken("ca1da488c9ea66effd518c4f14072cd1", andConfig: tapglueConfig)
 
         return true
     }

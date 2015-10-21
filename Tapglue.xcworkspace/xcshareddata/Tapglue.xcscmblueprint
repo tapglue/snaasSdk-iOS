@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C9077441835178A1D852FABC3D7838602662F2BF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C9077441835178A1D852FABC3D7838602662F2BF" : 0,
+    "DA27BC3AEB72FAEDD8E8C1C4F0701A10E7CA4FE4" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A7F91C4C-824D-413F-B345-CE2440445426",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C9077441835178A1D852FABC3D7838602662F2BF" : "ios_sdk",
+    "DA27BC3AEB72FAEDD8E8C1C4F0701A10E7CA4FE4" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Tapglue",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Tapglue.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:tapglue\/ios_sdk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C9077441835178A1D852FABC3D7838602662F2BF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:tapglue\/android_sdk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DA27BC3AEB72FAEDD8E8C1C4F0701A10E7CA4FE4"
+    }
+  ]
+}

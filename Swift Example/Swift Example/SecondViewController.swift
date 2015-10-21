@@ -59,7 +59,11 @@ class SecondViewController: BaseViewController {
     }
 
     func createEventWithType(type : String!) {
-        Tapglue.createEventWithType(type, onObject: nil)
+        let myEvent = TGEvent()
+        myEvent.type = type
+        myEvent.visibility = TGEventVisibility.Connection
+        
+        Tapglue.createEvent(myEvent)
     }
 
 }

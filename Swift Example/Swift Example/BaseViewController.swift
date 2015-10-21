@@ -22,7 +22,7 @@ import UIKit
 
 class BaseViewController: UIViewController {
 
-    lazy var loadingAlertView = UIAlertView(title: "loading", message: nil, delegate: nil, cancelButtonTitle: nil)
+    var loadingAlertView = UIAlertView(title: "loading", message: nil, delegate: nil, cancelButtonTitle: nil)
 
     func showLoadingView() {
         self.loadingAlertView.show()
