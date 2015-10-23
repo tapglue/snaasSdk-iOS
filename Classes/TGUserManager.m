@@ -281,7 +281,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     
     NSDictionary *urlParams = withEvent ? nil : @{@"with_event" : @"true"};
     
-    [self.client POST:TGUserManagerAPIEndpointConnections withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client PUT:TGUserManagerAPIEndpointConnections withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (jsonResponse && !error) {
                 completionBlock(YES, nil);
