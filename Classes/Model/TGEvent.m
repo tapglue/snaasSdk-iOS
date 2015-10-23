@@ -68,7 +68,8 @@ static NSString *const TGEventTargetKey = @"target";
     if (self) {
         self.latitude = NAN;
         self.longitude = NAN;
-        self.visibility = NAN;
+        // Set default visibility to connections
+        self.visibility = TGEventVisibilityConnection;
     }
     return self;
 }
