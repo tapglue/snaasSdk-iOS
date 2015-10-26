@@ -1,7 +1,5 @@
 # Tapglue iOS SDK
 
-[![Build Status](https://app.ship.io/jobs/AmtenDmjHHxgnJ_E/build_status.png)](https://app.ship.io/dashboard#/jobs/8366/history)
-
 This will help you get started with Tapglue on iOS step by step guide.
 
 A more detailed documentation can be found on our [documentation](http://developers.tapglue.com/docs/ios) website.
