@@ -279,7 +279,10 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
                                      @"type" : [self stringFromConnectionType:connectionType]
                                      };
     
-    NSDictionary *urlParams = withEvent ? nil : @{@"with_event" : @"true"};
+    NSDictionary *urlParams = nil;
+    if (withEvent == YES) {
+        urlParams = @{@"with_event" : @"true"};
+    }
     
     [self.client PUT:TGUserManagerAPIEndpointConnections withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
