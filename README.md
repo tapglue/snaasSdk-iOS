@@ -8,6 +8,10 @@ A more detailed documentation can be found on our [documentation](http://develop
 
 To start using the Tapglue API you need an `APP_TOKEN`. Visit our [Dashboard](https://beta.tapglue.com) and login with the credentials you have received from us. If you don't have a Tapglue account yet, please [get in touch](mailto:contact@tapglue.com). Check our [API documentation](http://developers.tapglue.com/docs) for more details.
 
+## Swift Sample App
+
+Bevore diving into the specifics of our SDK we recommend to check out the [Sample app](https://github.com/tapglue/ios_sample). It covers most of the concepts in our SDK and is a great template to use.
+
 # Installing the SDK
 
 This page will help you get started with Tapglue on iOS step by step guide.
