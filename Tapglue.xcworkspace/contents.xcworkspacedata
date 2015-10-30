@@ -8,9 +8,6 @@
       location = "group:Swift Example/Swift Example/../../Classes">
    </FileRef>
    <FileRef
-      location = "group:Swift Example/Swift Example.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Tapglue Tests/Tests.xcodeproj">
    </FileRef>
    <FileRef

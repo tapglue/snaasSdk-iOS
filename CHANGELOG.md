@@ -1,6 +1,18 @@
 # SDK Changelog
 
-## 1.0.3 (2015-09-30)
+## 1.0.3.3 (2015-10-30)
+
+### Added
+
+- New example app created in Swift 2.0
+
+### Changed
+
+- Connection creation fixed
+- Default event visibility fixed
+- Analytics module fixed
+
+## 1.0.3.1 (2015-09-30)
 
 ### Added
 
