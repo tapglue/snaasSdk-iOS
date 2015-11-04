@@ -33,9 +33,10 @@
 + (NSString*) tg_stringFromQueryParameters:(NSDictionary*)queryParameters {
     NSMutableArray* parts = [NSMutableArray array];
     [queryParameters enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+        NSCharacterSet *set = [NSCharacterSet URLQueryAllowedCharacterSet];
         NSString *part = [NSString stringWithFormat: @"%@=%@",
-                          [key stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding],
-                          [value stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]
+                          [key stringByAddingPercentEncodingWithAllowedCharacters:set],
+                          [value stringByAddingPercentEncodingWithAllowedCharacters:set]
                           ];
         [parts addObject:part];
     }];
