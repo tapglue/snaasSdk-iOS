@@ -59,13 +59,15 @@ static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
 
 + (instancetype)createOrLoadWithDictionary:(NSDictionary*)userData {
     TGObjectCache *cache = [self cache];
-    TGUser *user = [cache objectWithObjectId:[userData tg_stringValueForKey:TGModelObjectIdJsonKey]];
-    if (!user) {
-        user = [[TGUser alloc] initWithDictionary:userData];
-        if (user) { // user will be nil if the userData is invalid
-            [cache addObject:user];
-        }
+    
+    TGUser *cachedUser = [cache objectWithObjectId:[userData tg_stringValueForKey:TGModelObjectIdJsonKey]];
+    TGUser *user = [[TGUser alloc] initWithDictionary:userData];
+    if ([cachedUser isEqual:user]) {
+        user = cachedUser;
+    } else if (user) { // user will be nil if the userData is invalid
+        [cache addObject:user];
     }
+    
     return user;
 }
 

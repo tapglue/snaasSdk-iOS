@@ -92,7 +92,7 @@
         expect(event.eventId).to.beNil();
         expect(event.createdAt).toNot.beNil();
 
-        NSDate *startedAt = [NSDate dateWithTimeIntervalSinceNow:-1];
+        //NSDate *startedAt = [NSDate dateWithTimeIntervalSinceNow:-1];
 
         // Create Event
         [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {
@@ -137,7 +137,7 @@
         expect(event.eventId).to.beNil();
         expect(event.createdAt).toNot.beNil();
 
-        NSDate *startedAt = [NSDate dateWithTimeIntervalSinceNow:-1];
+        //NSDate *startedAt = [NSDate dateWithTimeIntervalSinceNow:-1];
 
         // Create Event
         [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {
@@ -165,7 +165,7 @@
 
         expect(event.eventId).to.beNil();
 
-        NSDate *startedAt = [NSDate dateWithTimeIntervalSinceNow:-1];
+        //NSDate *startedAt = [NSDate dateWithTimeIntervalSinceNow:-1];
 
         [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {
             expect(success).to.beTruthy();
@@ -255,7 +255,7 @@
 
         expect(event.eventId).to.beNil();
 
-        NSDate *startedAt = [NSDate dateWithTimeIntervalSinceNow:-1];
+        //NSDate *startedAt = [NSDate dateWithTimeIntervalSinceNow:-1];
 
         // Create Event
         [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {

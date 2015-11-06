@@ -433,7 +433,7 @@
 		78C2C9821B1C814300055195 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					78C2C98B1B1C81AF00055195 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -690,6 +690,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tabglue.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Tests copy";
 				SDKROOT = iphoneos;
 			};
@@ -733,6 +734,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tabglue.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Tests copy";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -742,6 +744,8 @@
 		78C2C9861B1C814300055195 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -796,6 +800,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tabglue.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Tests;
 				SDKROOT = iphoneos;
 			};
@@ -839,6 +844,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tabglue.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Tests;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
