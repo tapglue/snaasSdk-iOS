@@ -55,7 +55,12 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
             TGUser *updatedCurrentUser;
             if (user) {
                 [user loadDataFromDictionary:jsonResponse];
-                [[TGUser cache] addObject:user];
+                TGUser *cachedUser = [[TGUser cache] objectWithObjectId:user.objectId];
+                if ([cachedUser isEqual:user]) {
+                    
+                } else if (user) { // user will be nil if the userData is invalid
+                    [[TGUser cache] addObject:user];
+                }
                 updatedCurrentUser = user;
             }
             else {
