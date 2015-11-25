@@ -102,7 +102,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)retrieveCurrentUserWithCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
     [self.client GET:TGUserManagerAPIEndpointCurrentUser withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        [self handleSingleUserResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+        [self handleCurrentUserResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }
 
@@ -181,6 +181,19 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
     if (completionBlock) {
         completionBlock(success, responseError);
+    }
+}
+
+- (void)handleCurrentUserResponse:(NSDictionary*)jsonResponse withError:(NSError*)responseError andCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
+    if (jsonResponse && !responseError) {
+        TGUser *currentUser = [[TGUser alloc] initWithDictionary:jsonResponse];
+        [TGUser setCurrentUser:currentUser];
+        if (completionBlock) {
+            completionBlock(currentUser, nil);
+        }
+    }
+    else if (completionBlock) {
+        completionBlock(nil, responseError);
     }
 }
 
