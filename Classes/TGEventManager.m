@@ -282,7 +282,7 @@
     }];
 }
 
-- (void)retrieveEventsForObjectId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+- (void)retrieveEventsForObjectWithId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     
     NSString *route = @"events";
     NSString *query = @"";

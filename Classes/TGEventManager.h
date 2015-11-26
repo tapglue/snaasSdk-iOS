@@ -144,19 +144,12 @@
 - (void)retrieveEventsForUser:(TGUser*)user withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
- @abstract Retrieve all events for an object with id.
- @discussion This will retrieve the events for any object with an id.
- @param objectId The objectid for which the events should be retrieved.
- */
-- (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
-
-/*!
  @abstract Retrieve all events for an object with id and type.
  @discussion This will retrieve the events for any object with an id and type.
  @param objectId The objectid for which the events should be retrieved.
  @param type The type of the object for which the events should be retrieved.
  */
-- (void)retrieveEventsForObjectId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+- (void)retrieveEventsForObjectWithId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
  @abstract Retrieve the unread feed of the currentUser.
