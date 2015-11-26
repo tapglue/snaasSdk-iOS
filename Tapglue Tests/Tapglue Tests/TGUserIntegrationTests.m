@@ -643,18 +643,18 @@
         expect(success).to.beTruthy();
         expect(error).to.beFalsy();
 
-        TGUser *user = [[TGUser alloc] init];
+        TGUser *user = [TGUser currentUser];
         user.username = @"a";
         // Update User
-        [Tapglue updateUser:user withCompletionBlock:^(BOOL success, NSError *error) {
+        [user saveWithCompletionBlock:^(BOOL success, NSError *error) {
             expect(success).to.beFalsy();
             expect(error).to.beTruthy();
-
+            
             expect(error.domain).to.equal(TGErrorDomain);
             expect(error.code).to.equal(kTGErrorUserUsernameSize);
             expect(error.userInfo).toNot.beNil();
             expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
-
+            
             // Delete User
             [self deleteCurrentUserWithXCTestExpectation:expectation];
         }];

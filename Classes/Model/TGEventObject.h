@@ -21,6 +21,8 @@
 #import <Foundation/Foundation.h>
 #import "TGModelObject.h"
 
+@class TGUser;
+
 @interface TGEventObject : TGModelObject
 
 /*!
@@ -28,7 +30,11 @@
  @discussion This property contains the unique id for each object. Unlike all other model objects this is not set by Tapglue.
  */
 @property (nonatomic, strong) NSString *objectId;
-
+/*!
+ @abstract User who performed the event.
+ @discussion The user will be a TGUser object that contains the user who performed the event.
+ */
+@property (nonatomic, strong) TGUser *user;
 /*!
  @abstract Type of the object.
  @discussion The type of the object.
