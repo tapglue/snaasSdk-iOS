@@ -386,7 +386,7 @@
  @abstract Retrieve all events of an object with id.
  @discussion This will retrieve a all events of an object with an id.
  */
-+ (void)retrieveEventsForObjectWithId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
  @abstract Retrieve all events of an object with id and type.
