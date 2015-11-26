@@ -380,4 +380,13 @@
 + (NSArray*)cachedUnreadFeedForCurrentUser;
 + (NSInteger)cachedUnreadCountForCurrentUser;
 
+#pragma mark - Object Feeds
+
+/*!
+ @abstract Retrieve all events of an object.
+ @discussion This will retrieve a all events of an object.
+ NEWOBJECT
+ */
++ (void)retrieveEventsForObjectWithId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
 @end

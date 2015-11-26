@@ -144,6 +144,14 @@
 - (void)retrieveEventsForUser:(TGUser*)user withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
+ @abstract Retrieve all events for any user.
+ @discussion This will retrieve the events for any user.
+ NEWOBJECT
+ @param user The user object for which the events should be retrieved.
+ */
+- (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+/*!
  @abstract Retrieve the unread feed of the currentUser.
  @discussion This will retrieve unread feed of the currentUser.
  */

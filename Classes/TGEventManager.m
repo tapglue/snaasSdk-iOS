@@ -282,6 +282,26 @@
     }];
 }
 
+// NEWOBJECT
+- (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    
+    NSString *route = @"events";
+    NSString *query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}}", objectId];
+    [self.client GET:route withURLParameters:@{@"where" : query} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            if (!error) {
+                NSArray *events = [self eventsFromJsonResponse:jsonResponse];
+                if (completionBlock) {
+                    completionBlock(events, nil);
+                }
+            }
+            else if(completionBlock) {
+                completionBlock(nil, error);
+            }
+        }
+    }];
+}
+
 - (void)retrieveFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
                          withCompletionBlock:(TGFeedCompletionBlock)completionBlock {
     NSString *apiEndpoint = TGEventManagerAPIEndpointCurrentUserFeed;
