@@ -383,10 +383,15 @@
 #pragma mark - Object Feeds
 
 /*!
- @abstract Retrieve all events of an object.
- @discussion This will retrieve a all events of an object.
- NEWOBJECT
+ @abstract Retrieve all events of an object with id.
+ @discussion This will retrieve a all events of an object with an id.
  */
 + (void)retrieveEventsForObjectWithId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve all events of an object with id and type.
+ @discussion This will retrieve a all events of an object with an id and type.
+ */
++ (void)retrieveEventsForObjectWithId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 @end

@@ -464,9 +464,12 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveEventsForUser:user withCompletionBlock:completionBlock];
 }
 
-// NEWOBJECT
 + (void)retrieveEventsForObjectWithId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     [[self sharedInstance].eventManager retrieveEventsForObjectId:objectId withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveEventsForObjectWithId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [[self sharedInstance].eventManager retrieveEventsForObjectId:objectId andType:type withCompletionBlock:completionBlock];
 }
 
 #pragma mark - Helper

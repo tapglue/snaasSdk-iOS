@@ -282,11 +282,21 @@
     }];
 }
 
-// NEWOBJECT
 - (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self retrieveEventsForObjectId:objectId andType:nil withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveEventsForObjectId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     
     NSString *route = @"events";
-    NSString *query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}}", objectId];
+    NSString *query = @"";
+    // TODO: Build Query composer
+    if (type == nil) {
+        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}}", objectId];
+    } else {
+        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}},\"type\": {\"eq\":\"%@\"}}", objectId, type];
+    }
+    
     [self.client GET:route withURLParameters:@{@"where" : query} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
