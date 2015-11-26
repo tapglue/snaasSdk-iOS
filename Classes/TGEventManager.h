@@ -156,7 +156,7 @@
  @param objectId The objectid for which the events should be retrieved.
  @param type The type of the object for which the events should be retrieved.
  */
-- (void)retrieveEventsForObjectId:(NSString*)objectId andType:(NSString*) type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+- (void)retrieveEventsForObjectId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
  @abstract Retrieve the unread feed of the currentUser.
