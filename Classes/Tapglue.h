@@ -380,18 +380,64 @@
 + (NSArray*)cachedUnreadFeedForCurrentUser;
 + (NSInteger)cachedUnreadCountForCurrentUser;
 
-#pragma mark - Object Feeds
+#pragma mark - Event queries
+
+/*!
+ @abstract Retrieve all events of a type.
+ @discussion This will retrieve all events of a type.
+ */
++ (void)retrieveEventsOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
  @abstract Retrieve all events of an object with id.
- @discussion This will retrieve a all events of an object with an id.
+ @discussion This will retrieve all events of an object with an id.
  */
 + (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
  @abstract Retrieve all events of an object with id and type.
- @discussion This will retrieve a all events of an object with an id and type.
+ @discussion This will retrieve all events of an object with an id and type.
  */
-+ (void)retrieveEventsForObjectWithId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+#pragma mark - Current user event queries
+
+/*!
+ @abstract Retrieve current user events of a type.
+ @discussion This will retrieve current user events of a type.
+ */
++ (void)retrieveEventsForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve current user of an object with id.
+ @discussion This will retrieve current user events of an object with an id.
+ */
++ (void)retrieveEventsForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve current user events of an object with id and type.
+ @discussion This will retrieve current user events of an object with an id and type.
+ */
++ (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+#pragma mark - Feed Events queries
+
+/*!
+ @abstract Retrieve feed events of a type.
+ @discussion This will retrieve feed events of a type.
+ */
++ (void)retrieveFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve feed events of an object with id.
+ @discussion This will retrieve feed events of an object with an id.
+ */
++ (void)retrieveFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve feed events of an object with id and type.
+ @discussion This will retrieve feed events of an object with an id and type.
+ */
++ (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 @end

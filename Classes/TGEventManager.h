@@ -31,6 +31,11 @@
 @interface TGEventManager : TGBaseManager
 
 /*!
+ @abstract The api endpoint for all events.
+ */
+extern NSString *const TGEventManagerAPIEndpointEvents;
+
+/*!
  @abstract The cached event feed.
  @discussion This will contain all events of the cached feed.
  */
@@ -147,10 +152,25 @@
  @abstract Retrieve all events for an object with id and type.
  @discussion This will retrieve the events for any object with an id and type.
  @param objectId The objectid for which the events should be retrieved.
- @param type The type of the object for which the events should be retrieved.
+ @param eventType The type of the object for which the events should be retrieved.
  */
-- (void)retrieveEventsForObjectWithId:(NSString*)objectId andType:(NSString*)type withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+- (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
+/*!
+ @abstract Retrieve current user events for an object with id and type.
+ @discussion This will retrieve current user events for any object with an id and type.
+ @param objectId The objectid for which the events should be retrieved.
+ @param eventType The type of the object for which the events should be retrieved.
+ */
+- (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve all feed events for an object with id and type.
+ @discussion This will retrieve feed events for any object with an id and type.
+ @param objectId The objectid for which the events should be retrieved.
+ @param eventType The type of the object for which the events should be retrieved.
+ */
+- (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 /*!
  @abstract Retrieve the unread feed of the currentUser.
  @discussion This will retrieve unread feed of the currentUser.
