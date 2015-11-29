@@ -396,12 +396,11 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     NSString* query = @"";
     
     if((eventType != nil) && (objectId != nil)) {
-        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}},\"type\": {\"eq\":\"%@\"}}", objectId, eventType];
+        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}},\"type\": {\"eq\":\"%@\"}}}", objectId, eventType];
     } else if (eventType != nil) {
         query = [NSString stringWithFormat: @"{\"type\": {\"eq\":\"%@\"}}", eventType];
-        return nil;
     } else if (objectId != nil) {
-        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}", objectId];
+        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}}", objectId];
     }
     return query;
 }
