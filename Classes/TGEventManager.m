@@ -26,7 +26,8 @@
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
 
-#define TGEventManagerAPIEndpointCurrentUserEvents [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"events"]
+NSString *const TGEventManagerAPIEndpointEvents = @"events";
+#define TGEventManagerAPIEndpointCurrentUserEvents [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:TGEventManagerAPIEndpointEvents]
 #define TGEventManagerAPIEndpointCurrentUserFeed [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"feed"]
 
 @interface TGEventManager ()
@@ -181,7 +182,7 @@
 }
 
 - (void)updateEvent:(TGEvent*)event withCompletionBlock:(TGSucessCompletionBlock)completionBlock{
-    NSString *route = [TGEventManagerAPIEndpointCurrentUserEvents stringByAppendingPathComponent:event.eventId];[TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"events"];
+    NSString *route = [TGEventManagerAPIEndpointCurrentUserEvents stringByAppendingPathComponent:event.eventId];[TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:TGEventManagerAPIEndpointEvents];
     [self.client PUT:route withURLParameters:nil andPayload:event.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             completionBlock(error == nil, error);
@@ -266,8 +267,38 @@
 
 - (void)retrieveEventsForUser:(TGUser*)user withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     NSString *apiEndpoint = [self endPointForUser:user];
-    apiEndpoint = [apiEndpoint stringByAppendingPathComponent:@"events"];
+    apiEndpoint = [apiEndpoint stringByAppendingPathComponent:TGEventManagerAPIEndpointEvents];
     [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            if (!error) {
+                NSArray *events = [self eventsFromJsonResponse:jsonResponse];
+                if (completionBlock) {
+                    completionBlock(events, nil);
+                }
+            }
+            else if(completionBlock) {
+                completionBlock(nil, error);
+            }
+        }
+    }];
+}
+
+#pragma mark Event queries
+
+- (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointEvents withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointCurrentUserEvents withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointCurrentUserFeed withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveEventsForQuery:(NSString*)query andRoute:(NSString*)route withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self.client GET:route withURLParameters:@{@"where" : query} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
@@ -337,7 +368,6 @@
 }
 
 #pragma mark Helper
-
 - (void)handleSingleEventResponse:(NSDictionary*)jsonResponse withError:(NSError*)responseError andCompletionBlock:(TGGetEventCompletionBlock)completionBlock {
     if (jsonResponse && !responseError) {
         TGEvent *currentEvent = [[TGEvent alloc] initWithDictionary:jsonResponse];
@@ -361,6 +391,20 @@
     return events;
 }
 
+- (NSString*)composeQueryStringFromEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId {
+    // TODO: Make dynamic
+    NSString* query = @"";
+    
+    if((eventType != nil) && (objectId != nil)) {
+        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}},\"type\": {\"eq\":\"%@\"}}}", objectId, eventType];
+    } else if (eventType != nil) {
+        query = [NSString stringWithFormat: @"{\"type\": {\"eq\":\"%@\"}}", eventType];
+    } else if (objectId != nil) {
+        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}}", objectId];
+    }
+    return query;
+}
+
 /**
  @param user the user to get the connected users of or nil to get current user's connected users
  */
@@ -371,7 +415,6 @@
 - (NSString*)endPointForUserWithId:(NSString*)userId {
     return userId ? [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:userId] : TGUserManagerAPIEndpointCurrentUser;
 }
-
 
 #pragma mark - Persistence
 
