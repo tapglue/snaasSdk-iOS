@@ -1,4 +1,0 @@
-language: objective-c
-podfile: Tapglue Tests/Podfile
-xcode_project: Tapglue Tests/Tests.xcodeproj
-xcode_scheme: Tests
