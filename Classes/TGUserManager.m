@@ -47,29 +47,11 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)updateUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [self.client PUT:TGUserManagerAPIEndpointCurrentUser withURLParameters:nil andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        
+
         if (jsonResponse && !error) {
             [user loadDataFromDictionary:jsonResponse];
-            
-            // Update currentUser on update
-            TGUser *updatedCurrentUser;
-            if (user) {
-                [user loadDataFromDictionary:jsonResponse];
-                TGUser *cachedUser = [[TGUser cache] objectWithObjectId:user.objectId];
-                if ([cachedUser isEqual:user]) {
-                    
-                } else if (user) { // user will be nil if the userData is invalid
-                    [[TGUser cache] addObject:user];
-                }
-                updatedCurrentUser = user;
-            }
-            else {
-                updatedCurrentUser = [TGUser createOrLoadWithDictionary:jsonResponse];
-            }
-            
-            [TGUser setCurrentUser:updatedCurrentUser];
         }
-        
+
         if (completionBlock) {
             completionBlock(error == nil, error);
         }
