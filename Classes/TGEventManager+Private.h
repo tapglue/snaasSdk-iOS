@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#import "TGEventManager.h"
+
 #define TGEventManagerAPIEndpointCurrentUserEvents [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:TGEventManagerAPIEndpointEvents]
 #define TGEventManagerAPIEndpointCurrentUserFeed [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"feed"]
 
