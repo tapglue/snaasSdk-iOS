@@ -25,7 +25,7 @@
 + (instancetype)defaultConfiguration {
     TGConfiguration *config = [[self alloc] init];
     config.apiBaseUrl = @"https://api.tapglue.com/";
-    config.apiVersion = @"0.3";
+    config.apiVersion = @"0.4";
     config.loggingEnabled = NO;
     config.flushInterval = 10;
     config.showNetworkActivityIndicator = YES;
