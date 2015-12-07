@@ -84,7 +84,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)retrieveCurrentUserWithCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
     [self.client GET:TGUserManagerAPIEndpointCurrentUser withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        [self handleCurrentUserResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+        [self handleSingleUserResponse:jsonResponse forCurrentUser:YES withError:error andCompletionBlock:completionBlock];
     }];
 }
 
@@ -100,7 +100,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 - (void)retrieveUserWithId:(NSString*)userId withCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
     NSString *route = [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:userId];
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        [self handleSingleUserResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+        [self handleSingleUserResponse:jsonResponse forCurrentUser:NO withError:error andCompletionBlock:completionBlock];
     }];
 }
 
@@ -166,24 +166,14 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     }
 }
 
-- (void)handleCurrentUserResponse:(NSDictionary*)jsonResponse withError:(NSError*)responseError andCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
+- (void)handleSingleUserResponse:(NSDictionary*)jsonResponse forCurrentUser:(BOOL)isCurrentUser withError:(NSError*)responseError andCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
     if (jsonResponse && !responseError) {
-        TGUser *currentUser = [[TGUser alloc] initWithDictionary:jsonResponse];
-        [TGUser setCurrentUser:currentUser];
-        if (completionBlock) {
-            completionBlock(currentUser, nil);
+        TGUser *user = [[TGUser alloc] initWithDictionary:jsonResponse];
+        if (isCurrentUser) {
+            [TGUser setCurrentUser:user];
         }
-    }
-    else if (completionBlock) {
-        completionBlock(nil, responseError);
-    }
-}
-
-- (void)handleSingleUserResponse:(NSDictionary*)jsonResponse withError:(NSError*)responseError andCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
-    if (jsonResponse && !responseError) {
-        TGUser *currentUser = [[TGUser alloc] initWithDictionary:jsonResponse];
         if (completionBlock) {
-            completionBlock(currentUser, nil);
+            completionBlock(user, nil);
         }
     }
     else if (completionBlock) {
