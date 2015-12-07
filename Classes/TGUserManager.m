@@ -31,10 +31,6 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 NSString *const TGUserManagerAPIEndpointCurrentUser = @"me";
 NSString *const TGUserManagerAPIEndpointUsers = @"users";
 
-NSString *const TGUserManagerConnectionStatePending = @"pending";
-NSString *const TGUserManagerConnectionStateConfirmed = @"confirmed";
-NSString *const TGUserManagerConnectionStateRejected = @"rejected";
-
 static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 @implementation TGUserManager
@@ -272,14 +268,8 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
                      withEvent:(BOOL)withEvent
-                      andState:(NSString*)connectionState
+                      andState:(TGConnectionState)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-
-    NSArray *validStates = @[TGUserManagerConnectionStatePending,
-                             TGUserManagerConnectionStateConfirmed,
-                             TGUserManagerConnectionStateRejected];
-    
-    NSAssert([validStates containsObject:connectionState], @"unsupported connection state");
     
     if (!toUser.userId) {
         if (completionBlock) {
@@ -292,7 +282,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     NSDictionary *connectionData = @{
                                      @"user_to_id" : [[[NSNumberFormatter alloc] init] numberFromString:toUser.userId] ?: @(0),
                                      @"type" : [self stringFromConnectionType:connectionType],
-                                     @"state" : connectionState
+                                     @"state" : [self resolveConnectionState:connectionState]
                                      };
     
     NSDictionary *urlParams = nil;
@@ -322,6 +312,20 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (NSString*)stringFromConnectionType:(TGConnectionType)connectionType {
     return connectionType == TGConnectionTypeFriend ? @"friend" : @"follow";
+}
+
+- (NSString*)resolveConnectionState:(TGConnectionState)connectionState {
+    switch (connectionState) {
+        case TGConnectionStatePending:
+            return @"pending";
+        case TGConnectionStateConfirmed:
+            return @"confirmed";
+        case TGConnectionStateRejected:
+            return @"rejected";
+        default:
+            NSAssert(false, @"unknown TGConnectionState");
+            break;
+    }
 }
 
 @end

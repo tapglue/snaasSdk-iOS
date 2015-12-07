@@ -18,6 +18,21 @@
 //  limitations under the License.
 //
 
+#pragma mark - Enum Types
+
+//TODO: documentation 
+/*!
+ @typedef Determines the connection state.
+ @constant TGConnectionStatePending …
+ @constant TGConnectionStateConfirmed …
+ @constant TGConnectionStateRejected …
+ */
+typedef NS_ENUM(NSUInteger, TGConnectionState) {
+    TGConnectionStatePending = 0,
+    TGConnectionStateConfirmed,
+    TGConnectionStateRejected
+};
+
 #pragma mark - Errors
 
 /*!

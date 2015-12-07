@@ -307,12 +307,12 @@ static Tapglue* sharedInstance = nil;
 
 + (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [self followUser:user
-           withState:TGUserManagerConnectionStateConfirmed
+           withState:TGConnectionStateConfirmed
          createEvent:createEvent withCompletionBlock:completionBlock];
 }
 
 
-+ (void)followUser:(TGUser*)user withState:(NSString*)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
++ (void)followUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFollow
                                                        toUser:user
                                                     withEvent:createEvent
@@ -330,11 +330,11 @@ static Tapglue* sharedInstance = nil;
 
 + (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [self friendUser:user
-           withState:TGUserManagerConnectionStateConfirmed
+           withState:TGConnectionStateConfirmed
          createEvent:createEvent withCompletionBlock:completionBlock];
 }
 
-+ (void)friendUser:(TGUser*)user withState:(NSString*)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
++ (void)friendUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFriend
                                                        toUser:user
                                                     withEvent:createEvent

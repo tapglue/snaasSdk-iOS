@@ -182,7 +182,7 @@
  @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
  @param state
  */
-+ (void)followUser:(TGUser*)user withState:(NSString*)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)followUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Unfollow a user.
@@ -219,7 +219,7 @@
  @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
  @param state
  */
-+ (void)friendUser:(TGUser*)user withState:(NSString*)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)friendUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Unfriend a user.
