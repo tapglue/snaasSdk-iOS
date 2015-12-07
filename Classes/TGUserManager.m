@@ -333,10 +333,11 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)deleteConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
-           withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client DELETE:[TGUserManagerAPIEndpointConnections stringByAppendingPathComponent:toUser.userId]
-      withURLParameters:@{ @"type" : [self stringFromConnectionType:connectionType] }
-     andCompletionBlock:completionBlock];
+           withCompletionBlock:(TGSucessCompletionBlock)completionBlock {    
+    NSString *route = TGUserManagerAPIEndpointConnections;
+    route = [route stringByAppendingPathComponent:[self stringFromConnectionType:connectionType]];
+    route = [route stringByAppendingPathComponent:toUser.userId];
+    [self.client DELETE:route withURLParameters:nil andCompletionBlock:completionBlock];
 }
 
 - (NSString*)stringFromConnectionType:(TGConnectionType)connectionType {
