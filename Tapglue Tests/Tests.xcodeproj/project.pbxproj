@@ -57,6 +57,9 @@
 		78AA607D1C15CB2F007F56D5 /* TGQueryBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA607C1C15CB2F007F56D5 /* TGQueryBuilderTests.m */; };
 		78AA60921C15D9E1007F56D5 /* TGEventManager+Queries.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA608F1C15D9E1007F56D5 /* TGEventManager+Queries.m */; };
 		78AA60931C15D9E1007F56D5 /* TGQueryBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA60911C15D9E1007F56D5 /* TGQueryBuilder.m */; };
+		78AA60961C15EE4E007F56D5 /* TGConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA60951C15EE4E007F56D5 /* TGConnection.m */; };
+		78AA609A1C15F181007F56D5 /* TGConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA60951C15EE4E007F56D5 /* TGConnection.m */; };
+		78AA609C1C15F47E007F56D5 /* TGConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA609B1C15F47E007F56D5 /* TGConnectionTests.m */; };
 		78C2C9921B1C81AF00055195 /* Tapglue_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C2C9911B1C81AF00055195 /* Tapglue_Tests.m */; };
 		78C2C9A01B1C82F900055195 /* Tapglue.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C2C99B1B1C82F900055195 /* Tapglue.m */; };
 		78C34F9B1B26E28700286D78 /* TGLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C34F9A1B26E28700286D78 /* TGLogger.m */; };
@@ -120,6 +123,10 @@
 		78AA608F1C15D9E1007F56D5 /* TGEventManager+Queries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TGEventManager+Queries.m"; path = "../../Classes/TGEventManager+Queries.m"; sourceTree = "<group>"; };
 		78AA60901C15D9E1007F56D5 /* TGQueryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGQueryBuilder.h; path = ../../Classes/TGQueryBuilder.h; sourceTree = "<group>"; };
 		78AA60911C15D9E1007F56D5 /* TGQueryBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGQueryBuilder.m; path = ../../Classes/TGQueryBuilder.m; sourceTree = "<group>"; };
+		78AA60941C15EE4E007F56D5 /* TGConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGConnection.h; sourceTree = "<group>"; };
+		78AA60951C15EE4E007F56D5 /* TGConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGConnection.m; sourceTree = "<group>"; };
+		78AA60971C15F17A007F56D5 /* TGConnection+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGConnection+Private.h"; sourceTree = "<group>"; };
+		78AA609B1C15F47E007F56D5 /* TGConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGConnectionTests.m; sourceTree = "<group>"; };
 		78C2C98C1B1C81AF00055195 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C2C9901B1C81AF00055195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78C2C9911B1C81AF00055195 /* Tapglue_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tapglue_Tests.m; sourceTree = "<group>"; };
@@ -339,6 +346,9 @@
 				788DBF8E1B21EA9B0058C1C2 /* TGUser+Private.h */,
 				78C34FA81B270DCD00286D78 /* TGUser+Networking.h */,
 				78C34FA91B270DCD00286D78 /* TGUser+Networking.m */,
+				78AA60941C15EE4E007F56D5 /* TGConnection.h */,
+				78AA60971C15F17A007F56D5 /* TGConnection+Private.h */,
+				78AA60951C15EE4E007F56D5 /* TGConnection.m */,
 				78C6D15D1B1DAA5C00D94E6A /* TGEvent.h */,
 				78C6D15E1B1DAA5C00D94E6A /* TGEvent.m */,
 				97285B401B1F4AFA00D4CAC7 /* TGEventObject.h */,
@@ -371,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				78C6D1451B1DA35100D94E6A /* TGUserTests.m */,
+				78AA609B1C15F47E007F56D5 /* TGConnectionTests.m */,
 				78C6D1601B1DAFF400D94E6A /* TGEventTests.m */,
 				78D736691B1F60D000BE194D /* TGEventObjectTests.m */,
 				7891B2291BBA9BBD009AFA8E /* TGImageTests.m */,
@@ -591,6 +602,7 @@
 				7878EC8F1B2B24D900BA47F6 /* TGLogger.m in Sources */,
 				7878EC911B2B24D900BA47F6 /* TGEvent.m in Sources */,
 				7878EC921B2B24D900BA47F6 /* TGOfflineTests.m in Sources */,
+				78AA609A1C15F181007F56D5 /* TGConnection.m in Sources */,
 				7878EC931B2B24D900BA47F6 /* TGConfiguration.m in Sources */,
 				7878EC941B2B24D900BA47F6 /* NSThread+TGEnsureMainThread.m in Sources */,
 				7878EC951B2B24D900BA47F6 /* TGObjectCache.m in Sources */,
@@ -642,10 +654,12 @@
 				788DBF8D1B21E6E40058C1C2 /* TGSetupTests.m in Sources */,
 				78DBCC5F1B20893B009986BA /* NSDictionary+TGUtilities.m in Sources */,
 				78CF3D5E1B25CCAF0091B81B /* NSArray+RandomObject.m in Sources */,
+				78AA609C1C15F47E007F56D5 /* TGConnectionTests.m in Sources */,
 				78AA60931C15D9E1007F56D5 /* TGQueryBuilder.m in Sources */,
 				78C6D1581B1DA4CF00D94E6A /* TGModelObject.m in Sources */,
 				78C2C9A01B1C82F900055195 /* Tapglue.m in Sources */,
 				7891B22A1BBA9BBD009AFA8E /* TGImageTests.m in Sources */,
+				78AA60961C15EE4E007F56D5 /* TGConnection.m in Sources */,
 				78C6D1591B1DA4CF00D94E6A /* TGUser.m in Sources */,
 				78C6D1491B1DA44100D94E6A /* TGTestCase.m in Sources */,
 				78C6D1611B1DAFF400D94E6A /* TGEventTests.m in Sources */,

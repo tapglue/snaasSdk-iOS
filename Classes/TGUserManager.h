@@ -136,6 +136,12 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
                                        forUser:(TGUser*)user
                            withCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
 
+
+// TODO: docu
+- (void)retrieveConnectionsForCurrentUserOfState:(TGConnectionState)connectionState
+                             withCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
+
+    
 /*!
  @abstract Create a connection for a user.
  @discussion This will create a certain type of connection for the currentUser.

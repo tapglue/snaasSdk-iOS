@@ -436,6 +436,22 @@
     [self waitForExpectations];
 }
 
+// TODO: build tests for
+// - retrievePendingConncetionsForCurrentUserWithCompletionBlock
+// - retrieveRejectedConncetionsForCurrentUserWithCompletionBlock
+
+- (void)testRetrievePendingConnections {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        [Tapglue retrievePendingConncetionsForCurrentUserWithCompletionBlock:^(NSArray *incoming, NSArray *outgoing, NSError *error) {
+            NSLog(@"e: %@", error);
+            [expectation fulfill];
+        }];
+        
+    }];
+    
+}
+
+
 #pragma mark - Negative
 
 // [Negative] Logout and Retrieve follows

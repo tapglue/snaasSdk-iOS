@@ -26,6 +26,7 @@
 #import "TGUser+Private.h"
 #import "NSError+TGError.h"
 #import "TGObjectCache.h"
+#import "TGConnection+Private.h"
 
 NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 NSString *const TGUserManagerAPIEndpointCurrentUser = @"me";
@@ -221,6 +222,34 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 }
 
+- (void)retrieveConnectionsForCurrentUserOfState:(TGConnectionState)connectionState
+                             withCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock {
+ 
+    NSString *route = [TGUserManagerAPIEndpointConnections stringByAppendingPathComponent:[TGConnection stringForConnectionState:connectionState]];
+    
+    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            if (!error) {
+                [TGUser createAndCacheObjectsFromDictionaries:[jsonResponse objectForKey:@"users"]];
+                
+                NSMutableArray *incomingConnections = [NSMutableArray new];
+                for (NSDictionary *objectDict in [jsonResponse objectForKey:@"incoming"]) {
+                    [incomingConnections addObject:[[TGConnection alloc] initWithDictionary:objectDict]];
+                }
+
+                NSMutableArray *outgoingConnections = [NSMutableArray new];
+                for (NSDictionary *objectDict in [jsonResponse objectForKey:@"outgoing"]) {
+                    [outgoingConnections addObject:[[TGConnection alloc] initWithDictionary:objectDict]];
+                }
+                
+                completionBlock(incomingConnections, outgoingConnections, nil);
+            } else {
+                completionBlock(nil, nil, error);
+            }
+        }
+    }];
+}
+
 - (void)createSocialConnectionsForCurrentUserOnPlatformWithSocialIdKey:(NSString*)socialIdKey
                                                                 ofType:(TGConnectionType)connectionType
                                                       toSocialUsersIds:(NSArray*)toSocialUsersIds
@@ -282,7 +311,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     NSDictionary *connectionData = @{
                                      @"user_to_id" : [[[NSNumberFormatter alloc] init] numberFromString:toUser.userId] ?: @(0),
                                      @"type" : [self stringFromConnectionType:connectionType],
-                                     @"state" : [self resolveConnectionState:connectionState]
+                                     @"state" : [TGConnection stringForConnectionState:connectionState]
                                      };
     
     NSDictionary *urlParams = nil;
@@ -312,20 +341,6 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (NSString*)stringFromConnectionType:(TGConnectionType)connectionType {
     return connectionType == TGConnectionTypeFriend ? @"friend" : @"follow";
-}
-
-- (NSString*)resolveConnectionState:(TGConnectionState)connectionState {
-    switch (connectionState) {
-        case TGConnectionStatePending:
-            return @"pending";
-        case TGConnectionStateConfirmed:
-            return @"confirmed";
-        case TGConnectionStateRejected:
-            return @"rejected";
-        default:
-            NSAssert(false, @"unknown TGConnectionState");
-            break;
-    }
 }
 
 @end

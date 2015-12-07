@@ -358,6 +358,16 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].userManager retrieveConnectedUsersOfConnectionType:TGConnectionTypeFriend forUser:nil withCompletionBlock:completionBlock];
 }
 
++ (void)retrievePendingConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock {
+    [[self sharedInstance].userManager retrieveConnectionsForCurrentUserOfState:TGConnectionStatePending
+                                                            withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveRejectedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock {
+    [[self sharedInstance].userManager retrieveConnectionsForCurrentUserOfState:TGConnectionStateRejected
+                                                            withCompletionBlock:completionBlock];
+}
+
 + (void)retrieveFollowsForUser:(TGUser*)user withCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
     [[self sharedInstance].userManager retrieveConnectedUsersOfConnectionType:TGConnectionTypeFollow forUser:user withCompletionBlock:completionBlock];
 }

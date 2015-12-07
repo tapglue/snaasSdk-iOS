@@ -23,6 +23,7 @@
 #import "TGUser+Networking.h"
 #import "TGEvent+Networking.h"
 #import "TGEventObject.h"
+#import "TGConnection.h"
 #import "TGConfiguration.h"
 
 /*!
@@ -247,6 +248,15 @@
  */
 + (void)retrieveFriendsForCurrentUserWithCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
 // TODO: cache for current user connections
+
+
+// TODO: Doku
++ (void)retrievePendingConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
+
+// TODO: Doku
++ (void)retrieveRejectedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
+
+#pragma mark -
 
 /*!
  @abstract Retrieve list of users that are followed by any user.
