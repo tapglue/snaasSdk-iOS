@@ -123,6 +123,37 @@
 
 }
 
+
+- (void)testCreateOrLoadUserWithUpdatedData {
+    
+    // create a new user
+    TGUser *user1 = [TGUser createOrLoadWithDictionary:@{
+                                                        @"id" : @(85866757785095871),
+                                                        @"email" : @"testuser@tapglue.com",
+                                                        @"user_name":@"acc-1-app-1-user-2"
+                                                        }];
+    expect(user1).toNot.beNil();
+    
+    // check user name is set correctly
+    expect(user1.username).to.equal(@"acc-1-app-1-user-2");
+    
+    // load the user again with an updated username
+    TGUser *user2 = [TGUser createOrLoadWithDictionary:@{
+                                                        @"id" : @(85866757785095871),
+                                                        @"email" : @"testuser@tapglue.com",
+                                                        @"user_name":@"acc-1-app-1-user-4711"
+                                                        }];
+    
+    // check user name is set correctly
+    expect(user2.username).to.equal(@"acc-1-app-1-user-4711");
+    
+    // calling create user again with the same id should return the already existing instance of the user
+    expect(user2).to.equal(user1);
+
+    // check the user name has been updated / should always pass if expectation above passes
+    expect(user1.username).to.equal(@"acc-1-app-1-user-4711");
+}
+
 // [Correct] Create mutliple users from JSON
 - (void)testCreateAndCacheMultipleUsersFromDictionaries {
     NSArray *userData =  @[
