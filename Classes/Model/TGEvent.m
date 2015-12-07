@@ -59,10 +59,6 @@ static NSString *const TGEventTargetKey = @"target";
         self.user = [TGUser objectWithId:[eventData tg_stringValueForKey:TGEventUserIdJsonKey]];
         self.object = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"object"]];
         self.target = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"target"]];
-        // TODO: Refine user target
-        if((self.target) && ([self.target.type  isEqual: @"tg_user"])) {
-            self.target.user = [TGUser objectWithId:self.target.objectId];
-        }
     }
     return self;
 }
