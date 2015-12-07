@@ -26,22 +26,43 @@
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
+#import "TGQueryBuilder.h"
+
+/*!
+ @abstract Completion block for a network requets.
+ */
+typedef void (^TGEventListCompletionBlock)(NSArray *events, NSError *error);
 
 @implementation TGEventManager (Queries)
 
-- (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointEvents withCompletionBlock:completionBlock];
+- (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
+    // route: /events
+    [self retrieveEventsForQueryString:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId]
+                              andRoute:TGEventManagerAPIEndpointEvents
+                   withCompletionBlock:completionBlock];
 }
 
-- (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointCurrentUserEvents withCompletionBlock:completionBlock];
+- (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
+    // rout: /me/events
+    [self retrieveEventsForQueryString:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId]
+                              andRoute:TGEventManagerAPIEndpointCurrentUserEvents
+                   withCompletionBlock:completionBlock];
 }
 
-- (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointCurrentUserFeed withCompletionBlock:completionBlock];
+- (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
+    // route: /me/feed
+    [self retrieveEventsForQueryString:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId]
+                              andRoute:TGEventManagerAPIEndpointCurrentUserFeed
+                   withCompletionBlock:completionBlock];
 }
 
-- (void)retrieveEventsForQuery:(NSString*)query andRoute:(NSString*)route withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+- (void)retrieveEventsForQuery:(NSDictionary*)query andRoute:(NSString*)route withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
+    [self retrieveEventsForQueryString:[TGQueryBuilder urlStringFromQuery:query]
+                              andRoute:TGEventManagerAPIEndpointCurrentUserFeed
+                   withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveEventsForQueryString:(NSString*)query andRoute:(NSString*)route withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     [self.client GET:route withURLParameters:@{@"where" : query} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
@@ -58,19 +79,10 @@
 }
 
 - (NSString*)composeQueryStringFromEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId {
-    // TODO: Make dynamic
-    NSString* query = @"";
-    
-    if((eventType != nil) && (objectId != nil)) {
-        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}},\"type\": {\"eq\":\"%@\"}}}", objectId, eventType];
-    } else if (eventType != nil) {
-        query = [NSString stringWithFormat: @"{\"type\": {\"eq\":\"%@\"}}", eventType];
-    } else if (objectId != nil) {
-        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}}", objectId];
-    }
-    return query;
+    TGQueryBuilder *queryBuilder = [[TGQueryBuilder alloc] init];
+    [queryBuilder addTypeEquals:eventType];
+    [queryBuilder addObjectWithId:objectId];
+    return queryBuilder.queryAsUrlString;
 }
-
-
 
 @end
