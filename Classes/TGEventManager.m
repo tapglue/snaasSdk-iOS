@@ -19,6 +19,7 @@
 //
 
 #import "TGEventManager.h"
+#import "TGEventManager+Private.h"
 #import "TGEvent.h"
 #import "TGModelObject+Private.h"
 #import "TGApiClient.h"
@@ -27,8 +28,6 @@
 #import "TGUserManager.h"
 
 NSString *const TGEventManagerAPIEndpointEvents = @"events";
-#define TGEventManagerAPIEndpointCurrentUserEvents [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:TGEventManagerAPIEndpointEvents]
-#define TGEventManagerAPIEndpointCurrentUserFeed [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"feed"]
 
 @interface TGEventManager ()
 @property (nonatomic, strong, readwrite) NSArray *cachedFeed;
@@ -283,36 +282,6 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     }];
 }
 
-#pragma mark Event queries
-
-- (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointEvents withCompletionBlock:completionBlock];
-}
-
-- (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointCurrentUserEvents withCompletionBlock:completionBlock];
-}
-
-- (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointCurrentUserFeed withCompletionBlock:completionBlock];
-}
-
-- (void)retrieveEventsForQuery:(NSString*)query andRoute:(NSString*)route withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self.client GET:route withURLParameters:@{@"where" : query} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        if (completionBlock) {
-            if (!error) {
-                NSArray *events = [self eventsFromJsonResponse:jsonResponse];
-                if (completionBlock) {
-                    completionBlock(events, nil);
-                }
-            }
-            else if(completionBlock) {
-                completionBlock(nil, error);
-            }
-        }
-    }];
-}
-
 - (void)retrieveFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
                          withCompletionBlock:(TGFeedCompletionBlock)completionBlock {
     NSString *apiEndpoint = TGEventManagerAPIEndpointCurrentUserFeed;
@@ -389,20 +358,6 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
         [events addObject:newEvent];
     }
     return events;
-}
-
-- (NSString*)composeQueryStringFromEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId {
-    // TODO: Make dynamic
-    NSString* query = @"";
-    
-    if((eventType != nil) && (objectId != nil)) {
-        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}},\"type\": {\"eq\":\"%@\"}}}", objectId, eventType];
-    } else if (eventType != nil) {
-        query = [NSString stringWithFormat: @"{\"type\": {\"eq\":\"%@\"}}", eventType];
-    } else if (objectId != nil) {
-        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}}", objectId];
-    }
-    return query;
 }
 
 /**

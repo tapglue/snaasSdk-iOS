@@ -54,6 +54,8 @@
 		788DBF8D1B21E6E40058C1C2 /* TGSetupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DBF8C1B21E6E40058C1C2 /* TGSetupTests.m */; };
 		7891B2281BBA99A6009AFA8E /* TGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2271BBA99A6009AFA8E /* TGImage.m */; };
 		7891B22A1BBA9BBD009AFA8E /* TGImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2291BBA9BBD009AFA8E /* TGImageTests.m */; };
+		78AA60701C159E5B007F56D5 /* TGQueryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA606F1C159E5B007F56D5 /* TGQueryObject.m */; };
+		78AA60731C15A5AB007F56D5 /* TGEventManager+Queries.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA60721C15A5AB007F56D5 /* TGEventManager+Queries.m */; };
 		78C2C9921B1C81AF00055195 /* Tapglue_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C2C9911B1C81AF00055195 /* Tapglue_Tests.m */; };
 		78C2C9A01B1C82F900055195 /* Tapglue.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C2C99B1B1C82F900055195 /* Tapglue.m */; };
 		78C34F9B1B26E28700286D78 /* TGLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C34F9A1B26E28700286D78 /* TGLogger.m */; };
@@ -111,6 +113,11 @@
 		7891B2271BBA99A6009AFA8E /* TGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGImage.m; sourceTree = "<group>"; };
 		7891B2291BBA9BBD009AFA8E /* TGImageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGImageTests.m; sourceTree = "<group>"; };
 		7891B22B1BBABB1A009AFA8E /* TGImage+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGImage+Private.h"; sourceTree = "<group>"; };
+		78AA606E1C159E5B007F56D5 /* TGQueryObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGQueryObject.h; sourceTree = "<group>"; };
+		78AA606F1C159E5B007F56D5 /* TGQueryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGQueryObject.m; sourceTree = "<group>"; };
+		78AA60711C15A5AB007F56D5 /* TGEventManager+Queries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGEventManager+Queries.h"; sourceTree = "<group>"; };
+		78AA60721C15A5AB007F56D5 /* TGEventManager+Queries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TGEventManager+Queries.m"; sourceTree = "<group>"; };
+		78AA60741C15A7B5007F56D5 /* TGEventManager+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TGEventManager+Private.h"; sourceTree = "<group>"; };
 		78C2C98C1B1C81AF00055195 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C2C9901B1C81AF00055195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78C2C9911B1C81AF00055195 /* Tapglue_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tapglue_Tests.m; sourceTree = "<group>"; };
@@ -284,6 +291,9 @@
 				788DBF8A1B21D4870058C1C2 /* TGBaseManager.m */,
 				78DBCC601B20AD23009986BA /* TGEventManager.h */,
 				78DBCC611B20AD23009986BA /* TGEventManager.m */,
+				78AA60741C15A7B5007F56D5 /* TGEventManager+Private.h */,
+				78AA60711C15A5AB007F56D5 /* TGEventManager+Queries.h */,
+				78AA60721C15A5AB007F56D5 /* TGEventManager+Queries.m */,
 				788DBF861B21D3100058C1C2 /* TGUserManager.h */,
 				788DBF871B21D3100058C1C2 /* TGUserManager.m */,
 				78C34F991B26E28700286D78 /* TGLogger.h */,
@@ -327,6 +337,8 @@
 				78C6D1641B1DBE2100D94E6A /* NSString+TGUtilities.m */,
 				78DBCC5D1B20893B009986BA /* NSDictionary+TGUtilities.h */,
 				78DBCC5E1B20893B009986BA /* NSDictionary+TGUtilities.m */,
+				78AA606E1C159E5B007F56D5 /* TGQueryObject.h */,
+				78AA606F1C159E5B007F56D5 /* TGQueryObject.m */,
 			);
 			name = Model;
 			path = ../../Classes/Model;
@@ -589,6 +601,8 @@
 				788DBF881B21D3100058C1C2 /* TGUserManager.m in Sources */,
 				78DBCC5C1B207FDD009986BA /* TGISOFormatterTests.m in Sources */,
 				78DBCC4F1B2037D4009986BA /* TGObject.m in Sources */,
+				78AA60731C15A5AB007F56D5 /* TGEventManager+Queries.m in Sources */,
+				78AA60701C159E5B007F56D5 /* TGQueryObject.m in Sources */,
 				78EC5DEA1B283BF80052647C /* NSError+TGError.m in Sources */,
 				78C34FAD1B270DCD00286D78 /* TGEvent+Networking.m in Sources */,
 				7891B2281BBA99A6009AFA8E /* TGImage.m in Sources */,

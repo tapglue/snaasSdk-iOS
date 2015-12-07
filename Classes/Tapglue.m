@@ -26,6 +26,7 @@
 #import "TGModelObject+Private.h"
 #import "NSString+TGUtilities.h"
 #import "TGEventManager.h"
+#import "TGEventManager+Queries.h"
 #import "TGUserManager.h"
 #import "TGObjectCache.h"
 #import "TGConfiguration.h"
