@@ -57,7 +57,7 @@ typedef void (^TGEventListCompletionBlock)(NSArray *events, NSError *error);
 }
 
 - (void)retrieveEventsForQuery:(NSDictionary*)query andRoute:(NSString*)route withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
-    [self retrieveEventsForQueryString:[TGQueryBuilder urlStringFromQuery:query]
+    [self retrieveEventsForQueryString:[TGQueryBuilder stringFromQuery:query]
                               andRoute:TGEventManagerAPIEndpointCurrentUserFeed
                    withCompletionBlock:completionBlock];
 }
@@ -82,7 +82,7 @@ typedef void (^TGEventListCompletionBlock)(NSArray *events, NSError *error);
     TGQueryBuilder *queryBuilder = [[TGQueryBuilder alloc] init];
     [queryBuilder addTypeEquals:eventType];
     [queryBuilder addObjectWithId:objectId];
-    return queryBuilder.queryAsUrlString;
+    return queryBuilder.queryAsString;
 }
 
 @end

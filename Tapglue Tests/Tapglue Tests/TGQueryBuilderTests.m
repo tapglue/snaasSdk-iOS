@@ -45,8 +45,7 @@
 - (void)testQueryDictToUrlString {
     TGQueryBuilder *builder = [[TGQueryBuilder alloc] init];
     [builder addObjectWithId:@"some-id-123"];
-    // expect {"object":{"id":{"eq":"some-id-123"}}} as URL encoded string
-    expect(builder.queryAsUrlString).to.equal(@"%7B%22object%22:%7B%22id%22:%7B%22eq%22:%22some-id-123%22%7D%7D%7D");
+    expect(builder.queryAsString).to.equal(@"{\"object\":{\"id\":{\"eq\":\"some-id-123\"}}}");
 }
 
 @end

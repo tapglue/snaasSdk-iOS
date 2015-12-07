@@ -24,11 +24,11 @@
 @interface TGQueryBuilder : NSObject
 
 @property (nonatomic, strong, readonly) NSDictionary *query;
-@property (nonatomic, strong, readonly) NSString *queryAsUrlString;
+@property (nonatomic, strong, readonly) NSString *queryAsString;
 
 - (void)addTypeEquals:(NSString*)type;
 - (void)addObjectWithId:(NSString*)objectId;
 
-+ (NSString*) urlStringFromQuery:(NSDictionary*)query;
++ (NSString*) stringFromQuery:(NSDictionary*)query;
 
 @end

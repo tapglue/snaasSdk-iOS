@@ -39,14 +39,14 @@
     return self.mutableQuery.copy;
 }
 
-- (NSString*)queryAsUrlString {
-    return [self.class urlStringFromQuery:self.mutableQuery];
+- (NSString*)queryAsString {
+    return [self.class stringFromQuery:self.mutableQuery];
 }
 
-+ (NSString*)urlStringFromQuery:(NSDictionary*)query {
++ (NSString*)stringFromQuery:(NSDictionary*)query {
     NSData *data = [NSJSONSerialization dataWithJSONObject:query options:kNilOptions error:nil];
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    return [string stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+    return string;
 }
 
 - (void)addTypeEquals:(NSString*)type {
