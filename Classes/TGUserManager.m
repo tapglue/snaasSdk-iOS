@@ -30,6 +30,11 @@
 NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 NSString *const TGUserManagerAPIEndpointCurrentUser = @"me";
 NSString *const TGUserManagerAPIEndpointUsers = @"users";
+
+NSString *const TGUserManagerConnectionStatePending = @"pending";
+NSString *const TGUserManagerConnectionStateConfirmed = @"confirmed";
+NSString *const TGUserManagerConnectionStateRejected = @"rejected";
+
 static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 @implementation TGUserManager
@@ -267,8 +272,15 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
                      withEvent:(BOOL)withEvent
+                      andState:(NSString*)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
 
+    NSArray *validStates = @[TGUserManagerConnectionStatePending,
+                             TGUserManagerConnectionStateConfirmed,
+                             TGUserManagerConnectionStateRejected];
+    
+    NSAssert([validStates containsObject:connectionState], @"unsupported connection state");
+    
     if (!toUser.userId) {
         if (completionBlock) {
             NSDictionary *errorInfo = @{NSLocalizedDescriptionKey : @"The give toUser was either `nil` or has no userId." };
@@ -279,7 +291,8 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
     NSDictionary *connectionData = @{
                                      @"user_to_id" : [[[NSNumberFormatter alloc] init] numberFromString:toUser.userId] ?: @(0),
-                                     @"type" : [self stringFromConnectionType:connectionType]
+                                     @"type" : [self stringFromConnectionType:connectionType],
+                                     @"state" : connectionState
                                      };
     
     NSDictionary *urlParams = nil;

@@ -306,9 +306,17 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [self followUser:user
+           withState:TGUserManagerConnectionStateConfirmed
+         createEvent:createEvent withCompletionBlock:completionBlock];
+}
+
+
++ (void)followUser:(TGUser*)user withState:(NSString*)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFollow
                                                        toUser:user
                                                     withEvent:createEvent
+                                                     andState:state
                                           withCompletionBlock:completionBlock];
 }
 
@@ -321,9 +329,16 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [self friendUser:user
+           withState:TGUserManagerConnectionStateConfirmed
+         createEvent:createEvent withCompletionBlock:completionBlock];
+}
+
++ (void)friendUser:(TGUser*)user withState:(NSString*)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFriend
                                                        toUser:user
                                                     withEvent:createEvent
+                                                     andState:state
                                           withCompletionBlock:completionBlock];
 }
 

@@ -173,6 +173,17 @@
  */
 + (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+// TODO: docu state param
+/*!
+ @abstract Follow a user.
+ @discussion This will create a follow connection to another user.
+ 
+ @param user The user object which the currentUser wants to follow.
+ @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
+ @param state
+ */
++ (void)followUser:(TGUser*)user withState:(NSString*)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 /*!
  @abstract Unfollow a user.
  @discussion This will remove a previously created follow connection to another user.
@@ -197,6 +208,18 @@
  @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
  */
 + (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+
+// TODO: docu state param
+/*!
+ @abstract Become friend with a user.
+ @discussion This will create a friend connection to another user.
+ 
+ @param user The user object which the currentUser wants to become friend with.
+ @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
+ @param state
+ */
++ (void)friendUser:(TGUser*)user withState:(NSString*)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Unfriend a user.

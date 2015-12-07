@@ -38,6 +38,9 @@ extern NSString *const TGUserManagerAPIEndpointCurrentUser;
  */
 extern NSString *const TGUserManagerAPIEndpointUsers;
 
+extern NSString *const TGUserManagerConnectionStatePending;
+extern NSString *const TGUserManagerConnectionStateConfirmed;
+extern NSString *const TGUserManagerConnectionStateRejected;
 
 /*!
  @typedef Determines the connection type.
@@ -140,10 +143,12 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
  @param connectionType The connection type that should be created.
  @param toUser The user towards which the connection should be created for.
  @param withEvent Whether an event to appear for the associated user's feed should be created for the new collection.
+ @param state The conncetion state. One of the followwing values: 'pending', 'confirmed', 'rejected'
  */
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
                      withEvent:(BOOL)withEvent
+                      andState:(NSString*)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
