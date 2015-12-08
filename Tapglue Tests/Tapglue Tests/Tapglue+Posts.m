@@ -21,11 +21,22 @@
 #import "Tapglue+Posts.h"
 #import "Tapglue+Private.h"
 #import "TGPostsManager.h"
+#import "TGPost.h"
+#import "TGAttachment.h"
 
 @implementation Tapglue (Posts)
 
 + (TGPostsManager*)postManager {
     return [self sharedInstance].postManager;
+}
+
++ (void)createPostWithText:(NSString*)attachmentText
+                     named:(NSString*)attachmentName
+       withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+
+    TGPost *post = [[TGPost alloc] init];
+    [post addAttachment:[TGAttachment attachmentWithText:@"Lorem ipsum..." andName:@"body"]];
+    [self createPost:post withCompletionBlock:completionBlock];
 }
 
 + (void)createPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {

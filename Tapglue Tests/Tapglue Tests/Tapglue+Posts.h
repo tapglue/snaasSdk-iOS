@@ -30,6 +30,17 @@
  */
 + (void)createPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+// TODO: docu `text` and `name` param
+/*!
+ @abstract Create a post.
+ @discussion This will create an post for a the current user.
+ 
+ @param post The TGPost object that contains the post information.
+ @param text ...
+ @param name ...
+ */
++ (void)createPostWithText:(NSString*)attachmentText named:(NSString*)attachmentName withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 /*!
  @abstract Update a post.
  @discussion This will update a post.
