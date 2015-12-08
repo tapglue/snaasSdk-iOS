@@ -49,21 +49,23 @@
     return string;
 }
 
-#pragma mark - Object.ID
 
-- (void)addObjectWithId:(NSString*)objectId {
+#pragma mark - ObjectID
+
+- (void)addObjectIdEquals:(NSString*)objectId {
     if (objectId) {
-        [self addRequestCondition:@"eq" withValue:objectId forEventCondition:@"object.id"];
+        [self addRequestCondition:@"eq" withValue:objectId forEventCondition:@"tg_object_id"];
     }
 }
 
 - (void)addObjectIdIn:(NSArray*)objectIds {
     if ([self validateArrayInput:objectIds]) {
-        [self addRequestCondition:@"in" withValue:objectIds forEventCondition:@"object.id"];
+        [self addRequestCondition:@"in" withValue:objectIds forEventCondition:@"tg_object_id"];
     }
 }
 
-#pragma mark - Type 
+
+#pragma mark - Type
 
 - (void)addTypeEquals:(NSString*)type {
     if (type) {
@@ -76,6 +78,23 @@
         [self addRequestCondition:@"in" withValue:types forEventCondition:@"type"];
     }
 }
+
+
+#pragma mark - Object.ID
+
+- (void)addObjectWithIdEquals:(NSString*)objectId {
+    if (objectId) {
+        [self addRequestCondition:@"eq" withValue:objectId forEventCondition:@"object.id"];
+    }
+}
+
+- (void)addObjectWithIdIn:(NSArray*)objectIds {
+    if ([self validateArrayInput:objectIds]) {
+        [self addRequestCondition:@"in" withValue:objectIds forEventCondition:@"object.id"];
+    }
+}
+
+
 
 #pragma mark - Private
 
