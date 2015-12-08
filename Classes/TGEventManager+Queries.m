@@ -26,7 +26,7 @@
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
-#import "TGQuery.h"
+#import "TGQuery+Private.h"
 
 /*!
  @abstract Completion block for a network requets.
@@ -37,33 +37,27 @@ typedef void (^TGEventListCompletionBlock)(NSArray *events, NSError *error);
 
 - (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
     // route: /events
-    [self retrieveEventsForQueryString:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId]
-                              andRoute:TGEventManagerAPIEndpointEvents
-                   withCompletionBlock:completionBlock];
+    [self retrieveEventsWithQuery:[self composeQueryForEventType:eventType andObjectWithId:objectId]
+                          atRoute:TGEventManagerAPIEndpointEvents
+              withCompletionBlock:completionBlock];
 }
 
 - (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
     // rout: /me/events
-    [self retrieveEventsForQueryString:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId]
-                              andRoute:TGEventManagerAPIEndpointCurrentUserEvents
-                   withCompletionBlock:completionBlock];
+    [self retrieveEventsWithQuery:[self composeQueryForEventType:eventType andObjectWithId:objectId]
+                          atRoute:TGEventManagerAPIEndpointCurrentUserEvents
+              withCompletionBlock:completionBlock];
 }
 
 - (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
     // route: /me/feed
-    [self retrieveEventsForQueryString:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId]
-                              andRoute:TGEventManagerAPIEndpointCurrentUserFeed
-                   withCompletionBlock:completionBlock];
+    [self retrieveEventsWithQuery:[self composeQueryForEventType:eventType andObjectWithId:objectId]
+                          atRoute:TGEventManagerAPIEndpointCurrentUserFeed
+              withCompletionBlock:completionBlock];
 }
 
-- (void)retrieveEventsForQuery:(NSDictionary*)query andRoute:(NSString*)route withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
-    [self retrieveEventsForQueryString:[TGQuery stringFromQuery:query]
-                              andRoute:TGEventManagerAPIEndpointCurrentUserFeed
-                   withCompletionBlock:completionBlock];
-}
-
-- (void)retrieveEventsForQueryString:(NSString*)query andRoute:(NSString*)route withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self.client GET:route withURLParameters:@{@"where" : query} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+- (void)retrieveEventsWithQuery:(TGQuery*)query atRoute:(NSString*)route withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
+    [self.client GET:route withURLParameters:@{@"where" : query.queryAsString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
@@ -78,11 +72,11 @@ typedef void (^TGEventListCompletionBlock)(NSArray *events, NSError *error);
     }];
 }
 
-- (NSString*)composeQueryStringFromEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId {
-    TGQuery *queryBuilder = [[TGQuery alloc] init];
-    [queryBuilder addTypeEquals:eventType];
-    [queryBuilder addObjectWithId:objectId];
-    return queryBuilder.queryAsString;
+- (TGQuery*)composeQueryForEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId {
+    TGQuery *query = [[TGQuery alloc] init];
+    [query addTypeEquals:eventType];
+    [query addObjectWithId:objectId];
+    return query;
 }
 
 @end

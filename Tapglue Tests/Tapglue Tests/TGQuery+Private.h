@@ -1,8 +1,8 @@
 //
-//  TGQueryBuilder.h
+//  TGQuery+Private.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 07.12.15.
+//  Created by Martin Stemmle on 08.12.15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +18,13 @@
 //  limitations under the License.
 //
 
+#import "TGQuery.h"
 
-#import <Foundation/Foundation.h>
+@interface TGQuery (Private)
 
-@interface TGQuery : NSObject
+@property (nonatomic, strong, readonly) NSDictionary *query;
+@property (nonatomic, strong, readonly) NSString *queryAsString;
 
-- (void)addTypeEquals:(NSString*)type;
-- (void)addObjectWithId:(NSString*)objectId;
++ (NSString*) stringFromQuery:(NSDictionary*)query;
 
 @end
