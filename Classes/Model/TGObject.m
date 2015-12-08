@@ -71,7 +71,16 @@ NSString *const TGModelObjectIdJsonKey = @"id";
         if ([objectValue isKindOfClass:[NSURL class]]) {
             NSURL *urlValue = (NSURL*)objectValue;
             objectValue = urlValue.absoluteString;
+        } else if([objectValue isKindOfClass:[NSArray class]]) {
+            NSMutableArray *arrayValue = ((NSArray*)objectValue).mutableCopy;
+            for (NSUInteger i = 0; i < arrayValue.count; i++) {
+                if ([arrayValue[i] isKindOfClass:[TGObject class]]) {
+                    arrayValue[i] = [((TGObject*)arrayValue[i]) jsonDictionary];
+                }
+            }
+            objectValue = arrayValue;
         }
+        
         BOOL addValue = objectValue != nil;
         addValue &= ![objectValue isEqual:@{}];
         if (addValue && [objectValue isKindOfClass:[NSNumber class]]) {

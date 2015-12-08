@@ -18,6 +18,22 @@
 //  limitations under the License.
 //
 
+#pragma mark - Enums 
+
+/*!
+ @typedef Defines the visibibly of events and posts for other users.
+ @constant TGVisibilityPrivate makes the event visible only for the currentUser.
+ @constant TGVisibilityConnection makes the event visible for friends and followers.
+ @constant TGVisibilityPublic makes the event visible for everyone.
+ */
+
+typedef NS_ENUM(NSInteger, TGVisibility) {
+    TGVisibilityPrivate = 10,
+    TGVisibilityConnection = 20,
+    TGVisibilityPublic = 30
+};
+
+
 #pragma mark - Errors
 
 /*!
