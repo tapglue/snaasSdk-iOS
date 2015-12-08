@@ -116,9 +116,8 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 }
 
 - (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
-    NSString *queryString = [@"?email=" stringByAppendingString:[emails componentsJoinedByString:@"&email="]];
-    NSString *route = [TGUserManagerAPIEndpointSearch stringByAppendingString:queryString];
-    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    NSString *queryString = [emails componentsJoinedByString:@"&email="];
+    [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:@{@"email" : queryString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }
@@ -127,10 +126,11 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
                  withSocialUsersIds:(NSArray*)socialUserIds
                  andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
     
-    NSString *queryString = [NSString stringWithFormat:@"?social_platform=%@&socialid=%@",
-                             socialPlattform, [socialUserIds componentsJoinedByString:@"&socialid="]];
-    NSString *route = [TGUserManagerAPIEndpointSearch stringByAppendingString:queryString];
-    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    NSString *queryString = [socialUserIds componentsJoinedByString:@"&socialid="];
+    NSDictionary *urlParams = @{@"social_platform": socialPlattform,
+                                @"socialid" : queryString};
+
+    [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:urlParams andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }

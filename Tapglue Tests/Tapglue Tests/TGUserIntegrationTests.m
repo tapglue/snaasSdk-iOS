@@ -963,6 +963,58 @@
     }];
 }
 
+- (void)testSearchUsersByEmails {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(error).to.beNil();
+            expect(success).to.beTruthy();
+            
+            NSArray *emails = @[TGPersistentUserEmail, @"anotherUser@mail.com", @"yetanotherUser@mail.com"];
+            
+            [Tapglue searchUsersWithEmails:emails andCompletionBlock:^(NSArray *users, NSError *error) {
+                expect(users.count).to.beGreaterThanOrEqualTo(1);
+                expect(users).toNot.beNil();
+                expect(error).to.beNil();
+                [expectation fulfill];
+            }];
+        }];
+        
+        
+    }];
+}
+
+- (void)testSearchUsersBySocialIds {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        TGUser *user = [TGUser new];
+        user.username = @"Testuserftw";
+        [user setSocialId:@"fb12345" forKey:@"facebook"];
+        [user setPassword:@"password"];
+        
+        
+        [Tapglue createAndLoginUser:user withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(error).to.beNil();
+            expect(success).to.beTruthy();
+            
+            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(error).to.beNil();
+                expect(success).to.beTruthy();
+                
+                NSArray *socialIds = @[@"fb12345"];
+                
+                [Tapglue searchUsersOnSocialPlatform:@"facebook" withSocialUsersIds:socialIds andCompletionBlock:^(NSArray *users, NSError *error) {
+                    expect(users.count).to.beGreaterThanOrEqualTo(1);
+                    expect(users).toNot.beNil();
+                    expect(error).to.beNil();
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    }];
+}
+
+
 // [Correct] Test for isCurrentUser
 - (void)testIsCurrentUserAfterLogin {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
