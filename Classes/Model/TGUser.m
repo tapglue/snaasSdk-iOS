@@ -153,7 +153,11 @@ static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
 #pragma mark - JSON Parser
 
 - (NSDictionary*)jsonDictionary {
-    NSMutableDictionary *dictFromMapping = [self dictionaryWithMapping:[self jsonMappingForWriting]];
+    return [self jsonDictionaryWithMapping:[self jsonMappingForWriting]];
+}
+
+- (NSDictionary*)jsonDictionaryWithMapping:(NSDictionary*)mapping {
+    NSMutableDictionary *dictFromMapping = [self dictionaryWithMapping:mapping];
     if (self.hashedPassword) { [dictFromMapping setObject:self.hashedPassword forKey:TGUserPasswordJsonKey]; }
     [dictFromMapping tg_setValueIfNotNil:[TGImage jsonDictionaryForImagesDictionary:self.images] forKey:TGUserImagesJsonKey];
     return dictFromMapping ;
@@ -186,15 +190,19 @@ static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
     [mapping addEntriesFromDictionary:@{
                                         TGUserActivatedJsonKey : @"activated",
                                         TGUserImagesJsonKey : @"images",
-                                        TGUserFriendsCountJsonKey : @"friendsCount",
-                                        TGUserFollowersCountJsonKey : @"followersCount",
-                                        TGUserFollowingCountJsonKey : @"followingCount",
                                         TGUserIsFriendJsonKey : @"isFriend",
                                         TGUserIsFollowerJsonKey : @"isFollower",
                                         TGUserIsFollowedJsonKey : @"isFollowed",
                                         TGUserLastLoginJsonKey : @"lastLogin"
                                         }];
+    [mapping addEntriesFromDictionary:[self jsonMappingForConnectionCounts]];
     return mapping;
+}
+
+- (NSDictionary*)jsonMappingForConnectionCounts {
+    return @{ TGUserFriendsCountJsonKey : @"friendsCount",
+              TGUserFollowersCountJsonKey : @"followersCount",
+              TGUserFollowingCountJsonKey : @"followingCount" };
 }
 
 #pragma mark - Helper
@@ -235,7 +243,9 @@ static TGUser *_inMemoryCurrentUser = nil;
     _inMemoryCurrentUser = user;
     NSUserDefaults *userDefaults = [Tapglue sharedInstance].userDefaults;
     if (user) {
-        [userDefaults setObject:user.jsonDictionary forKey:TGUserDefaultsCurrentUserKey];
+        NSMutableDictionary *mapping = [user jsonMappingForWriting].mutableCopy;
+        [mapping addEntriesFromDictionary:[user jsonMappingForConnectionCounts]];
+        [userDefaults setObject:[user jsonDictionaryWithMapping:mapping] forKey:TGUserDefaultsCurrentUserKey];
     }
     else {
         [userDefaults removeObjectForKey:TGUserDefaultsCurrentUserKey];
