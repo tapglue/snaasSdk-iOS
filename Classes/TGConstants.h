@@ -304,7 +304,7 @@ typedef NS_ENUM(NSInteger, TGErrorCode) {
 
 #pragma mark - Blocks
 
-@class TGUser, TGEvent;
+@class TGUser, TGEvent, TGPost;
 
 /*!
  @abstract Completion block for succes.
@@ -340,3 +340,11 @@ typedef void (^TGGetEventListCompletionBlock)(NSArray *events, NSError *error);
  @discussion The TGFeedCompletionBlock will return the events, the unreadCount and an error.
  */
 typedef void (^TGFeedCompletionBlock)(NSArray *events, NSInteger unreadCount, NSError *error);
+
+/*!
+ @abstract Completion block for a post.
+ @discussion The TGGetPostCompletionBlock will return a user or an error.
+ */
+typedef void (^TGGetPostCompletionBlock)(TGPost *user, NSError *error);
+
+

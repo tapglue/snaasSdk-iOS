@@ -92,6 +92,9 @@
 		78EC5DEA1B283BF80052647C /* NSError+TGError.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DE91B283BF80052647C /* NSError+TGError.m */; };
 		78EC5DF31B28A9540052647C /* UIDevice+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DF21B28A9540052647C /* UIDevice+TGUtilities.m */; };
 		78F787DF1C1722CB00AC1B39 /* TGAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 789E19171C171B8800192EE4 /* TGAttachment.m */; };
+		78F787E91C17392F00AC1B39 /* TGPostsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787E81C17392F00AC1B39 /* TGPostsManager.m */; };
+		78F787EC1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787EB1C1739B000AC1B39 /* Tapglue+Posts.m */; };
+		78F787ED1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787EB1C1739B000AC1B39 /* Tapglue+Posts.m */; };
 		97285B421B1F4AFA00D4CAC7 /* TGEventObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 97285B411B1F4AFA00D4CAC7 /* TGEventObject.m */; };
 		B97D0F5637EA6B1C2BB18889 /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1485A1AE17C16949E43E09CC /* libPods-ios.a */; };
 /* End PBXBuildFile section */
@@ -196,6 +199,10 @@
 		78EC5DF11B28A9540052647C /* UIDevice+TGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+TGUtilities.h"; path = "../../Classes/UIDevice+TGUtilities.h"; sourceTree = "<group>"; };
 		78EC5DF21B28A9540052647C /* UIDevice+TGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+TGUtilities.m"; path = "../../Classes/UIDevice+TGUtilities.m"; sourceTree = "<group>"; };
 		78F787E01C1724FA00AC1B39 /* TGAttachment+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGAttachment+Private.h"; sourceTree = "<group>"; };
+		78F787E71C17392F00AC1B39 /* TGPostsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGPostsManager.h; path = ../../Classes/TGPostsManager.h; sourceTree = "<group>"; };
+		78F787E81C17392F00AC1B39 /* TGPostsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGPostsManager.m; path = ../../Classes/TGPostsManager.m; sourceTree = "<group>"; };
+		78F787EA1C1739B000AC1B39 /* Tapglue+Posts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tapglue+Posts.h"; sourceTree = "<group>"; };
+		78F787EB1C1739B000AC1B39 /* Tapglue+Posts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tapglue+Posts.m"; sourceTree = "<group>"; };
 		8D763668941847D43BAAC2F9 /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		97285B401B1F4AFA00D4CAC7 /* TGEventObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGEventObject.h; sourceTree = "<group>"; };
 		97285B411B1F4AFA00D4CAC7 /* TGEventObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGEventObject.m; sourceTree = "<group>"; };
@@ -312,31 +319,35 @@
 		78C2C9971B1C82C000055195 /* SDK Classes */ = {
 			isa = PBXGroup;
 			children = (
-				78EC5DF11B28A9540052647C /* UIDevice+TGUtilities.h */,
-				78EC5DF21B28A9540052647C /* UIDevice+TGUtilities.m */,
 				78C6D14A1B1DA4CF00D94E6A /* Model */,
 				78C6D1501B1DA4CF00D94E6A /* RestClient */,
 				78AA60851C15D527007F56D5 /* Event Queries */,
-				78C6D1551B1DA4CF00D94E6A /* NSDateFormatter+TGISOFormatter.h */,
-				78C6D1561B1DA4CF00D94E6A /* NSDateFormatter+TGISOFormatter.m */,
 				78C6D1571B1DA4CF00D94E6A /* TGConstants.h */,
 				78C2C99D1B1C82F900055195 /* Tapglue.h */,
 				78C2C99B1B1C82F900055195 /* Tapglue.m */,
 				788DBF911B21EB1B0058C1C2 /* Tapglue+Private.h */,
+				78F787EA1C1739B000AC1B39 /* Tapglue+Posts.h */,
+				78F787EB1C1739B000AC1B39 /* Tapglue+Posts.m */,
+				78C34F9F1B26E9DD00286D78 /* TGConfiguration.h */,
+				78C34FA01B26E9DD00286D78 /* TGConfiguration.m */,
 				788DBF891B21D4870058C1C2 /* TGBaseManager.h */,
 				788DBF8A1B21D4870058C1C2 /* TGBaseManager.m */,
 				78DBCC601B20AD23009986BA /* TGEventManager.h */,
 				78DBCC611B20AD23009986BA /* TGEventManager.m */,
 				788DBF861B21D3100058C1C2 /* TGUserManager.h */,
 				788DBF871B21D3100058C1C2 /* TGUserManager.m */,
+				78F787E71C17392F00AC1B39 /* TGPostsManager.h */,
+				78F787E81C17392F00AC1B39 /* TGPostsManager.m */,
 				78C34F991B26E28700286D78 /* TGLogger.h */,
 				78C34F9A1B26E28700286D78 /* TGLogger.m */,
-				78C34F9F1B26E9DD00286D78 /* TGConfiguration.h */,
-				78C34FA01B26E9DD00286D78 /* TGConfiguration.m */,
 				786285381B271FC800D91B4F /* NSThread+TGEnsureMainThread.h */,
 				786285391B271FC800D91B4F /* NSThread+TGEnsureMainThread.m */,
 				78EC5DE81B283BF80052647C /* NSError+TGError.h */,
 				78EC5DE91B283BF80052647C /* NSError+TGError.m */,
+				78EC5DF11B28A9540052647C /* UIDevice+TGUtilities.h */,
+				78EC5DF21B28A9540052647C /* UIDevice+TGUtilities.m */,
+				78C6D1551B1DA4CF00D94E6A /* NSDateFormatter+TGISOFormatter.h */,
+				78C6D1561B1DA4CF00D94E6A /* NSDateFormatter+TGISOFormatter.m */,
 			);
 			name = "SDK Classes";
 			sourceTree = "<group>";
@@ -597,6 +608,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78F787ED1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */,
 				78F787DF1C1722CB00AC1B39 /* TGAttachment.m in Sources */,
 				783185F41BBAD07E0050F9DB /* TGImage.m in Sources */,
 				7878EC771B2B24D900BA47F6 /* TGApiClient.m in Sources */,
@@ -641,6 +653,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78F787EC1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */,
 				78C6D15B1B1DA4CF00D94E6A /* TGApiClient.m in Sources */,
 				788DBF881B21D3100058C1C2 /* TGUserManager.m in Sources */,
 				78DBCC5C1B207FDD009986BA /* TGISOFormatterTests.m in Sources */,
@@ -657,6 +670,7 @@
 				78EC5DF31B28A9540052647C /* UIDevice+TGUtilities.m in Sources */,
 				78C6D1651B1DBE2100D94E6A /* NSString+TGUtilities.m in Sources */,
 				78CF3D611B25CFF30091B81B /* TGEvent+RandomTestEvent.m in Sources */,
+				78F787E91C17392F00AC1B39 /* TGPostsManager.m in Sources */,
 				78C6D15A1B1DA4CF00D94E6A /* NSURL+TGUtilities.m in Sources */,
 				7878ECAC1B2B279500BA47F6 /* TGApiClientMock.m in Sources */,
 				78D7366A1B1F60D000BE194D /* TGEventObjectTests.m in Sources */,

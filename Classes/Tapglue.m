@@ -27,6 +27,7 @@
 #import "NSString+TGUtilities.h"
 #import "TGEventManager.h"
 #import "TGEventManager+Queries.h"
+#import "TGPostsManager.h"
 #import "TGUserManager.h"
 #import "TGObjectCache.h"
 #import "TGConfiguration.h"
@@ -45,6 +46,7 @@ NSString *const TaplueSDKID = @"com.tapglue.sdk";
 
 @property (nonatomic, strong) TGEventManager *eventManager;
 @property (nonatomic, strong) TGUserManager *userManager;
+@property (nonatomic, strong) TGPostsManager *postsManager;
 @property (nonatomic, strong) NSTimer *flushTimer;
 
 @end
