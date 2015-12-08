@@ -54,6 +54,7 @@
 		788DBF8D1B21E6E40058C1C2 /* TGSetupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DBF8C1B21E6E40058C1C2 /* TGSetupTests.m */; };
 		7891B2281BBA99A6009AFA8E /* TGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2271BBA99A6009AFA8E /* TGImage.m */; };
 		7891B22A1BBA9BBD009AFA8E /* TGImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2291BBA9BBD009AFA8E /* TGImageTests.m */; };
+		789E19101C16E41100192EE4 /* TGQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA60911C15D9E1007F56D5 /* TGQuery.m */; };
 		78AA607D1C15CB2F007F56D5 /* TGQueryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA607C1C15CB2F007F56D5 /* TGQueryTests.m */; };
 		78AA60921C15D9E1007F56D5 /* TGEventManager+Queries.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA608F1C15D9E1007F56D5 /* TGEventManager+Queries.m */; };
 		78AA60931C15D9E1007F56D5 /* TGQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA60911C15D9E1007F56D5 /* TGQuery.m */; };
@@ -593,6 +594,7 @@
 				7878EC831B2B24D900BA47F6 /* NSString+TGRandomString.m in Sources */,
 				7878EC841B2B24D900BA47F6 /* UIDevice+TGUtilities.m in Sources */,
 				7878EC851B2B24D900BA47F6 /* NSString+TGUtilities.m in Sources */,
+				789E19101C16E41100192EE4 /* TGQuery.m in Sources */,
 				7878EC861B2B24D900BA47F6 /* TGEvent+RandomTestEvent.m in Sources */,
 				7878EC871B2B24D900BA47F6 /* NSURL+TGUtilities.m in Sources */,
 				7878EC891B2B24D900BA47F6 /* TGEventObject.m in Sources */,

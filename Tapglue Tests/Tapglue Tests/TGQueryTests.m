@@ -7,7 +7,11 @@
 //
 
 #import "TGTestCase.h"
-#import "TGQuery.h"
+#import "TGQuery+Private.h"
+
+@interface TGQuery (Testing)
+- (void)addRequestCondition:(NSString*)requestCondition withValue:(id)value forEventCondition:(NSString*)eventCondition;
+@end
 
 @interface TGQueryTests : TGTestCase
 
@@ -46,6 +50,12 @@
     TGQuery *builder = [[TGQuery alloc] init];
     [builder addObjectWithId:@"some-id-123"];
     expect(builder.queryAsString).to.equal(@"{\"object\":{\"id\":{\"eq\":\"some-id-123\"}}}");
+}
+
+- (void)testQueryWithTypeIn {
+    TGQuery *query = [TGQuery new];
+    [query addTypeIn:@[@"my_event_1", @"my_event_2"]];
+    expect(query.queryAsString).to.equal(@"{\"type\":{\"in\":[\"my_event_1\",\"my_event_2\"]}}");
 }
 
 @end

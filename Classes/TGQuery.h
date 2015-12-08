@@ -23,7 +23,14 @@
 
 @interface TGQuery : NSObject
 
-- (void)addTypeEquals:(NSString*)type;
+// TODO: documetation 
+
+#pragma mark - Object.ID
 - (void)addObjectWithId:(NSString*)objectId;
+- (void)addObjectIdIn:(NSArray*)objectIds;
+
+#pragma mark - Type 
+- (void)addTypeEquals:(NSString*)type;
+- (void)addTypeIn:(NSArray*)types;
 
 @end

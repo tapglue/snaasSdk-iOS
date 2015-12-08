@@ -49,18 +49,72 @@
     return string;
 }
 
-- (void)addTypeEquals:(NSString*)type {
-    if (type) {
-        [self.mutableQuery setValue:@{@"eq":type} forKeyPath:@"type"];
-    }
-}
+#pragma mark - Object.ID
 
 - (void)addObjectWithId:(NSString*)objectId {
     if (objectId) {
-        [self.mutableQuery setValue:@{@"id":@{@"eq":objectId}} forKeyPath:@"object"];
+        [self addRequestCondition:@"eq" withValue:objectId forEventCondition:@"object.id"];
     }
 }
 
+- (void)addObjectIdIn:(NSArray*)objectIds {
+    if ([self validateArrayInput:objectIds]) {
+        [self addRequestCondition:@"in" withValue:objectIds forEventCondition:@"object.id"];
+    }
+}
 
+#pragma mark - Type 
+
+- (void)addTypeEquals:(NSString*)type {
+    if (type) {
+        [self addRequestCondition:@"eq" withValue:type forEventCondition:@"type"];
+    }
+}
+
+- (void)addTypeIn:(NSArray*)types {
+    if ([self validateArrayInput:types]) {
+        [self addRequestCondition:@"in" withValue:types forEventCondition:@"type"];
+    }
+}
+
+#pragma mark - Private
+
+/*!
+ @abstract Adds a new condtion to the query.
+ @discussion Conditions are resolve to a nested json structure.
+ @param requestCondition RequestCondition specifies the type for filtering for the fields.
+ @param eventCondition EventCondition specifies the evnet field to be filtered. It can also be passed in as a keyPath seperated by a period for conditions effecting event properties.
+ */
+- (void)addRequestCondition:(NSString*)requestCondition withValue:(id)value forEventCondition:(NSString*)eventCondition {
+    NSDictionary *conditionJson = [self jsonDictionaryForRequestCondition:requestCondition withValue:value];
+    NSArray *eventCompontents = [eventCondition componentsSeparatedByString:@"."];
+    for (NSUInteger i = eventCompontents.count-1; i > 0; i--) {
+        conditionJson = @{eventCompontents[i] : conditionJson};
+    }
+    [self.mutableQuery setValue:conditionJson forKeyPath:eventCompontents.firstObject];
+}
+
+
+- (NSDictionary*)jsonDictionaryForRequestCondition:(NSString*)requestCondition withValue:(id)value {
+    if ([requestCondition isEqualToString:@"eq"]) {
+        return @{requestCondition: value};
+    }
+    if ([requestCondition isEqualToString:@"in"]) {
+        NSAssert([value isKindOfClass:[NSArray class]], @"value must be an array for requestCondition 'in'");
+        return @{requestCondition: value};
+    }
+    
+    NSAssert(false, @"unsupported requestCondition '%@'", requestCondition);
+    return nil;
+}
+
+#pragma mark - Validate inputs 
+
+- (BOOL)validateArrayInput:(NSArray*)array {
+    if (array && array.count > 0) {
+        return YES;
+    }
+    return NO;
+}
 
 @end
