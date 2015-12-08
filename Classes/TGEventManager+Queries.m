@@ -26,7 +26,7 @@
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
-#import "TGQueryBuilder.h"
+#import "TGQuery.h"
 
 /*!
  @abstract Completion block for a network requets.
@@ -57,7 +57,7 @@ typedef void (^TGEventListCompletionBlock)(NSArray *events, NSError *error);
 }
 
 - (void)retrieveEventsForQuery:(NSDictionary*)query andRoute:(NSString*)route withCompletionBlock:(TGEventListCompletionBlock)completionBlock {
-    [self retrieveEventsForQueryString:[TGQueryBuilder stringFromQuery:query]
+    [self retrieveEventsForQueryString:[TGQuery stringFromQuery:query]
                               andRoute:TGEventManagerAPIEndpointCurrentUserFeed
                    withCompletionBlock:completionBlock];
 }
@@ -79,7 +79,7 @@ typedef void (^TGEventListCompletionBlock)(NSArray *events, NSError *error);
 }
 
 - (NSString*)composeQueryStringFromEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId {
-    TGQueryBuilder *queryBuilder = [[TGQueryBuilder alloc] init];
+    TGQuery *queryBuilder = [[TGQuery alloc] init];
     [queryBuilder addTypeEquals:eventType];
     [queryBuilder addObjectWithId:objectId];
     return queryBuilder.queryAsString;

@@ -21,7 +21,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TGQueryBuilder : NSObject
+@interface TGQuery : NSObject
 
 @property (nonatomic, strong, readonly) NSDictionary *query;
 @property (nonatomic, strong, readonly) NSString *queryAsString;

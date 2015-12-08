@@ -7,19 +7,19 @@
 //
 
 #import "TGTestCase.h"
-#import "TGQueryBuilder.h"
+#import "TGQuery.h"
 
-@interface TGQueryBuilderTests : TGTestCase
+@interface TGQueryTests : TGTestCase
 
 @end
 
-@implementation TGQueryBuilderTests
+@implementation TGQueryTests
 
 - (void)testComposeQueryDictionaryFromEventType {
-    TGQueryBuilder *builder;
+    TGQuery *builder;
     NSDictionary *query;
 
-    builder = [[TGQueryBuilder alloc] init];
+    builder = [[TGQuery alloc] init];
     [builder addTypeEquals:@"foo"];
     [builder addObjectWithId:@"bar"];
     query = builder.query;
@@ -27,14 +27,14 @@
     expect([query valueForKey:@"type"]).toNot.beNil();
     expect([query valueForKey:@"object"]).toNot.beNil();
     
-    builder = [[TGQueryBuilder alloc] init];
+    builder = [[TGQuery alloc] init];
     [builder addTypeEquals:@"foo"];
     query = builder.query;
     expect(query.count).to.equal(1);
     expect([query valueForKey:@"type"]).toNot.beNil();
     expect([query valueForKey:@"object"]).to.beNil();
     
-    builder = [[TGQueryBuilder alloc] init];
+    builder = [[TGQuery alloc] init];
     [builder addObjectWithId:@"bar"];
     query = builder.query;
     expect(query.count).to.equal(1);
@@ -43,7 +43,7 @@
 }
 
 - (void)testQueryDictToUrlString {
-    TGQueryBuilder *builder = [[TGQueryBuilder alloc] init];
+    TGQuery *builder = [[TGQuery alloc] init];
     [builder addObjectWithId:@"some-id-123"];
     expect(builder.queryAsString).to.equal(@"{\"object\":{\"id\":{\"eq\":\"some-id-123\"}}}");
 }

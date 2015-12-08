@@ -19,13 +19,13 @@
 //
 
 
-#import "TGQueryBuilder.h"
+#import "TGQuery.h"
 
-@interface TGQueryBuilder ()
+@interface TGQuery ()
 @property (nonatomic, strong) NSMutableDictionary *mutableQuery;
 @end
 
-@implementation TGQueryBuilder
+@implementation TGQuery
 
 - (instancetype) init {
     self = [super init];
