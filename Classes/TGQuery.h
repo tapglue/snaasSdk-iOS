@@ -34,7 +34,7 @@
 - (void)addTypeIn:(NSArray*)types;
 
 #pragma mark - Object.ID
-- (void)addObjectWithIdEquals:(NSString*)objectId;
-- (void)addObjectWithIdIn:(NSArray*)objectIds;
+- (void)addEventObjectWithIdEquals:(NSString*)objectId;
+- (void)addEventObjectWithIdIn:(NSArray*)objectIds;
 
 @end

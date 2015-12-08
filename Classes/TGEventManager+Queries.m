@@ -70,7 +70,7 @@
 - (TGQuery*)composeQueryForEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId {
     TGQuery *query = [[TGQuery alloc] init];
     [query addTypeEquals:eventType];
-    [query addObjectWithIdEquals:objectId];
+    [query addEventObjectWithIdEquals:objectId];
     return query;
 }
 

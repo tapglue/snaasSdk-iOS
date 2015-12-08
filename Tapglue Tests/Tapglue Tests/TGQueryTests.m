@@ -52,7 +52,7 @@
 
     builder = [[TGQuery alloc] init];
     [builder addTypeEquals:@"foo"];
-    [builder addObjectWithIdEquals:@"bar"];
+    [builder addEventObjectWithIdEquals:@"bar"];
     query = builder.query;
     expect(query.count).to.equal(2);
     expect([query valueForKey:@"type"]).toNot.beNil();
@@ -66,7 +66,7 @@
     expect([query valueForKey:@"object"]).to.beNil();
     
     builder = [[TGQuery alloc] init];
-    [builder addObjectWithIdEquals:@"bar"];
+    [builder addEventObjectWithIdEquals:@"bar"];
     query = builder.query;
     expect(query.count).to.equal(1);
     expect([query valueForKey:@"type"]).to.beNil();
@@ -75,7 +75,7 @@
 
 - (void)testQueryDictToUrlString {
     TGQuery *builder = [[TGQuery alloc] init];
-    [builder addObjectWithIdEquals:@"some-id-123"];
+    [builder addEventObjectWithIdEquals:@"some-id-123"];
     expect(builder.queryAsString).to.equal(@"{\"object\":{\"id\":{\"eq\":\"some-id-123\"}}}");
 }
 

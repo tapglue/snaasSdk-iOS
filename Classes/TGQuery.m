@@ -82,13 +82,13 @@
 
 #pragma mark - Object.ID
 
-- (void)addObjectWithIdEquals:(NSString*)objectId {
+- (void)addEventObjectWithIdEquals:(NSString*)objectId {
     if (objectId) {
         [self addRequestCondition:@"eq" withValue:objectId forEventCondition:@"object.id"];
     }
 }
 
-- (void)addObjectWithIdIn:(NSArray*)objectIds {
+- (void)addEventObjectWithIdIn:(NSArray*)objectIds {
     if ([self validateArrayInput:objectIds]) {
         [self addRequestCondition:@"in" withValue:objectIds forEventCondition:@"object.id"];
     }
