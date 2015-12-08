@@ -249,16 +249,16 @@
     expect(user.images).to.beKindOf([NSDictionary class]);
     TGImage *profileImage = [user.images objectForKey:@"profile_thumb"];
     expect(profileImage).to.beKindOf([TGImage class]);
-    expect(profileImage.url).to.equal([NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"]);
+    expect(profileImage.url).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
 }
 
 // [Correct] From JSON to User with connection counts
 - (void)testConnectionCountsForUserInitWithDictionary {
     NSDictionary *userData = @{ @"id":@(858667),
                                 @"user_name":@"acc-1-app-1-user-2",
-                                @"friends" : @12,
-                                @"followers" : @123,
-                                @"following" : @57
+                                @"friend_count" : @12,
+                                @"follower_count" : @123,
+                                @"followed_count" : @57
                                 };
     
     TGUser *user = [[TGUser alloc] initWithDictionary:userData];
