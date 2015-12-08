@@ -140,4 +140,30 @@
 }
 
 
+- (void)testInitJsonDictionaryWithOnlyTextAttachment {
+    
+    TGPost *post = [TGPost new];
+    [post addAttachment:[TGAttachment attachmentWithText:@"Lorem ipsum..." andName:@"body"]];
+    
+    NSDictionary *jsonDictionary = post.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    
+    expect(jsonDictionary.count).to.equal(2);
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"id"]).to.beNil();
+    expect([jsonDictionary valueForKey:@"visibility"]).to.equal(20);
+    
+    expect([jsonDictionary valueForKey:@"attachments"]).to.beKindOf([NSArray class]);
+    NSArray *jsonAttachments = [jsonDictionary valueForKey:@"attachments"];
+    expect(jsonAttachments.count).to.equal(1);
+    expect(jsonAttachments).to.contain((@{
+                                          @"content": @"Lorem ipsum...",
+                                          @"name": @"body",
+                                          @"type": @"text"
+                                          }));
+    
+}
+
+
 @end

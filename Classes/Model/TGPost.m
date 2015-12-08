@@ -36,6 +36,15 @@ static NSString *const TGPostUserIdJsonKey = @"user_id";
 
 @implementation TGPost
 
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        // Set default visibility to connections
+        self.visibility = TGVisibilityConnection;
+    }
+    return self;
+}
+
 - (NSArray*)attachments {
     return [NSArray arrayWithArray:self.mutableAttachemnts];
 }
