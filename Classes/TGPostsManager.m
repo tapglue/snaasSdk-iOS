@@ -77,16 +77,67 @@ static NSString *const TGPostsManagerAPIEndpointPosts = @"posts";
     }];
 }
 
-#pragma mark - Helper 
+
+#pragma mark Lists
+
+- (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    // route: /posts
+    [self retrievePostsAtRoute:TGPostsManagerAPIEndpointPosts withCompletionBlock:completionBlock];
+}
+
+- (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    // route: /me/feed/posts
+    NSString *route = [TGApiEndpointCurrentUser stringByAppendingPathComponent:@"feed"];
+    route = [route stringByAppendingPathComponent:TGPostsManagerAPIEndpointPosts];
+    [self retrievePostsAtRoute:route withCompletionBlock:completionBlock];
+}
+
+- (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    // route: /me/posts
+    NSString *route = [TGApiEndpointCurrentUser stringByAppendingPathComponent:TGPostsManagerAPIEndpointPosts];
+    [self retrievePostsAtRoute:route withCompletionBlock:completionBlock];
+}
+
+- (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    // route: /users/{userID}/posts
+    NSString *route = [TGApiEndpointUsers stringByAppendingPathComponent:userId];
+    route = [route stringByAppendingPathComponent:TGPostsManagerAPIEndpointPosts];
+    [self retrievePostsAtRoute:route withCompletionBlock:completionBlock];
+}
+
+- (void)retrievePostsAtRoute:(NSString*)route withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (!error) {
+            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+            
+            NSArray *posts = [self postsFromJsonResponse:jsonResponse];
+            
+            if (completionBlock) {
+                completionBlock(posts, nil);
+            }
+        }
+        else if(completionBlock) {
+            completionBlock(nil, error);
+        }
+    }];
+}
+
+#pragma mark - Helper
 
 - (NSString*)routeForPostWithId:(NSString*)postId {
     return [TGPostsManagerAPIEndpointPosts stringByAppendingPathComponent:postId];
 }
 
-
-
-
-
+- (NSArray*)postsFromJsonResponse:(NSDictionary*)jsonResponse {
+    NSArray *postDictionaries = [jsonResponse objectForKey:@"posts"];
+    NSMutableArray *posts = [NSMutableArray arrayWithCapacity:postDictionaries.count];
+    for (NSDictionary *postData in postDictionaries) {
+        TGPost *newPost = [[TGPost alloc] initWithDictionary:postData];
+        [posts addObject:newPost];
+    }
+    return posts;
+}
 
 
 

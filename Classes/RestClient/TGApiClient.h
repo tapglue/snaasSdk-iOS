@@ -20,11 +20,9 @@
 
 #import <Foundation/Foundation.h>
 
-/*!
- @abstract Defintion of events endpoint.
- @constant TGApiEndpointEvents holds the name of the endpoint for events
- */
 extern NSString *const TGApiEndpointEvents;
+extern NSString *const TGApiEndpointUsers;
+extern NSString *const TGApiEndpointCurrentUser;
 
 /*!
  @abstract Completion block for a network requets.

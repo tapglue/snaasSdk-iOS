@@ -36,6 +36,8 @@
 #endif
 
 NSString *const TGApiEndpointEvents = @"events";
+NSString *const TGApiEndpointUsers = @"users";
+NSString *const TGApiEndpointCurrentUser = @"me";
 
 static NSString *const TGApiClientAppAndDeviceInfoAppNameKey = @"appName";
 static NSString *const TGApiClientAppAndDeviceInfoAppBunldeIdKey = @"appBundleId";

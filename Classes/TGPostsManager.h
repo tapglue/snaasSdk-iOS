@@ -61,17 +61,29 @@
  */
 - (void)retrievePostWithId:(NSString*)objectId withCompletionBlock:(TGGetPostCompletionBlock)completionBlock;
 
+
 #pragma mark Lists
 
+/*!
+ @abstract Retrieve all posts.
+ */
+- (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
-//Create Post	POST	/posts
-//Retrieve Post	GET	/posts/{postID}
-//Update Post	PUT	/posts/{postID}
-//Delete Post	DELETE	/posts/{postID}
-//Retrieve all Posts	GET	/posts
-//Retrieve Posts Feed	GET	/me/feed/posts
-//Retrieve my Posts	GET	/me/posts
-//Retrieve users Posts	GET	/users/{userID}/posts
+/*!
+ @abstract Retrieve the feed of posts for the current user.
+ */
+- (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
+
+/*!
+ @abstract Retrieve the own of posts made by the current user.
+ */
+- (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
+
+/*!
+ @abstract Retrieve the posts made by the given user.
+ @param userId The user's id to retrieve it's posts for.
+ */
+- (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
 
 #pragma mark - Comments

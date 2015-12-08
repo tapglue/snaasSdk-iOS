@@ -345,6 +345,11 @@ typedef void (^TGFeedCompletionBlock)(NSArray *events, NSInteger unreadCount, NS
  @abstract Completion block for a post.
  @discussion The TGGetPostCompletionBlock will return a user or an error.
  */
-typedef void (^TGGetPostCompletionBlock)(TGPost *user, NSError *error);
+typedef void (^TGGetPostCompletionBlock)(TGPost *post, NSError *error);
+
+/*!
+ @abstract Completion block for a network requets fetching a list of posts.
+ */
+typedef void (^TGGetPostListCompletionBlock)(NSArray *posts, NSError *error);
 
 

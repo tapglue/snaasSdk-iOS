@@ -30,6 +30,10 @@
     return [self sharedInstance].postManager;
 }
 
+#pragma mark - Posts -
+
+#pragma mark CRUD
+
 + (void)createPostWithText:(NSString*)attachmentText
                      named:(NSString*)attachmentName
        withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
@@ -53,6 +57,28 @@
 
 + (void)retrievePostWithId:(NSString*)objectId withCompletionBlock:(TGGetPostCompletionBlock)completionBlock {
     [[self postManager] retrievePostWithId:objectId withCompletionBlock:completionBlock];
+}
+
+#pragma mark Lists
+
+- (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    [[self postManager] retrieveAllPostsWithCompletionBlock:completionBlock];
+}
+
+- (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    [[self postManager] retrievePostsFeedForCurrentUserWithCompletionBlock:completionBlock];
+}
+
+- (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    [[self postManager] retrievePostsForCurrentUserWithCompletionBlock:completionBlock];
+}
+
+- (void)retrievePostsForUser:(TGUser*)user withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    [self retrievePostsForUserWithId:user.userId withCompletionBlock:completionBlock];
+}
+
+- (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
+    [[self postManager] retrievePostsForUserWithId:userId withCompletionBlock:completionBlock];
 }
 
 
