@@ -952,6 +952,17 @@
     }];
 }
 
+- (void)testUserSearchWithEmails {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        NSArray *emails = @[@"1@tapgleu.com", @"asdf@tapglue.com"];
+        [Tapglue searchUsersWithEmails:emails andCompletionBlock:^(NSArray *users, NSError *error) {
+            expect(error).to.beNil();
+            expect(users.count).to.beGreaterThanOrEqualTo(0);
+            [expectation fulfill];
+        }];
+    }];
+}
+
 // [Correct] Test for isCurrentUser
 - (void)testIsCurrentUserAfterLogin {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {

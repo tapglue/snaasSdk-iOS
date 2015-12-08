@@ -32,6 +32,8 @@ NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 NSString *const TGUserManagerAPIEndpointCurrentUser = @"me";
 NSString *const TGUserManagerAPIEndpointUsers = @"users";
 
+#define TGUserManagerAPIEndpointSearch [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:@"search"]
+
 static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 @implementation TGUserManager
@@ -107,12 +109,32 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 }
 
 - (void)searchUsersWithSearchString:(NSString*)searchString
-                 andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
-    NSString *route = [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:@"search"];
-    [self.client GET:route withURLParameters:@{@"q" : searchString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:@{@"q" : searchString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }
+
+- (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    NSString *queryString = [@"?email=" stringByAppendingString:[emails componentsJoinedByString:@"&email="]];
+    NSString *route = [TGUserManagerAPIEndpointSearch stringByAppendingString:queryString];
+    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+    }];
+}
+
+- (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
+                 withSocialUsersIds:(NSArray*)socialUserIds
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    
+    NSString *queryString = [NSString stringWithFormat:@"?social_platform=%@&socialid=%@",
+                             socialPlattform, [socialUserIds componentsJoinedByString:@"&socialid="]];
+    NSString *route = [TGUserManagerAPIEndpointSearch stringByAppendingString:queryString];
+    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+    }];
+}
+
 
 #pragma mark   Helper - Handlers
 

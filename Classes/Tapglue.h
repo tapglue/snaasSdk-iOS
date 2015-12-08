@@ -148,6 +148,8 @@
  */
 + (void)retrieveUserWithId:(NSString*)userId withCompletionBlock:(TGGetUserCompletionBlock)completionBlock;
 
+#pragma mark Search
+
 /*!
  @abstract Search other users.
  @discussion This will retrieve the details of the users for a given search term.
@@ -155,6 +157,14 @@
  @param term The term for which users should be searched.
  */
 + (void)searchUsersWithTerm:(NSString*)term andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
+
+// TODO: docu
++ (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
+
+// TODO: docu
++ (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
+                 withSocialUsersIds:(NSArray*)socialUserIds
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
 #pragma mark - Connections
 

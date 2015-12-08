@@ -121,7 +121,15 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
 
  @param searchString Term for which users should be searched.
  */
-- (void)searchUsersWithSearchString:(NSString*)searchString andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
+- (void)searchUsersWithSearchString:(NSString*)searchString andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
+
+// TODO: docu
+- (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
+
+// TODO: docu
+- (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
+                 withSocialUsersIds:(NSArray*)socialUserIds
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
 #pragma mark - Connections
 

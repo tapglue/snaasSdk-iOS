@@ -269,6 +269,16 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].userManager searchUsersWithSearchString:term andCompletionBlock:completionBlock];
 }
 
++ (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    [[self sharedInstance].userManager searchUsersWithEmails:emails andCompletionBlock:completionBlock];
+}
+
++ (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
+                 withSocialUsersIds:(NSArray*)socialUserIds
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    [[self sharedInstance].userManager searchUsersOnSocialPlatform:socialPlattform withSocialUsersIds:socialUserIds andCompletionBlock:completionBlock];
+}
+
 #pragma mark - Feed
 
 + (void)retrieveFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock {

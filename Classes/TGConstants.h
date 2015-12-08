@@ -292,19 +292,25 @@ typedef NS_ENUM(NSInteger, TGErrorCode) {
 
 /*!
  @abstract Completion block for succes.
- @discussion The TGSucessCompletionBlock will return a success and an error.
+ @discussion The TGSucessCompletionBlock will return a success flag and an error.
  */
 typedef void (^TGSucessCompletionBlock)(BOOL success, NSError *error);
 
 /*!
  @abstract Completion block for a user.
- @discussion The TGGetUserCompletionBlock will return a user and an error.
+ @discussion The TGGetUserCompletionBlock will return a user or an error.
  */
 typedef void (^TGGetUserCompletionBlock)(TGUser *user, NSError *error);
 
 /*!
+ @abstract Completion block for a user list.
+ @discussion The TGGetUserListCompletionBlock will return a list of user or an error.
+ */
+typedef void (^TGGetUserListCompletionBlock)(NSArray *users, NSError *error);
+
+/*!
  @abstract Completion block for an event.
- @discussion The TGGetEventCompletionBlock will return an event and an error.
+ @discussion The TGGetEventCompletionBlock will return an event or an error.
  */
 typedef void (^TGGetEventCompletionBlock)(TGEvent *event, NSError *error);
 
