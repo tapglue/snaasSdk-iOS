@@ -309,6 +309,11 @@ typedef void (^TGGetUserCompletionBlock)(TGUser *user, NSError *error);
 typedef void (^TGGetEventCompletionBlock)(TGEvent *event, NSError *error);
 
 /*!
+ @abstract Completion block for a network requets fetching a list of events.
+ */
+typedef void (^TGGetEventListCompletionBlock)(NSArray *events, NSError *error);
+
+/*!
  @abstract Completion block for a feed.
  @discussion The TGFeedCompletionBlock will return the events, the unreadCount and an error.
  */

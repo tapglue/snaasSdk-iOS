@@ -22,28 +22,14 @@
 
 @interface TGEventManager (Queries)
 
-/*!
- @abstract Retrieve all events for an object with id and type.
- @discussion This will retrieve the events for any object with an id and type.
- @param objectId The objectid for which the events should be retrieved.
- @param eventType The type of the object for which the events should be retrieved.
- */
-- (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+// TODO: docu
 
-/*!
- @abstract Retrieve current user events for an object with id and type.
- @discussion This will retrieve current user events for any object with an id and type.
- @param objectId The objectid for which the events should be retrieved.
- @param eventType The type of the object for which the events should be retrieved.
- */
-- (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+- (void)retrieveEventsWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-/*!
- @abstract Retrieve all feed events for an object with id and type.
- @discussion This will retrieve feed events for any object with an id and type.
- @param objectId The objectid for which the events should be retrieved.
- @param eventType The type of the object for which the events should be retrieved.
- */
-- (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
+- (void)retrieveEventsForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
+- (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+- (TGQuery*)composeQueryForEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId;
+    
 @end

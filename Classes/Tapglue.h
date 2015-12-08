@@ -25,6 +25,7 @@
 #import "TGEventObject.h"
 #import "TGConnection.h"
 #import "TGConfiguration.h"
+#import "TGQuery.h"
 
 /*!
  @abstract `Tapglue` The primary interface for integrating Tapglue with your app.
@@ -413,64 +414,75 @@
 + (NSArray*)cachedUnreadFeedForCurrentUser;
 + (NSInteger)cachedUnreadCountForCurrentUser;
 
-#pragma mark - Event queries
+#pragma mark - Queries -
+
+#pragma mark Events queries
 
 /*!
  @abstract Retrieve all events of a type.
  @discussion This will retrieve all events of a type.
  */
-+ (void)retrieveEventsOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsOfType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve all events of an object with id.
  @discussion This will retrieve all events of an object with an id.
  */
-+ (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve all events of an object with id and type.
  @discussion This will retrieve all events of an object with an id and type.
  */
-+ (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-#pragma mark - Current user event queries
+// TODO: documentation
++ (void)retrieveEventsWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+#pragma mark Current user event queries
 
 /*!
  @abstract Retrieve current user events of a type.
  @discussion This will retrieve current user events of a type.
  */
-+ (void)retrieveEventsForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve current user of an object with id.
  @discussion This will retrieve current user events of an object with an id.
  */
-+ (void)retrieveEventsForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve current user events of an object with id and type.
  @discussion This will retrieve current user events of an object with an id and type.
  */
-+ (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-#pragma mark - Feed Events queries
+// TODO: documentation
++ (void)retrieveEventsForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+#pragma mark Feed Events queries
 
 /*!
  @abstract Retrieve feed events of a type.
  @discussion This will retrieve feed events of a type.
  */
-+ (void)retrieveFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve feed events of an object with id.
  @discussion This will retrieve feed events of an object with an id.
  */
-+ (void)retrieveFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve feed events of an object with id and type.
  @discussion This will retrieve feed events of an object with an id and type.
  */
-+ (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+// TODO: documentation
++ (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 @end
