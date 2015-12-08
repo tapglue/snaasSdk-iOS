@@ -30,6 +30,50 @@
 
 @implementation TGEventIntegrationTests
 
+- (void)setUp {
+    [super setUp];
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    [Tapglue createAndLoginUserWithEmail:TGPersistentUserEmail andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+        expect(success).to.beTruthy();
+        expect(error).to.beNil();
+        
+        [Tapglue createAndLoginUserWithUsername:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+        }];
+    }];
+}
+
+- (void)tearDown {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [super tearDown];
+    
+    [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+        expect(success).will.beTruthy();
+        expect(error).will.beNil();
+        
+        TGUser *currentBUser = [TGUser currentUser];
+        [currentBUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).will.beTruthy();
+            expect(error).will.beNil();
+            expect([TGUser currentUser]).to.beNil();
+            
+            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).will.beTruthy();
+                expect(error).will.beNil();
+                
+                TGUser *currentBUser = [TGUser currentUser];
+                [currentBUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).will.beTruthy();
+                    expect(error).will.beNil();
+                    expect([TGUser currentUser]).to.beNil();
+                }];
+            }];
+        }];
+    }];
+}
+
 #pragma mark - CRUD Event -
 
 #pragma mark - Correct
@@ -767,6 +811,94 @@
     }];
 }
 
+// [Correct] Retrieve events for query object
+- (void)testRetrieveEventsForQueryObject {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *eventType = [NSString randomStringWithLength:10];
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        TGEvent *event = [[TGEvent alloc] init];
+        event.type = eventType;
+        
+        TGEventObject *object = [TGEventObject new];
+        
+        object.objectId = objectId;
+        event.object = object;
+        
+        // Login Other User
+        [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Search User
+            [Tapglue searchUsersWithTerm:TGPersistentUserEmail andCompletionBlock:^(NSArray *users, NSError *error) {
+                expect(users).toNot.beNil();
+                expect(error).to.beNil();
+                
+                TGUser *user = users.firstObject;
+                
+                // Friend User
+                [Tapglue friendUser:user withState:TGConnectionStateConfirmed createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                    
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    
+                    // Create Event
+                    [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                            expect(error).to.beNil();
+                            
+                            TGEvent *newEvent = [[TGEvent alloc] init];
+                            newEvent.type = eventType;
+                            newEvent.object = object;
+                            
+                            // Create Event
+                            [Tapglue createEvent:newEvent withCompletionBlock:^(BOOL success, NSError *error) {
+                                expect(success).to.beTruthy();
+                                expect(error).to.beNil();
+                                
+                                // Create Query Object
+                                TGQuery *query = [TGQuery new];
+                                [query addEventObjectWithIdEquals:objectId];
+                                [query addTypeEquals:eventType];
+                                
+                                // Retrieve Events with Query
+                                [Tapglue retrieveEventsWithQuery:query andCompletionBlock:^(NSArray *events, NSError *error) {
+                                    expect(events).toNot.beNil();
+                                    expect(error).to.beNil();
+                                    
+                                    // Retrieve me events with Query
+                                    [Tapglue retrieveEventsForCurrentUserWithQuery:query andCompletionBlock:^(NSArray *events, NSError *error) {
+                                        expect(events).toNot.beNil();
+                                        expect(error).to.beNil();
+                                        
+                                        TGEvent *retrievedEvent = events.firstObject;
+                                        expect(retrievedEvent.type).to.equal(eventType);
+                                        
+                                        [Tapglue retrieveFeedForCurrentUserWithQuery:query andCompletionBlock:^(NSArray *events, NSError *error) {
+                                            expect(events).toNot.beNil();
+                                            expect(error).to.beNil();
+                                            
+                                            TGEvent *retrievedEvent = events.firstObject;
+                                            expect(retrievedEvent.type).to.equal(eventType);
+                                            
+                                            [expectation fulfill];
+                                        }];
+                                    }];
+                                }];
+                            }];
+                        }];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
 
 #pragma mark - Negative
 
