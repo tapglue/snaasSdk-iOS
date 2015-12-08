@@ -55,12 +55,6 @@
     }
 }
 
-- (void)addTypeNotEquals:(NSString*)type {
-    if (type) {
-        [self.mutableQuery setValue:@{@"neq":type} forKeyPath:@"type"];
-    }
-}
-
 - (void)addObjectWithId:(NSString*)objectId {
     if (objectId) {
         [self.mutableQuery setValue:@{@"id":@{@"eq":objectId}} forKeyPath:@"object"];
