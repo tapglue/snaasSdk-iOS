@@ -19,6 +19,8 @@
 //
 
 #import "TGIntegrationTestCase.h"
+#import "TGConnection.h"
+#import "NSString+TGRandomString.h"
 
 @interface TGConnectionIntegrationTests : TGIntegrationTestCase
 
@@ -29,11 +31,45 @@
 - (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    [Tapglue createAndLoginUserWithEmail:TGPersistentUserEmail andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+        expect(success).to.beTruthy();
+        expect(error).to.beNil();
+        
+        [Tapglue createAndLoginUserWithUsername:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+        }];
+    }];
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    
+    [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+        expect(success).will.beTruthy();
+        expect(error).will.beNil();
+        
+        TGUser *currentBUser = [TGUser currentUser];
+        [currentBUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).will.beTruthy();
+            expect(error).will.beNil();
+            expect([TGUser currentUser]).to.beNil();
+            
+            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).will.beTruthy();
+                expect(error).will.beNil();
+                
+                TGUser *currentBUser = [TGUser currentUser];
+                [currentBUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).will.beTruthy();
+                    expect(error).will.beNil();
+                    expect([TGUser currentUser]).to.beNil();
+                }];
+            }];
+        }];
+    }];
 }
 
 #pragma mark - Create/Delete Connections -
@@ -77,12 +113,12 @@
             expect(error).to.beNil();
 
             // Friend User
-            [Tapglue friendUser:users[1] withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue friendUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
 
                 // Unfriend User
-                [Tapglue unfriendUser:users[1] withCompletionBlock:^(BOOL success, NSError *error) {
+                [Tapglue unfriendUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
                     expect(success).to.beTruthy();
                     expect(error).to.beNil();
 
@@ -108,7 +144,7 @@
                 expect(error).to.beNil();
 
                 // Friend User
-                [Tapglue friendUser:users[1] withCompletionBlock:^(BOOL success, NSError *error) {
+                [Tapglue friendUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
                     expect(success).to.beTruthy();
                     expect(error).to.beNil();
 
@@ -118,11 +154,96 @@
                         expect(error).to.beNil();
 
                         // Unfriend User
-                        [Tapglue unfriendUser:users[1] withCompletionBlock:^(BOOL success, NSError *error) {
+                        [Tapglue unfriendUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
                             expect(success).to.beTruthy();
                             expect(error).to.beNil();
 
                             [expectation fulfill];
+                        }];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
+// [Correct] Create Pending Connection and Confirm
+- (void)testCreatePendingFriendConnection {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        NSString *userAName = [NSString randomStringWithLength:10];
+        NSString *userBName = [NSString randomStringWithLength:10];
+
+        // Create user
+        [Tapglue createAndLoginUserWithUsername:userAName andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Create friend user
+            [Tapglue createAndLoginUserWithUsername:userBName andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                // Search UserA
+                [Tapglue searchUsersWithTerm:userAName andCompletionBlock:^(NSArray *users, NSError *error) {
+                    expect(users).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    // Create Pending Connection to User A
+                    [Tapglue friendUser:users.firstObject withState:TGConnectionStatePending createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        // Login User A
+                        [Tapglue loginWithUsernameOrEmail:userAName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                            expect(error).to.beNil();
+                            
+                            // Retrieve pending connections
+                            [Tapglue retrievePendingConncetionsForCurrentUserWithCompletionBlock:^(NSArray *incoming, NSArray *outgoing, NSError *error) {
+                                expect(incoming.count).to.beGreaterThanOrEqualTo(1);
+                                expect(outgoing.count).toNot.beGreaterThanOrEqualTo(1);
+                                expect(error).to.beNil();
+                                
+                                TGConnection *incomingConnection = incoming.firstObject;
+                                
+                                expect(incomingConnection.state).to.equal(TGConnectionStatePending);
+                                
+                                // Confirm connection to User B
+                                [Tapglue friendUser:incomingConnection.fromUser withState:TGConnectionStateConfirmed createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                                    expect(success).to.beTruthy();
+                                    expect(error).to.beNil();
+                                    
+                                    // Retrieve Friends List
+                                    [Tapglue retrieveFriendsForCurrentUserWithCompletionBlock:^(NSArray *users, NSError *error) {
+                                        expect(users).toNot.beNil();
+                                        expect(error).to.beNil();
+                                        
+                                        // Delete User A
+                                        TGUser *currentAUser = [TGUser currentUser];
+                                        [currentAUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
+                                            expect(success).will.beTruthy();
+                                            expect(error).will.beNil();
+                                            expect([TGUser currentUser]).to.beNil();
+                                            
+                                            // Login User B
+                                            [Tapglue loginWithUsernameOrEmail:userBName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                                                expect(success).will.beTruthy();
+                                                expect(error).will.beNil();
+                                                    
+                                                // Delete User B
+                                                TGUser *currentBUser = [TGUser currentUser];
+                                                [currentBUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
+                                                    expect(success).will.beTruthy();
+                                                    expect(error).will.beNil();
+                                                    expect([TGUser currentUser]).to.beNil();
+                                                        
+                                                    [expectation fulfill];
+                                                }];
+                                            }];
+                                        }];
+                                    }];
+                                }];
+                            }];
                         }];
                     }];
                 }];
@@ -181,8 +302,8 @@
 
                 // Follow Same User
                 [Tapglue followUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
-                    expect(success).to.beFalsy();
-                    expect(error).to.beTruthy();
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
 
                     // Unfollow
                     [Tapglue unfollowUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
@@ -207,17 +328,17 @@
             expect(error).to.beNil();
 
             // Friend User
-            [Tapglue friendUser:users[1] withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue friendUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
 
                 // Friend User
-                [Tapglue friendUser:users[1] withCompletionBlock:^(BOOL success, NSError *error) {
-                    expect(success).to.beFalsy();
-                    expect(error).to.beTruthy();
+                [Tapglue friendUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).to.beTruthy();
+                    expect(error).to.beFalsy();
 
                     // Unfriend User
-                    [Tapglue unfriendUser:users[1] withCompletionBlock:^(BOOL success, NSError *error) {
+                    [Tapglue unfriendUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
                         expect(success).to.beTruthy();
                         expect(error).to.beNil();
 
@@ -263,10 +384,6 @@
                 [Tapglue retrieveFollowsForCurrentUserWithCompletionBlock:^(NSArray *users, NSError *error) {
                     expect(error).to.beNil();
                     expect(users).toNot.beNil();
-                    for(TGUser *user in users) {
-                        expect(user).to.beInstanceOf([TGUser class]);
-                        expect(user).to.equal(users.firstObject);
-                    }
 
                     // Unfollow
                     [Tapglue unfollowUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
@@ -301,7 +418,7 @@
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
 
-//                // Retrieve Friends
+                // Retrieve Friends
                 [Tapglue retrieveFriendsForCurrentUserWithCompletionBlock:^(NSArray *users, NSError *error) {
                     expect(error).to.beNil();
                     expect(users).to.beKindOf([NSArray class]);
@@ -314,7 +431,7 @@
                     [Tapglue unfriendUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
                         expect(success).to.beTruthy();
                         expect(error).to.beNil();
-//
+
                         [expectation fulfill];
                     }];
                 }];
@@ -436,82 +553,92 @@
     [self waitForExpectations];
 }
 
-// TODO: build tests for
-// - retrievePendingConncetionsForCurrentUserWithCompletionBlock
-// - retrieveRejectedConncetionsForCurrentUserWithCompletionBlock
-
-- (void)testRetrievePendingConnections {
+// [Correct] Create Pending Connection and Reject
+- (void)testCreatePendingFriendConnectionAndReject {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-        [Tapglue retrievePendingConncetionsForCurrentUserWithCompletionBlock:^(NSArray *incoming, NSArray *outgoing, NSError *error) {
-            NSLog(@"e: %@", error);
-            [expectation fulfill];
-        }];
+        NSString *userAName = [NSString randomStringWithLength:10];
+        NSString *userBName = [NSString randomStringWithLength:10];
         
+        // Create user
+        [Tapglue createAndLoginUserWithUsername:userAName andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Create friend user
+            [Tapglue createAndLoginUserWithUsername:userBName andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                // Search UserA
+                [Tapglue searchUsersWithTerm:userAName andCompletionBlock:^(NSArray *users, NSError *error) {
+                    expect(users).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    // Create Pending Connection to User A
+                    [Tapglue friendUser:users.firstObject withState:TGConnectionStatePending createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        // Login User A
+                        [Tapglue loginWithUsernameOrEmail:userAName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                            expect(error).to.beNil();
+                            
+                            // Retrieve pending connections
+                            [Tapglue retrievePendingConncetionsForCurrentUserWithCompletionBlock:^(NSArray *incoming, NSArray *outgoing, NSError *error) {
+                                expect(incoming.count).to.beGreaterThanOrEqualTo(1);
+                                expect(outgoing.count).toNot.beGreaterThanOrEqualTo(1);
+                                expect(error).to.beNil();
+                                
+                                TGConnection *incomingConnection = incoming.firstObject;
+                                
+                                expect(incomingConnection.state).to.equal(TGConnectionStatePending);
+                                
+                                // Confirm connection to User B
+                                [Tapglue friendUser:incomingConnection.fromUser withState:TGConnectionStateRejected createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                                    expect(success).to.beTruthy();
+                                    expect(error).to.beNil();
+                                    
+                                    // Retrieve Friends List
+                                    [Tapglue retrieveFriendsForCurrentUserWithCompletionBlock:^(NSArray *users, NSError *error) {
+                                        expect(users).toNot.beNil();
+                                        expect(error).to.beNil();
+                                        
+                                        // Delete User A
+                                        TGUser *currentAUser = [TGUser currentUser];
+                                        [currentAUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
+                                            expect(success).will.beTruthy();
+                                            expect(error).will.beNil();
+                                            expect([TGUser currentUser]).to.beNil();
+                                            
+                                            // Login User B
+                                            [Tapglue loginWithUsernameOrEmail:userBName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                                                expect(success).will.beTruthy();
+                                                expect(error).will.beNil();
+                                                
+                                                // Delete User B
+                                                TGUser *currentBUser = [TGUser currentUser];
+                                                [currentBUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
+                                                    expect(success).will.beTruthy();
+                                                    expect(error).will.beNil();
+                                                    expect([TGUser currentUser]).to.beNil();
+                                                    
+                                                    [expectation fulfill];
+                                                }];
+                                            }];
+                                        }];
+                                    }];
+                                }];
+                            }];
+                        }];
+                    }];
+                }];
+            }];
+        }];
     }];
-    
 }
 
 
 #pragma mark - Negative
-
-// [Negative] Logout and Retrieve follows
-- (void)testRetrieveFollowsAfterLogout {
-    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-
-        //Logout User
-        [Tapglue logoutWithCompletionBlock:^(BOOL success, NSError *error) {
-            expect(success).to.beTruthy();
-            expect(error).to.beNil();
-
-            // Retrieve Follows
-            [Tapglue retrieveFollowersForCurrentUserWithCompletionBlock:^(NSArray *users, NSError *error) {
-                expect(users.count).to.equal(0);
-                expect(error).toNot.beNil();
-
-                [expectation fulfill];
-            }];
-        }];
-    }];
-}
-
-// [Negative] Logout and Retrieve followers
-- (void)testRetrieveFollowersAfterLogout {
-    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-
-        //Logout User
-        [Tapglue logoutWithCompletionBlock:^(BOOL success, NSError *error) {
-            expect(success).to.beTruthy();
-            expect(error).to.beNil();
-
-            // Retrieve Followers
-            [Tapglue retrieveFollowersForCurrentUserWithCompletionBlock:^(NSArray *users, NSError *error) {
-                expect(users.count).to.equal(0);
-                expect(error).toNot.beNil();
-
-                [expectation fulfill];
-            }];
-        }];
-    }];
-}
-
-// [Negative] Logout and Retrieve friends
-- (void)testRetrieveFriendsAfterLogout {
-    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-
-        //Logout User
-        [Tapglue logoutWithCompletionBlock:^(BOOL success, NSError *error) {
-            expect(success).to.beTruthy();
-            expect(error).to.beNil();
-
-            // Retrieve friends
-            [Tapglue retrieveFriendsForCurrentUserWithCompletionBlock:^(NSArray *users, NSError *error) {
-                expect(users.count).to.equal(0);
-                expect(error).toNot.beNil();
-
-                [expectation fulfill];
-            }];
-        }];
-    }];
-}
 
 @end

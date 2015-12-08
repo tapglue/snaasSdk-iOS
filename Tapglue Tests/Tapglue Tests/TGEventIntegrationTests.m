@@ -22,6 +22,7 @@
 #import "TGObject+Private.h"
 #import "TGEventManager.h"
 #import "Tapglue+Private.h"
+#import "NSString+TGRandomString.h"
 
 @interface TGEventIntegrationTests : TGIntegrationTestCase
 
@@ -659,6 +660,113 @@
         }];
     }];
 }
+
+#import "NSString+TGRandomString.h"
+
+// [Correct] Retrieve events for type
+- (void)testRetrieveEventsOfType {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *eventType = [NSString randomStringWithLength:10];
+        
+        // Create Event
+        [Tapglue createEventWithType:eventType withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [Tapglue retrieveEventsForCurrentUserOfType:eventType withCompletionBlock:^(NSArray *events, NSError *error) {
+                expect(events).toNot.beNil();
+                expect(error).to.beNil();
+                expect(events.count).to.beGreaterThanOrEqualTo(1);
+                
+                [Tapglue retrieveEventsOfType:eventType withCompletionBlock:^(NSArray *events, NSError *error) {
+                    expect(events).toNot.beNil();
+                    expect(error).to.beNil();
+                    expect(events.count).to.beGreaterThanOrEqualTo(1);
+                    
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    }];
+}
+
+// [Correct] Retrieve events for objectid
+- (void)testRetrieveEventsForObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        NSString *eventType = [NSString randomStringWithLength:10];
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        TGEvent *event = [[TGEvent alloc] init];
+        event.type = eventType;
+        
+        TGEventObject *object = [TGEventObject new];
+        
+        object.objectId = objectId;
+        event.object = object;
+        
+        //Create Event
+        [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [Tapglue  retrieveEventsForObjectId:objectId withCompletionBlock:^(NSArray *events, NSError *error) {
+                expect(events).toNot.beNil();
+                expect(error).to.beNil();
+                
+                expect(events.count).to.equal(1);
+                
+                [Tapglue retrieveEventsForCurrentUserForObjectId:objectId withCompletionBlock:^(NSArray *events, NSError *error) {
+                    expect(events).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    expect(events.count).to.equal(1);
+                    
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    }];
+}
+
+// [Correct] Retrieve events for type and id
+- (void)testRetrieveEventsOfTypeAndObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *eventType = [NSString randomStringWithLength:10];
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        TGEvent *event = [[TGEvent alloc] init];
+        event.type = eventType;
+        
+        TGEventObject *object = [TGEventObject new];
+        
+        object.objectId = objectId;
+        event.object = object;
+        
+        // Create Event
+        [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            [Tapglue retrieveEventsForCurrentUserForObjectWithId:objectId andEventType:eventType withCompletionBlock:^(NSArray *events, NSError *error) {
+                expect(events).toNot.beNil();
+                expect(error).to.beNil();
+                
+                expect(events.count).to.equal(1);
+                
+                [Tapglue retrieveEventsForObjectWithId:objectId andEventType:eventType withCompletionBlock:^(NSArray *events, NSError *error) {
+                    expect(events).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    expect(events.count).to.equal(1);
+                    [expectation fulfill];
+                    
+                }];
+            }];
+        }];
+    }];
+}
+
 
 #pragma mark - Negative
 
