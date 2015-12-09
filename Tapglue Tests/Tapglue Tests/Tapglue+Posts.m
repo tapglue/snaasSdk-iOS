@@ -59,23 +59,23 @@
 
 #pragma mark Lists
 
-- (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
++ (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     [[self postsManager] retrieveAllPostsWithCompletionBlock:completionBlock];
 }
 
-- (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
++ (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     [[self postsManager] retrievePostsFeedForCurrentUserWithCompletionBlock:completionBlock];
 }
 
-- (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
++ (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     [[self postsManager] retrievePostsForCurrentUserWithCompletionBlock:completionBlock];
 }
 
-- (void)retrievePostsForUser:(TGUser*)user withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
++ (void)retrievePostsForUser:(TGUser*)user withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     [self retrievePostsForUserWithId:user.userId withCompletionBlock:completionBlock];
 }
 
-- (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
++ (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     [[self postsManager] retrievePostsForUserWithId:userId withCompletionBlock:completionBlock];
 }
 

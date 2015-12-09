@@ -77,29 +77,29 @@
 /*!
  @abstract Retrieve all posts.
  */
-- (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
++ (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve the feed of posts for the current user.
  */
-- (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
++ (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve the own of posts made by the current user.
  */
-- (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
++ (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve the posts made by the given user.
  @param user The user to retrieve it's posts for.
  */
-- (void)retrievePostsForUser:(TGUser*)user withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
++ (void)retrievePostsForUser:(TGUser*)user withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve the posts made by the given user.
  @param userId The user's id to retrieve it's posts for.
  */
-- (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
++ (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
 
 @end
