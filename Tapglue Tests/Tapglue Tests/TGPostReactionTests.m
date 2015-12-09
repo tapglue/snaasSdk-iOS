@@ -109,4 +109,36 @@
     expect([jsonDictionary valueForKey:@"content"]).to.equal(@"funny 😀");
 }
 
+- (void)testInitLikeWithDictionary {
+    TGPostLike *like = [[TGPostLike alloc] initWithDictionary:@{ @"id": @"12743631303647840",
+                                                                 @"post_id": @"471739965702621007",
+                                                                 @"user_id": @"998667",
+                                                                 @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                                                                 @"updated_at": @"2014-02-10T06:25:10.144996856Z" }];
+    
+    expect(like).toNot.beNil();
+    
+    // Check for correct values
+    expect(like.objectId).to.equal(@"12743631303647840");
+    expect(like.post).to.equal(self.post);
+    expect(like.user).to.equal(self.reader);
+    expect(like.createdAt).to.equal([NSDate dateWithTimeIntervalSince1970:1433148297]);
+    expect(like.updatedAt).to.equal([NSDate dateWithTimeIntervalSince1970:1392013510]);
+}
+
+
+- (void)testJsonDictionaryForLike {
+    TGPostLike *like = [TGPostLike new];
+    like.post = self.post;
+    like.user = self.reader;
+    
+    NSDictionary *jsonDictionary = like.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    expect(jsonDictionary.count).to.equal(2);
+    
+    // Check for correct values
+    expect([jsonDictionary valueForKey:@"user_id"]).to.equal(@"998667");
+    expect([jsonDictionary valueForKey:@"post_id"]).to.equal(@"471739965702621007");
+}
+
 @end
