@@ -109,6 +109,25 @@
     expect([jsonDictionary valueForKey:@"content"]).to.equal(@"funny 😀");
 }
 
+- (void)testLoadDataOnComment {
+    TGPostComment *comment = [TGPostComment new];
+    comment.post = self.post;
+    comment.user = self.reader;
+    comment.content = @"funny 😀";
+    
+    NSMutableDictionary *jsonDictionary = comment.jsonDictionary.mutableCopy;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    expect(jsonDictionary.count).to.equal(3);
+    jsonDictionary[@"id"] = @"1092381209";
+    
+    [comment loadDataFromDictionary:jsonDictionary];
+
+    expect(comment.objectId).to.equal(@"1092381209");
+    expect(comment.user).to.equal(self.reader);
+    expect(comment.post).to.equal(self.post);
+    expect(comment.content).to.equal(@"funny 😀");
+}
+
 - (void)testInitLikeWithDictionary {
     TGPostLike *like = [[TGPostLike alloc] initWithDictionary:@{ @"id": @"12743631303647840",
                                                                  @"post_id": @"471739965702621007",

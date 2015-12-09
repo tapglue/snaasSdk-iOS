@@ -37,9 +37,20 @@
 #pragma mark CRUD
 
 - (void)createPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client createObject:post
-                      atRoute:[TGApiRoutesBuilder routeForAllPosts]
-          withCompletionBlock:completionBlock];
+    [self.client POST:[TGApiRoutesBuilder routeForAllPosts] withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+
+        [post loadDataFromDictionary:jsonResponse];
+        [[TGPost cache] addObject:post];
+        
+        if (!error) {
+            if (completionBlock) {
+                completionBlock(YES, nil);
+            }
+        } else if (completionBlock) {
+            completionBlock(NO, error);
+        }
+    }];
+
 }
 
 - (void)updatePost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
@@ -141,8 +152,6 @@
         
         if (!error) {
             [self createAndCacheUserFromJsonResponse:jsonResponse];
-
-            [TGPost createOrLoadWithDictionary:[jsonResponse objectForKey:@"posts"]]; // add post to cache
             
             NSArray *commentDictionaries = [jsonResponse objectForKey:@"comments"];
             NSMutableArray *comments = [NSMutableArray arrayWithCapacity:commentDictionaries.count];

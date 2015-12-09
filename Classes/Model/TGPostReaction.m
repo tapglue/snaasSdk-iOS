@@ -42,8 +42,6 @@ static NSString *const TGPostReactionPostIdJsonKey = @"post_id";
     _post = [TGPost objectWithId:[data tg_stringValueForKey:TGPostReactionPostIdJsonKey]];
 }
 
-
-
 - (NSDictionary*)jsonMapping {
     // left side: json attribute name , right side: model property name
     // post_id and user_id are handled separety 
@@ -56,20 +54,11 @@ static NSString *const TGPostReactionPostIdJsonKey = @"post_id";
               @"post_id" : @"post.objectId" };
 }
 
-//
-//- (NSDictionary*)jsonMappingForReading {
-//    NSMutableDictionary *mapping = [self jsonMappingForWriting].mutableCopy;
-//    [mapping addEntriesFromDictionary:@{
-//                                        @"counts.comments" : @"commentsCount",
-//                                        @"counts.likes" : @"likesCount",
-//                                        @"counts.shares" : @"sharesCount"
-//                                        }];
-//    return mapping;
-//}
-//
-//
-
-
-
+- (NSDictionary*)jsonDictionary {
+    // id on posts must be a string while all other objects use numbers
+    NSMutableDictionary *jsonDictionary = [super jsonDictionary].mutableCopy;
+    jsonDictionary[TGModelObjectIdJsonKey] = [jsonDictionary[TGModelObjectIdJsonKey] stringValue];
+    return jsonDictionary;
+}
 
 @end

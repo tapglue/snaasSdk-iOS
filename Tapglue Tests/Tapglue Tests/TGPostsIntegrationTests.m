@@ -34,6 +34,8 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test setUp will finish"];
+
     [Tapglue createAndLoginUserWithEmail:TGPersistentUserEmail andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
         expect(success).to.beTruthy();
         expect(error).to.beNil();
@@ -41,8 +43,16 @@
         [Tapglue createAndLoginUserWithUsername:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
             expect(success).to.beTruthy();
             expect(error).to.beNil();
+            [expectation fulfill];
         }];
     }];
+    
+    [self waitForExpectationsWithTimeout:30.0 handler:^(NSError *error) {
+        if(error) {
+            XCTFail(@"Expectation Failed with error: %@", error);
+        }
+    }];
+
 }
 
 - (void)tearDown {
@@ -136,6 +146,7 @@
         [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
             expect(success).to.beTruthy();
             expect(error).to.beNil();
+            expect(post.objectId).toNot.beNil();
             
             // Retrieve my posts
             [Tapglue retrievePostsForCurrentUserWithCompletionBlock:^(NSArray *posts, NSError *error) {
@@ -154,6 +165,190 @@
                     
                     // Delete Post
                     [Tapglue deletePostWithId:post.objectId withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [expectation fulfill];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
+#pragma mark - CRUD Comments -
+
+#pragma mark - Correct
+
+// [Correct] Test Post Lists
+- (void)testCRUDComments {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        // Create TGPost Object
+        TGPost *post = [TGPost new];
+        post.visibility = TGVisibilityPublic;
+        post.tags = @[@"fitness",@"running"];
+        
+        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        
+        // Create Post
+        [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Create Comment
+            [Tapglue createCommentWithContent:@"great post!" forPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                // Retrieve Comments
+                [Tapglue retrieveCommentsForPost:post withCompletionBlock:^(NSArray *comments, NSError *error) {
+                    expect(comments).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    TGPostComment *comment = comments.firstObject;
+                    comment.content = @"bad post!";
+                    
+                    // Update Comment
+                    [Tapglue updateComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        // Delete Comment
+                        [Tapglue deleteComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                            expect(error).to.beNil();
+                            
+                            [expectation fulfill];
+                        }];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
+// [Correct] Test Post Lists
+- (void)testCRUDCommentsViaPostObject {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        // Create TGPost Object
+        TGPost *post = [TGPost new];
+        post.visibility = TGVisibilityPublic;
+        post.tags = @[@"fitness",@"running"];
+        
+        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        
+        // Create Post
+        [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Create Comment
+            [post commentWithContent:@"great post!" withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                // Retrieve Comments
+                [Tapglue retrieveCommentsForPost:post withCompletionBlock:^(NSArray *comments, NSError *error) {
+                    expect(comments).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    TGPostComment *comment = comments.firstObject;
+                    comment.content = @"bad post!";
+                    
+                    // Update Comment
+                    [Tapglue updateComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        // Delete Comment
+                        [Tapglue deleteComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                            expect(error).to.beNil();
+                            
+                            [expectation fulfill];
+                        }];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
+// [Correct] Test Post Lists
+- (void)testCRUDLikes {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        // Create TGPost Object
+        TGPost *post = [TGPost new];
+        post.visibility = TGVisibilityPublic;
+        post.tags = @[@"fitness",@"running"];
+        
+        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        
+        // Create Post
+        [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            expect(post.objectId).toNot.beNil();
+            
+            // Create Like
+            [Tapglue createLikeForPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                // Retrieve Likes
+                [Tapglue retrieveLikesForPost:post withCompletionBlock:^(NSArray *likes, NSError *error) {
+                    expect(likes).toNot.beNil();
+                    expect(error).to.beNil();
+
+                    TGPostLike *like = likes.firstObject;
+                    expect(like).toNot.beNil();
+                
+                    // Delete Like
+                    [Tapglue deleteLike:like withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [expectation fulfill];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
+// [Correct] Test Post Lists
+- (void)testCRUDLikesViaPostObject {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        // Create TGPost Object
+        TGPost *post = [TGPost new];
+        post.visibility = TGVisibilityPublic;
+        post.tags = @[@"fitness",@"running"];
+        
+        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        
+        // Create Post
+        [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Create Like
+            [post likeWithCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                // Retrieve Likes
+                [Tapglue retrieveLikesForPost:post withCompletionBlock:^(NSArray *likes, NSError *error) {
+                    expect(likes).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    TGPostLike *like = likes.firstObject;
+                    expect(like).toNot.beNil();
+                    
+                    // Delete Like
+                    [Tapglue deleteLike:like withCompletionBlock:^(BOOL success, NSError *error) {
                         expect(success).to.beTruthy();
                         expect(error).to.beNil();
                         

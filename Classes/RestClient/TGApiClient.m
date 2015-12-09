@@ -193,6 +193,12 @@ static NSString *const TGApiClientAppAndDeviceInfoCarrier = @"carrier";
         [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         request.HTTPBody = [NSJSONSerialization dataWithJSONObject:bodyObject options:kNilOptions error:NULL]; // ToDo: error handling for json parsing
     }
+    
+    // FIXME: temporary fix for creating likes >>>
+    else if ([method isEqualToString:@"POST"] || [method isEqualToString:@"PUT"]) {
+        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    }
+    // <<< 
 
     [self setNetworkActivityIndicatorVisible:YES];
 
@@ -261,7 +267,8 @@ static NSString *const TGApiClientAppAndDeviceInfoCarrier = @"carrier";
     NSDictionary *errorDictionary = @{ TGErrorHTTPStatusCodeKey : [NSNumber numberWithInteger:httpStatusCode] };
 
     NSArray *jsonErrors = [jsonResponse objectForKey:@"errors"];
-    if (jsonErrors.count == 0) {
+    
+    if (jsonErrors.count == 0 || ![jsonErrors isKindOfClass:[NSArray class]]) {
         error = [NSError tg_errorWithCode:kTGErrorUnknownError userInfo:errorDictionary];
     } else if (jsonErrors.count == 1) {
         error = [NSError tg_errorFromJsonDicitonary:jsonErrors.firstObject withUserInfo:errorDictionary];
@@ -275,6 +282,7 @@ static NSString *const TGApiClientAppAndDeviceInfoCarrier = @"carrier";
         [errorUserInfo setObject:@"Multiple errors occured. See userInfos[TGErrorUnderlyingErrorsKey]" forKey:NSLocalizedDescriptionKey];
         error = [NSError tg_errorWithCode:kTGErrorMultipleErrors userInfo:errorUserInfo];
     }
+    
     return error;
 }
 

@@ -18,20 +18,22 @@
 //  limitations under the License.
 //
 
-#import "TGPost.h"
+#import "TGPost+Reactions.h"
+#import "Tapglue+Private.h"
+#import "TGPostsManager.h"
 
-@class TGPostComment, TGPostLike;
-
-@interface TGPost (Reactions)
+@implementation TGPost (Reactions)
 
 #pragma mark - Comments
 
-// TODO: documentation
-+ (TGPostComment*)commentWithContent:(NSString*)commentContent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+- (TGPostComment*)commentWithContent:(NSString*)commentContent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    return [[Tapglue sharedInstance].postsManager createCommentWithContent:commentContent forPost:self withCompletionBlock:completionBlock];
+}
 
 #pragma mark - Likes
 
-// TODO: documentation
-+ (TGPostLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+- (TGPostLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    return [[Tapglue sharedInstance].postsManager createLikeForPost:self withCompletionBlock:completionBlock];
+}
 
 @end
