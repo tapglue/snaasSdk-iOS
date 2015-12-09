@@ -165,4 +165,56 @@
     }];
 }
 
+#pragma mark - CRUD Comments -
+
+#pragma mark - Correct
+
+// [Correct] Test Post Lists
+- (void)testCRUDComments {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        // Create TGPost Object
+        TGPost *post = [TGPost new];
+        post.visibility = TGVisibilityPublic;
+        post.tags = @[@"fitness",@"running"];
+        
+        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        
+        // Create Post
+        [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Create Comment
+            [Tapglue createCommentWithContent:@"great post!" forPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                // Retrieve Comments
+                [Tapglue retrieveCommentsForPost:post withCompletionBlock:^(NSArray *comments, NSError *error) {
+                    expect(comments).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    TGPostComment *comment = comments.firstObject;
+                    comment.content = @"bad post!";
+                    
+                    // Update Comment
+                    [Tapglue updateComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        // Delete Comment
+                        [Tapglue deleteComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                            expect(error).to.beNil();
+                            
+                            [expectation fulfill];
+                        }];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
 @end

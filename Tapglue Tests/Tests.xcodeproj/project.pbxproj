@@ -108,6 +108,7 @@
 		78F787EC1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787EB1C1739B000AC1B39 /* Tapglue+Posts.m */; };
 		78F787ED1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787EB1C1739B000AC1B39 /* Tapglue+Posts.m */; };
 		97285B421B1F4AFA00D4CAC7 /* TGEventObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 97285B411B1F4AFA00D4CAC7 /* TGEventObject.m */; };
+		9767716A1C188A3900F5333C /* TGPostsIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 976771691C188A3900F5333C /* TGPostsIntegrationTests.m */; };
 		B97D0F5637EA6B1C2BB18889 /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1485A1AE17C16949E43E09CC /* libPods-ios.a */; };
 /* End PBXBuildFile section */
 
@@ -229,6 +230,7 @@
 		97285B401B1F4AFA00D4CAC7 /* TGEventObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGEventObject.h; sourceTree = "<group>"; };
 		97285B411B1F4AFA00D4CAC7 /* TGEventObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGEventObject.m; sourceTree = "<group>"; };
 		97285B431B21AE9900D4CAC7 /* TGConnectionIntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGConnectionIntegrationTests.m; sourceTree = "<group>"; };
+		976771691C188A3900F5333C /* TGPostsIntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGPostsIntegrationTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -470,6 +472,7 @@
 		78DBCC591B2054B8009986BA /* IntegrationTests */ = {
 			isa = PBXGroup;
 			children = (
+				976771691C188A3900F5333C /* TGPostsIntegrationTests.m */,
 				78DBCC531B20533D009986BA /* TGIntegrationTestCase.h */,
 				78DBCC541B20533D009986BA /* TGIntegrationTestCase.m */,
 				78DBCC571B205404009986BA /* TGUserIntegrationTests.m */,
@@ -659,6 +662,7 @@
 				78F787ED1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */,
 				78C6F6621C186B12002A2382 /* TGPostReaction.m in Sources */,
 				78F787DF1C1722CB00AC1B39 /* TGAttachment.m in Sources */,
+				9767716A1C188A3900F5333C /* TGPostsIntegrationTests.m in Sources */,
 				783185F41BBAD07E0050F9DB /* TGImage.m in Sources */,
 				7878EC771B2B24D900BA47F6 /* TGApiClient.m in Sources */,
 				78C6F6471C1843BE002A2382 /* TGPost.m in Sources */,
