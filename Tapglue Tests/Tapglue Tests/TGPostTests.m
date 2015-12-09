@@ -148,7 +148,7 @@
     expect(jsonDictionary.count).to.equal(4);
     
     // Check for correct values
-    expect([jsonDictionary valueForKey:@"id"]).to.equal(858667);
+    expect([jsonDictionary valueForKey:@"id"]).to.equal(@"858667");
     
     expect([jsonDictionary valueForKey:@"visibility"]).to.equal(30);
     

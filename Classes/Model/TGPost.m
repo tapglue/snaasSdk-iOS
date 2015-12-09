@@ -103,6 +103,12 @@ static NSString *const TGPostUserIdJsonKey = @"user_id";
     return mapping;
 }
 
+- (NSDictionary*)jsonDictionary {
+    // id on posts must be a string while all other objects use numbers
+    NSMutableDictionary *jsonDictionary = [super jsonDictionary].mutableCopy;
+    jsonDictionary[TGModelObjectIdJsonKey] = [jsonDictionary[TGModelObjectIdJsonKey] stringValue];
+    return jsonDictionary;
+}
 
 - (void)setAttachments:(NSArray*)attachments {
     self.mutableAttachemnts = attachments.mutableCopy;
