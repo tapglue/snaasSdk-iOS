@@ -82,6 +82,7 @@ static Tapglue* sharedInstance = nil;
         */
         // self.eventManager = [[TGEventManager alloc] initWithClient:self.client];
         self.userManager = [[TGUserManager alloc] initWithClient:self.client];
+        self.postsManager = [[TGPostsManager alloc] initWithClient:self.client];
         [self registerForAppLifeCycleNotifications];
 
         [self loadConfig:config];
