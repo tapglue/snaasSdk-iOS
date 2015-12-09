@@ -152,8 +152,6 @@
         
         if (!error) {
             [self createAndCacheUserFromJsonResponse:jsonResponse];
-
-            [TGPost createOrLoadWithDictionary:[jsonResponse objectForKey:@"posts"]]; // add post to cache
             
             NSArray *commentDictionaries = [jsonResponse objectForKey:@"comments"];
             NSMutableArray *comments = [NSMutableArray arrayWithCapacity:commentDictionaries.count];
