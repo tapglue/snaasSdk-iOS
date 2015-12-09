@@ -113,6 +113,8 @@ typedef NS_ENUM(NSInteger, TGEventVisibility) {
  */
 @property (nonatomic, strong) TGEventObject *target;
 
+// TODO: documentation
+@property (nonatomic, strong) NSString *tgObjectId;
 
 
 @end

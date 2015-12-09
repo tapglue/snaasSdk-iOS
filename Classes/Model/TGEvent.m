@@ -140,7 +140,8 @@ static NSString *const TGEventTargetKey = @"target";
              @"latitude" : @"latitude",
              @"longitude" : @"longitude",
              @"visibility" : @"visibility",
-             @"metadata" : @"metadata"
+             @"metadata" : @"metadata",
+             @"tg_object_id" : @"tgObjectId"
              };
 }
 
@@ -168,6 +169,7 @@ static NSString *const TGEventTargetKey = @"target";
     [aCoder encodeObject:self.object.jsonDictionary forKey:@"object"];
     [aCoder encodeObject:self.target.jsonDictionary forKey:@"target"];
     [aCoder encodeObject:self.user.jsonDictionary forKey:@"user"];
+    [aCoder encodeObject:self.tgObjectId];
 }
 
 - (id) initWithCoder:(NSCoder *)aDecoder {
@@ -185,6 +187,7 @@ static NSString *const TGEventTargetKey = @"target";
         self.object = [[TGEventObject alloc] initWithDictionary:[aDecoder decodeObjectForKey:@"object"]];
         self.target = [[TGEventObject alloc] initWithDictionary:[aDecoder decodeObjectForKey:@"target"]];
         self.user = [TGUser createOrLoadWithDictionary:[aDecoder decodeObjectForKey:@"user"]];
+        self.tgObjectId = [aDecoder decodeObject];
     }
     return self;
 }
