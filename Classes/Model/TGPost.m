@@ -77,6 +77,14 @@ static NSString *const TGPostUserIdJsonKey = @"user_id";
 }
 
 - (NSDictionary*)jsonMapping {
+    static NSDictionary *mapping;
+    if (!mapping) {
+        mapping = [self jsonMappingForReading];
+    }
+    return mapping;
+}
+
+- (NSDictionary*)jsonMappingForWriting {
     // left side: json attribute name , right side: model property name
     return @{
              TGPostTagsJsonKey : @"tags",
@@ -84,15 +92,17 @@ static NSString *const TGPostUserIdJsonKey = @"user_id";
              TGPostAttachmentsJsonKey : @"attachments"
              };
 }
-//
-//- (NSDictionary*)jsonDictionary {
-//    NSDictionary *jsonDict = [super jsonDictionary];
-//    NSMutableArray *attachemntsJson = [NSMutableArray arrayWithCapacity:self.mutableAttachemnts.count];
-//    for (TGAttachment *attachment in self.mutableAttachemnts) {
-//        [attachemntsJson addObject:attachment.jsonDictionary];
-//    }
-//    jsonDict[TGPostAttachmentsJsonKey] = [attachemntsJson
-//}
+
+- (NSDictionary*)jsonMappingForReading {
+    NSMutableDictionary *mapping = [self jsonMappingForWriting].mutableCopy;
+    [mapping addEntriesFromDictionary:@{
+                                        @"counts.comments" : @"commentsCount",
+                                        @"counts.likes" : @"likesCount",
+                                        @"counts.shares" : @"sharesCount"
+                                        }];
+    return mapping;
+}
+
 
 - (void)setAttachments:(NSArray*)attachments {
     self.mutableAttachemnts = attachments.mutableCopy;

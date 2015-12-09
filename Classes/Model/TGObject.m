@@ -24,7 +24,12 @@
 
 NSString *const TGModelObjectIdJsonKey = @"id";
 
-@interface TGObject ()
+@protocol TGObjectJsonMapping <NSObject>
+@optional
+- (NSDictionary*)jsonMappingForWriting;
+@end
+
+@interface TGObject () <TGObjectJsonMapping>
 @property (nonatomic, strong, readwrite) NSString *objectId;
 @end
 
@@ -47,6 +52,9 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 }
 
 - (NSDictionary*)jsonDictionary {
+    if ([self respondsToSelector:@selector(jsonMappingForWriting)]) {
+        return [self dictionaryWithMapping:[self jsonMappingForWriting]];
+    }
     return [self dictionaryWithMapping:[self jsonMapping]];
 }
 
@@ -57,7 +65,7 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 
 - (void)loadDataFromDictionary:(NSDictionary*)data withMapping:(NSDictionary*)mapping {
     [mapping enumerateKeysAndObjectsUsingBlock:^(id jsonKey, id objKey, BOOL *stop) {
-        id dataValue = [data valueForKey:jsonKey];
+        id dataValue = [data valueForKeyPath:jsonKey];
         if (dataValue) {
             [self setValue:dataValue forKey:objKey];
         }

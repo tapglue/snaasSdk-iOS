@@ -50,4 +50,23 @@
 
 - (void) addAttachment:(TGAttachment*)attachment;
 
+
+#pragma mark Counts
+
+/*!
+ @abstract The number of commets the post has.
+ */
+@property (nonatomic, assign, readonly) NSInteger commentsCount;
+
+/*!
+ @abstract The number of likes the post has.
+ */
+@property (nonatomic, assign, readonly) NSInteger likesCount;
+
+/*!
+ @abstract The number of shares the post has.
+ */
+@property (nonatomic, assign, readonly) NSInteger sharesCount;
+
+
 @end

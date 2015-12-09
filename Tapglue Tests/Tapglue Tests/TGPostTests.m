@@ -45,7 +45,7 @@
 }
 
 
-- (void)testInitPostWithDictionaryAll {
+- (void)testInitPostWithDictionaryAllButNoCounts {
     NSDictionary *postData = @{
                                 @"id" : @(471739965702621007),
                                 @"user_id" : @(858667),
@@ -93,12 +93,47 @@
     expect(attachment2.type).to.equal(@"text");
     expect(attachment2.name).to.equal(@"body");
     expect(attachment2.content).to.equal(@"Lorem ipsum...");
+    
+    expect(post.commentsCount).to.equal(0);
+    expect(post.likesCount).to.equal(0);
+    expect(post.sharesCount).to.equal(0);
 
     expect(post.createdAt).to.equal([NSDate dateWithTimeIntervalSince1970:1433148297]);
     expect(post.updatedAt).to.equal([NSDate dateWithTimeIntervalSince1970:1392013510]);
 }
 
-- (void)testInitJsonDictionaryWithAll {
+
+- (void)testInitPostWithDictionaryWithCounts {
+    NSDictionary *postData = @{
+                               @"id" : @(471739965702621007),
+                               @"user_id" : @(858667),
+                               @"visibility": @(30),
+                               @"tags": @[@"fitness",@"running"],
+                               @"attachments" : @[
+                                       @{
+                                           @"content": @"Lorem ipsum...",
+                                           @"name": @"body",
+                                           @"type": @"text"
+                                           }
+                                       ],
+                               @"counts" : @{
+                                           @"comments": @(3),
+                                           @"likes": @(12),
+                                           @"shares": @(1)
+                                       },
+                               @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                               @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
+    
+    TGPost *post = [[TGPost alloc] initWithDictionary:postData];
+    
+    expect(post).toNot.beNil();
+    expect(post.commentsCount).to.equal(3);
+    expect(post.likesCount).to.equal(12);
+    expect(post.sharesCount).to.equal(1);
+}
+
+
+- (void)testJsonDictionaryWithAll {
 
     TGPost *post = [TGPost new];
     post.objectId = @"858667";
@@ -140,7 +175,7 @@
 }
 
 
-- (void)testInitJsonDictionaryWithOnlyTextAttachment {
+- (void)testJsonDictionaryWithOnlyTextAttachment {
     
     TGPost *post = [TGPost new];
     [post addAttachment:[TGAttachment attachmentWithText:@"Lorem ipsum..." andName:@"body"]];
@@ -165,5 +200,14 @@
     
 }
 
+
+- (void)testJsonDictionaryWillNotIncludeCounts {
+    TGPost *post = [TGPost new];
+    [post addAttachment:[TGAttachment attachmentWithText:@"Lorem ipsum..." andName:@"body"]];
+    
+    NSDictionary *jsonDictionary = post.jsonDictionary;
+    expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
+    expect(jsonDictionary.count).to.equal(2);  // set proper count
+}
 
 @end
