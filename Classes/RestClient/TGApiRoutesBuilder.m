@@ -19,8 +19,9 @@
 //
 
 #import "TGApiRoutesBuilder.h"
-#import "TGPostComment.h"
 #import "TGPost.h"
+#import "TGPostComment.h"
+#import "TGPostLike.h"
 
 static NSString * const TGApiRouteUsers = @"users";
 static NSString * const TGApiRouteCurrentUser = @"me";
@@ -86,6 +87,18 @@ static NSString * const TGApiRouteLikes = @"likes";
     return [[self routeForCommentsOnPostWithId:postId] stringByAppendingPathComponent:commentId];
 }
 
++ (NSString*)routeForLike:(TGPostLike *)like {
+    return [self routeForLikeWithId:like.objectId onPostWithId:like.post.objectId];
+}
+
++ (NSString*)routeForLikesOnPostWithId:(NSString*)postId {
+    return [[self routeForPostWithId:postId] stringByAppendingPathComponent:TGApiRouteLikes];
+}
+
++ (NSString*)routeForLikeWithId:(NSString*)likeId onPostWithId:(NSString*)postId {
+    NSParameterAssert(likeId);
+    return [[self routeForLikesOnPostWithId:postId] stringByAppendingPathComponent:likeId];
+}
 
 #pragma mark - Helper 
 

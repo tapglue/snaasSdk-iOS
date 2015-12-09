@@ -22,6 +22,7 @@
 #import "TGPost.h"
 #import "TGAttachment.h"
 #import "TGPostComment.h"
+#import "TGPostLike.h"
 
 @interface Tapglue (Posts)
 
@@ -123,5 +124,22 @@
 // TODO: documentation
 + (void)retrieveCommentsForPostWithId:(NSString*)postId
                   withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
+
+#pragma mark - Likes -
+
+// TODO: documentation
++ (TGPostLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+// TODO: documentation
++ (void)deleteLike:(TGPostLike*)like withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+// TODO: documentation
++ (void)retrieveLikesForPost:(TGPost*)post
+            withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
+
+// TODO: documentation
++ (void)retrieveLikesForPostWithId:(NSString*)postId
+                  withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
+
 
 @end

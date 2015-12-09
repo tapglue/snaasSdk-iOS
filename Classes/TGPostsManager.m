@@ -28,6 +28,7 @@
 #import "TGApiRoutesBuilder.h"
 #import "TGPostReaction+Private.h"
 #import "TGPostComment.h"
+#import "TGPostLike.h"
 
 @implementation TGPostsManager
 
@@ -126,7 +127,7 @@
 
 - (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [self.client updateObject:comment
-                      atRoute:[TGApiRoutesBuilder routeForCommentWithId:comment.objectId onPostWithId:comment.post.objectId]
+                      atRoute:[TGApiRoutesBuilder routeForComment:comment]
           withCompletionBlock:completionBlock];
 }
 
@@ -159,6 +160,53 @@
     }];
 }
 
+#pragma mark - Likes -
+
+- (TGPostLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    TGPostLike *like = [[TGPostLike alloc] init];
+    like.post = post;
+    like.user = [TGUser currentUser];
+    
+    [self.client POST:[TGApiRoutesBuilder routeForLikesOnPostWithId:post.objectId] withURLParameters:nil andPayload:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [like loadDataFromDictionary:jsonResponse]; // update the data
+        if (!error) {
+            if (completionBlock) {
+                completionBlock(YES, nil);
+            }
+        } else if (completionBlock) {
+            completionBlock(NO, error);
+        }
+    }];
+    
+    return like;
+}
+
+- (void)deleteLike:(TGPostLike*)like withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [self.client DELETE:[TGApiRoutesBuilder routeForLike:like] withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveLikesForPostWithId:(NSString*)postId
+                  withCompletionBlock:(void (^)(NSArray *Likes, NSError *error))completionBlock {
+    [self.client GET:[TGApiRoutesBuilder routeForLikesOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        
+        if (!error) {
+            [self createAndCacheUserFromJsonResponse:jsonResponse];
+    
+            NSArray *likeDictionaries = [jsonResponse objectForKey:@"likes"];
+            NSMutableArray *likes = [NSMutableArray arrayWithCapacity:likeDictionaries.count];
+            for (NSDictionary *data in likeDictionaries) {
+                [likes addObject:[[TGPostLike alloc] initWithDictionary:data]];
+            }
+            
+            if (completionBlock) {
+                completionBlock(likes, nil);
+            }
+        }
+        else if(completionBlock) {
+            completionBlock(nil, error);
+        }
+    }];
+}
 
 #pragma mark - Helper
 
