@@ -92,7 +92,6 @@
 		78C6F6611C186B12002A2382 /* TGPostReaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65C1C186B12002A2382 /* TGPostReaction.m */; };
 		78C6F6621C186B12002A2382 /* TGPostReaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65C1C186B12002A2382 /* TGPostReaction.m */; };
 		78C6F6641C186B83002A2382 /* TGPostReactionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6631C186B83002A2382 /* TGPostReactionTests.m */; };
-		78C6F6651C186B83002A2382 /* TGPostReactionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6631C186B83002A2382 /* TGPostReactionTests.m */; };
 		78CF3D5E1B25CCAF0091B81B /* NSArray+RandomObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D5D1B25CCAF0091B81B /* NSArray+RandomObject.m */; };
 		78CF3D611B25CFF30091B81B /* TGEvent+RandomTestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D601B25CFF30091B81B /* TGEvent+RandomTestEvent.m */; };
 		78CF3D641B25D0750091B81B /* NSString+TGRandomString.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D631B25D0750091B81B /* NSString+TGRandomString.m */; };
@@ -669,7 +668,6 @@
 				7878EC781B2B24D900BA47F6 /* TGConnectionIntegrationTests.m in Sources */,
 				78C6F6461C182FCB002A2382 /* TGApiRoutesBuilder.m in Sources */,
 				7878EC791B2B24D900BA47F6 /* TGUserManager.m in Sources */,
-				78C6F6651C186B83002A2382 /* TGPostReactionTests.m in Sources */,
 				7878EC7A1B2B24D900BA47F6 /* TGEventIntegrationTests.m in Sources */,
 				7878EC7C1B2B24D900BA47F6 /* TGApiClientMock.m in Sources */,
 				7878EC7D1B2B24D900BA47F6 /* TGObject.m in Sources */,

@@ -39,6 +39,7 @@
     [self.client POST:[TGApiRoutesBuilder routeForAllPosts] withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
 
         [post loadDataFromDictionary:jsonResponse];
+        [[TGPost cache] addObject:post];
         
         if (!error) {
             if (completionBlock) {
@@ -162,8 +163,6 @@
         if (!error) {
             NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
             [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
-
-            [TGPost createOrLoadWithDictionary:[jsonResponse objectForKey:@"posts"]]; // add post to cache
             
             NSArray *commentDictionaries = [jsonResponse objectForKey:@"comments"];
             NSMutableArray *comments = [NSMutableArray arrayWithCapacity:commentDictionaries.count];
