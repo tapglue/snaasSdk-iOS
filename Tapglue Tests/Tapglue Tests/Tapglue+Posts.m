@@ -21,8 +21,6 @@
 #import "Tapglue+Posts.h"
 #import "Tapglue+Private.h"
 #import "TGPostsManager.h"
-#import "TGPost.h"
-#import "TGAttachment.h"
 
 @implementation Tapglue (Posts)
 

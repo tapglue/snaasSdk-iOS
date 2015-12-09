@@ -19,6 +19,8 @@
 //
 
 #import "Tapglue.h"
+#import "TGPost.h"
+#import "TGAttachment.h"
 
 @interface Tapglue (Posts)
 

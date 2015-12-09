@@ -83,6 +83,8 @@
 		78C6D1651B1DBE2100D94E6A /* NSString+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6D1641B1DBE2100D94E6A /* NSString+TGUtilities.m */; };
 		78C6F6451C182FC6002A2382 /* TGApiRoutesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */; };
 		78C6F6461C182FCB002A2382 /* TGApiRoutesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */; };
+		78C6F6471C1843BE002A2382 /* TGPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 789E19121C17122F00192EE4 /* TGPost.m */; };
+		78C6F6481C184586002A2382 /* TGPostsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787E81C17392F00AC1B39 /* TGPostsManager.m */; };
 		78CF3D5E1B25CCAF0091B81B /* NSArray+RandomObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D5D1B25CCAF0091B81B /* NSArray+RandomObject.m */; };
 		78CF3D611B25CFF30091B81B /* TGEvent+RandomTestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D601B25CFF30091B81B /* TGEvent+RandomTestEvent.m */; };
 		78CF3D641B25D0750091B81B /* NSString+TGRandomString.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D631B25D0750091B81B /* NSString+TGRandomString.m */; };
@@ -618,6 +620,7 @@
 				78F787DF1C1722CB00AC1B39 /* TGAttachment.m in Sources */,
 				783185F41BBAD07E0050F9DB /* TGImage.m in Sources */,
 				7878EC771B2B24D900BA47F6 /* TGApiClient.m in Sources */,
+				78C6F6471C1843BE002A2382 /* TGPost.m in Sources */,
 				7878EC781B2B24D900BA47F6 /* TGConnectionIntegrationTests.m in Sources */,
 				78C6F6461C182FCB002A2382 /* TGApiRoutesBuilder.m in Sources */,
 				7878EC791B2B24D900BA47F6 /* TGUserManager.m in Sources */,
@@ -645,6 +648,7 @@
 				78AA609A1C15F181007F56D5 /* TGConnection.m in Sources */,
 				7878EC931B2B24D900BA47F6 /* TGConfiguration.m in Sources */,
 				7878EC941B2B24D900BA47F6 /* NSThread+TGEnsureMainThread.m in Sources */,
+				78C6F6481C184586002A2382 /* TGPostsManager.m in Sources */,
 				7878EC951B2B24D900BA47F6 /* TGObjectCache.m in Sources */,
 				7878EC971B2B24D900BA47F6 /* TGUser+Networking.m in Sources */,
 				7878EC991B2B24D900BA47F6 /* NSDictionary+TGUtilities.m in Sources */,

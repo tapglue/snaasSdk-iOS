@@ -496,3 +496,6 @@
 + (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 @end
+
+// must to be imported after the interface definition
+#import "Tapglue+Posts.h"
