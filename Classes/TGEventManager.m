@@ -299,9 +299,8 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
-                NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
-                [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
-
+                [self createAndCacheUserFromJsonResponse:jsonResponse];
+                
                 NSInteger unreadCount = [[jsonResponse objectForKey:@"unread_events_count"] integerValue];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
 

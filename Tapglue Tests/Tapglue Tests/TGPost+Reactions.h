@@ -1,8 +1,8 @@
 //
-//  TGBaseManager.h
+//  TGPost+Reactions.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 05/06/15.
+//  Created by Martin Stemmle on 09.12.15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,20 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
+#import "TGPost.h"
 
-@class TGApiClient;
+@class TGPostComment, TGPostLike;
 
-/*!
- @abstract The base network manager.
- @discussion This is the base manager to handle the whole network communication.
- */
-@interface TGBaseManager : NSObject
+@interface TGPost (Reactions)
 
-/*!
- @abstract The Tapglue API Client.
- @discussion This holds the tapglue API client to do the network communication.
- */
-@property (nonatomic, readonly) TGApiClient *client;
+#pragma mark - Comments
 
-- (instancetype)initWithClient:(TGApiClient*)client;
+// TODO: documentation
+- (TGPostComment*)commentWithContent:(NSString*)commentContent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-- (NSArray*)createAndCacheUserFromJsonResponse:(NSDictionary*)jsonResponse;
+#pragma mark - Likes
+
+// TODO: documentation
+- (TGPostLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 @end

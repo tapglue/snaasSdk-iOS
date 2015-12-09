@@ -19,7 +19,7 @@
 //
 
 #import "TGPostsManager.h"
-#import "TGApiClient.h"
+#import "TGApiClient+TGObject.h"
 #import "TGPost.h"
 #import "TGModelObject+Private.h"
 #import "Tapglue+Private.h"
@@ -28,6 +28,7 @@
 #import "TGApiRoutesBuilder.h"
 #import "TGPostReaction+Private.h"
 #import "TGPostComment.h"
+#import "TGPostLike.h"
 
 @implementation TGPostsManager
 
@@ -53,11 +54,9 @@
 }
 
 - (void)updatePost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client PUT:[TGApiRoutesBuilder routeForPostWithId:post.objectId] withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        if (completionBlock) {
-            completionBlock(error == nil, error);
-        }
-    }];
+    [self.client updateObject:post
+                      atRoute:[TGApiRoutesBuilder routeForPostWithId:post.objectId]
+          withCompletionBlock:completionBlock];
 }
 
 - (void)deletePostWithId:(NSString*)objectId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
@@ -104,8 +103,7 @@
 - (void)retrievePostsAtRoute:(NSString*)route withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (!error) {
-            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
-            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+            [self createAndCacheUserFromJsonResponse:jsonResponse];
             
             NSArray *posts = [self postsFromJsonResponse:jsonResponse];
             
@@ -130,26 +128,18 @@
     comment.content = commentContent;
     comment.post = post;
     comment.user = [TGUser currentUser];
+
+    [self.client createObject:comment
+                      atRoute:[TGApiRoutesBuilder routeForCommentsOnPostWithId:post.objectId]
+          withCompletionBlock:completionBlock];
     
-    [self.client POST:[TGApiRoutesBuilder routeForCommentsOnPostWithId:post.objectId] withURLParameters:nil andPayload:comment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        [comment loadDataFromDictionary:jsonResponse];
-        if (!error) {
-            if (completionBlock) {
-                completionBlock(YES, nil);
-            }
-        } else if (completionBlock) {
-            completionBlock(NO, error);
-        }
-    }];
     return comment;
 }
 
 - (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client PUT:[TGApiRoutesBuilder routeForCommentWithId:comment.objectId onPostWithId:comment.post.objectId] withURLParameters:nil andPayload:comment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        if (completionBlock) {
-            completionBlock(error == nil, error);
-        }
-    }];
+    [self.client updateObject:comment
+                      atRoute:[TGApiRoutesBuilder routeForComment:comment]
+          withCompletionBlock:completionBlock];
 }
 
 - (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
@@ -161,8 +151,9 @@
     [self.client GET:[TGApiRoutesBuilder routeForCommentsOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         
         if (!error) {
-            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
-            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+            [self createAndCacheUserFromJsonResponse:jsonResponse];
+
+            [TGPost createOrLoadWithDictionary:[jsonResponse objectForKey:@"posts"]]; // add post to cache
             
             NSArray *commentDictionaries = [jsonResponse objectForKey:@"comments"];
             NSMutableArray *comments = [NSMutableArray arrayWithCapacity:commentDictionaries.count];
@@ -180,6 +171,53 @@
     }];
 }
 
+#pragma mark - Likes -
+
+- (TGPostLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    TGPostLike *like = [[TGPostLike alloc] init];
+    like.post = post;
+    like.user = [TGUser currentUser];
+    
+    [self.client POST:[TGApiRoutesBuilder routeForLikesOnPostWithId:post.objectId] withURLParameters:nil andPayload:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [like loadDataFromDictionary:jsonResponse]; // update the data
+        if (!error) {
+            if (completionBlock) {
+                completionBlock(YES, nil);
+            }
+        } else if (completionBlock) {
+            completionBlock(NO, error);
+        }
+    }];
+    
+    return like;
+}
+
+- (void)deleteLike:(TGPostLike*)like withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [self.client DELETE:[TGApiRoutesBuilder routeForLike:like] withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveLikesForPostWithId:(NSString*)postId
+                  withCompletionBlock:(void (^)(NSArray *Likes, NSError *error))completionBlock {
+    [self.client GET:[TGApiRoutesBuilder routeForLikesOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        
+        if (!error) {
+            [self createAndCacheUserFromJsonResponse:jsonResponse];
+    
+            NSArray *likeDictionaries = [jsonResponse objectForKey:@"likes"];
+            NSMutableArray *likes = [NSMutableArray arrayWithCapacity:likeDictionaries.count];
+            for (NSDictionary *data in likeDictionaries) {
+                [likes addObject:[[TGPostLike alloc] initWithDictionary:data]];
+            }
+            
+            if (completionBlock) {
+                completionBlock(likes, nil);
+            }
+        }
+        else if(completionBlock) {
+            completionBlock(nil, error);
+        }
+    }];
+}
 
 #pragma mark - Helper
 

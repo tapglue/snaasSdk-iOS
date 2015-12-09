@@ -106,4 +106,26 @@
     [[self postsManager] retrieveCommentsForPostWithId:postId withCompletionBlock:completionBlock];
 }
 
+
+#pragma mark - Likes -
+
++ (TGPostLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    return [[self postsManager] createLikeForPost:post withCompletionBlock:completionBlock];
+}
+
++ (void)deleteLike:(TGPostLike*)like withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self postsManager] deleteLike:like withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveLikesForPost:(TGPost*)post
+            withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock {
+    [self retrieveLikesForPostWithId:post.objectId withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveLikesForPostWithId:(NSString*)postId
+                  withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock {
+    [[self postsManager] retrieveLikesForPostWithId:postId withCompletionBlock:completionBlock];
+}
+
+
 @end
