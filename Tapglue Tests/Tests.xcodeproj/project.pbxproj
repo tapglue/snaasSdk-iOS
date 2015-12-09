@@ -56,6 +56,7 @@
 		788DBF8D1B21E6E40058C1C2 /* TGSetupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DBF8C1B21E6E40058C1C2 /* TGSetupTests.m */; };
 		7891B2281BBA99A6009AFA8E /* TGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2271BBA99A6009AFA8E /* TGImage.m */; };
 		7891B22A1BBA9BBD009AFA8E /* TGImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2291BBA9BBD009AFA8E /* TGImageTests.m */; };
+		7892F2771C18CA85008B57DF /* TGPost+Reactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E036681C18BB5E00AF53FA /* TGPost+Reactions.m */; };
 		789E19101C16E41100192EE4 /* TGQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA60911C15D9E1007F56D5 /* TGQuery.m */; };
 		789E19131C17122F00192EE4 /* TGPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 789E19121C17122F00192EE4 /* TGPost.m */; };
 		789E19151C1715BD00192EE4 /* TGPostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 789E19141C1715BD00192EE4 /* TGPostTests.m */; };
@@ -694,6 +695,7 @@
 				789E19101C16E41100192EE4 /* TGQuery.m in Sources */,
 				78C6F65E1C186B12002A2382 /* TGPostComment.m in Sources */,
 				78C6F6601C186B12002A2382 /* TGPostLike.m in Sources */,
+				7892F2771C18CA85008B57DF /* TGPost+Reactions.m in Sources */,
 				7878EC861B2B24D900BA47F6 /* TGEvent+RandomTestEvent.m in Sources */,
 				7878EC871B2B24D900BA47F6 /* NSURL+TGUtilities.m in Sources */,
 				7878EC891B2B24D900BA47F6 /* TGEventObject.m in Sources */,
