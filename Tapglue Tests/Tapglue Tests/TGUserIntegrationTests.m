@@ -22,6 +22,7 @@
 #import "TGObject+Private.h"
 #import "TGUser.h"
 #import "NSError+TGError.h"
+#import "NSString+TGRandomString.h"
 
 @interface TGUserIntegrationTests : TGIntegrationTestCase
 
@@ -1064,20 +1065,24 @@
     }];
 }
 
-//TODO: test case 1:
-// - login user 1
-// - get feed
-// - test cached feed
-// - logout
-// - test cache is empty
+#pragma mark - Other User Test -
 
-//TODO: test case 2:
-// - login user 1
-// - get feed
-// - test cached feed
-// - login user 2
-// - test cache is empty
-// - get feed
-// - test cached feed
+#pragma mark - Correct
+
+// [Correct] Cretae User with Rest Method
+- (void)testCreateUserWithRestMethod {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+
+        TGUser *user = [TGUser new];
+        user.username =  [NSString randomStringWithLength:10];
+        [user setPassword:[NSString randomStringWithLength:10]];
+        
+        [Tapglue makeRestRequestWithHTTPMethod:@"POST" atEndPoint:@"users" withURLParameters:nil andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+            expect(jsonResponse).toNot.beNil();
+            expect(error).to.beNil();
+            [expectation fulfill];
+        }];
+    }];
+}
 
 @end
