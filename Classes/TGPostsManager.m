@@ -26,6 +26,8 @@
 #import "NSError+TGError.h"
 #import "TGObjectCache.h"
 #import "TGApiRoutesBuilder.h"
+#import "TGPostReaction+Private.h"
+#import "TGPostComment.h"
 
 @implementation TGPostsManager
 
@@ -116,13 +118,77 @@
     }];
 }
 
+
+#pragma mark - Comments -
+
+- (TGPostComment*)createCommentWithContent:(NSString*)commentContent
+                                   forPost:(TGPost*)post
+                       withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    
+    TGPostComment *comment = [[TGPostComment alloc] init];
+    comment.content = commentContent;
+    comment.post = post;
+    comment.user = [TGUser currentUser];
+    
+    [self.client POST:[TGApiRoutesBuilder routeForCommentsOnPostWithId:post.objectId] withURLParameters:nil andPayload:comment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [comment loadDataFromDictionary:jsonResponse];
+        if (!error) {
+            if (completionBlock) {
+                completionBlock(YES, nil);
+            }
+        } else if (completionBlock) {
+            completionBlock(NO, error);
+        }
+    }];
+    return comment;
+}
+
+- (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [self.client PUT:[TGApiRoutesBuilder routeForCommentWithId:comment.objectId onPostWithId:comment.post.objectId] withURLParameters:nil andPayload:comment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            completionBlock(error == nil, error);
+        }
+    }];
+}
+
+- (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [self.client DELETE:[TGApiRoutesBuilder routeForComment:comment] withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveCommentsForPostsWithId:(NSString*)postId
+                   withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock {
+    [self.client GET:[TGApiRoutesBuilder routeForCommentsOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        
+        if (!error) {
+            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+
+            [TGPost createOrLoadWithDictionary:[jsonResponse objectForKey:@"posts"]]; // add post to cache
+            
+            NSArray *commentDictionaries = [jsonResponse objectForKey:@"comments"];
+            NSMutableArray *comments = [NSMutableArray arrayWithCapacity:commentDictionaries.count];
+            for (NSDictionary *data in commentDictionaries) {
+                [comments addObject:[[TGPostComment alloc] initWithDictionary:data]];
+            }
+
+            if (completionBlock) {
+                completionBlock(comments, nil);
+            }
+        }
+        else if(completionBlock) {
+            completionBlock(nil, error);
+        }
+    }];
+}
+
+
 #pragma mark - Helper
 
 - (NSArray*)postsFromJsonResponse:(NSDictionary*)jsonResponse {
     NSArray *postDictionaries = [jsonResponse objectForKey:@"posts"];
     NSMutableArray *posts = [NSMutableArray arrayWithCapacity:postDictionaries.count];
     for (NSDictionary *postData in postDictionaries) {
-        TGPost *newPost = [[TGPost alloc] initWithDictionary:postData];
+        TGPost *newPost = [TGPost createOrLoadWithDictionary:postData];
         [posts addObject:newPost];
     }
     return posts;

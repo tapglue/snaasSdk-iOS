@@ -21,11 +21,11 @@
 #import "TGBaseManager.h"
 #import "TGConstants.h"
 
-@class TGUser, TGPost;
+@class TGUser, TGPost, TGPostComment;
 
 @interface TGPostsManager : TGBaseManager
 
-#pragma mark - Posts - 
+#pragma mark - Posts -
 
 #pragma mark CRUD
 
@@ -86,9 +86,18 @@
 - (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
 
-#pragma mark - Comments
+#pragma mark - Comments -
 
+- (TGPostComment*)createCommentWithContent:(NSString*)commentContent
+                                   forPost:(TGPost*)post
+                       withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+- (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+- (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+- (void)retrieveCommentsForPostsWithId:(NSString*)postId
+                   withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
 
 #pragma mark - Likes
 

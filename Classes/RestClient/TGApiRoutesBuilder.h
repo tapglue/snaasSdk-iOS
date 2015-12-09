@@ -21,6 +21,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class TGPostComment;
+
 @interface TGApiRoutesBuilder : NSObject
 
 #pragma mark - Events
@@ -68,5 +70,12 @@
  */
 + (NSString*)routeForMixedFeed;
 
+
+#pragma mark - Post reactions
+
++ (NSString*)routeForCommentsOnPostWithId:(NSString*)postId;
+
++ (NSString*)routeForComment:(TGPostComment*)comment;
++ (NSString*)routeForCommentWithId:(NSString*)commentId onPostWithId:(NSString*)postId;
 
 @end

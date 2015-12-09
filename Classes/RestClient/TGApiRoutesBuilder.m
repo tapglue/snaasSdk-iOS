@@ -19,12 +19,16 @@
 //
 
 #import "TGApiRoutesBuilder.h"
+#import "TGPostComment.h"
+#import "TGPost.h"
 
 static NSString * const TGApiRouteUsers = @"users";
 static NSString * const TGApiRouteCurrentUser = @"me";
 static NSString * const TGApiRouteFeed = @"feed";
 static NSString * const TGApiRoutePosts = @"posts";
 static NSString * const TGApiRouteEvents = @"events";
+static NSString * const TGApiRouteComments = @"comments";
+static NSString * const TGApiRouteLikes = @"likes";
 
 @implementation TGApiRoutesBuilder
 
@@ -65,6 +69,21 @@ static NSString * const TGApiRouteEvents = @"events";
 
 + (NSString*)baseRouteForFeeds {
     return [TGApiRouteCurrentUser stringByAppendingPathComponent:TGApiRouteFeed];
+}
+
+#pragma mark - Post reactions
+
++ (NSString*)routeForCommentsOnPostWithId:(NSString*)postId {
+    return [[self routeForPostWithId:postId] stringByAppendingPathComponent:TGApiRouteComments];
+}
+
++ (NSString*)routeForComment:(TGPostComment *)comment {
+    return [self routeForCommentWithId:comment.objectId onPostWithId:comment.post.objectId];
+}
+            
++ (NSString*)routeForCommentWithId:(NSString*)commentId onPostWithId:(NSString*)postId {
+    NSParameterAssert(commentId);
+    return [[self routeForCommentsOnPostWithId:postId] stringByAppendingPathComponent:commentId];
 }
 
 
