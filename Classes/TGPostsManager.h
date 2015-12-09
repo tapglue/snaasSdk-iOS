@@ -96,8 +96,8 @@
 
 - (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-- (void)retrieveCommentsForPostsWithId:(NSString*)postId
-                   withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
+- (void)retrieveCommentsForPostWithId:(NSString*)postId
+                  withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
 
 #pragma mark - Likes
 

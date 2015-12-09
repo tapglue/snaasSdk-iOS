@@ -80,4 +80,30 @@
 }
 
 
+#pragma mark - Comments -
+
++ (TGPostComment*)createCommentWithContent:(NSString*)commentContent
+                                   forPost:(TGPost*)post
+                       withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    return [[self postsManager] createCommentWithContent:commentContent forPost:post withCompletionBlock:completionBlock];
+}
+
++ (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self postsManager] updateComment:comment withCompletionBlock:completionBlock];
+}
+
++ (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self postsManager] deleteComment:comment withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveCommentsForPost:(TGPost*)post
+            withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock {
+    [self retrieveCommentsForPostWithId:post.objectId withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveCommentsForPostWithId:(NSString*)postId
+                  withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock {
+    [[self postsManager] retrieveCommentsForPostWithId:postId withCompletionBlock:completionBlock];
+}
+
 @end

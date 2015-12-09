@@ -155,8 +155,8 @@
     [self.client DELETE:[TGApiRoutesBuilder routeForComment:comment] withCompletionBlock:completionBlock];
 }
 
-- (void)retrieveCommentsForPostsWithId:(NSString*)postId
-                   withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock {
+- (void)retrieveCommentsForPostWithId:(NSString*)postId
+                  withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock {
     [self.client GET:[TGApiRoutesBuilder routeForCommentsOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         
         if (!error) {

@@ -21,6 +21,7 @@
 #import "Tapglue.h"
 #import "TGPost.h"
 #import "TGAttachment.h"
+#import "TGPostComment.h"
 
 @interface Tapglue (Posts)
 
@@ -101,5 +102,26 @@
  */
 + (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock;
 
+
+#pragma mark - Comments -
+
+// TODO: documentation
++ (TGPostComment*)createCommentWithContent:(NSString*)commentContent
+                                   forPost:(TGPost*)post
+                       withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+// TODO: documentation
++ (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+// TODO: documentation
++ (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+// TODO: documentation
++ (void)retrieveCommentsForPost:(TGPost*)post
+            withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
+
+// TODO: documentation
++ (void)retrieveCommentsForPostWithId:(NSString*)postId
+                  withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
 
 @end
