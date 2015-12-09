@@ -21,10 +21,7 @@
 
 - (void)setUp {
     [super setUp];
-    
     self.client = [[TGApiClient alloc] initWithAppToken:@"foo" andConfig:nil];
-    
-    
 }
 
 - (void)testErrorParsingDoesNotCrash {

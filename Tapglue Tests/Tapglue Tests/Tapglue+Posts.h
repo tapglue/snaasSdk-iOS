@@ -20,6 +20,7 @@
 
 #import "Tapglue.h"
 #import "TGPost.h"
+#import "TGPost+Reactions.h"
 #import "TGAttachment.h"
 #import "TGPostComment.h"
 #import "TGPostLike.h"
