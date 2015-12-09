@@ -568,6 +568,21 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
+#pragma mark - Raw Rest -
+
++ (NSURLSessionDataTask*) makeRestRequestWithHTTPMethod:(NSString*)method
+                                             atEndPoint:(NSString*)endPoint
+                                      withURLParameters:(NSDictionary*)urlParams
+                                             andPayload:(NSDictionary*)bodyObject
+                                     andCompletionBlock:(void (^)(NSDictionary *jsonResponse, NSError *error))completionBlock {
+
+    return [[self sharedInstance].client makeRequestWithHTTPMethod:method
+                                                        atEndPoint:endPoint
+                                                 withURLParameters:urlParams
+                                                        andPayload:bodyObject
+                                                andCompletionBlock:completionBlock];
+}
+
 #pragma mark - Helper -
 
 - (NSUserDefaults*)userDefaults {

@@ -495,4 +495,14 @@
 // TODO: documentation
 + (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
+#pragma mark - Raw Rest -
+
+// TODO: documentation
+
++ (NSURLSessionDataTask*) makeRestRequestWithHTTPMethod:(NSString*)method
+                                             atEndPoint:(NSString*)endPoint
+                                      withURLParameters:(NSDictionary*)urlParams
+                                             andPayload:(NSDictionary*)bodyObject
+                                     andCompletionBlock:(void (^)(NSDictionary *jsonResponse, NSError *error))completionBlock;
+
 @end

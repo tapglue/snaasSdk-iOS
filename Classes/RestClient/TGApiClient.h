@@ -144,4 +144,11 @@ typedef void (^TGNetworkCompletionBlock)(NSDictionary *jsonResponse, NSError *er
               withURLParameters:(NSDictionary*)urlParams
              andCompletionBlock:(void (^)(BOOL success, NSError *error))completionBlock;
 
+// TODO: docu
+- (NSURLSessionDataTask*)makeRequestWithHTTPMethod:(NSString*)method
+                                        atEndPoint:(NSString*)endPoint
+                                 withURLParameters:(NSDictionary*)urlParams
+                                        andPayload:(NSDictionary*)bodyObject
+                                andCompletionBlock:(void (^)(NSDictionary *jsonResponse, NSError *error))completionBlock;
+
 @end
