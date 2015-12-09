@@ -49,7 +49,7 @@ extern NSString *const TaplueSDKID;
  @abstract Manager for all posts interactions.
  @discussion This is the handler to manage all posts and related interactions in the app.
  */
-@property (nonatomic, strong) TGPostsManager *postManager;
+@property (nonatomic, strong) TGPostsManager *postsManager;
 
 
 #pragma mark - User Management

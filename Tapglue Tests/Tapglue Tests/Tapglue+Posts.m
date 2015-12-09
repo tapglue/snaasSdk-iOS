@@ -26,8 +26,8 @@
 
 @implementation Tapglue (Posts)
 
-+ (TGPostsManager*)postManager {
-    return [self sharedInstance].postManager;
++ (TGPostsManager*)postsManager {
+    return [self sharedInstance].postsManager;
 }
 
 #pragma mark - Posts -
@@ -44,33 +44,33 @@
 }
 
 + (void)createPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [[self postManager] createPost:post withCompletionBlock:completionBlock];
+    [[self postsManager] createPost:post withCompletionBlock:completionBlock];
 }
 
 + (void)updatePost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [[self postManager] updatePost:post withCompletionBlock:completionBlock];
+    [[self postsManager] updatePost:post withCompletionBlock:completionBlock];
 }
 
 + (void)deletePostWithId:(NSString*)objectId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [[self postManager] deletePostWithId:objectId withCompletionBlock:completionBlock];
+    [[self postsManager] deletePostWithId:objectId withCompletionBlock:completionBlock];
 }
 
 + (void)retrievePostWithId:(NSString*)objectId withCompletionBlock:(TGGetPostCompletionBlock)completionBlock {
-    [[self postManager] retrievePostWithId:objectId withCompletionBlock:completionBlock];
+    [[self postsManager] retrievePostWithId:objectId withCompletionBlock:completionBlock];
 }
 
 #pragma mark Lists
 
 - (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
-    [[self postManager] retrieveAllPostsWithCompletionBlock:completionBlock];
+    [[self postsManager] retrieveAllPostsWithCompletionBlock:completionBlock];
 }
 
 - (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
-    [[self postManager] retrievePostsFeedForCurrentUserWithCompletionBlock:completionBlock];
+    [[self postsManager] retrievePostsFeedForCurrentUserWithCompletionBlock:completionBlock];
 }
 
 - (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
-    [[self postManager] retrievePostsForCurrentUserWithCompletionBlock:completionBlock];
+    [[self postsManager] retrievePostsForCurrentUserWithCompletionBlock:completionBlock];
 }
 
 - (void)retrievePostsForUser:(TGUser*)user withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
@@ -78,7 +78,7 @@
 }
 
 - (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
-    [[self postManager] retrievePostsForUserWithId:userId withCompletionBlock:completionBlock];
+    [[self postsManager] retrievePostsForUserWithId:userId withCompletionBlock:completionBlock];
 }
 
 
