@@ -135,11 +135,11 @@
 
 // TODO: documentation
 + (void)retrieveLikesForPost:(TGPost*)post
-            withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
+         withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
 
 // TODO: documentation
 + (void)retrieveLikesForPostWithId:(NSString*)postId
-                  withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
+               withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
 
 
 @end

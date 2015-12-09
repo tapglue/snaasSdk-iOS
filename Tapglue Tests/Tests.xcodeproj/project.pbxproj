@@ -102,6 +102,7 @@
 		78DBCC5C1B207FDD009986BA /* TGISOFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DBCC5B1B207FDD009986BA /* TGISOFormatterTests.m */; };
 		78DBCC5F1B20893B009986BA /* NSDictionary+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DBCC5E1B20893B009986BA /* NSDictionary+TGUtilities.m */; };
 		78DBCC621B20AD23009986BA /* TGEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DBCC611B20AD23009986BA /* TGEventManager.m */; };
+		78E036651C18A83400AF53FA /* TGPost+Reactions.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E036641C18A83400AF53FA /* TGPost+Reactions.m */; };
 		78EC5DEA1B283BF80052647C /* NSError+TGError.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DE91B283BF80052647C /* NSError+TGError.m */; };
 		78EC5DF31B28A9540052647C /* UIDevice+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EC5DF21B28A9540052647C /* UIDevice+TGUtilities.m */; };
 		78F787DF1C1722CB00AC1B39 /* TGAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 789E19171C171B8800192EE4 /* TGAttachment.m */; };
@@ -219,6 +220,8 @@
 		78DBCC5E1B20893B009986BA /* NSDictionary+TGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+TGUtilities.m"; sourceTree = "<group>"; };
 		78DBCC601B20AD23009986BA /* TGEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGEventManager.h; path = ../../Classes/TGEventManager.h; sourceTree = "<group>"; };
 		78DBCC611B20AD23009986BA /* TGEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGEventManager.m; path = ../../Classes/TGEventManager.m; sourceTree = "<group>"; };
+		78E036631C18A83400AF53FA /* TGPost+Reactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGPost+Reactions.h"; sourceTree = "<group>"; };
+		78E036641C18A83400AF53FA /* TGPost+Reactions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TGPost+Reactions.m"; sourceTree = "<group>"; };
 		78EC5DE81B283BF80052647C /* NSError+TGError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+TGError.h"; path = "../../Classes/NSError+TGError.h"; sourceTree = "<group>"; };
 		78EC5DE91B283BF80052647C /* NSError+TGError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+TGError.m"; path = "../../Classes/NSError+TGError.m"; sourceTree = "<group>"; };
 		78EC5DF11B28A9540052647C /* UIDevice+TGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+TGUtilities.h"; path = "../../Classes/UIDevice+TGUtilities.h"; sourceTree = "<group>"; };
@@ -454,6 +457,8 @@
 				78C6F6581C186B12002A2382 /* TGPostComment.m */,
 				78C6F6591C186B12002A2382 /* TGPostLike.h */,
 				78C6F65A1C186B12002A2382 /* TGPostLike.m */,
+				78E036631C18A83400AF53FA /* TGPost+Reactions.h */,
+				78E036641C18A83400AF53FA /* TGPost+Reactions.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -765,6 +770,7 @@
 				7891B22A1BBA9BBD009AFA8E /* TGImageTests.m in Sources */,
 				78AA60961C15EE4E007F56D5 /* TGConnection.m in Sources */,
 				78C6D1591B1DA4CF00D94E6A /* TGUser.m in Sources */,
+				78E036651C18A83400AF53FA /* TGPost+Reactions.m in Sources */,
 				78C6D1491B1DA44100D94E6A /* TGTestCase.m in Sources */,
 				78C6D1611B1DAFF400D94E6A /* TGEventTests.m in Sources */,
 			);
