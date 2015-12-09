@@ -11,6 +11,8 @@
 		782675DD1B30C04500404353 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 782675DB1B30BFA300404353 /* Secrets.plist */; };
 		783185F41BBAD07E0050F9DB /* TGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7891B2271BBA99A6009AFA8E /* TGImage.m */; };
 		7862853A1B271FC800D91B4F /* NSThread+TGEnsureMainThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 786285391B271FC800D91B4F /* NSThread+TGEnsureMainThread.m */; };
+		7866BFAF1C1886BA00F28FCA /* TGApiClient+TGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7866BFAE1C1886BA00F28FCA /* TGApiClient+TGObject.m */; };
+		7866BFB01C1886C500F28FCA /* TGApiClient+TGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7866BFAE1C1886BA00F28FCA /* TGApiClient+TGObject.m */; };
 		7878EC771B2B24D900BA47F6 /* TGApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6D1541B1DA4CF00D94E6A /* TGApiClient.m */; };
 		7878EC781B2B24D900BA47F6 /* TGConnectionIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97285B431B21AE9900D4CAC7 /* TGConnectionIntegrationTests.m */; };
 		7878EC791B2B24D900BA47F6 /* TGUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788DBF871B21D3100058C1C2 /* TGUserManager.m */; };
@@ -118,6 +120,8 @@
 		786285381B271FC800D91B4F /* NSThread+TGEnsureMainThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+TGEnsureMainThread.h"; path = "../../Classes/NSThread+TGEnsureMainThread.h"; sourceTree = "<group>"; };
 		786285391B271FC800D91B4F /* NSThread+TGEnsureMainThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+TGEnsureMainThread.m"; path = "../../Classes/NSThread+TGEnsureMainThread.m"; sourceTree = "<group>"; };
 		7862853E1B272C6300D91B4F /* TGOfflineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGOfflineTests.m; sourceTree = "<group>"; };
+		7866BFAD1C1886BA00F28FCA /* TGApiClient+TGObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGApiClient+TGObject.h"; sourceTree = "<group>"; };
+		7866BFAE1C1886BA00F28FCA /* TGApiClient+TGObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TGApiClient+TGObject.m"; sourceTree = "<group>"; };
 		7878ECA71B2B24D900BA47F6 /* Tests copy.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests copy.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		788CD1621B1F00940064E7BC /* TGObjectCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGObjectCache.h; sourceTree = "<group>"; };
 		788CD1631B1F00940064E7BC /* TGObjectCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGObjectCache.m; sourceTree = "<group>"; };
@@ -415,6 +419,8 @@
 				78C6D1521B1DA4CF00D94E6A /* NSURL+TGUtilities.m */,
 				78C6D1531B1DA4CF00D94E6A /* TGApiClient.h */,
 				78C6D1541B1DA4CF00D94E6A /* TGApiClient.m */,
+				7866BFAD1C1886BA00F28FCA /* TGApiClient+TGObject.h */,
+				7866BFAE1C1886BA00F28FCA /* TGApiClient+TGObject.m */,
 				78C6F6431C182FC6002A2382 /* TGApiRoutesBuilder.h */,
 				78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */,
 			);
@@ -664,6 +670,7 @@
 				78C6F6471C1843BE002A2382 /* TGPost.m in Sources */,
 				7878EC781B2B24D900BA47F6 /* TGConnectionIntegrationTests.m in Sources */,
 				78C6F6461C182FCB002A2382 /* TGApiRoutesBuilder.m in Sources */,
+				7866BFB01C1886C500F28FCA /* TGApiClient+TGObject.m in Sources */,
 				7878EC791B2B24D900BA47F6 /* TGUserManager.m in Sources */,
 				78C6F6651C186B83002A2382 /* TGPostReactionTests.m in Sources */,
 				7878EC7A1B2B24D900BA47F6 /* TGEventIntegrationTests.m in Sources */,
@@ -750,6 +757,7 @@
 				78C34FAC1B270DCD00286D78 /* TGUser+Networking.m in Sources */,
 				788DBF8D1B21E6E40058C1C2 /* TGSetupTests.m in Sources */,
 				78DBCC5F1B20893B009986BA /* NSDictionary+TGUtilities.m in Sources */,
+				7866BFAF1C1886BA00F28FCA /* TGApiClient+TGObject.m in Sources */,
 				78C6F6611C186B12002A2382 /* TGPostReaction.m in Sources */,
 				78CF3D5E1B25CCAF0091B81B /* NSArray+RandomObject.m in Sources */,
 				78AA609C1C15F47E007F56D5 /* TGConnectionTests.m in Sources */,

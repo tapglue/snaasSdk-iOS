@@ -19,7 +19,7 @@
 //
 
 #import "TGPostsManager.h"
-#import "TGApiClient.h"
+#import "TGApiClient+TGObject.h"
 #import "TGPost.h"
 #import "TGModelObject+Private.h"
 #import "Tapglue+Private.h"
@@ -36,27 +36,15 @@
 #pragma mark CRUD
 
 - (void)createPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client POST:[TGApiRoutesBuilder routeForAllPosts] withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-
-        [post loadDataFromDictionary:jsonResponse];
-        
-        if (!error) {
-            if (completionBlock) {
-                completionBlock(YES, nil);
-            }
-        } else if (completionBlock) {
-            completionBlock(NO, error);
-        }
-    }];
-
+    [self.client createObject:post
+                      atRoute:[TGApiRoutesBuilder routeForAllPosts]
+          withCompletionBlock:completionBlock];
 }
 
 - (void)updatePost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client PUT:[TGApiRoutesBuilder routeForPostWithId:post.objectId] withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        if (completionBlock) {
-            completionBlock(error == nil, error);
-        }
-    }];
+    [self.client updateObject:post
+                      atRoute:[TGApiRoutesBuilder routeForPostWithId:post.objectId]
+          withCompletionBlock:completionBlock];
 }
 
 - (void)deletePostWithId:(NSString*)objectId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
@@ -129,26 +117,18 @@
     comment.content = commentContent;
     comment.post = post;
     comment.user = [TGUser currentUser];
+
+    [self.client createObject:comment
+                      atRoute:[TGApiRoutesBuilder routeForCommentsOnPostWithId:post.objectId]
+          withCompletionBlock:completionBlock];
     
-    [self.client POST:[TGApiRoutesBuilder routeForCommentsOnPostWithId:post.objectId] withURLParameters:nil andPayload:comment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        [comment loadDataFromDictionary:jsonResponse];
-        if (!error) {
-            if (completionBlock) {
-                completionBlock(YES, nil);
-            }
-        } else if (completionBlock) {
-            completionBlock(NO, error);
-        }
-    }];
     return comment;
 }
 
 - (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client PUT:[TGApiRoutesBuilder routeForCommentWithId:comment.objectId onPostWithId:comment.post.objectId] withURLParameters:nil andPayload:comment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        if (completionBlock) {
-            completionBlock(error == nil, error);
-        }
-    }];
+    [self.client updateObject:comment
+                      atRoute:[TGApiRoutesBuilder routeForCommentWithId:comment.objectId onPostWithId:comment.post.objectId]
+          withCompletionBlock:completionBlock];
 }
 
 - (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
