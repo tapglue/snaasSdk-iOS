@@ -81,6 +81,8 @@
 		78C6D15F1B1DAA5C00D94E6A /* TGEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6D15E1B1DAA5C00D94E6A /* TGEvent.m */; };
 		78C6D1611B1DAFF400D94E6A /* TGEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6D1601B1DAFF400D94E6A /* TGEventTests.m */; };
 		78C6D1651B1DBE2100D94E6A /* NSString+TGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6D1641B1DBE2100D94E6A /* NSString+TGUtilities.m */; };
+		78C6F6451C182FC6002A2382 /* TGApiRoutesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */; };
+		78C6F6461C182FCB002A2382 /* TGApiRoutesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */; };
 		78CF3D5E1B25CCAF0091B81B /* NSArray+RandomObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D5D1B25CCAF0091B81B /* NSArray+RandomObject.m */; };
 		78CF3D611B25CFF30091B81B /* TGEvent+RandomTestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D601B25CFF30091B81B /* TGEvent+RandomTestEvent.m */; };
 		78CF3D641B25D0750091B81B /* NSString+TGRandomString.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D631B25D0750091B81B /* NSString+TGRandomString.m */; };
@@ -176,6 +178,8 @@
 		78C6D1601B1DAFF400D94E6A /* TGEventTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGEventTests.m; sourceTree = "<group>"; };
 		78C6D1631B1DBE2100D94E6A /* NSString+TGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TGUtilities.h"; sourceTree = "<group>"; };
 		78C6D1641B1DBE2100D94E6A /* NSString+TGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TGUtilities.m"; sourceTree = "<group>"; };
+		78C6F6431C182FC6002A2382 /* TGApiRoutesBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGApiRoutesBuilder.h; sourceTree = "<group>"; };
+		78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGApiRoutesBuilder.m; sourceTree = "<group>"; };
 		78CF3D5C1B25CCAF0091B81B /* NSArray+RandomObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+RandomObject.h"; sourceTree = "<group>"; };
 		78CF3D5D1B25CCAF0091B81B /* NSArray+RandomObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+RandomObject.m"; sourceTree = "<group>"; };
 		78CF3D5F1B25CFF30091B81B /* TGEvent+RandomTestEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TGEvent+RandomTestEvent.h"; sourceTree = "<group>"; };
@@ -401,6 +405,8 @@
 				78C6D1521B1DA4CF00D94E6A /* NSURL+TGUtilities.m */,
 				78C6D1531B1DA4CF00D94E6A /* TGApiClient.h */,
 				78C6D1541B1DA4CF00D94E6A /* TGApiClient.m */,
+				78C6F6431C182FC6002A2382 /* TGApiRoutesBuilder.h */,
+				78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */,
 			);
 			name = RestClient;
 			path = ../../Classes/RestClient;
@@ -613,6 +619,7 @@
 				783185F41BBAD07E0050F9DB /* TGImage.m in Sources */,
 				7878EC771B2B24D900BA47F6 /* TGApiClient.m in Sources */,
 				7878EC781B2B24D900BA47F6 /* TGConnectionIntegrationTests.m in Sources */,
+				78C6F6461C182FCB002A2382 /* TGApiRoutesBuilder.m in Sources */,
 				7878EC791B2B24D900BA47F6 /* TGUserManager.m in Sources */,
 				7878EC7A1B2B24D900BA47F6 /* TGEventIntegrationTests.m in Sources */,
 				7878EC7C1B2B24D900BA47F6 /* TGApiClientMock.m in Sources */,
@@ -653,6 +660,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78C6F6451C182FC6002A2382 /* TGApiRoutesBuilder.m in Sources */,
 				78F787EC1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */,
 				78C6D15B1B1DA4CF00D94E6A /* TGApiClient.m in Sources */,
 				788DBF881B21D3100058C1C2 /* TGUserManager.m in Sources */,
