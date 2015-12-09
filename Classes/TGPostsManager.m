@@ -91,8 +91,7 @@
 - (void)retrievePostsAtRoute:(NSString*)route withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (!error) {
-            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
-            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+            [self createAndCacheUserFromJsonResponse:jsonResponse];
             
             NSArray *posts = [self postsFromJsonResponse:jsonResponse];
             
@@ -140,8 +139,7 @@
     [self.client GET:[TGApiRoutesBuilder routeForCommentsOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         
         if (!error) {
-            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
-            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+            [self createAndCacheUserFromJsonResponse:jsonResponse];
 
             [TGPost createOrLoadWithDictionary:[jsonResponse objectForKey:@"posts"]]; // add post to cache
             
