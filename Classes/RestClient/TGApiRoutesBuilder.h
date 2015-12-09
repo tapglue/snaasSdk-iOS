@@ -27,7 +27,7 @@
 
 /*!
  @param userId The userId for aonther user or `nil` for the current user.
- @return The route to get the events of a particlar user.
+ @return The route to the events of a particlar user.
  */
 + (NSString*)routeForEventsOfUserWithId:(NSString*)userId;
 
@@ -35,8 +35,18 @@
 #pragma mark - Posts
 
 /*!
+ @return The route to all posts.
+ */
++ (NSString*)routeForAllPosts;
+
+/*!
+ @return The route to a particular post.
+ */
++ (NSString*)routeForPostWithId:(NSString*)postId;
+
+/*!
  @param userId The userId for aonther user or `nil` for the current user.
- @return The route to get the posts of a particlar user.
+ @return The route to the posts of a particlar user.
  */
 + (NSString*)routeForPostsOfUserWithId:(NSString*)userId;
 
@@ -44,17 +54,17 @@
 #pragma mark - Feeds
 
 /*!
- @return The route to get the feed of posts for the current user.
+ @return The route to the feed of posts for the current user.
  */
 + (NSString*)routeForPostsFeed;
 
 /*!
- @return The route to get the feed of events for the current user.
+ @return The route to the feed of events for the current user.
  */
 + (NSString*)routeForEventsFeed;
 
 /*!
- @return The route to get the mixed feed of posts & events for the current user.
+ @return The route to the mixed feed of posts & events for the current user.
  */
 + (NSString*)routeForMixedFeed;
 

@@ -36,6 +36,15 @@ static NSString * const TGApiRouteEvents = @"events";
 
 #pragma mark - Posts
 
++ (NSString*)routeForAllPosts {
+    return TGApiRoutePosts;
+}
+
++ (NSString*)routeForPostWithId:(NSString*)postId {
+    NSParameterAssert(postId);
+    return [TGApiRoutePosts stringByAppendingPathComponent:postId];
+}
+
 + (NSString*)routeForPostsOfUserWithId:(NSString*)userId {
     return [[self baseRouteForUserWithId:userId] stringByAppendingPathComponent:TGApiRoutePosts];
 }

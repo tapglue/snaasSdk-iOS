@@ -25,9 +25,7 @@
 #import "Tapglue+Private.h"
 #import "NSError+TGError.h"
 #import "TGObjectCache.h"
-
-
-static NSString *const TGPostsManagerAPIEndpointPosts = @"posts";
+#import "TGApiRoutesBuilder.h"
 
 @implementation TGPostsManager
 
@@ -36,7 +34,7 @@ static NSString *const TGPostsManagerAPIEndpointPosts = @"posts";
 #pragma mark CRUD
 
 - (void)createPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client POST:TGPostsManagerAPIEndpointPosts withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client POST:[TGApiRoutesBuilder routeForAllPosts] withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
 
         [post loadDataFromDictionary:jsonResponse];
         
@@ -52,7 +50,7 @@ static NSString *const TGPostsManagerAPIEndpointPosts = @"posts";
 }
 
 - (void)updatePost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client PUT:[self routeForPostWithId:post.objectId] withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client PUT:[TGApiRoutesBuilder routeForPostWithId:post.objectId] withURLParameters:nil andPayload:post.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             completionBlock(error == nil, error);
         }
@@ -60,11 +58,11 @@ static NSString *const TGPostsManagerAPIEndpointPosts = @"posts";
 }
 
 - (void)deletePostWithId:(NSString*)objectId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client DELETE:[self routeForPostWithId:objectId] withCompletionBlock:completionBlock];
+    [self.client DELETE:[TGApiRoutesBuilder routeForPostWithId:objectId] withCompletionBlock:completionBlock];
 }
 
 - (void)retrievePostWithId:(NSString*)objectId withCompletionBlock:(TGGetPostCompletionBlock)completionBlock {
-    [self.client GET:[self routeForPostWithId:objectId] withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client GET:[TGApiRoutesBuilder routeForPostWithId:objectId] withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (jsonResponse && !error) {
             TGPost *post = [[TGPost alloc] initWithDictionary:jsonResponse];
             if (completionBlock) {
@@ -82,27 +80,22 @@ static NSString *const TGPostsManagerAPIEndpointPosts = @"posts";
 
 - (void)retrieveAllPostsWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     // route: /posts
-    [self retrievePostsAtRoute:TGPostsManagerAPIEndpointPosts withCompletionBlock:completionBlock];
+    [self retrievePostsAtRoute:[TGApiRoutesBuilder routeForAllPosts] withCompletionBlock:completionBlock];
 }
 
 - (void)retrievePostsFeedForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     // route: /me/feed/posts
-    NSString *route = [TGApiEndpointCurrentUser stringByAppendingPathComponent:@"feed"];
-    route = [route stringByAppendingPathComponent:TGPostsManagerAPIEndpointPosts];
-    [self retrievePostsAtRoute:route withCompletionBlock:completionBlock];
+    [self retrievePostsAtRoute:[TGApiRoutesBuilder routeForPostsFeed] withCompletionBlock:completionBlock];
 }
 
 - (void)retrievePostsForCurrentUserWithCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     // route: /me/posts
-    NSString *route = [TGApiEndpointCurrentUser stringByAppendingPathComponent:TGPostsManagerAPIEndpointPosts];
-    [self retrievePostsAtRoute:route withCompletionBlock:completionBlock];
+    [self retrievePostsAtRoute:[TGApiRoutesBuilder routeForPostsOfUserWithId:nil] withCompletionBlock:completionBlock];
 }
 
 - (void)retrievePostsForUserWithId:(NSString*)userId withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     // route: /users/{userID}/posts
-    NSString *route = [TGApiEndpointUsers stringByAppendingPathComponent:userId];
-    route = [route stringByAppendingPathComponent:TGPostsManagerAPIEndpointPosts];
-    [self retrievePostsAtRoute:route withCompletionBlock:completionBlock];
+    [self retrievePostsAtRoute:[TGApiRoutesBuilder routeForPostsOfUserWithId:userId] withCompletionBlock:completionBlock];
 }
 
 - (void)retrievePostsAtRoute:(NSString*)route withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
@@ -124,10 +117,6 @@ static NSString *const TGPostsManagerAPIEndpointPosts = @"posts";
 }
 
 #pragma mark - Helper
-
-- (NSString*)routeForPostWithId:(NSString*)postId {
-    return [TGPostsManagerAPIEndpointPosts stringByAppendingPathComponent:postId];
-}
 
 - (NSArray*)postsFromJsonResponse:(NSDictionary*)jsonResponse {
     NSArray *postDictionaries = [jsonResponse objectForKey:@"posts"];
