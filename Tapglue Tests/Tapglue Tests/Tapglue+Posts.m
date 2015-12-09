@@ -39,7 +39,7 @@
        withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
 
     TGPost *post = [[TGPost alloc] init];
-    [post addAttachment:[TGAttachment attachmentWithText:@"Lorem ipsum..." andName:@"body"]];
+    [post addAttachment:[TGAttachment attachmentWithText:attachmentText andName:attachmentName]];
     [self createPost:post withCompletionBlock:completionBlock];
 }
 
