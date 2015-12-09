@@ -73,6 +73,7 @@
     expect(^{[TGObjectCache cacheForClass:[NSString class]];}).to.raiseAny();
     expect(^{[TGObjectCache cacheForClass:[TGUser class]];}).toNot.raiseAny();
     expect(^{[TGObjectCache cacheForClass:[TGEvent class]];}).toNot.raiseAny();
+    expect(^{[TGObjectCache cacheForClass:[TGPost class]];}).toNot.raiseAny();
 }
 
 - (void)testFindObjectUsingPredicate {
@@ -262,6 +263,41 @@
 
 }
 
+- (void)testPostCaching {
+    NSDictionary *postData = @{
+                               @"id" : @(471739965702621007),
+                               @"user_id" : @(858667),
+                               @"visibility": @(30),
+                               @"tags": @[@"fitness",@"running"],
+                               @"attachments" : @[
+                                       @{
+                                           @"content": @"Lorem ipsum...",
+                                           @"name": @"body",
+                                           @"type": @"text"
+                                           }
+                                       ],
+                               @"counts" : @{
+                                       @"comments": @(3),
+                                       @"likes": @(12),
+                                       @"shares": @(1)
+                                       },
+                               @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                               @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
+    
+    // try loading a not yet created user
+    expect([TGUser objectWithId:@"471739965702621007"]).to.beNil();
+    
+    // create a new post
+    TGPost *post = [TGPost createOrLoadWithDictionary:postData];
+    expect(post).toNot.beNil();
+    
+    // the user should now be loadable and return the created post
+    expect([TGPost objectWithId:@"471739965702621007"]).to.equal(post);
+    
+    // calling create post again with the same id should return the already existing instance of the post
+    expect([TGPost createOrLoadWithDictionary:postData]).to.equal(post);
+    
+}
 
 
 @end

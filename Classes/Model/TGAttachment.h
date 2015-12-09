@@ -1,8 +1,8 @@
 //
-//  TGBaseManager.h
+//  TGAttachments.m
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 05/06/15.
+//  Created by Martin Stemmle on 08.12.15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,19 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
 
-@class TGApiClient;
+#import "TGModelObject.h"
 
-/*!
- @abstract The base network manager.
- @discussion This is the base manager to handle the whole network communication.
- */
-@interface TGBaseManager : NSObject
+// TODO: docu
 
-/*!
- @abstract The Tapglue API Client.
- @discussion This holds the tapglue API client to do the network communication.
- */
-@property (nonatomic, readonly) TGApiClient *client;
+@interface TGAttachment : TGModelObject
 
-- (instancetype)initWithClient:(TGApiClient*)client;
++ (instancetype) attachmentWithText:(NSString*)text andName:(NSString*)name;
++ (instancetype) attachmentWithNSURL:(NSURL*)url andName:(NSString*)name;
++ (instancetype) attachmentWithURL:(NSString*)urlString andName:(NSString*)name;
 
-- (NSArray*)createAndCacheUserFromJsonResponse:(NSDictionary*)jsonResponse;
+@property (nonatomic, strong, readonly) NSString *type;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *content;
 
 @end

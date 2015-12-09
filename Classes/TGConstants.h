@@ -18,6 +18,22 @@
 //  limitations under the License.
 //
 
+#pragma mark - Enums 
+
+/*!
+ @typedef Defines the visibibly of events and posts for other users.
+ @constant TGVisibilityPrivate makes the event visible only for the currentUser.
+ @constant TGVisibilityConnection makes the event visible for friends and followers.
+ @constant TGVisibilityPublic makes the event visible for everyone.
+ */
+
+typedef NS_ENUM(NSInteger, TGVisibility) {
+    TGVisibilityPrivate = 10,
+    TGVisibilityConnection = 20,
+    TGVisibilityPublic = 30
+};
+
+
 #pragma mark - Errors
 
 /*!
@@ -288,7 +304,7 @@ typedef NS_ENUM(NSInteger, TGErrorCode) {
 
 #pragma mark - Blocks
 
-@class TGUser, TGEvent;
+@class TGUser, TGEvent, TGPost;
 
 /*!
  @abstract Completion block for succes.
@@ -324,3 +340,16 @@ typedef void (^TGGetEventListCompletionBlock)(NSArray *events, NSError *error);
  @discussion The TGFeedCompletionBlock will return the events, the unreadCount and an error.
  */
 typedef void (^TGFeedCompletionBlock)(NSArray *events, NSInteger unreadCount, NSError *error);
+
+/*!
+ @abstract Completion block for a post.
+ @discussion The TGGetPostCompletionBlock will return a user or an error.
+ */
+typedef void (^TGGetPostCompletionBlock)(TGPost *post, NSError *error);
+
+/*!
+ @abstract Completion block for a network requets fetching a list of posts.
+ */
+typedef void (^TGGetPostListCompletionBlock)(NSArray *posts, NSError *error);
+
+

@@ -208,7 +208,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 - (void)handleUserListResponse:(NSDictionary*)jsonResponse withError:(NSError*)responseError andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
     if (completionBlock) {
         if (!responseError) {
-            NSArray *users = [TGUser createAndCacheObjectsFromDictionaries:[jsonResponse objectForKey:@"users"]];
+            NSArray *users = [self createAndCacheUserFromJsonResponse:jsonResponse];
             completionBlock(users, nil);
         } else {
             completionBlock(nil, responseError);
@@ -252,7 +252,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
-                [TGUser createAndCacheObjectsFromDictionaries:[jsonResponse objectForKey:@"users"]];
+                [self createAndCacheUserFromJsonResponse:jsonResponse];
                 
                 NSMutableArray *incomingConnections = [NSMutableArray new];
                 for (NSDictionary *objectDict in [jsonResponse objectForKey:@"incoming"]) {

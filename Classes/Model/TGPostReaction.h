@@ -1,8 +1,8 @@
 //
-//  TGBaseManager.h
+//  TGPostReaction.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 05/06/15.
+//  Created by Martin Stemmle on 09.12.15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,25 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
+#import "TGModelObject.h"
 
-@class TGApiClient;
-
-/*!
- @abstract The base network manager.
- @discussion This is the base manager to handle the whole network communication.
- */
-@interface TGBaseManager : NSObject
+@class TGUser, TGPost;
 
 /*!
- @abstract The Tapglue API Client.
- @discussion This holds the tapglue API client to do the network communication.
+ @abstract The absract base class for reactions that the user can take on posts.
  */
-@property (nonatomic, readonly) TGApiClient *client;
+@interface TGPostReaction : TGModelObject
 
-- (instancetype)initWithClient:(TGApiClient*)client;
+/*!
+ @abstract User who performed the reaction on the post.
+ @discussion The user will be a TGUser object that contains the user who performed reaction on the post.
+ */
+@property (nonatomic, readonly) TGUser *user;
 
-- (NSArray*)createAndCacheUserFromJsonResponse:(NSDictionary*)jsonResponse;
+/*!
+ @abstract The post the on which the is reaction performed on.
+ */
+@property (nonatomic, readonly) TGPost *post;
+
 
 @end

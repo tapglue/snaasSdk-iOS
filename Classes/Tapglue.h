@@ -506,3 +506,6 @@
                                      andCompletionBlock:(void (^)(NSDictionary *jsonResponse, NSError *error))completionBlock;
 
 @end
+
+// must to be imported after the interface definition
+#import "Tapglue+Posts.h"

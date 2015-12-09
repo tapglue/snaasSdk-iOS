@@ -1,8 +1,8 @@
 //
-//  TGBaseManager.h
+//  TGApiClient+TGObject.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 05/06/15.
+//  Created by Martin Stemmle on 09/12/15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,15 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
+#import "TGApiClient.h"
+#import "TGConstants.h"
 
-@class TGApiClient;
+@class TGObject;
 
-/*!
- @abstract The base network manager.
- @discussion This is the base manager to handle the whole network communication.
- */
-@interface TGBaseManager : NSObject
+@interface TGApiClient (TGObject)
 
-/*!
- @abstract The Tapglue API Client.
- @discussion This holds the tapglue API client to do the network communication.
- */
-@property (nonatomic, readonly) TGApiClient *client;
+- (void)createObject:(TGObject*)object atRoute:(NSString*)route withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-- (instancetype)initWithClient:(TGApiClient*)client;
-
-- (NSArray*)createAndCacheUserFromJsonResponse:(NSDictionary*)jsonResponse;
+- (void)updateObject:(TGObject*)object atRoute:(NSString*)route withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 @end

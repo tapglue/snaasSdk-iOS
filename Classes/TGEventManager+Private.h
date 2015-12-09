@@ -20,9 +20,6 @@
 
 #import "TGEventManager.h"
 
-#define TGEventManagerAPIEndpointCurrentUserEvents [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:TGEventManagerAPIEndpointEvents]
-#define TGEventManagerAPIEndpointCurrentUserFeed [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"feed"]
-
 @interface TGEventManager (Private)
 
 - (NSArray*)eventsFromJsonResponse:(NSDictionary*)jsonResponse;

@@ -32,6 +32,11 @@
         NSDictionary *secrets = [NSDictionary dictionaryWithContentsOfFile:plistPath];
         _appToken = [secrets valueForKey:@"appToken"];
     }
+    if ([_appToken isEqualToString:@"<PUT YOUR TOKEN HERE>"]) {
+        for(int i = 0; i < 10; i++) {
+            NSLog(@"ERROR: appToken not set in secrets.plist ❗️❗️❗️");
+        }
+    };
     return _appToken;
 }
 

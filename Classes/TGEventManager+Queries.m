@@ -27,6 +27,7 @@
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
 #import "TGQuery+Private.h"
+#import "TGApiRoutesBuilder.h"
 
 @implementation TGEventManager (Queries)
 
@@ -40,14 +41,14 @@
 - (void)retrieveEventsForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     // rout: /me/events
     [self retrieveEventsWithQuery:query
-                          atRoute:TGEventManagerAPIEndpointCurrentUserEvents
+                          atRoute:[TGApiRoutesBuilder routeForEventsOfUserWithId:nil]
               withCompletionBlock:completionBlock];
 }
 
 - (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     // route: /me/feed
     [self retrieveEventsWithQuery:query
-                          atRoute:TGEventManagerAPIEndpointCurrentUserFeed
+                          atRoute:[TGApiRoutesBuilder routeForMixedFeed]
               withCompletionBlock:completionBlock];
 }
 
