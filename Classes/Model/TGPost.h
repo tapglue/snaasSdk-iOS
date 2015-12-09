@@ -26,8 +26,8 @@
 @interface TGPost : TGModelObject
 
 /*!
- @abstract User who performed the event.
- @discussion The user will be a TGUser object that contains the user who performed the event.
+ @abstract User who published the post.
+ @discussion The user will be a TGUser object that contains the user who published the post.
  */
 @property (nonatomic, readonly) TGUser *user;
 

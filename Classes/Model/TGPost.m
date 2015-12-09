@@ -22,6 +22,7 @@
 #import "TGPost.h"
 #import "TGUser+Private.h"
 #import "TGModelObject+Private.h"
+#import "TGObjectCache.h"
 #import "NSDictionary+TGUtilities.h"
 #import "TGAttachment.h"
 
@@ -35,6 +36,22 @@ static NSString *const TGPostUserIdJsonKey = @"user_id";
 @end
 
 @implementation TGPost
+
++ (instancetype)createOrLoadWithDictionary:(NSDictionary*)data {
+    TGObjectCache *cache = [self cache];
+    TGPost *post = [cache objectWithObjectId:[data tg_stringValueForKey:TGModelObjectIdJsonKey]];
+    if (!post) {
+        post = [[TGPost alloc] initWithDictionary:data];
+        if (post) { // post will be nil if the data is invalid
+            [cache addObject:post];
+        }
+    }
+    else {
+        [post loadDataFromDictionary:data]; // update the existing with potentially new data
+    }
+    
+    return post;
+}
 
 - (instancetype) init {
     self = [super init];

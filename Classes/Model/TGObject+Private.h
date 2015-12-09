@@ -26,11 +26,18 @@
  */
 extern NSString *const TGModelObjectIdJsonKey;
 
+
+@protocol TGObjectJsonMapping <NSObject>
+@optional
+- (NSDictionary*)jsonMappingForWriting;
+@end
+
+
 /*!
  @abstract The defaul TGObject.
  @discussion TGObject contains the objectId associated with each object.
  */
-@interface TGObject (Private)
+@interface TGObject (Private) <TGObjectJsonMapping>
 
 /*!
  @abstract The unique objectId.
