@@ -193,6 +193,12 @@ static NSString *const TGApiClientAppAndDeviceInfoCarrier = @"carrier";
         [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         request.HTTPBody = [NSJSONSerialization dataWithJSONObject:bodyObject options:kNilOptions error:NULL]; // ToDo: error handling for json parsing
     }
+    
+    // FIXME: temporary fix for creating likes >>>
+    else if ([method isEqualToString:@"POST"] || [method isEqualToString:@"PUT"]) {
+        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    }
+    // <<< 
 
     [self setNetworkActivityIndicatorVisible:YES];
 
