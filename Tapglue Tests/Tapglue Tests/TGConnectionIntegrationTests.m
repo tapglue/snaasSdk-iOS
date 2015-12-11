@@ -107,7 +107,7 @@
             expect(users).toNot.beEmpty();
 
             // Follow User
-            [Tapglue followUser:users.firstObject createEvent:YES withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue followUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
 
@@ -209,7 +209,7 @@
                     expect(error).to.beNil();
                     
                     // Create Pending Connection to User A
-                    [Tapglue friendUser:users.firstObject withState:TGConnectionStatePending createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                    [Tapglue friendUser:users.firstObject withState:TGConnectionStatePending withCompletionBlock:^(BOOL success, NSError *error) {
                         expect(success).to.beTruthy();
                         expect(error).to.beNil();
                         
@@ -229,7 +229,7 @@
                                 expect(incomingConnection.state).to.equal(TGConnectionStatePending);
                                 
                                 // Confirm connection to User B
-                                [Tapglue friendUser:incomingConnection.fromUser withState:TGConnectionStateConfirmed createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                                [Tapglue friendUser:incomingConnection.fromUser withState:TGConnectionStateConfirmed withCompletionBlock:^(BOOL success, NSError *error) {
                                     expect(success).to.beTruthy();
                                     expect(error).to.beNil();
                                     
@@ -594,7 +594,7 @@
                     expect(error).to.beNil();
                     
                     // Create Pending Connection to User A
-                    [Tapglue friendUser:users.firstObject withState:TGConnectionStatePending createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                    [Tapglue friendUser:users.firstObject withState:TGConnectionStatePending withCompletionBlock:^(BOOL success, NSError *error) {
                         expect(success).to.beTruthy();
                         expect(error).to.beNil();
                         
@@ -614,7 +614,7 @@
                                 expect(incomingConnection.state).to.equal(TGConnectionStatePending);
                                 
                                 // Confirm connection to User B
-                                [Tapglue friendUser:incomingConnection.fromUser withState:TGConnectionStateRejected createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                                [Tapglue friendUser:incomingConnection.fromUser withState:TGConnectionStateRejected withCompletionBlock:^(BOOL success, NSError *error) {
                                     expect(success).to.beTruthy();
                                     expect(error).to.beNil();
                                     

@@ -318,7 +318,6 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
-                     withEvent:(BOOL)withEvent
                       andState:(TGConnectionState)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     
@@ -336,12 +335,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
                                      @"state" : [TGConnection stringForConnectionState:connectionState]
                                      };
     
-    NSDictionary *urlParams = nil;
-    if (withEvent == YES) {
-        urlParams = @{@"with_event" : @"true"};
-    }
-    
-    [self.client PUT:TGUserManagerAPIEndpointConnections withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client PUT:TGUserManagerAPIEndpointConnections withURLParameters:nil andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (jsonResponse && !error) {
                 completionBlock(YES, nil);

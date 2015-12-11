@@ -177,7 +177,6 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
  */
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
-                     withEvent:(BOOL)withEvent
                       andState:(TGConnectionState)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 

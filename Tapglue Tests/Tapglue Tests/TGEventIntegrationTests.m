@@ -749,7 +749,7 @@
                 TGUser *user = users.firstObject;
                 
                 // Friend User
-                [Tapglue friendUser:user withState:TGConnectionStateConfirmed createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                [Tapglue friendUser:user withState:TGConnectionStateConfirmed withCompletionBlock:^(BOOL success, NSError *error) {
                     
                     expect(success).to.beTruthy();
                     expect(error).to.beNil();
@@ -813,7 +813,7 @@
                 TGUser *user = users.firstObject;
                 
                 // Friend User
-                [Tapglue friendUser:user withState:TGConnectionStateConfirmed createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                [Tapglue friendUser:user withState:TGConnectionStateConfirmed withCompletionBlock:^(BOOL success, NSError *error) {
                     
                     expect(success).to.beTruthy();
                     expect(error).to.beNil();
@@ -976,7 +976,7 @@
                 TGUser *user = users.firstObject;
                 
                 // Friend User
-                [Tapglue friendUser:user withState:TGConnectionStateConfirmed createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                [Tapglue friendUser:user withState:TGConnectionStateConfirmed withCompletionBlock:^(BOOL success, NSError *error) {
                     
                     expect(success).to.beTruthy();
                     expect(error).to.beNil();

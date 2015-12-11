@@ -319,20 +319,13 @@ static Tapglue* sharedInstance = nil;
 #pragma mark - Connections
 
 + (void)followUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self followUser:user createEvent:NO withCompletionBlock:completionBlock];
-}
-
-+ (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self followUser:user
-           withState:TGConnectionStateConfirmed
-         createEvent:createEvent withCompletionBlock:completionBlock];
+    [self followUser:user withState:TGConnectionStateConfirmed withCompletionBlock:completionBlock];
 }
 
 
-+ (void)followUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
++ (void)followUser:(TGUser*)user withState:(TGConnectionState)state withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFollow
                                                        toUser:user
-                                                    withEvent:createEvent
                                                      andState:state
                                           withCompletionBlock:completionBlock];
 }
@@ -342,19 +335,12 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)friendUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self friendUser:user createEvent:NO withCompletionBlock:completionBlock];
+    [self friendUser:user withState:TGConnectionStateConfirmed withCompletionBlock:completionBlock];
 }
 
-+ (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self friendUser:user
-           withState:TGConnectionStateConfirmed
-         createEvent:createEvent withCompletionBlock:completionBlock];
-}
-
-+ (void)friendUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
++ (void)friendUser:(TGUser*)user withState:(TGConnectionState)state withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFriend
                                                        toUser:user
-                                                    withEvent:createEvent
                                                      andState:state
                                           withCompletionBlock:completionBlock];
 }
