@@ -113,7 +113,10 @@ typedef NS_ENUM(NSInteger, TGEventVisibility) {
  */
 @property (nonatomic, strong) TGEventObject *target;
 
-// TODO: documentation
+/*!
+ @abstract The ID of the Tapglue ID.
+ @discussion The ID of the Tapglue ID.
+ */
 @property (nonatomic, strong) NSString *tgObjectId;
 
 

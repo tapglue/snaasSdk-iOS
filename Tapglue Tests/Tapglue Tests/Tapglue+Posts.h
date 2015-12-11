@@ -39,14 +39,13 @@
  */
 + (void)createPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-// TODO: docu `text` and `name` param
 /*!
  @abstract Create a post.
  @discussion This will create an post for a the current user.
  
  @param post The TGPost object that contains the post information.
- @param text ...
- @param name ...
+ @param text The text that the post contains.
+ @param name The name of the post.
  */
 + (void)createPostWithText:(NSString*)attachmentText named:(NSString*)attachmentName withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
@@ -107,38 +106,85 @@
 
 #pragma mark - Comments -
 
-// TODO: documentation
+/*!
+ @abstract Creates a comment on a post.
+ @discussion This will create a comment on a post.
+ 
+ @param commentContent The content of the comment.
+ @param post The Post object that is being commented.
+ */
 + (TGPostComment*)createCommentWithContent:(NSString*)commentContent
                                    forPost:(TGPost*)post
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Updates a comment on a post.
+ @discussion This will update a comment on a post.
+ 
+ @param comment The comment object that is being updated.
+ */
 + (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Deletes a comment on a post.
+ @discussion This will delete a comment on a post.
+ 
+ @param comment The comment object that is being deleted.
+ */
 + (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Retrieve comments for a post.
+ @discussion This will retrieve all comments for a post.
+ 
+ @param post The post object for which comments are retrieved.
+ */
 + (void)retrieveCommentsForPost:(TGPost*)post
             withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Retrieve comments for a postId.
+ @discussion This will retrieve all comments for a postId.
+ 
+ @param postId The postId for which comments are retrieved.
+ */
 + (void)retrieveCommentsForPostWithId:(NSString*)postId
                   withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
 
 #pragma mark - Likes -
 
-// TODO: documentation
+/*!
+ @abstract Create a like for a post.
+ @discussion This will create a like for a post.
+ 
+ @param post The post object for which a like is being created.
+ */
 + (TGPostLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Delete a like for a post.
+ @discussion This will delete a like for a post.
+ 
+ @param like The like object that is being deleted.
+ */
 + (void)deleteLike:(TGPostLike*)like withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-// TODO: documentation
+
+/*!
+ @abstract Retrieve likes for a post.
+ @discussion This will retrieve all likes for a post.
+ 
+ @param postId The post object for which likes are retrieved.
+ */
 + (void)retrieveLikesForPost:(TGPost*)post
          withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Retrieve likes for a postId.
+ @discussion This will retrieve all likes for a postId.
+ 
+ @param postId The postId for which likes are retrieved.
+ */
 + (void)retrieveLikesForPostWithId:(NSString*)postId
                withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
 

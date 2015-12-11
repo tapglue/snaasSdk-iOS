@@ -22,14 +22,37 @@
 
 @interface TGEventManager (Queries)
 
-// TODO: docu
-
+/*!
+ @abstract Retrieve all events that match a query.
+ @discussion This will retrieve all events matching the query object.
+ 
+ @param query Object that describes the query.
+ */
 - (void)retrieveEventsWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
+/*!
+ @abstract Retrieve current user events that match a query.
+ @discussion This will retrieve current user events matching the query object.
+ 
+ @param query Object that describes the query.
+ */
 - (void)retrieveEventsForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
+/*!
+ @abstract Retrieve feed events that match a query.
+ @discussion This will retrieve feed events matching the query object.
+ 
+ @param query Object that describes the query.
+ */
 - (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
+/*!
+ @abstract Compose a query for an eventType and an objectId.
+ @discussion This compose a query for an eventType and an objectId.
+ 
+ @param eventType Type of the event.
+ @param objectId Id of the object.
+ */
 - (TGQuery*)composeQueryForEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId;
     
 @end

@@ -21,16 +21,42 @@
 
 #import "TGModelObject.h"
 
-// TODO: docu
-
 @interface TGAttachment : TGModelObject
 
+/*!
+ @abstract Creates an attachment of type text with a name.
+ @discussion This will create an attachment of type text with a name.
+ */
 + (instancetype) attachmentWithText:(NSString*)text andName:(NSString*)name;
+
+/*!
+ @abstract Creates an attachment of type URL with a name.
+ @discussion This will create an attachment of URL (from a NSURL) with a name.
+ */
 + (instancetype) attachmentWithNSURL:(NSURL*)url andName:(NSString*)name;
+
+/*!
+ @abstract Creates an attachment of type URL with a name.
+ @discussion This will create an attachment of URL with a name.
+ */
 + (instancetype) attachmentWithURL:(NSString*)urlString andName:(NSString*)name;
 
+/*!
+ @abstract The type of an attachment.
+ @discussion This property contains the type of an attachment.
+ */
 @property (nonatomic, strong, readonly) NSString *type;
+
+/*!
+ @abstract The name of an attachment.
+ @discussion This property contains the name of an attachment.
+ */
 @property (nonatomic, strong) NSString *name;
+
+/*!
+ @abstract The content of an attachment.
+ @discussion This property contains type of an attachment.
+ */
 @property (nonatomic, strong) NSString *content;
 
 @end

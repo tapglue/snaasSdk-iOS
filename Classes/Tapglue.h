@@ -158,11 +158,22 @@
  */
 + (void)searchUsersWithTerm:(NSString*)term andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
 
-// TODO: docu
+/*!
+ @abstract Search multiple users with emails.
+ @discussion This will retrieve the details of the users for a set of email adresses.
+ 
+ @param emails The emails of the users that are being searched.
+ */
 + (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
-// TODO: docu
-+ (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
+/*!
+ @abstract Search multiple users with socialIds.
+ @discussion This will retrieve the details of the users for a set of socialIds.
+ 
+ @param socialPlatform The name of the social platform.
+ @param socialUserIds The socialIds of the users that are being searched.
+ */
++ (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
                  withSocialUsersIds:(NSArray*)socialUserIds
                  andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
@@ -185,14 +196,13 @@
  */
 + (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
-// TODO: docu state param
 /*!
  @abstract Follow a user.
  @discussion This will create a follow connection to another user.
  
  @param user The user object which the currentUser wants to follow.
  @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
- @param state
+ @param state Specifies the connection state of the follow (pending, confirmed, rejected).
  */
 + (void)followUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
@@ -222,14 +232,13 @@
 + (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 
-// TODO: docu state param
 /*!
  @abstract Become friend with a user.
  @discussion This will create a friend connection to another user.
  
  @param user The user object which the currentUser wants to become friend with.
  @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
- @param state
+ @param state Specifies the connection state of the friend (pending, confirmed, rejected).
  */
 + (void)friendUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
@@ -261,11 +270,23 @@
 // TODO: cache for current user connections
 
 
-// TODO: Doku
+/*!
+ @abstract Retrieve list of pending connections.
+ @discussion This will retrieve a list of users that have a pending connection with the currentUser.
+ */
 + (void)retrievePendingConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
 
-// TODO: Doku
+/*!
+ @abstract Retrieve list of rejected connections.
+ @discussion This will retrieve a list of users that have a rejected connection with the currentUser.
+ */
 + (void)retrieveRejectedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve list of confirmed connections.
+ @discussion This will retrieve a list of users that have a confirmed connection with the currentUser.
+ */
++ (void)retrieveConfirmedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
 
 #pragma mark -
 
@@ -446,7 +467,10 @@
  */
 + (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Retrieve all events that match a query.
+ @discussion This will retrieve all events matching the query object.
+ */
 + (void)retrieveEventsWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 #pragma mark Current user event queries
@@ -469,7 +493,10 @@
  */
 + (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Retrieve current user events that match a query.
+ @discussion This will retrieve current user events matching the query object.
+ */
 + (void)retrieveEventsForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 #pragma mark Feed Events queries
@@ -492,13 +519,18 @@
  */
 + (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-// TODO: documentation
+/*!
+ @abstract Retrieve feed events that match a query.
+ @discussion This will retrieve feed events matching the query object.
+ */
 + (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 #pragma mark - Raw Rest -
 
-// TODO: documentation
-
+/*!
+ @abstract Create a generic HTTP request.
+ @discussion This will create a generic HTTP Request.
+ */
 + (NSURLSessionDataTask*) makeRestRequestWithHTTPMethod:(NSString*)method
                                              atEndPoint:(NSString*)endPoint
                                       withURLParameters:(NSDictionary*)urlParams

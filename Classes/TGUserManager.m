@@ -122,12 +122,12 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     }];
 }
 
-- (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
+- (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
                  withSocialUsersIds:(NSArray*)socialUserIds
                  andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
     
     NSString *queryString = [socialUserIds componentsJoinedByString:@"&socialid="];
-    NSDictionary *urlParams = @{@"social_platform": socialPlattform,
+    NSDictionary *urlParams = @{@"social_platform": socialPlatform,
                                 @"socialid" : queryString};
 
     [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:urlParams andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {

@@ -26,12 +26,20 @@
 
 #pragma mark - Comments
 
-// TODO: documentation
+/*!
+ @abstract Create Comment with content on a post.
+ @discussion This will create a comment with a certain content.
+ 
+ @param commentContent This contains the comment.
+ */
 - (TGPostComment*)commentWithContent:(NSString*)commentContent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 #pragma mark - Likes
 
-// TODO: documentation
+/*!
+ @abstract Create a like on a post.
+ @discussion Create a like on a post.
+ */
 - (TGPostLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 @end

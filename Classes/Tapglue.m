@@ -276,10 +276,10 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].userManager searchUsersWithEmails:emails andCompletionBlock:completionBlock];
 }
 
-+ (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
++ (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
                  withSocialUsersIds:(NSArray*)socialUserIds
                  andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
-    [[self sharedInstance].userManager searchUsersOnSocialPlatform:socialPlattform withSocialUsersIds:socialUserIds andCompletionBlock:completionBlock];
+    [[self sharedInstance].userManager searchUsersOnSocialPlatform:socialPlatform withSocialUsersIds:socialUserIds andCompletionBlock:completionBlock];
 }
 
 #pragma mark - Feed
@@ -378,6 +378,11 @@ static Tapglue* sharedInstance = nil;
 
 + (void)retrieveRejectedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock {
     [[self sharedInstance].userManager retrieveConnectionsForCurrentUserOfState:TGConnectionStateRejected
+                                                            withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveConfirmedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock {
+    [[self sharedInstance].userManager retrieveConnectionsForCurrentUserOfState:TGConnectionStateConfirmed
                                                             withCompletionBlock:completionBlock];
 }
 
