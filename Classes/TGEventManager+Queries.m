@@ -20,6 +20,8 @@
 
 #import "TGEventManager+Queries.h"
 #import "TGEventManager+Private.h"
+#import "TGPostsManager.h"
+#import "TGPost.h"
 #import "TGEvent.h"
 #import "TGModelObject+Private.h"
 #import "TGApiClient.h"
@@ -52,9 +54,9 @@
               withCompletionBlock:completionBlock];
 }
 
-- (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+- (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
     // route: /me/feed
-    [self retrieveEventsWithQuery:query
+    [self retrieveNewsFeedWithQuery:query
                           atRoute:[TGApiRoutesBuilder routeForNewsFeed]
               withCompletionBlock:completionBlock];
 }
@@ -70,6 +72,25 @@
             }
             else if(completionBlock) {
                 completionBlock(nil, error);
+            }
+        }
+    }];
+}
+
+- (void)retrieveNewsFeedWithQuery:(TGQuery*)query atRoute:(NSString*)route withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
+    [self.client GET:route withURLParameters:@{@"where" : query.queryAsString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            if (!error) {
+                //TODO: Load posts
+                // NSArray *events = [self postsFromJsonResponse:jsonResponse];
+                NSArray *events = [self eventsFromJsonResponse:jsonResponse];
+                if (completionBlock) {
+                    //TODO: posts in completion
+                    completionBlock(nil, events, nil);
+                }
+            }
+            else if(completionBlock) {
+                completionBlock(nil, nil, error);
             }
         }
     }];

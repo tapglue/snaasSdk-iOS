@@ -160,7 +160,7 @@ extern NSString *const TGEventManagerAPIEndpointEvents;
  @discussion This will retrieve news feed of the currentUser.
  */
 - (void)retrieveNewsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
-                               withCompletionBlock:(TGFeedCompletionBlock)completionBlock;
+                               withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve the unread count for the feed of the currentUser.

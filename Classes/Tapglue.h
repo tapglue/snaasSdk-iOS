@@ -433,7 +433,7 @@
  @abstract Retrieve news feed for the currentUser.
  @discussion This will retrieve the news feed for the currentUser.
  */
-+ (void)retrieveNewsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock;
++ (void)retrieveNewsFeedForCurrentUserWithCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve unread events of news feed for the currentUser.
@@ -537,7 +537,7 @@
  @abstract Retrieve news feed that match a query.
  @discussion This will retrieve a news feed  matching the query object.
  */
-+ (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
++ (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
 #pragma mark - Raw Rest -
 

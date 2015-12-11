@@ -288,7 +288,7 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveNewsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock {
++ (void)retrieveNewsFeedForCurrentUserWithCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
     [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
 }
 
@@ -580,7 +580,7 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
++ (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
     [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 

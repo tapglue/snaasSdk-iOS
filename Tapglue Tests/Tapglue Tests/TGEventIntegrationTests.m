@@ -709,10 +709,10 @@
 }
 
 // [Corrent] Retrieve small events feed
-- (void)testEventsFeedSmall {
+- (void)testNewsFeedSmall {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
         
-        [Tapglue retrieveNewsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
+        [Tapglue retrieveNewsFeedForCurrentUserWithCompletionBlock:^(NSArray *posts, NSArray *events, NSError *error) {
             expect(events).toNot.beNil();
             expect(error).to.beNil();
             
@@ -722,7 +722,7 @@
 }
 
 // [Correct] Retrieve events feed with query
-- (void)testEventsFeedWithQuery {
+- (void)testNewsFeedWithQuery {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
         
         NSString *eventType = [NSString randomStringWithLength:10];
@@ -762,11 +762,16 @@
                         [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
                             expect(success).to.beTruthy();
                             expect(error).to.beNil();
+                            
+                            // Create Query Object
+                            TGQuery *query = [TGQuery new];
+                            [query addEventObjectWithIdEquals:objectId];
+                            [query addTypeEquals:eventType];
                 
                             // Retrieve Feed with Query
-                            [Tapglue retrieveEventsFeedForCurrentUserOfType:eventType withCompletionBlock:^(NSArray *events, NSError *error) {
+                            [Tapglue retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:^(NSArray *posts, NSArray *events, NSError *error) {
                                 expect(events).toNot.beNil();
-                                expect(events.count).to.beGreaterThanOrEqualTo(0);
+                                expect(events.count).to.beGreaterThanOrEqualTo(1);
                                 expect(error).to.beNil();
                                 
                                 [expectation fulfill];

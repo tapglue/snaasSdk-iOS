@@ -52,7 +52,7 @@
  
  @param query Object that describes the query.
  */
-- (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+- (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
 /*!
  @abstract Compose a query for an eventType and an objectId.

@@ -323,7 +323,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
 }
 
 - (void)retrieveNewsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
-                               withCompletionBlock:(TGFeedCompletionBlock)completionBlock {
+                               withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
     
     NSString *apiEndpoint = [TGApiRoutesBuilder routeForNewsFeed];
     if (onlyUnread) {
@@ -334,13 +334,14 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     // TODO: [improvement] find a way to push a all completion blocks on the calling queue
     NSOperationQueue *current_queue = [NSOperationQueue currentQueue];
     
-    
     [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
                 [self createAndCacheUserFromJsonResponse:jsonResponse];
                 
                 NSInteger unreadCount = [[jsonResponse objectForKey:@"unread_events_count"] integerValue];
+                //TODO: read posts
+                //NSArray *posts = [self postsFromJsonResponse:jsonResponse];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
                 
                 self.cachedFeed = events;
@@ -348,7 +349,8 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
                 
                 if (completionBlock) {
                     [current_queue addOperationWithBlock:^{
-                        completionBlock(events, unreadCount, nil);
+                        //TODO: posts in completion
+                        completionBlock(nil, events, nil);
                     }];
                 }
             }
