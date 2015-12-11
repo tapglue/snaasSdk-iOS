@@ -19,20 +19,8 @@
 //
 
 #import "TGModelObject.h"
+#import "TGConstants.h"
 #import <Foundation/Foundation.h>
-
-/*!
- @typedef Defines the visibibly of events for other users.
- @constant TGEventVisibilityPrivate makes the event visible only for the currentUser.
- @constant TGEventVisibilityConnection makes the event visible for friends and followers.
- @constant TGEventVisibilityPublic makes the event visible for everyone.
- */
-
-typedef NS_ENUM(NSInteger, TGEventVisibility) {
-    TGEventVisibilityPrivate = 10,
-    TGEventVisibilityConnection = 20,
-    TGEventVisibilityPublic = 30
-};
 
 @class TGUser, TGEventObject;
 
@@ -90,7 +78,7 @@ typedef NS_ENUM(NSInteger, TGEventVisibility) {
  @abstract Visibility of the event.
  @discussion The visibility of the event determines if it should be public, private or only be seen by connections.
  */
-@property (nonatomic, assign) TGEventVisibility visibility;
+@property (nonatomic, assign) TGVisibility visibility;
 
 /*!
  @abstract Images associated with the event.
