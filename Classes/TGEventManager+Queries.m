@@ -65,6 +65,8 @@
     [self.client GET:route withURLParameters:@{@"where" : query.queryAsString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
+                NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+                [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
                 if (completionBlock) {
                     completionBlock(events, nil);
@@ -81,6 +83,8 @@
     [self.client GET:route withURLParameters:@{@"where" : query.queryAsString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
+                NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+                [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
                 NSArray *posts = [self postsFromJsonResponse:jsonResponse];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
                 if (completionBlock) {
