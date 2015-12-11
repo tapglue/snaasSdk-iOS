@@ -2,7 +2,7 @@
 //  TGEventManager+Private.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 07.12.15.
+//  Created by Martin Stemmle on 07/12/15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,5 +23,6 @@
 @interface TGEventManager (Private)
 
 - (NSArray*)eventsFromJsonResponse:(NSDictionary*)jsonResponse;
+- (NSArray*)postsFromJsonResponse:(NSDictionary*)jsonResponse;
 
 @end

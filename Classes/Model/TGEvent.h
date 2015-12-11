@@ -19,28 +19,16 @@
 //
 
 #import "TGModelObject.h"
+#import "TGConstants.h"
 #import <Foundation/Foundation.h>
-
-/*!
- @typedef Defines the visibibly of events for other users.
- @constant TGEventVisibilityPrivate makes the event visible only for the currentUser.
- @constant TGEventVisibilityConnection makes the event visible for friends and followers.
- @constant TGEventVisibilityPublic makes the event visible for everyone.
- */
-
-typedef NS_ENUM(NSInteger, TGEventVisibility) {
-    TGEventVisibilityPrivate = 10,
-    TGEventVisibilityConnection = 20,
-    TGEventVisibilityPublic = 30
-};
 
 @class TGUser, TGEventObject;
 
 @interface TGEvent : TGModelObject <NSCoding>
 
 /*!
- @abstract Unique user identifier of the event.
- @discussion The eventId will be in the form of a UUID.
+ @abstract Unique identifier of the event.
+ @discussion The eventId will be a unique string.
  */
 @property (nonatomic, strong, readonly) NSString *eventId;
 
@@ -90,7 +78,7 @@ typedef NS_ENUM(NSInteger, TGEventVisibility) {
  @abstract Visibility of the event.
  @discussion The visibility of the event determines if it should be public, private or only be seen by connections.
  */
-@property (nonatomic, assign) TGEventVisibility visibility;
+@property (nonatomic, assign) TGVisibility visibility;
 
 /*!
  @abstract Images associated with the event.
@@ -113,7 +101,10 @@ typedef NS_ENUM(NSInteger, TGEventVisibility) {
  */
 @property (nonatomic, strong) TGEventObject *target;
 
-// TODO: documentation
+/*!
+ @abstract The ID of the Tapglue ID.
+ @discussion The ID of the Tapglue ID.
+ */
 @property (nonatomic, strong) NSString *tgObjectId;
 
 

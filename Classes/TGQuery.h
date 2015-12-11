@@ -2,7 +2,7 @@
 //  TGQueryBuilder.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 07.12.15.
+//  Created by Martin Stemmle on 07/12/15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,18 +23,55 @@
 
 @interface TGQuery : NSObject
 
-// TODO: documetation
-
 #pragma mark - ObjectID
+/*!
+ @abstract Adds an Tapglue objectId to the query.
+ @discussion This will add an Tapglue objectId to the query.
+ 
+ @param objectId The ID of an Tapglue object
+ */
 - (void)addObjectIdEquals:(NSString*)objectId;
+
+/*!
+ @abstract Adds multiple Tapglue objectIds to the query.
+ @discussion This will add multiple Tapglue objectIds to the query.
+ 
+ @param objectIds Array of Tapglue objectIds
+ */
 - (void)addObjectIdIn:(NSArray*)objectIds;
 
 #pragma mark - Type
+/*!
+ @abstract Adds an event type to the query.
+ @discussion This will add an event type to the query.
+ 
+ @param type The event type
+ */
 - (void)addTypeEquals:(NSString*)type;
+
+/*!
+ @abstract Adds multiple event types to the query.
+ @discussion This will multiple event types to the query.
+ 
+ @param types Array of event type
+ */
 - (void)addTypeIn:(NSArray*)types;
 
 #pragma mark - Object.ID
+/*!
+ @abstract Adds an event objectId to the query.
+ @discussion This will add an event objectId to the query.
+ 
+ @param objectId The ID of an Tapglue object
+ */
 - (void)addEventObjectWithIdEquals:(NSString*)objectId;
+
+/*!
+ @abstract Adds multiple event objectIds to the query.
+ @discussion This will add multiple event objectIds to the query.
+ 
+ @param objectIds Array of event objectIds
+ */
 - (void)addEventObjectWithIdIn:(NSArray*)objectIds;
 
 @end

@@ -122,12 +122,12 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     }];
 }
 
-- (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
+- (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
                  withSocialUsersIds:(NSArray*)socialUserIds
                  andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
     
     NSString *queryString = [socialUserIds componentsJoinedByString:@"&socialid="];
-    NSDictionary *urlParams = @{@"social_platform": socialPlattform,
+    NSDictionary *urlParams = @{@"social_platform": socialPlatform,
                                 @"socialid" : queryString};
 
     [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:urlParams andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
@@ -208,7 +208,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 - (void)handleUserListResponse:(NSDictionary*)jsonResponse withError:(NSError*)responseError andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
     if (completionBlock) {
         if (!responseError) {
-            NSArray *users = [self createAndCacheUserFromJsonResponse:jsonResponse];
+            NSArray *users = [TGUser createAndCacheObjectsFromDictionaries:[jsonResponse objectForKey:@"users"]];
             completionBlock(users, nil);
         } else {
             completionBlock(nil, responseError);
@@ -252,7 +252,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
-                [self createAndCacheUserFromJsonResponse:jsonResponse];
+                [TGUser createAndCacheObjectsFromDictionaries:[jsonResponse objectForKey:@"users"]];
                 
                 NSMutableArray *incomingConnections = [NSMutableArray new];
                 for (NSDictionary *objectDict in [jsonResponse objectForKey:@"incoming"]) {
@@ -318,7 +318,6 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
-                     withEvent:(BOOL)withEvent
                       andState:(TGConnectionState)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     
@@ -336,12 +335,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
                                      @"state" : [TGConnection stringForConnectionState:connectionState]
                                      };
     
-    NSDictionary *urlParams = nil;
-    if (withEvent == YES) {
-        urlParams = @{@"with_event" : @"true"};
-    }
-    
-    [self.client PUT:TGUserManagerAPIEndpointConnections withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client PUT:TGUserManagerAPIEndpointConnections withURLParameters:nil andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (jsonResponse && !error) {
                 completionBlock(YES, nil);

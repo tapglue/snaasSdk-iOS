@@ -2,7 +2,7 @@
 //  TGPost+Reactions.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 09.12.15.
+//  Created by Martin Stemmle on 09/12/15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,12 +26,20 @@
 
 #pragma mark - Comments
 
-// TODO: documentation
+/*!
+ @abstract Create Comment with content on a post.
+ @discussion This will create a comment with a certain content.
+ 
+ @param commentContent This contains the comment.
+ */
 - (TGPostComment*)commentWithContent:(NSString*)commentContent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 #pragma mark - Likes
 
-// TODO: documentation
+/*!
+ @abstract Create a like on a post.
+ @discussion Create a like on a post.
+ */
 - (TGPostLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 @end

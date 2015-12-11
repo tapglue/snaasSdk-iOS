@@ -116,18 +116,29 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
 - (void)logoutWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
- @abstract Search users.
+ @abstract Search users with term.
  @discussion This will search for users for a given term.
 
  @param searchString Term for which users should be searched.
  */
 - (void)searchUsersWithSearchString:(NSString*)searchString andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
-// TODO: docu
+/*!
+ @abstract Search users with emails.
+ @discussion This will search for users for a set of email adresses.
+ 
+ @param emails Adresses for which users are being searched.
+ */
 - (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
-// TODO: docu
-- (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
+/*!
+ @abstract Search users with socialIds.
+ @discussion This will search for users for a set of socialIds.
+ 
+ @param socialPlatform Name of the platform where the ids come from.
+ @param socialUserIds Set of socialIds from the users.
+ */
+- (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
                  withSocialUsersIds:(NSArray*)socialUserIds
                  andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
@@ -145,7 +156,12 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
                            withCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
 
 
-// TODO: docu
+/*!
+ @abstract Retrieve the connections of a user wit ha state.
+ @discussion This will retrieve the connections of a certain user with a specific state.
+ 
+ @param connectionState The connection state that should be retrieved.
+ */
 - (void)retrieveConnectionsForCurrentUserOfState:(TGConnectionState)connectionState
                              withCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
 
@@ -161,7 +177,6 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
  */
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
-                     withEvent:(BOOL)withEvent
                       andState:(TGConnectionState)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 

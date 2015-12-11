@@ -2,7 +2,7 @@
 //  TGApiRoutesBuilder.h
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 09.12.15.
+//  Created by Martin Stemmle on 09/12/15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,7 +68,7 @@
 /*!
  @return The route to the mixed feed of posts & events for the current user.
  */
-+ (NSString*)routeForMixedFeed;
++ (NSString*)routeForNewsFeed;
 
 
 #pragma mark - Post reactions

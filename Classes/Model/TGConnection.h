@@ -23,12 +23,11 @@
 #import "TGModelObject.h"
 #import "TGUser.h"
 
-//TODO: documentation
 /*!
  @typedef Determines the connection state.
- @constant TGConnectionStatePending …
- @constant TGConnectionStateConfirmed …
- @constant TGConnectionStateRejected …
+ @constant TGConnectionStatePending defines the state for a pending connection.
+ @constant TGConnectionStateConfirmed defines the state for a confirmed connection.
+ @constant TGConnectionStateRejected defines the state for a rejected connection.
  */
 typedef NS_ENUM(NSUInteger, TGConnectionState) {
     TGConnectionStatePending = 0,
@@ -38,9 +37,28 @@ typedef NS_ENUM(NSUInteger, TGConnectionState) {
 
 @interface TGConnection : NSObject
 
+/*!
+ @abstract The user where the connection is triggered from.
+ @discussion This property contains the user where the connection is being triggered from.
+ */
 @property (nonatomic, strong, readonly) TGUser *fromUser;
+
+/*!
+ @abstract The user where the connection is going to.
+ @discussion This property contains the user where the connection is going to.
+ */
 @property (nonatomic, strong, readonly) TGUser *toUser;
+
+/*!
+ @abstract The date where the connection was created.
+ @discussion This property contains the date the connection was created.
+ */
 @property (nonatomic, strong, readonly) NSDate *createdAt;
+
+/*!
+ @abstract The state of the connection.
+ @discussion This property contains the user where the connection is being triggered from.
+ */
 @property (nonatomic, readonly) TGConnectionState state;
 
 @end

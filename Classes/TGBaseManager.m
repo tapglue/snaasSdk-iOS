@@ -19,8 +19,6 @@
 //
 
 #import "TGBaseManager.h"
-#import "TGUser+Private.h"
-#import "TGModelObject+Private.h"
 
 @interface TGBaseManager ()
 
@@ -36,11 +34,6 @@
         self.client = client;
     }
     return self;
-}
-
-- (NSArray*)createAndCacheUserFromJsonResponse:(NSDictionary*)jsonResponse {
-    NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
-    return [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
 }
 
 @end

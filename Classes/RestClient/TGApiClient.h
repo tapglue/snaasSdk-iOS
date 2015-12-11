@@ -142,7 +142,17 @@ typedef void (^TGNetworkCompletionBlock)(NSDictionary *jsonResponse, NSError *er
               withURLParameters:(NSDictionary*)urlParams
              andCompletionBlock:(void (^)(BOOL success, NSError *error))completionBlock;
 
-// TODO: docu
+/*!
+ @abstract A Generic HTTP Method.
+ @discussion This is a generic method to create a HTTP Call.
+ 
+ @param method The HTTP Method.
+ @param endpoint The endpoint to which the request goes.
+ @param urlParams Additional URL parameters of the request.
+ @param bodyObject The payload of the request.
+ 
+ @return A NSURLSessionDataTask will be returned.
+ */
 - (NSURLSessionDataTask*)makeRequestWithHTTPMethod:(NSString*)method
                                         atEndPoint:(NSString*)endPoint
                                  withURLParameters:(NSDictionary*)urlParams

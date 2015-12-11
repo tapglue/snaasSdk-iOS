@@ -20,6 +20,7 @@
 
 #import "TGEventManager.h"
 #import "TGEventManager+Private.h"
+#import "TGPost.h"
 #import "TGEvent.h"
 #import "TGModelObject+Private.h"
 #import "TGApiClient.h"
@@ -283,7 +284,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     }];
 }
 
-- (void)retrieveFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
+- (void)retrieveEventsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
                          withCompletionBlock:(TGFeedCompletionBlock)completionBlock {
     
     NSString *apiEndpoint = [TGApiRoutesBuilder routeForEventsFeed];
@@ -299,7 +300,8 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
-                [self createAndCacheUserFromJsonResponse:jsonResponse];
+                NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+                [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
                 
                 NSInteger unreadCount = [[jsonResponse objectForKey:@"unread_events_count"] integerValue];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
@@ -310,6 +312,46 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
                 if (completionBlock) {
                     [current_queue addOperationWithBlock:^{
                         completionBlock(events, unreadCount, nil);
+                    }];
+                }
+            }
+            else if(completionBlock) {
+                [current_queue addOperationWithBlock:^{
+                    completionBlock(nil, 0, error);
+                }];
+            }
+        }
+    }];
+}
+
+- (void)retrieveNewsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
+                               withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
+    
+    NSString *apiEndpoint = [TGApiRoutesBuilder routeForNewsFeed];
+    if (onlyUnread) {
+        apiEndpoint = [apiEndpoint stringByAppendingPathComponent:@"unread"];
+    }
+    
+    
+    // TODO: [improvement] find a way to push a all completion blocks on the calling queue
+    NSOperationQueue *current_queue = [NSOperationQueue currentQueue];
+    
+    [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            if (!error) {
+                NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+                [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+                
+                NSInteger unreadCount = [[jsonResponse objectForKey:@"unread_events_count"] integerValue];
+                NSArray *posts = [self postsFromJsonResponse:jsonResponse];
+                NSArray *events = [self eventsFromJsonResponse:jsonResponse];
+                
+                self.cachedFeed = events;
+                self.unreadCount = unreadCount;
+                
+                if (completionBlock) {
+                    [current_queue addOperationWithBlock:^{
+                        completionBlock(posts, events, nil);
                     }];
                 }
             }
@@ -359,6 +401,16 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
         [events addObject:newEvent];
     }
     return events;
+}
+
+- (NSArray*)postsFromJsonResponse:(NSDictionary*)jsonResponse {
+    NSArray *postDictionaries = [jsonResponse objectForKey:@"posts"];
+    NSMutableArray *posts = [NSMutableArray arrayWithCapacity:postDictionaries.count];
+    for (NSDictionary *postData in postDictionaries) {
+        TGPost *newPost = [TGPost createOrLoadWithDictionary:postData];
+        [posts addObject:newPost];
+    }
+    return posts;
 }
 
 /**

@@ -352,4 +352,9 @@ typedef void (^TGGetPostCompletionBlock)(TGPost *post, NSError *error);
  */
 typedef void (^TGGetPostListCompletionBlock)(NSArray *posts, NSError *error);
 
+/*!
+ @abstract Completion block for a network requets fetching a list of posts and events.
+ */
+typedef void (^TGGetNewsFeedCompletionBlock)(NSArray *posts, NSArray *events, NSError *error);
+
 

@@ -31,7 +31,7 @@
 
 /*!
  @abstract Unique user identifier from us.
- @discussion The userId will be in the form of a UUID.
+ @discussion The userId will be a unique string.
  */
 @property (nonatomic, strong, readonly) NSString *userId;
 

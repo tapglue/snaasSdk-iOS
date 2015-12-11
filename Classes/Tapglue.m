@@ -276,20 +276,24 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].userManager searchUsersWithEmails:emails andCompletionBlock:completionBlock];
 }
 
-+ (void)searchUsersOnSocialPlatform:(NSString*)socialPlattform
++ (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
                  withSocialUsersIds:(NSArray*)socialUserIds
                  andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
-    [[self sharedInstance].userManager searchUsersOnSocialPlatform:socialPlattform withSocialUsersIds:socialUserIds andCompletionBlock:completionBlock];
+    [[self sharedInstance].userManager searchUsersOnSocialPlatform:socialPlatform withSocialUsersIds:socialUserIds andCompletionBlock:completionBlock];
 }
 
 #pragma mark - Feed
 
-+ (void)retrieveFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock {
-    [[self sharedInstance].eventManager retrieveFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
++ (void)retrieveEventsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveNewsFeedForCurrentUserWithCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
 }
 
 + (void)retrieveUnreadFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [[self sharedInstance].eventManager retrieveFeedForCurrentUserOnlyUnread:YES withCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
+    [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:YES withCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
         if (completionBlock) {
             completionBlock(events, error);
         }
@@ -315,20 +319,13 @@ static Tapglue* sharedInstance = nil;
 #pragma mark - Connections
 
 + (void)followUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self followUser:user createEvent:NO withCompletionBlock:completionBlock];
-}
-
-+ (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self followUser:user
-           withState:TGConnectionStateConfirmed
-         createEvent:createEvent withCompletionBlock:completionBlock];
+    [self followUser:user withState:TGConnectionStateConfirmed withCompletionBlock:completionBlock];
 }
 
 
-+ (void)followUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
++ (void)followUser:(TGUser*)user withState:(TGConnectionState)state withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFollow
                                                        toUser:user
-                                                    withEvent:createEvent
                                                      andState:state
                                           withCompletionBlock:completionBlock];
 }
@@ -338,19 +335,12 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)friendUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self friendUser:user createEvent:NO withCompletionBlock:completionBlock];
+    [self friendUser:user withState:TGConnectionStateConfirmed withCompletionBlock:completionBlock];
 }
 
-+ (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self friendUser:user
-           withState:TGConnectionStateConfirmed
-         createEvent:createEvent withCompletionBlock:completionBlock];
-}
-
-+ (void)friendUser:(TGUser*)user withState:(TGConnectionState)state createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
++ (void)friendUser:(TGUser*)user withState:(TGConnectionState)state withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createConnectionOfType:TGConnectionTypeFriend
                                                        toUser:user
-                                                    withEvent:createEvent
                                                      andState:state
                                           withCompletionBlock:completionBlock];
 }
@@ -378,6 +368,11 @@ static Tapglue* sharedInstance = nil;
 
 + (void)retrieveRejectedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock {
     [[self sharedInstance].userManager retrieveConnectionsForCurrentUserOfState:TGConnectionStateRejected
+                                                            withCompletionBlock:completionBlock];
+}
+
++ (void)retrieveConfirmedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock {
+    [[self sharedInstance].userManager retrieveConnectionsForCurrentUserOfState:TGConnectionStateConfirmed
                                                             withCompletionBlock:completionBlock];
 }
 
@@ -551,24 +546,33 @@ static Tapglue* sharedInstance = nil;
 
 #pragma mark Feed Events queries
 
-+ (void)retrieveFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveFeedForCurrentUserForObjectWithId:nil andEventType:eventType withCompletionBlock:completionBlock];
++ (void)retrieveEventsFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self retrieveEventsFeedForCurrentUserForObjectWithId:nil andEventType:eventType withCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveFeedForCurrentUserForObjectWithId:objectId andEventType:nil withCompletionBlock:completionBlock];
++ (void)retrieveEventsFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self retrieveEventsFeedForCurrentUserForObjectWithId:objectId andEventType:nil withCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId
++ (void)retrieveEventsFeedForCurrentUserForObjectWithId:(NSString*)objectId
                                      andEventType:(NSString*)eventType
                               withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     
     TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventType:eventType andObjectWithId:objectId];
-    [self retrieveFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+    [self retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
-    [[self sharedInstance].eventManager retrieveFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
++ (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+}
+
++ (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+}
+
++ (void)retrieveNewsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
+    TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
+    [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
 #pragma mark - Raw Rest -

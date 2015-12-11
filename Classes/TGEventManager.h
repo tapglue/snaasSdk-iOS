@@ -149,11 +149,18 @@ extern NSString *const TGEventManagerAPIEndpointEvents;
 - (void)retrieveEventsForUser:(TGUser*)user withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
- @abstract Retrieve the unread feed of the currentUser.
- @discussion This will retrieve unread feed of the currentUser.
+ @abstract Retrieve the events feed of the currentUser.
+ @discussion This will retrieve events feed of the currentUser.
  */
-- (void)retrieveFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
+- (void)retrieveEventsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
                          withCompletionBlock:(TGFeedCompletionBlock)completionBlock;
+
+/*!
+ @abstract Retrieve the news feed of the currentUser.
+ @discussion This will retrieve news feed of the currentUser.
+ */
+- (void)retrieveNewsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
+                               withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve the unread count for the feed of the currentUser.
