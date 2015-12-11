@@ -708,8 +708,21 @@
     }];
 }
 
-// [Correct] Retrieve news feed
-- (void)testFeed {
+// [Corrent] Retrieve small events feed
+- (void)testEventsFeedSmall {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        [Tapglue retrieveEventsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
+            expect(events).toNot.beNil();
+            expect(error).to.beNil();
+
+            [expectation fulfill];
+        }];
+    }];
+}
+
+// [Correct] Retrieve events feed
+- (void)testEventsFeed {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
         
         NSString *eventType = [NSString randomStringWithLength:10];
@@ -749,20 +762,6 @@
                         [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
                             expect(success).to.beTruthy();
                             expect(error).to.beNil();
-                            
-                            TGEvent *newEvent = [[TGEvent alloc] init];
-                            newEvent.type = eventType;
-                            newEvent.object = object;
-                            
-                            // Create Event
-                            [Tapglue createEvent:newEvent withCompletionBlock:^(BOOL success, NSError *error) {
-                                expect(success).to.beTruthy();
-                                expect(error).to.beNil();
-                                
-                                // Create Query Object
-                                TGQuery *query = [TGQuery new];
-                                [query addEventObjectWithIdEquals:objectId];
-                                [query addTypeEquals:eventType];
                                 
                                 // Retrieve Feed with Query
                                 [Tapglue retrieveEventsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
@@ -773,7 +772,6 @@
                                     
                                     [expectation fulfill];
                                 }];
-                            }];
                         }];
                     }];
                 }];
@@ -959,7 +957,7 @@
                                             expect(events).toNot.beNil();
                                             expect(error).to.beNil();
                                             
-                                            TGEvent *retrievedEvent = events.firstObject;
+                                            TGEvent *retrievedEvent = events.lastObject;
                                             expect(retrievedEvent.type).to.equal(eventType);
                                             
                                             [expectation fulfill];
