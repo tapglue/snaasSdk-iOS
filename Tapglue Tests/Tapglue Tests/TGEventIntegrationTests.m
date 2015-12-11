@@ -1017,7 +1017,7 @@
                                         TGEvent *retrievedEvent = events.firstObject;
                                         expect(retrievedEvent.type).to.equal(eventType);
                                         
-                                        [Tapglue retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:^(NSArray *events, NSError *error) {
+                                        [Tapglue retrieveEventsWithQuery:query andCompletionBlock:^(NSArray *events, NSError *error) {
                                             expect(events).toNot.beNil();
                                             expect(error).to.beNil();
                                             

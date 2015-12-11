@@ -100,8 +100,7 @@
         expect([TGUser currentUser].userId).toNot.beNil();
         expect([TGUser currentUser].username).to.equal(TGTestUsername);
 
-        // Delete User
-        [self deleteCurrentUserWithXCTestExpectation:expectation];
+        [expectation fulfill];
     }];
 
     [self waitForExpectations];
@@ -120,8 +119,7 @@
         expect([TGUser currentUser].userId).toNot.beNil();
         expect([TGUser currentUser].email).to.equal(TGTestUserEmail);
 
-        // Delete User
-        [self deleteCurrentUserWithXCTestExpectation:expectation];
+        [expectation fulfill];
     }];
 
     [self waitForExpectations];
@@ -164,8 +162,7 @@
         expect([TGUser currentUser].email).to.equal(user.email);
         expect([TGUser currentUser].url).to.equal(user.url);
 
-        // Delete User
-        [self deleteCurrentUserWithXCTestExpectation:expectation];
+        [expectation fulfill];
     }];
 
     [self waitForExpectations];
@@ -190,7 +187,7 @@
         expect(user.isCurrentUser).to.beTruthy();
         expect(user).to.equal([TGUser currentUser]);
 
-        [self deleteCurrentUserWithXCTestExpectation:expectation];
+        [expectation fulfill];
     }];
 
     [self waitForExpectations];
@@ -228,8 +225,8 @@
 
             expect([TGUser currentUser].username).to.equal(@"changedUsername");
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -264,8 +261,8 @@
             expect([TGUser currentUser].username).to.equal(user.username);
             expect([TGUser currentUser].username).to.equal(@"changedUsername");
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -304,8 +301,8 @@
 
             expect([TGUser currentUser].email).to.equal(user.email);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -342,8 +339,8 @@
 
             expect([TGUser currentUser].email).to.equal(user.email);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -386,8 +383,8 @@
 
             expect([TGUser currentUser]).toNot.beNil();
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -414,8 +411,8 @@
             expect(user).toNot.beNil();
             expect(user.username).to.equal(TGTestUsername);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -440,8 +437,8 @@
             expect(error).to.beNil();
             expect(user.email).to.equal(TGTestUserEmail);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -479,8 +476,8 @@
             expect(user.lastName).to.equal(TGTestLastName);
             expect(user.email).to.equal(TGTestUserEmail);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -528,8 +525,8 @@
                                   expect(user.lastName).to.equal(TGTestLastName);
                                   expect(user.email).to.equal(TGTestUserEmail);
 
-                                  // Delete User
-                                  [self deleteCurrentUserWithXCTestExpectation:expectation];
+                                  [expectation fulfill];
+                                  
                               }];
                           }];
         }];
@@ -574,8 +571,8 @@
                 expect(user.lastName).to.equal(TGTestLastName);
                 expect(user.email).to.equal(TGTestUserEmail);
 
-                // Delete User
-                [self deleteCurrentUserWithXCTestExpectation:expectation];
+                [expectation fulfill];
+                
             }];
         }];
     }];
@@ -691,8 +688,8 @@
             expect(error.userInfo).toNot.beNil();
             expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
             
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -721,8 +718,8 @@
             expect(error.userInfo).toNot.beNil();
 //            expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -750,8 +747,8 @@
             expect(error.userInfo).toNot.beNil();
 //            expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -790,8 +787,8 @@
                                   expect(success).to.beTruthy();
                                   expect(error).to.beFalsy();
 
-                                  // Delete User
-                                  [self deleteCurrentUserWithXCTestExpectation:expectation];
+                                  [expectation fulfill];
+                                  
                               }];
             }];
         }];
@@ -819,8 +816,8 @@
 
             expect(user).to.beNil();
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -861,8 +858,8 @@
                                   expect(success).to.beTruthy();
                                   expect(error).to.beFalsy();
 
-                                  // Delete User
-                                  [self deleteCurrentUserWithXCTestExpectation:expectation];
+                                  [expectation fulfill];
+                                  
                               }];
             }];
         }];
@@ -899,8 +896,8 @@
                                   expect(success).to.beTruthy();
                                   expect(error).to.beNil();
 
-
-                                  [self deleteCurrentUserWithXCTestExpectation:expectation];
+                                [expectation fulfill];
+                                  
                               }];
                           }];
                       }];
@@ -1060,17 +1057,6 @@
 }
 
 #pragma mark - Negative
-
-// [Negative] Test for isCurrentUser after logout
-- (void)testIsCurrentUserAfterLogout {
-    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-
-        [Tapglue logoutWithCompletionBlock:^(BOOL success, NSError *error) {
-            expect([TGUser currentUser].isCurrentUser).to.beFalsy;
-            [expectation fulfill];
-        }];
-    }];
-}
 
 // [Negative] Search user with to short keyword
 - (void)testUserSearchShortOne {

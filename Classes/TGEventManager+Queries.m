@@ -81,12 +81,10 @@
     [self.client GET:route withURLParameters:@{@"where" : query.queryAsString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
-                //TODO: Load posts
-                // NSArray *events = [self postsFromJsonResponse:jsonResponse];
+                NSArray *posts = [self postsFromJsonResponse:jsonResponse];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
                 if (completionBlock) {
-                    //TODO: posts in completion
-                    completionBlock(nil, events, nil);
+                    completionBlock(posts, events, nil);
                 }
             }
             else if(completionBlock) {

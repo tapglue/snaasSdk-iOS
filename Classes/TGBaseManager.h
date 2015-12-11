@@ -36,6 +36,4 @@
 
 - (instancetype)initWithClient:(TGApiClient*)client;
 
-- (NSArray*)createAndCacheUserFromJsonResponse:(NSDictionary*)jsonResponse;
-
 @end

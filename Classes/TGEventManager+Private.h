@@ -23,5 +23,6 @@
 @interface TGEventManager (Private)
 
 - (NSArray*)eventsFromJsonResponse:(NSDictionary*)jsonResponse;
+- (NSArray*)postsFromJsonResponse:(NSDictionary*)jsonResponse;
 
 @end

@@ -20,6 +20,7 @@
 
 #import "TGEventManager.h"
 #import "TGEventManager+Private.h"
+#import "TGPost.h"
 #import "TGEvent.h"
 #import "TGModelObject+Private.h"
 #import "TGApiClient.h"
@@ -299,7 +300,8 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
-                [self createAndCacheUserFromJsonResponse:jsonResponse];
+                NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+                [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
                 
                 NSInteger unreadCount = [[jsonResponse objectForKey:@"unread_events_count"] integerValue];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
@@ -337,11 +339,11 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
-                [self createAndCacheUserFromJsonResponse:jsonResponse];
+                NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+                [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
                 
                 NSInteger unreadCount = [[jsonResponse objectForKey:@"unread_events_count"] integerValue];
-                //TODO: read posts
-                //NSArray *posts = [self postsFromJsonResponse:jsonResponse];
+                NSArray *posts = [self postsFromJsonResponse:jsonResponse];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
                 
                 self.cachedFeed = events;
@@ -349,8 +351,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
                 
                 if (completionBlock) {
                     [current_queue addOperationWithBlock:^{
-                        //TODO: posts in completion
-                        completionBlock(nil, events, nil);
+                        completionBlock(posts, events, nil);
                     }];
                 }
             }
@@ -400,6 +401,16 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
         [events addObject:newEvent];
     }
     return events;
+}
+
+- (NSArray*)postsFromJsonResponse:(NSDictionary*)jsonResponse {
+    NSArray *postDictionaries = [jsonResponse objectForKey:@"posts"];
+    NSMutableArray *posts = [NSMutableArray arrayWithCapacity:postDictionaries.count];
+    for (NSDictionary *postData in postDictionaries) {
+        TGPost *newPost = [TGPost createOrLoadWithDictionary:postData];
+        [posts addObject:newPost];
+    }
+    return posts;
 }
 
 /**

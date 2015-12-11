@@ -103,7 +103,8 @@
 - (void)retrievePostsAtRoute:(NSString*)route withCompletionBlock:(TGGetPostListCompletionBlock)completionBlock {
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (!error) {
-            [self createAndCacheUserFromJsonResponse:jsonResponse];
+            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
             
             NSArray *posts = [self postsFromJsonResponse:jsonResponse];
             
@@ -151,7 +152,8 @@
     [self.client GET:[TGApiRoutesBuilder routeForCommentsOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         
         if (!error) {
-            [self createAndCacheUserFromJsonResponse:jsonResponse];
+            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
             
             NSArray *commentDictionaries = [jsonResponse objectForKey:@"comments"];
             NSMutableArray *comments = [NSMutableArray arrayWithCapacity:commentDictionaries.count];
@@ -199,7 +201,8 @@
     [self.client GET:[TGApiRoutesBuilder routeForLikesOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         
         if (!error) {
-            [self createAndCacheUserFromJsonResponse:jsonResponse];
+            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
     
             NSArray *likeDictionaries = [jsonResponse objectForKey:@"likes"];
             NSMutableArray *likes = [NSMutableArray arrayWithCapacity:likeDictionaries.count];

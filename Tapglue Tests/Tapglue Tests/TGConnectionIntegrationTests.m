@@ -243,7 +243,6 @@
                                         [currentAUser deleteWithCompletionBlock:^(BOOL success, NSError *error) {
                                             expect(success).will.beTruthy();
                                             expect(error).will.beNil();
-                                            expect([TGUser currentUser]).to.beNil();
                                             
                                             // Login User B
                                             [Tapglue loginWithUsernameOrEmail:userBName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
