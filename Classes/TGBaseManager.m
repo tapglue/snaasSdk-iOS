@@ -39,8 +39,8 @@
 }
 
 - (NSArray*)createAndCacheUserFromJsonResponse:(NSDictionary*)jsonResponse {
-    NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
-    return [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+    NSArray *userDictionaries = [jsonResponse objectForKey:@"users"];
+    return [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];;
 }
 
 @end

@@ -111,6 +111,8 @@
 		78F787EC1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787EB1C1739B000AC1B39 /* Tapglue+Posts.m */; };
 		78F787ED1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787EB1C1739B000AC1B39 /* Tapglue+Posts.m */; };
 		97285B421B1F4AFA00D4CAC7 /* TGEventObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 97285B411B1F4AFA00D4CAC7 /* TGEventObject.m */; };
+		975ECC961C1B1F090025173A /* TGQueryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA607C1C15CB2F007F56D5 /* TGQueryTests.m */; };
+		975ECC971C1B1FC30025173A /* TGEventManager+Queries.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AA608F1C15D9E1007F56D5 /* TGEventManager+Queries.m */; };
 		9767716A1C188A3900F5333C /* TGPostsIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 976771691C188A3900F5333C /* TGPostsIntegrationTests.m */; };
 		B97D0F5637EA6B1C2BB18889 /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1485A1AE17C16949E43E09CC /* libPods-ios.a */; };
 /* End PBXBuildFile section */
@@ -685,6 +687,7 @@
 				7878EC791B2B24D900BA47F6 /* TGUserManager.m in Sources */,
 				7878EC7A1B2B24D900BA47F6 /* TGEventIntegrationTests.m in Sources */,
 				7878EC7C1B2B24D900BA47F6 /* TGApiClientMock.m in Sources */,
+				975ECC961C1B1F090025173A /* TGQueryTests.m in Sources */,
 				7878EC7D1B2B24D900BA47F6 /* TGObject.m in Sources */,
 				7878EC7E1B2B24D900BA47F6 /* NSError+TGError.m in Sources */,
 				7878EC7F1B2B24D900BA47F6 /* TGEvent+Networking.m in Sources */,
@@ -719,6 +722,7 @@
 				7878EC9C1B2B24D900BA47F6 /* Tapglue.m in Sources */,
 				7878EC9D1B2B24D900BA47F6 /* TGUser.m in Sources */,
 				7878EC9E1B2B24D900BA47F6 /* TGTestCase.m in Sources */,
+				975ECC971C1B1FC30025173A /* TGEventManager+Queries.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

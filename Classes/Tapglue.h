@@ -427,7 +427,7 @@
  @abstract Retrieve news feed for the currentUser.
  @discussion This will retrieve the news feed for the currentUser.
  */
-+ (void)retrieveFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock;
++ (void)retrieveEventsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve unread events of news feed for the currentUser.
@@ -505,25 +505,25 @@
  @abstract Retrieve feed events of a type.
  @discussion This will retrieve feed events of a type.
  */
-+ (void)retrieveFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
++ (void)retrieveEventsFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve feed events of an object with id.
  @discussion This will retrieve feed events of an object with an id.
  */
-+ (void)retrieveFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
++ (void)retrieveEventsFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve feed events of an object with id and type.
  @discussion This will retrieve feed events of an object with an id and type.
  */
-+ (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
++ (void)retrieveEventsFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve feed events that match a query.
  @discussion This will retrieve feed events matching the query object.
  */
-+ (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
++ (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 #pragma mark - Raw Rest -
 

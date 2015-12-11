@@ -283,7 +283,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     }];
 }
 
-- (void)retrieveFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
+- (void)retrieveEventsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
                          withCompletionBlock:(TGFeedCompletionBlock)completionBlock {
     
     NSString *apiEndpoint = [TGApiRoutesBuilder routeForEventsFeed];

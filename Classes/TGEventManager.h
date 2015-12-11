@@ -152,7 +152,7 @@ extern NSString *const TGEventManagerAPIEndpointEvents;
  @abstract Retrieve the unread feed of the currentUser.
  @discussion This will retrieve unread feed of the currentUser.
  */
-- (void)retrieveFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
+- (void)retrieveEventsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
                          withCompletionBlock:(TGFeedCompletionBlock)completionBlock;
 
 /*!

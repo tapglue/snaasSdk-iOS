@@ -39,8 +39,8 @@ typedef NS_ENUM(NSInteger, TGEventVisibility) {
 @interface TGEvent : TGModelObject <NSCoding>
 
 /*!
- @abstract Unique user identifier of the event.
- @discussion The eventId will be in the form of a UUID.
+ @abstract Unique identifier of the event.
+ @discussion The eventId will be a unique string.
  */
 @property (nonatomic, strong, readonly) NSString *eventId;
 

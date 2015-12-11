@@ -2,7 +2,7 @@
 //  TGEventManager+Queries.m
 //  Tapglue iOS SDK
 //
-//  Created by Martin Stemmle on 07.12.15.
+//  Created by Martin Stemmle on 07/12/15.
 //  Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,7 +45,7 @@
               withCompletionBlock:completionBlock];
 }
 
-- (void)retrieveFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+- (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     // route: /me/feed
     [self retrieveEventsWithQuery:query
                           atRoute:[TGApiRoutesBuilder routeForMixedFeed]

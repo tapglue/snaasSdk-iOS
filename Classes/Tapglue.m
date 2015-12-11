@@ -284,12 +284,12 @@ static Tapglue* sharedInstance = nil;
 
 #pragma mark - Feed
 
-+ (void)retrieveFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock {
-    [[self sharedInstance].eventManager retrieveFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
++ (void)retrieveEventsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
 }
 
 + (void)retrieveUnreadFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [[self sharedInstance].eventManager retrieveFeedForCurrentUserOnlyUnread:YES withCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
+    [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:YES withCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
         if (completionBlock) {
             completionBlock(events, error);
         }
@@ -556,24 +556,24 @@ static Tapglue* sharedInstance = nil;
 
 #pragma mark Feed Events queries
 
-+ (void)retrieveFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveFeedForCurrentUserForObjectWithId:nil andEventType:eventType withCompletionBlock:completionBlock];
++ (void)retrieveEventsFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self retrieveEventsFeedForCurrentUserForObjectWithId:nil andEventType:eventType withCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveFeedForCurrentUserForObjectWithId:objectId andEventType:nil withCompletionBlock:completionBlock];
++ (void)retrieveEventsFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
+    [self retrieveEventsFeedForCurrentUserForObjectWithId:objectId andEventType:nil withCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId
++ (void)retrieveEventsFeedForCurrentUserForObjectWithId:(NSString*)objectId
                                      andEventType:(NSString*)eventType
                               withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     
     TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventType:eventType andObjectWithId:objectId];
-    [self retrieveFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+    [self retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
-    [[self sharedInstance].eventManager retrieveFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
++ (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
 #pragma mark - Raw Rest -
