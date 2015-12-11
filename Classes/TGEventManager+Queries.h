@@ -47,6 +47,14 @@
 - (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
+ @abstract Retrieve news feed that match a query.
+ @discussion This will retrieve news feed matching the query object.
+ 
+ @param query Object that describes the query.
+ */
+- (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+/*!
  @abstract Compose a query for an eventType and an objectId.
  @discussion This compose a query for an eventType and an objectId.
  

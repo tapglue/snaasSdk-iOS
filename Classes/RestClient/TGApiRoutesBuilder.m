@@ -64,7 +64,7 @@ static NSString * const TGApiRouteLikes = @"likes";
     return [[self baseRouteForFeeds] stringByAppendingPathComponent:TGApiRouteEvents];
 }
 
-+ (NSString*)routeForMixedFeed {
++ (NSString*)routeForNewsFeed {
     return [self baseRouteForFeeds];
 }
 

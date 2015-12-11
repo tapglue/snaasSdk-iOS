@@ -68,7 +68,7 @@
 /*!
  @return The route to the mixed feed of posts & events for the current user.
  */
-+ (NSString*)routeForMixedFeed;
++ (NSString*)routeForNewsFeed;
 
 
 #pragma mark - Post reactions

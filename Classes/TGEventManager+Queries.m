@@ -46,9 +46,16 @@
 }
 
 - (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    // route: /me/feed/events
+    [self retrieveEventsWithQuery:query
+                          atRoute:[TGApiRoutesBuilder routeForEventsFeed]
+              withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     // route: /me/feed
     [self retrieveEventsWithQuery:query
-                          atRoute:[TGApiRoutesBuilder routeForMixedFeed]
+                          atRoute:[TGApiRoutesBuilder routeForNewsFeed]
               withCompletionBlock:completionBlock];
 }
 

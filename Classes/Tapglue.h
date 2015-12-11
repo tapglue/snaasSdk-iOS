@@ -424,10 +424,16 @@
 #pragma mark - Feeds
 
 /*!
+ @abstract Retrieve events feed for the currentUser.
+ @discussion This will retrieve the events feed for the currentUser.
+ */
++ (void)retrieveEventsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock;
+
+/*!
  @abstract Retrieve news feed for the currentUser.
  @discussion This will retrieve the news feed for the currentUser.
  */
-+ (void)retrieveEventsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock;
++ (void)retrieveNewsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve unread events of news feed for the currentUser.
@@ -499,7 +505,7 @@
  */
 + (void)retrieveEventsForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-#pragma mark Feed Events queries
+#pragma mark Events Feed queries
 
 /*!
  @abstract Retrieve feed events of a type.
@@ -524,6 +530,14 @@
  @discussion This will retrieve feed events matching the query object.
  */
 + (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+#pragma mark News Feed queries
+
+/*!
+ @abstract Retrieve news feed that match a query.
+ @discussion This will retrieve a news feed  matching the query object.
+ */
++ (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 #pragma mark - Raw Rest -
 

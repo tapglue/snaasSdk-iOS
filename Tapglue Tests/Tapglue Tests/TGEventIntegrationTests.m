@@ -712,14 +712,73 @@
 - (void)testEventsFeedSmall {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
         
-        [Tapglue retrieveEventsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
+        [Tapglue retrieveNewsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
             expect(events).toNot.beNil();
             expect(error).to.beNil();
-
+            
             [expectation fulfill];
         }];
     }];
 }
+
+// [Correct] Retrieve events feed with query
+- (void)testEventsFeedWithQuery {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *eventType = [NSString randomStringWithLength:10];
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        TGEvent *event = [[TGEvent alloc] init];
+        event.type = eventType;
+        
+        TGEventObject *object = [TGEventObject new];
+        
+        object.objectId = objectId;
+        event.object = object;
+        
+        // Login Other User
+        [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Search User
+            [Tapglue searchUsersWithTerm:TGPersistentUserEmail andCompletionBlock:^(NSArray *users, NSError *error) {
+                expect(users).toNot.beNil();
+                expect(error).to.beNil();
+                
+                TGUser *user = users.firstObject;
+                
+                // Friend User
+                [Tapglue friendUser:user withState:TGConnectionStateConfirmed createEvent:NO withCompletionBlock:^(BOOL success, NSError *error) {
+                    
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    
+                    // Create Event
+                    [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                            expect(error).to.beNil();
+                
+                            // Retrieve Feed with Query
+                            [Tapglue retrieveEventsFeedForCurrentUserOfType:eventType withCompletionBlock:^(NSArray *events, NSError *error) {
+                                expect(events).toNot.beNil();
+                                expect(events.count).to.beGreaterThanOrEqualTo(0);
+                                expect(error).to.beNil();
+                                
+                                [expectation fulfill];
+                            }];
+                        }];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
 
 // [Correct] Retrieve events feed
 - (void)testEventsFeed {
@@ -763,7 +822,7 @@
                             expect(success).to.beTruthy();
                             expect(error).to.beNil();
                                 
-                                // Retrieve Feed with Query
+                                // Retrieve Feed
                                 [Tapglue retrieveEventsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
                                     expect(events).toNot.beNil();
                                     expect(events.count).to.beGreaterThanOrEqualTo(0);

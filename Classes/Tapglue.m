@@ -288,6 +288,10 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
 }
 
++ (void)retrieveNewsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
+}
+
 + (void)retrieveUnreadFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:YES withCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
         if (completionBlock) {
@@ -574,6 +578,10 @@ static Tapglue* sharedInstance = nil;
 
 + (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+}
+
++ (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
 #pragma mark - Raw Rest -
