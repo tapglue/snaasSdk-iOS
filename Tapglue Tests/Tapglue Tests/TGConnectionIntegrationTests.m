@@ -32,6 +32,8 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test setUp will finish"];
+    
     [Tapglue createAndLoginUserWithEmail:TGPersistentUserEmail andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
         expect(success).to.beTruthy();
         expect(error).to.beNil();
@@ -39,8 +41,26 @@
         [Tapglue createAndLoginUserWithUsername:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
             expect(success).to.beTruthy();
             expect(error).to.beNil();
+            
+            [Tapglue createAndLoginUserWithUsername:TGFriendUsername andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                [Tapglue createAndLoginUserWithUsername:TGTestUsername andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    [expectation fulfill];
+                }];
+            }];
         }];
     }];
+    
+    [self waitForExpectationsWithTimeout:30.0 handler:^(NSError *error) {
+        if(error) {
+            XCTFail(@"Expectation Failed with error: %@", error);
+        }
+    }];
+    
 }
 
 - (void)tearDown {
