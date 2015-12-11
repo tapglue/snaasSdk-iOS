@@ -1037,16 +1037,78 @@
     }];
 }
 
-#pragma mark - Negative
-
-// TODO: More use cases for negative feed events
-// Variations to count events etc.
-// Get unread feed
-// Get feed
-// Get current user feed
-// Get user feed
-
-// TODO: Cache Tests
-// TODO: Flush Tests
+// [Correct] Retrieve feed for a set of event types
+- (void)testRetrieveFeedForSetOfEventTypes {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *eventType = [NSString randomStringWithLength:10];
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        TGEvent *event = [[TGEvent alloc] init];
+        event.type = eventType;
+        
+        TGEventObject *object = [TGEventObject new];
+        
+        object.objectId = objectId;
+        event.object = object;
+        
+        // Login Other User
+        [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            // Search User
+            [Tapglue searchUsersWithTerm:TGPersistentUserEmail andCompletionBlock:^(NSArray *users, NSError *error) {
+                expect(users).toNot.beNil();
+                expect(error).to.beNil();
+                
+                TGUser *user = users.firstObject;
+                
+                // Friend User
+                [Tapglue friendUser:user withState:TGConnectionStateConfirmed withCompletionBlock:^(BOOL success, NSError *error) {
+                    
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    
+                    // Create Event
+                    [Tapglue createEvent:event withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                            expect(error).to.beNil();
+                            
+                            TGEvent *newEvent = [[TGEvent alloc] init];
+                            newEvent.type = eventType;
+                            newEvent.object = object;
+                            
+                            // Create Event
+                            [Tapglue createEvent:newEvent withCompletionBlock:^(BOOL success, NSError *error) {
+                                expect(success).to.beTruthy();
+                                expect(error).to.beNil();
+                                
+                                // Create Query Object
+                                TGQuery *query = [TGQuery new];
+                                [query addEventObjectWithIdEquals:objectId];
+                                [query addTypeEquals:eventType];
+                                
+                                NSArray *types = @[eventType];
+                                
+                                // Retrieve Events with Query
+                                [Tapglue retrieveNewsFeedForCurrentUserForEventTypes:types withCompletionBlock:^(NSArray *posts, NSArray *events, NSError *error) {
+                                    expect(success).to.beTruthy();
+                                    expect(error).to.beNil();
+                                    
+                                    [expectation fulfill];
+                                }];
+                            }];
+                        }];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
 
 @end

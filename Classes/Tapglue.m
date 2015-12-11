@@ -570,6 +570,11 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
++ (void)retrieveNewsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
+    TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
+    [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+}
+
 #pragma mark - Raw Rest -
 
 + (NSURLSessionDataTask*) makeRestRequestWithHTTPMethod:(NSString*)method

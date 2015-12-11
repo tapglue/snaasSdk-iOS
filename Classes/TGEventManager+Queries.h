@@ -62,5 +62,13 @@
  @param objectId Id of the object.
  */
 - (TGQuery*)composeQueryForEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId;
+
+/*!
+ @abstract Compose a query for a set of event types.
+ @discussion This compose a query for a set of event types.
+ 
+ @param types A set of event types.
+ */
+- (TGQuery*)composeQueryForEventTypes:(NSArray*)types;
     
 @end

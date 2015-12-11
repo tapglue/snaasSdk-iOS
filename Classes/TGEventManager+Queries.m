@@ -105,4 +105,10 @@
     return query;
 }
 
+- (TGQuery*)composeQueryForEventTypes:(NSArray*)types {
+    TGQuery *query = [[TGQuery alloc] init];
+    [query addTypeIn:types];
+    return query;
+}
+
 @end

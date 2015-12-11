@@ -521,6 +521,12 @@
  */
 + (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
+/*!
+ @abstract Retrieve news feed for a set of event types.
+ @discussion This will retrieve a news feed for a set of event types.
+ */
++ (void)retrieveNewsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
+
 #pragma mark - Raw Rest -
 
 /*!
