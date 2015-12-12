@@ -15,7 +15,7 @@
 ### Changed
 
 - Updated Endpoints according to Tapglue API 0.4
-- Many small fixes
+- Various small fixes
 
 ### Removed
 
