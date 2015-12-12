@@ -1,10 +1,25 @@
 # SDK Changelog
 
-## 1.1 (2015-12-11)
+## 1.1 (2015-12-14)
 
 ### Added
 
+- UGC API with Posts, Comments & Likes
+- New Feed API with Newsfeed, Posts Feed & Events Feed
+- New Connections API with Friends Confirmation
+- Queries for all Feeds
+- Multi-User Search (by Email & SocialIds)
+- Improved Users & Events Caching
+- Stability improvements
+
 ### Changed
+
+- Updated Endpoints according to Tapglue API 0.4
+- Various small fixes
+
+### Removed
+
+- Manual event creation for Connections
 
 ## 1.0.3.3 (2015-10-30)
 
