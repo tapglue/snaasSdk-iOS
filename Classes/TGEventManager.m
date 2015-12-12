@@ -19,16 +19,17 @@
 //
 
 #import "TGEventManager.h"
+#import "TGEventManager+Private.h"
+#import "TGPost.h"
 #import "TGEvent.h"
 #import "TGModelObject+Private.h"
 #import "TGApiClient.h"
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
+#import "TGApiRoutesBuilder.h"
 
 NSString *const TGEventManagerAPIEndpointEvents = @"events";
-#define TGEventManagerAPIEndpointCurrentUserEvents [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:TGEventManagerAPIEndpointEvents]
-#define TGEventManagerAPIEndpointCurrentUserFeed [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"feed"]
 
 @interface TGEventManager ()
 @property (nonatomic, strong, readwrite) NSArray *cachedFeed;
@@ -167,7 +168,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
 #pragma mark members
 
 - (void)createEvent:(TGEvent*)event withCompletionBlock:(TGSucessCompletionBlock)completionBlock{
-    [self.client POST:TGEventManagerAPIEndpointCurrentUserEvents withURLParameters:nil andPayload:event.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client POST:[TGApiRoutesBuilder routeForEventsOfUserWithId:nil] withURLParameters:nil andPayload:event.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
 
         [event loadDataFromDictionary:jsonResponse];
 
@@ -182,7 +183,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
 }
 
 - (void)updateEvent:(TGEvent*)event withCompletionBlock:(TGSucessCompletionBlock)completionBlock{
-    NSString *route = [TGEventManagerAPIEndpointCurrentUserEvents stringByAppendingPathComponent:event.eventId];[TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:TGEventManagerAPIEndpointEvents];
+    NSString *route = [[TGApiRoutesBuilder routeForEventsOfUserWithId:nil] stringByAppendingPathComponent:event.eventId];
     [self.client PUT:route withURLParameters:nil andPayload:event.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             completionBlock(error == nil, error);
@@ -218,7 +219,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
 
 
 - (void)deleteEventWithId:(NSString*)eventId withCompletionBlock:(TGSucessCompletionBlock)completionBlock{
-    NSString *route = [TGEventManagerAPIEndpointCurrentUserEvents stringByAppendingPathComponent:eventId];
+    NSString *route = [[TGApiRoutesBuilder routeForEventsOfUserWithId:nil] stringByAppendingPathComponent:eventId];
     [self.client DELETE:route withCompletionBlock:completionBlock];
 }
 
@@ -283,39 +284,10 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     }];
 }
 
-#pragma mark Event queries
-
-- (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointEvents withCompletionBlock:completionBlock];
-}
-
-- (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointCurrentUserEvents withCompletionBlock:completionBlock];
-}
-
-- (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self retrieveEventsForQuery:[self composeQueryStringFromEventType:eventType andObjectWithId:objectId] andRoute:TGEventManagerAPIEndpointCurrentUserFeed withCompletionBlock:completionBlock];
-}
-
-- (void)retrieveEventsForQuery:(NSString*)query andRoute:(NSString*)route withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
-    [self.client GET:route withURLParameters:@{@"where" : query} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        if (completionBlock) {
-            if (!error) {
-                NSArray *events = [self eventsFromJsonResponse:jsonResponse];
-                if (completionBlock) {
-                    completionBlock(events, nil);
-                }
-            }
-            else if(completionBlock) {
-                completionBlock(nil, error);
-            }
-        }
-    }];
-}
-
-- (void)retrieveFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
+- (void)retrieveEventsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
                          withCompletionBlock:(TGFeedCompletionBlock)completionBlock {
-    NSString *apiEndpoint = TGEventManagerAPIEndpointCurrentUserFeed;
+    
+    NSString *apiEndpoint = [TGApiRoutesBuilder routeForEventsFeed];
     if (onlyUnread) {
         apiEndpoint = [apiEndpoint stringByAppendingPathComponent:@"unread"];
     }
@@ -330,7 +302,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
             if (!error) {
                 NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
                 [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
-
+                
                 NSInteger unreadCount = [[jsonResponse objectForKey:@"unread_events_count"] integerValue];
                 NSArray *events = [self eventsFromJsonResponse:jsonResponse];
 
@@ -352,8 +324,48 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     }];
 }
 
+- (void)retrieveNewsFeedForCurrentUserOnlyUnread:(BOOL)onlyUnread
+                               withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
+    
+    NSString *apiEndpoint = [TGApiRoutesBuilder routeForNewsFeed];
+    if (onlyUnread) {
+        apiEndpoint = [apiEndpoint stringByAppendingPathComponent:@"unread"];
+    }
+    
+    
+    // TODO: [improvement] find a way to push a all completion blocks on the calling queue
+    NSOperationQueue *current_queue = [NSOperationQueue currentQueue];
+    
+    [self.client GET:apiEndpoint withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            if (!error) {
+                NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+                [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+                
+                NSInteger unreadCount = [[jsonResponse objectForKey:@"unread_events_count"] integerValue];
+                NSArray *posts = [self postsFromJsonResponse:jsonResponse];
+                NSArray *events = [self eventsFromJsonResponse:jsonResponse];
+                
+                self.cachedFeed = events;
+                self.unreadCount = unreadCount;
+                
+                if (completionBlock) {
+                    [current_queue addOperationWithBlock:^{
+                        completionBlock(posts, events, nil);
+                    }];
+                }
+            }
+            else if(completionBlock) {
+                [current_queue addOperationWithBlock:^{
+                    completionBlock(nil, 0, error);
+                }];
+            }
+        }
+    }];
+}
+
 - (void)retrieveFeedUnreadCountForCurrentWithCompletionBlock:(void (^)(NSInteger, NSError *))completionBlock {
-    NSString *route = [TGEventManagerAPIEndpointCurrentUserFeed stringByAppendingPathComponent:@"unread/count"];
+    NSString *route = [[TGApiRoutesBuilder routeForEventsFeed] stringByAppendingPathComponent:@"unread/count"];
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (!error) {
@@ -391,18 +403,14 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     return events;
 }
 
-- (NSString*)composeQueryStringFromEventType:(NSString*)eventType andObjectWithId:(NSString*)objectId {
-    // TODO: Make dynamic
-    NSString* query = @"";
-    
-    if((eventType != nil) && (objectId != nil)) {
-        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}},\"type\": {\"eq\":\"%@\"}}}", objectId, eventType];
-    } else if (eventType != nil) {
-        query = [NSString stringWithFormat: @"{\"type\": {\"eq\":\"%@\"}}", eventType];
-    } else if (objectId != nil) {
-        query = [NSString stringWithFormat: @"{\"object\": {\"id\": {\"eq\": \"%@\"}}}", objectId];
+- (NSArray*)postsFromJsonResponse:(NSDictionary*)jsonResponse {
+    NSArray *postDictionaries = [jsonResponse objectForKey:@"posts"];
+    NSMutableArray *posts = [NSMutableArray arrayWithCapacity:postDictionaries.count];
+    for (NSDictionary *postData in postDictionaries) {
+        TGPost *newPost = [TGPost createOrLoadWithDictionary:postData];
+        [posts addObject:newPost];
     }
-    return query;
+    return posts;
 }
 
 /**

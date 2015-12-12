@@ -26,10 +26,14 @@
 #import "TGUser+Private.h"
 #import "NSError+TGError.h"
 #import "TGObjectCache.h"
+#import "TGConnection+Private.h"
 
 NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 NSString *const TGUserManagerAPIEndpointCurrentUser = @"me";
 NSString *const TGUserManagerAPIEndpointUsers = @"users";
+
+#define TGUserManagerAPIEndpointSearch [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:@"search"]
+
 static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 @implementation TGUserManager
@@ -47,29 +51,11 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)updateUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [self.client PUT:TGUserManagerAPIEndpointCurrentUser withURLParameters:nil andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        
+
         if (jsonResponse && !error) {
             [user loadDataFromDictionary:jsonResponse];
-            
-            // Update currentUser on update
-            TGUser *updatedCurrentUser;
-            if (user) {
-                [user loadDataFromDictionary:jsonResponse];
-                TGUser *cachedUser = [[TGUser cache] objectWithObjectId:user.objectId];
-                if ([cachedUser isEqual:user]) {
-                    
-                } else if (user) { // user will be nil if the userData is invalid
-                    [[TGUser cache] addObject:user];
-                }
-                updatedCurrentUser = user;
-            }
-            else {
-                updatedCurrentUser = [TGUser createOrLoadWithDictionary:jsonResponse];
-            }
-            
-            [TGUser setCurrentUser:updatedCurrentUser];
         }
-        
+
         if (completionBlock) {
             completionBlock(error == nil, error);
         }
@@ -102,7 +88,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)retrieveCurrentUserWithCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
     [self.client GET:TGUserManagerAPIEndpointCurrentUser withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        [self handleCurrentUserResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+        [self handleSingleUserResponse:jsonResponse forCurrentUser:YES withError:error andCompletionBlock:completionBlock];
     }];
 }
 
@@ -118,17 +104,37 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 - (void)retrieveUserWithId:(NSString*)userId withCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
     NSString *route = [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:userId];
     [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
-        [self handleSingleUserResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+        [self handleSingleUserResponse:jsonResponse forCurrentUser:NO withError:error andCompletionBlock:completionBlock];
     }];
 }
 
 - (void)searchUsersWithSearchString:(NSString*)searchString
-                 andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
-    NSString *route = [TGUserManagerAPIEndpointUsers stringByAppendingPathComponent:@"search"];
-    [self.client GET:route withURLParameters:@{@"q" : searchString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:@{@"q" : searchString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }
+
+- (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    NSString *queryString = [emails componentsJoinedByString:@"&email="];
+    [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:@{@"email" : queryString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+    }];
+}
+
+- (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
+                 withSocialUsersIds:(NSArray*)socialUserIds
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    
+    NSString *queryString = [socialUserIds componentsJoinedByString:@"&socialid="];
+    NSDictionary *urlParams = @{@"social_platform": socialPlatform,
+                                @"socialid" : queryString};
+
+    [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:urlParams andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+    }];
+}
+
 
 #pragma mark   Helper - Handlers
 
@@ -184,24 +190,14 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     }
 }
 
-- (void)handleCurrentUserResponse:(NSDictionary*)jsonResponse withError:(NSError*)responseError andCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
+- (void)handleSingleUserResponse:(NSDictionary*)jsonResponse forCurrentUser:(BOOL)isCurrentUser withError:(NSError*)responseError andCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
     if (jsonResponse && !responseError) {
-        TGUser *currentUser = [[TGUser alloc] initWithDictionary:jsonResponse];
-        [TGUser setCurrentUser:currentUser];
-        if (completionBlock) {
-            completionBlock(currentUser, nil);
+        TGUser *user = [[TGUser alloc] initWithDictionary:jsonResponse];
+        if (isCurrentUser) {
+            [TGUser setCurrentUser:user];
         }
-    }
-    else if (completionBlock) {
-        completionBlock(nil, responseError);
-    }
-}
-
-- (void)handleSingleUserResponse:(NSDictionary*)jsonResponse withError:(NSError*)responseError andCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
-    if (jsonResponse && !responseError) {
-        TGUser *currentUser = [[TGUser alloc] initWithDictionary:jsonResponse];
         if (completionBlock) {
-            completionBlock(currentUser, nil);
+            completionBlock(user, nil);
         }
     }
     else if (completionBlock) {
@@ -246,6 +242,34 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
         [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 
+}
+
+- (void)retrieveConnectionsForCurrentUserOfState:(TGConnectionState)connectionState
+                             withCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock {
+ 
+    NSString *route = [TGUserManagerAPIEndpointConnections stringByAppendingPathComponent:[TGConnection stringForConnectionState:connectionState]];
+    
+    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            if (!error) {
+                [TGUser createAndCacheObjectsFromDictionaries:[jsonResponse objectForKey:@"users"]];
+                
+                NSMutableArray *incomingConnections = [NSMutableArray new];
+                for (NSDictionary *objectDict in [jsonResponse objectForKey:@"incoming"]) {
+                    [incomingConnections addObject:[[TGConnection alloc] initWithDictionary:objectDict]];
+                }
+
+                NSMutableArray *outgoingConnections = [NSMutableArray new];
+                for (NSDictionary *objectDict in [jsonResponse objectForKey:@"outgoing"]) {
+                    [outgoingConnections addObject:[[TGConnection alloc] initWithDictionary:objectDict]];
+                }
+                
+                completionBlock(incomingConnections, outgoingConnections, nil);
+            } else {
+                completionBlock(nil, nil, error);
+            }
+        }
+    }];
 }
 
 - (void)createSocialConnectionsForCurrentUserOnPlatformWithSocialIdKey:(NSString*)socialIdKey
@@ -294,9 +318,9 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
-                     withEvent:(BOOL)withEvent
+                      andState:(TGConnectionState)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-
+    
     if (!toUser.userId) {
         if (completionBlock) {
             NSDictionary *errorInfo = @{NSLocalizedDescriptionKey : @"The give toUser was either `nil` or has no userId." };
@@ -307,15 +331,11 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
     NSDictionary *connectionData = @{
                                      @"user_to_id" : [[[NSNumberFormatter alloc] init] numberFromString:toUser.userId] ?: @(0),
-                                     @"type" : [self stringFromConnectionType:connectionType]
+                                     @"type" : [self stringFromConnectionType:connectionType],
+                                     @"state" : [TGConnection stringForConnectionState:connectionState]
                                      };
     
-    NSDictionary *urlParams = nil;
-    if (withEvent == YES) {
-        urlParams = @{@"with_event" : @"true"};
-    }
-    
-    [self.client PUT:TGUserManagerAPIEndpointConnections withURLParameters:urlParams andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    [self.client PUT:TGUserManagerAPIEndpointConnections withURLParameters:nil andPayload:connectionData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         if (completionBlock) {
             if (jsonResponse && !error) {
                 completionBlock(YES, nil);
@@ -329,10 +349,11 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)deleteConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
-           withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client DELETE:[TGUserManagerAPIEndpointConnections stringByAppendingPathComponent:toUser.userId]
-      withURLParameters:@{ @"type" : [self stringFromConnectionType:connectionType] }
-     andCompletionBlock:completionBlock];
+           withCompletionBlock:(TGSucessCompletionBlock)completionBlock {    
+    NSString *route = TGUserManagerAPIEndpointConnections;
+    route = [route stringByAppendingPathComponent:[self stringFromConnectionType:connectionType]];
+    route = [route stringByAppendingPathComponent:toUser.userId];
+    [self.client DELETE:route withURLParameters:nil andCompletionBlock:completionBlock];
 }
 
 - (NSString*)stringFromConnectionType:(TGConnectionType)connectionType {

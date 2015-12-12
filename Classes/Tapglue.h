@@ -23,7 +23,9 @@
 #import "TGUser+Networking.h"
 #import "TGEvent+Networking.h"
 #import "TGEventObject.h"
+#import "TGConnection.h"
 #import "TGConfiguration.h"
+#import "TGQuery.h"
 
 /*!
  @abstract `Tapglue` The primary interface for integrating Tapglue with your app.
@@ -146,6 +148,8 @@
  */
 + (void)retrieveUserWithId:(NSString*)userId withCompletionBlock:(TGGetUserCompletionBlock)completionBlock;
 
+#pragma mark Search
+
 /*!
  @abstract Search other users.
  @discussion This will retrieve the details of the users for a given search term.
@@ -153,6 +157,25 @@
  @param term The term for which users should be searched.
  */
 + (void)searchUsersWithTerm:(NSString*)term andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
+
+/*!
+ @abstract Search multiple users with emails.
+ @discussion This will retrieve the details of the users for a set of email adresses.
+ 
+ @param emails The emails of the users that are being searched.
+ */
++ (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
+
+/*!
+ @abstract Search multiple users with socialIds.
+ @discussion This will retrieve the details of the users for a set of socialIds.
+ 
+ @param socialPlatform The name of the social platform.
+ @param socialUserIds The socialIds of the users that are being searched.
+ */
++ (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
+                 withSocialUsersIds:(NSArray*)socialUserIds
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
 #pragma mark - Connections
 
@@ -170,8 +193,9 @@
  
  @param user The user object which the currentUser wants to follow.
  @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
+ @param state Specifies the connection state of the follow (pending, confirmed, rejected).
  */
-+ (void)followUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)followUser:(TGUser*)user withState:(TGConnectionState)state withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Unfollow a user.
@@ -189,14 +213,16 @@
  */
 + (void)friendUser:(TGUser*)user withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+
 /*!
  @abstract Become friend with a user.
  @discussion This will create a friend connection to another user.
  
  @param user The user object which the currentUser wants to become friend with.
  @param createEvent Whether an event to appear for the associated user's feed should be created for the new collection.
+ @param state Specifies the connection state of the friend (pending, confirmed, rejected).
  */
-+ (void)friendUser:(TGUser*)user createEvent:(BOOL)createEvent withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)friendUser:(TGUser*)user withState:(TGConnectionState)state withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Unfriend a user.
@@ -224,6 +250,27 @@
  */
 + (void)retrieveFriendsForCurrentUserWithCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
 // TODO: cache for current user connections
+
+
+/*!
+ @abstract Retrieve list of pending connections.
+ @discussion This will retrieve a list of users that have a pending connection with the currentUser.
+ */
++ (void)retrievePendingConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve list of rejected connections.
+ @discussion This will retrieve a list of users that have a rejected connection with the currentUser.
+ */
++ (void)retrieveRejectedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
+
+/*!
+ @abstract Retrieve list of confirmed connections.
+ @discussion This will retrieve a list of users that have a confirmed connection with the currentUser.
+ */
++ (void)retrieveConfirmedConncetionsForCurrentUserWithCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
+
+#pragma mark -
 
 /*!
  @abstract Retrieve list of users that are followed by any user.
@@ -359,10 +406,16 @@
 #pragma mark - Feeds
 
 /*!
+ @abstract Retrieve events feed for the currentUser.
+ @discussion This will retrieve the events feed for the currentUser.
+ */
++ (void)retrieveEventsFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock;
+
+/*!
  @abstract Retrieve news feed for the currentUser.
  @discussion This will retrieve the news feed for the currentUser.
  */
-+ (void)retrieveFeedForCurrentUserWithCompletionBlock:(TGFeedCompletionBlock)completionBlock;
++ (void)retrieveNewsFeedForCurrentUserWithCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve unread events of news feed for the currentUser.
@@ -380,64 +433,113 @@
 + (NSArray*)cachedUnreadFeedForCurrentUser;
 + (NSInteger)cachedUnreadCountForCurrentUser;
 
-#pragma mark - Event queries
+#pragma mark - Queries -
+
+#pragma mark Events queries
 
 /*!
  @abstract Retrieve all events of a type.
  @discussion This will retrieve all events of a type.
  */
-+ (void)retrieveEventsOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsOfType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve all events of an object with id.
  @discussion This will retrieve all events of an object with an id.
  */
-+ (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForObjectId:(NSString*)objectId withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve all events of an object with id and type.
  @discussion This will retrieve all events of an object with an id and type.
  */
-+ (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-#pragma mark - Current user event queries
+/*!
+ @abstract Retrieve all events that match a query.
+ @discussion This will retrieve all events matching the query object.
+ */
++ (void)retrieveEventsWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+#pragma mark Current user event queries
 
 /*!
  @abstract Retrieve current user events of a type.
  @discussion This will retrieve current user events of a type.
  */
-+ (void)retrieveEventsForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve current user of an object with id.
  @discussion This will retrieve current user events of an object with an id.
  */
-+ (void)retrieveEventsForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve current user events of an object with id and type.
  @discussion This will retrieve current user events of an object with an id and type.
  */
-+ (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-#pragma mark - Feed Events queries
+/*!
+ @abstract Retrieve current user events that match a query.
+ @discussion This will retrieve current user events matching the query object.
+ */
++ (void)retrieveEventsForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+#pragma mark Events Feed queries
 
 /*!
  @abstract Retrieve feed events of a type.
  @discussion This will retrieve feed events of a type.
  */
-+ (void)retrieveFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsFeedForCurrentUserOfType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve feed events of an object with id.
  @discussion This will retrieve feed events of an object with an id.
  */
-+ (void)retrieveFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsFeedForCurrentUserForObjectId:(NSString*)objectId withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve feed events of an object with id and type.
  @discussion This will retrieve feed events of an object with an id and type.
  */
-+ (void)retrieveFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveEventsFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+/*!
+ @abstract Retrieve feed events that match a query.
+ @discussion This will retrieve feed events matching the query object.
+ */
++ (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+#pragma mark News Feed queries
+
+/*!
+ @abstract Retrieve news feed that match a query.
+ @discussion This will retrieve a news feed  matching the query object.
+ */
++ (void)retrieveNewsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
+
+/*!
+ @abstract Retrieve news feed for a set of event types.
+ @discussion This will retrieve a news feed for a set of event types.
+ */
++ (void)retrieveNewsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
+
+#pragma mark - Raw Rest -
+
+/*!
+ @abstract Create a generic HTTP request.
+ @discussion This will create a generic HTTP Request.
+ */
++ (NSURLSessionDataTask*) makeRestRequestWithHTTPMethod:(NSString*)method
+                                             atEndPoint:(NSString*)endPoint
+                                      withURLParameters:(NSDictionary*)urlParams
+                                             andPayload:(NSDictionary*)bodyObject
+                                     andCompletionBlock:(void (^)(NSDictionary *jsonResponse, NSError *error))completionBlock;
 
 @end
+
+// must to be imported after the interface definition
+#import "Tapglue+Posts.h"

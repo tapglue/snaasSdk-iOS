@@ -47,6 +47,9 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 }
 
 - (NSDictionary*)jsonDictionary {
+    if ([self respondsToSelector:@selector(jsonMappingForWriting)]) {
+        return [self dictionaryWithMapping:[self jsonMappingForWriting]];
+    }
     return [self dictionaryWithMapping:[self jsonMapping]];
 }
 
@@ -57,7 +60,7 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 
 - (void)loadDataFromDictionary:(NSDictionary*)data withMapping:(NSDictionary*)mapping {
     [mapping enumerateKeysAndObjectsUsingBlock:^(id jsonKey, id objKey, BOOL *stop) {
-        id dataValue = [data valueForKey:jsonKey];
+        id dataValue = [data valueForKeyPath:jsonKey];
         if (dataValue) {
             [self setValue:dataValue forKey:objKey];
         }
@@ -67,11 +70,20 @@ NSString *const TGModelObjectIdJsonKey = @"id";
 - (NSMutableDictionary*)dictionaryWithMapping:(NSDictionary*)mapping {
     NSMutableDictionary *dict = [NSMutableDictionary new];
     [mapping enumerateKeysAndObjectsUsingBlock:^(id jsonKey, id objKey, BOOL *stop) {
-        id objectValue = [self valueForKey:objKey];
+        id objectValue = [self valueForKeyPath:objKey];
         if ([objectValue isKindOfClass:[NSURL class]]) {
             NSURL *urlValue = (NSURL*)objectValue;
             objectValue = urlValue.absoluteString;
+        } else if([objectValue isKindOfClass:[NSArray class]]) {
+            NSMutableArray *arrayValue = ((NSArray*)objectValue).mutableCopy;
+            for (NSUInteger i = 0; i < arrayValue.count; i++) {
+                if ([arrayValue[i] isKindOfClass:[TGObject class]]) {
+                    arrayValue[i] = [((TGObject*)arrayValue[i]) jsonDictionary];
+                }
+            }
+            objectValue = arrayValue;
         }
+        
         BOOL addValue = objectValue != nil;
         addValue &= ![objectValue isEqual:@{}];
         if (addValue && [objectValue isKindOfClass:[NSNumber class]]) {

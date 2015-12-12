@@ -23,7 +23,7 @@
 
 extern NSString *const TaplueSDKID;
 
-@class TGEventManager, TGUserManager;
+@class TGEventManager, TGUserManager, TGPostsManager;
 
 @interface Tapglue (Private)
 
@@ -44,6 +44,13 @@ extern NSString *const TaplueSDKID;
  @discussion This is the handler to manage all user interactions in the app.
  */
 @property (nonatomic, strong) TGUserManager *userManager;
+
+/*!
+ @abstract Manager for all posts interactions.
+ @discussion This is the handler to manage all posts and related interactions in the app.
+ */
+@property (nonatomic, strong) TGPostsManager *postsManager;
+
 
 #pragma mark - User Management
 

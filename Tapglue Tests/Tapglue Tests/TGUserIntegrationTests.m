@@ -22,12 +22,48 @@
 #import "TGObject+Private.h"
 #import "TGUser.h"
 #import "NSError+TGError.h"
+#import "NSString+TGRandomString.h"
 
 @interface TGUserIntegrationTests : TGIntegrationTestCase
 
 @end
 
 @implementation TGUserIntegrationTests
+
+- (void)setUp {
+    [super setUp];
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test setUp will finish"];
+    
+    [Tapglue createAndLoginUserWithEmail:TGPersistentUserEmail andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+        expect(success).to.beTruthy();
+        expect(error).to.beNil();
+        
+        [Tapglue createAndLoginUserWithUsername:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [Tapglue createAndLoginUserWithUsername:TGFriendUsername andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                [Tapglue createAndLoginUserWithUsername:TGTestUsername andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    }];
+    
+    [self waitForExpectationsWithTimeout:30.0 handler:^(NSError *error) {
+        if(error) {
+            XCTFail(@"Expectation Failed with error: %@", error);
+        }
+    }];
+    
+}
 
 #pragma mark - CRUD User -
 
@@ -64,8 +100,7 @@
         expect([TGUser currentUser].userId).toNot.beNil();
         expect([TGUser currentUser].username).to.equal(TGTestUsername);
 
-        // Delete User
-        [self deleteCurrentUserWithXCTestExpectation:expectation];
+        [expectation fulfill];
     }];
 
     [self waitForExpectations];
@@ -84,8 +119,7 @@
         expect([TGUser currentUser].userId).toNot.beNil();
         expect([TGUser currentUser].email).to.equal(TGTestUserEmail);
 
-        // Delete User
-        [self deleteCurrentUserWithXCTestExpectation:expectation];
+        [expectation fulfill];
     }];
 
     [self waitForExpectations];
@@ -128,8 +162,7 @@
         expect([TGUser currentUser].email).to.equal(user.email);
         expect([TGUser currentUser].url).to.equal(user.url);
 
-        // Delete User
-        [self deleteCurrentUserWithXCTestExpectation:expectation];
+        [expectation fulfill];
     }];
 
     [self waitForExpectations];
@@ -154,7 +187,7 @@
         expect(user.isCurrentUser).to.beTruthy();
         expect(user).to.equal([TGUser currentUser]);
 
-        [self deleteCurrentUserWithXCTestExpectation:expectation];
+        [expectation fulfill];
     }];
 
     [self waitForExpectations];
@@ -192,8 +225,8 @@
 
             expect([TGUser currentUser].username).to.equal(@"changedUsername");
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -228,8 +261,8 @@
             expect([TGUser currentUser].username).to.equal(user.username);
             expect([TGUser currentUser].username).to.equal(@"changedUsername");
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -268,8 +301,8 @@
 
             expect([TGUser currentUser].email).to.equal(user.email);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -306,8 +339,8 @@
 
             expect([TGUser currentUser].email).to.equal(user.email);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -350,8 +383,8 @@
 
             expect([TGUser currentUser]).toNot.beNil();
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -378,8 +411,8 @@
             expect(user).toNot.beNil();
             expect(user.username).to.equal(TGTestUsername);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -404,8 +437,8 @@
             expect(error).to.beNil();
             expect(user.email).to.equal(TGTestUserEmail);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -443,8 +476,8 @@
             expect(user.lastName).to.equal(TGTestLastName);
             expect(user.email).to.equal(TGTestUserEmail);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -492,8 +525,8 @@
                                   expect(user.lastName).to.equal(TGTestLastName);
                                   expect(user.email).to.equal(TGTestUserEmail);
 
-                                  // Delete User
-                                  [self deleteCurrentUserWithXCTestExpectation:expectation];
+                                  [expectation fulfill];
+                                  
                               }];
                           }];
         }];
@@ -538,8 +571,8 @@
                 expect(user.lastName).to.equal(TGTestLastName);
                 expect(user.email).to.equal(TGTestUserEmail);
 
-                // Delete User
-                [self deleteCurrentUserWithXCTestExpectation:expectation];
+                [expectation fulfill];
+                
             }];
         }];
     }];
@@ -655,8 +688,8 @@
             expect(error.userInfo).toNot.beNil();
             expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
             
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -685,8 +718,8 @@
             expect(error.userInfo).toNot.beNil();
 //            expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -714,8 +747,8 @@
             expect(error.userInfo).toNot.beNil();
 //            expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -754,8 +787,8 @@
                                   expect(success).to.beTruthy();
                                   expect(error).to.beFalsy();
 
-                                  // Delete User
-                                  [self deleteCurrentUserWithXCTestExpectation:expectation];
+                                  [expectation fulfill];
+                                  
                               }];
             }];
         }];
@@ -783,8 +816,8 @@
 
             expect(user).to.beNil();
 
-            // Delete User
-            [self deleteCurrentUserWithXCTestExpectation:expectation];
+            [expectation fulfill];
+            
         }];
     }];
 
@@ -825,8 +858,8 @@
                                   expect(success).to.beTruthy();
                                   expect(error).to.beFalsy();
 
-                                  // Delete User
-                                  [self deleteCurrentUserWithXCTestExpectation:expectation];
+                                  [expectation fulfill];
+                                  
                               }];
             }];
         }];
@@ -863,8 +896,8 @@
                                   expect(success).to.beTruthy();
                                   expect(error).to.beNil();
 
-
-                                  [self deleteCurrentUserWithXCTestExpectation:expectation];
+                                [expectation fulfill];
+                                  
                               }];
                           }];
                       }];
@@ -952,6 +985,69 @@
     }];
 }
 
+- (void)testUserSearchWithEmails {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        NSArray *emails = @[@"1@tapgleu.com", @"asdf@tapglue.com"];
+        [Tapglue searchUsersWithEmails:emails andCompletionBlock:^(NSArray *users, NSError *error) {
+            expect(error).to.beNil();
+            expect(users.count).to.beGreaterThanOrEqualTo(0);
+            [expectation fulfill];
+        }];
+    }];
+}
+
+- (void)testSearchUsersByEmails {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(error).to.beNil();
+            expect(success).to.beTruthy();
+            
+            NSArray *emails = @[TGPersistentUserEmail, @"anotherUser@mail.com", @"yetanotherUser@mail.com"];
+            
+            [Tapglue searchUsersWithEmails:emails andCompletionBlock:^(NSArray *users, NSError *error) {
+                expect(users.count).to.beGreaterThanOrEqualTo(1);
+                expect(users).toNot.beNil();
+                expect(error).to.beNil();
+                [expectation fulfill];
+            }];
+        }];
+        
+        
+    }];
+}
+
+- (void)testSearchUsersBySocialIds {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        TGUser *user = [TGUser new];
+        user.username = @"Testuserftw";
+        [user setSocialId:@"fb12345" forKey:@"facebook"];
+        [user setPassword:@"password"];
+        
+        
+        [Tapglue createAndLoginUser:user withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(error).to.beNil();
+            expect(success).to.beTruthy();
+            
+            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(error).to.beNil();
+                expect(success).to.beTruthy();
+                
+                NSArray *socialIds = @[@"fb12345"];
+                
+                [Tapglue searchUsersOnSocialPlatform:@"facebook" withSocialUsersIds:socialIds andCompletionBlock:^(NSArray *users, NSError *error) {
+                    expect(users.count).to.beGreaterThanOrEqualTo(1);
+                    expect(users).toNot.beNil();
+                    expect(error).to.beNil();
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    }];
+}
+
+
 // [Correct] Test for isCurrentUser
 - (void)testIsCurrentUserAfterLogin {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
@@ -961,17 +1057,6 @@
 }
 
 #pragma mark - Negative
-
-// [Negative] Test for isCurrentUser after logout
-- (void)testIsCurrentUserAfterLogout {
-    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-
-        [Tapglue logoutWithCompletionBlock:^(BOOL success, NSError *error) {
-            expect([TGUser currentUser].isCurrentUser).to.beFalsy;
-            [expectation fulfill];
-        }];
-    }];
-}
 
 // [Negative] Search user with to short keyword
 - (void)testUserSearchShortOne {
@@ -1001,20 +1086,24 @@
     }];
 }
 
-//TODO: test case 1:
-// - login user 1
-// - get feed
-// - test cached feed
-// - logout
-// - test cache is empty
+#pragma mark - Other User Test -
 
-//TODO: test case 2:
-// - login user 1
-// - get feed
-// - test cached feed
-// - login user 2
-// - test cache is empty
-// - get feed
-// - test cached feed
+#pragma mark - Correct
+
+// [Correct] Cretae User with Rest Method
+- (void)testCreateUserWithRestMethod {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+
+        TGUser *user = [TGUser new];
+        user.username =  [NSString randomStringWithLength:10];
+        [user setPassword:[NSString randomStringWithLength:10]];
+        
+        [Tapglue makeRestRequestWithHTTPMethod:@"POST" atEndPoint:@"users" withURLParameters:nil andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+            expect(jsonResponse).toNot.beNil();
+            expect(error).to.beNil();
+            [expectation fulfill];
+        }];
+    }];
+}
 
 @end

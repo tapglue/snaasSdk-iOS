@@ -20,6 +20,8 @@
 
 #import "TGEventObject.h"
 #import "TGObject+Private.h"
+#import "TGUser+Private.h"
+#import "TGModelObject+Private.h"
 
 @interface TGEventObject ()
 @property (nonatomic, strong) NSMutableDictionary *displayNames;
@@ -29,6 +31,16 @@
 
 @dynamic objectId;
 @synthesize displayNames = _displayNames;
+
+- (instancetype)initWithDictionary:(NSDictionary *)data {
+    self = [super initWithDictionary:data];
+    
+    if ([self.type isEqualToString:@"tg_user"]) {
+        self.user = [TGUser objectWithId:self.objectId];
+    }
+    
+    return self;
+}
 
 - (NSDictionary*)jsonMapping {
     return @{

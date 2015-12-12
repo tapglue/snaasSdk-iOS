@@ -73,6 +73,7 @@
     expect(^{[TGObjectCache cacheForClass:[NSString class]];}).to.raiseAny();
     expect(^{[TGObjectCache cacheForClass:[TGUser class]];}).toNot.raiseAny();
     expect(^{[TGObjectCache cacheForClass:[TGEvent class]];}).toNot.raiseAny();
+    expect(^{[TGObjectCache cacheForClass:[TGPost class]];}).toNot.raiseAny();
 }
 
 - (void)testFindObjectUsingPredicate {
@@ -121,6 +122,37 @@
     // calling create user again with the same id should return the already existing instance of the user
     expect([TGUser createOrLoadWithDictionary:userData]).to.equal(user);
 
+}
+
+
+- (void)testCreateOrLoadUserWithUpdatedData {
+    
+    // create a new user
+    TGUser *user1 = [TGUser createOrLoadWithDictionary:@{
+                                                        @"id" : @(85866757785095871),
+                                                        @"email" : @"testuser@tapglue.com",
+                                                        @"user_name":@"acc-1-app-1-user-2"
+                                                        }];
+    expect(user1).toNot.beNil();
+    
+    // check user name is set correctly
+    expect(user1.username).to.equal(@"acc-1-app-1-user-2");
+    
+    // load the user again with an updated username
+    TGUser *user2 = [TGUser createOrLoadWithDictionary:@{
+                                                        @"id" : @(85866757785095871),
+                                                        @"email" : @"testuser@tapglue.com",
+                                                        @"user_name":@"acc-1-app-1-user-4711"
+                                                        }];
+    
+    // check user name is set correctly
+    expect(user2.username).to.equal(@"acc-1-app-1-user-4711");
+    
+    // calling create user again with the same id should return the already existing instance of the user
+    expect(user2).to.equal(user1);
+
+    // check the user name has been updated / should always pass if expectation above passes
+    expect(user1.username).to.equal(@"acc-1-app-1-user-4711");
 }
 
 // [Correct] Create mutliple users from JSON
@@ -231,6 +263,41 @@
 
 }
 
+- (void)testPostCaching {
+    NSDictionary *postData = @{
+                               @"id" : @(471739965702621007),
+                               @"user_id" : @(858667),
+                               @"visibility": @(30),
+                               @"tags": @[@"fitness",@"running"],
+                               @"attachments" : @[
+                                       @{
+                                           @"content": @"Lorem ipsum...",
+                                           @"name": @"body",
+                                           @"type": @"text"
+                                           }
+                                       ],
+                               @"counts" : @{
+                                       @"comments": @(3),
+                                       @"likes": @(12),
+                                       @"shares": @(1)
+                                       },
+                               @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                               @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
+    
+    // try loading a not yet created user
+    expect([TGUser objectWithId:@"471739965702621007"]).to.beNil();
+    
+    // create a new post
+    TGPost *post = [TGPost createOrLoadWithDictionary:postData];
+    expect(post).toNot.beNil();
+    
+    // the user should now be loadable and return the created post
+    expect([TGPost objectWithId:@"471739965702621007"]).to.equal(post);
+    
+    // calling create post again with the same id should return the already existing instance of the post
+    expect([TGPost createOrLoadWithDictionary:postData]).to.equal(post);
+    
+}
 
 
 @end

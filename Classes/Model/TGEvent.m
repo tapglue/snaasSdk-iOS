@@ -59,10 +59,6 @@ static NSString *const TGEventTargetKey = @"target";
         self.user = [TGUser objectWithId:[eventData tg_stringValueForKey:TGEventUserIdJsonKey]];
         self.object = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"object"]];
         self.target = [[TGEventObject alloc] initWithDictionary:[eventData objectForKey:@"target"]];
-        // TODO: Refine user target
-        if((self.target) && ([self.target.type  isEqual: @"tg_user"])) {
-            self.target.user = [TGUser objectWithId:self.target.objectId];
-        }
     }
     return self;
 }
@@ -73,7 +69,7 @@ static NSString *const TGEventTargetKey = @"target";
         self.latitude = NAN;
         self.longitude = NAN;
         // Set default visibility to connections
-        self.visibility = TGEventVisibilityConnection;
+        self.visibility = TGVisibilityConnection;
     }
     return self;
 }
@@ -144,7 +140,8 @@ static NSString *const TGEventTargetKey = @"target";
              @"latitude" : @"latitude",
              @"longitude" : @"longitude",
              @"visibility" : @"visibility",
-             @"metadata" : @"metadata"
+             @"metadata" : @"metadata",
+             @"tg_object_id" : @"tgObjectId"
              };
 }
 
@@ -172,6 +169,7 @@ static NSString *const TGEventTargetKey = @"target";
     [aCoder encodeObject:self.object.jsonDictionary forKey:@"object"];
     [aCoder encodeObject:self.target.jsonDictionary forKey:@"target"];
     [aCoder encodeObject:self.user.jsonDictionary forKey:@"user"];
+    [aCoder encodeObject:self.tgObjectId];
 }
 
 - (id) initWithCoder:(NSCoder *)aDecoder {
@@ -189,6 +187,7 @@ static NSString *const TGEventTargetKey = @"target";
         self.object = [[TGEventObject alloc] initWithDictionary:[aDecoder decodeObjectForKey:@"object"]];
         self.target = [[TGEventObject alloc] initWithDictionary:[aDecoder decodeObjectForKey:@"target"]];
         self.user = [TGUser createOrLoadWithDictionary:[aDecoder decodeObjectForKey:@"user"]];
+        self.tgObjectId = [aDecoder decodeObject];
     }
     return self;
 }

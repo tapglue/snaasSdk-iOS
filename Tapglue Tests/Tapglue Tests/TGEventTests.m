@@ -67,6 +67,7 @@
                                 @"location" : @"berlin",
                                 @"latitude" : @52.520007,
                                 @"longitude" : @13.404954,
+                                @"tg_object_id" : @"124810",
                                 @"object" : @{
                                                 @"id" : @"o4711",
                                                 @"type": @"movie",
@@ -101,6 +102,7 @@
     expect(event.location).to.equal(@"berlin");
     expect(event.latitude).to.equal(@52.520007);
     expect(event.longitude).to.equal(@13.404954);
+    expect(event.tgObjectId).to.equal(@"124810");
     expect(event.object.objectId).to.equal(@"o4711");
     expect(event.object.type).to.equal(@"movie");
     expect(event.object.url).to.equal(@"app://tapglue.com/objects/1");
@@ -551,6 +553,7 @@
     event.location = @"berlin";
     event.latitude = 52.520007;
     event.longitude = 13.404954;
+    event.tgObjectId = @"124810";
 
     TGEventObject *object = [TGEventObject new];
 
@@ -571,16 +574,18 @@
     NSDictionary *jsonDictionary = event.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
 
-    expect(jsonDictionary.count).to.equal(10);
+    expect(jsonDictionary.count).to.equal(12);
 
     // Check for correct values
     expect([jsonDictionary valueForKey:@"id"]).to.equal(487293102930293);
     expect([jsonDictionary valueForKey:@"type"]).to.equal(@"like");
     expect([jsonDictionary valueForKey:@"language"]).to.equal(@"en");
     expect([jsonDictionary valueForKey:@"priority"]).to.equal(@"high");
+    expect([jsonDictionary valueForKey:@"visibility"]).toNot.beNil();
     expect([jsonDictionary valueForKey:@"location"]).to.equal(@"berlin");
     expect([jsonDictionary valueForKey:@"latitude"]).to.equal(@52.520007);
     expect([jsonDictionary valueForKey:@"longitude"]).to.equal(@13.404954);
+    expect([jsonDictionary valueForKey:@"tg_object_id"]).to.equal(@"124810");
     expect([jsonDictionary valueForKey:@"object"]).toNot.beNil();
     expect([jsonDictionary valueForKey:@"object"]).to.equal(@{
                                                               @"id" : @"a1b2c3",
@@ -623,10 +628,11 @@
     NSDictionary *jsonDictionary = event.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
 
-    expect(jsonDictionary.count).to.equal(3);
+    expect(jsonDictionary.count).to.equal(4);
 
     expect([jsonDictionary valueForKey:@"type"]).to.equal(@"like");
     expect([jsonDictionary valueForKey:@"object"]).toNot.beNil();
+    expect([jsonDictionary valueForKey:@"visibility"]).toNot.beNil();
 
 
     expect([jsonDictionary valueForKeyPath:@"object.id"]).to.equal(@"a1b2c3");
@@ -663,10 +669,11 @@
     NSDictionary *jsonDictionary = event.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
     
-    expect(jsonDictionary.count).to.equal(3);
+    expect(jsonDictionary.count).to.equal(4);
     
     expect([jsonDictionary valueForKey:@"type"]).to.equal(@"like");
     expect([jsonDictionary valueForKey:@"target"]).toNot.beNil();
+    expect([jsonDictionary valueForKey:@"visibility"]).toNot.beNil();
     
     
     expect([jsonDictionary valueForKeyPath:@"target.id"]).to.equal(@"a1b2c3");
@@ -692,10 +699,11 @@
     NSDictionary *jsonDictionary = event.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
 
-    expect(jsonDictionary.count).to.equal(2);
+    expect(jsonDictionary.count).to.equal(3);
 
     // Check for correct values
     expect([jsonDictionary valueForKey:@"type"]).to.equal(@"like");
+    expect([jsonDictionary valueForKey:@"visibility"]).toNot.beNil();
 
     // Check for correct types
     [self validateDataTypesForEventJsonDictionary:jsonDictionary];
@@ -712,14 +720,14 @@
 
     NSDictionary *jsonDictionary = event.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
-    expect(jsonDictionary.count).to.equal(2);
+    expect(jsonDictionary.count).to.equal(3);
 
     // Check for correct values
     expect([jsonDictionary valueForKey:@"type"]).to.equal(@"like");
     expect([jsonDictionary valueForKey:@"created_at"]).to.beKindOf([NSString class]);
     expect([jsonDictionary valueForKey:@"location"]).to.equal(nil);
     expect([jsonDictionary valueForKey:@"priority"]).to.equal(nil);
-    expect([jsonDictionary valueForKey:@"visibility"]).to.equal(nil);
+    expect([jsonDictionary valueForKey:@"visibility"]).toNot.beNil();
 
     // Check for correct types
     [self validateDataTypesForEventJsonDictionary:jsonDictionary];
@@ -809,7 +817,7 @@
 
     NSDictionary *jsonDictionary = event.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
-    expect(jsonDictionary.count).to.equal(3);
+    expect(jsonDictionary.count).to.equal(4);
 
     [self falsifyJsonDictionary:jsonDictionary];
 }
@@ -887,12 +895,14 @@
 
     TGEvent *testEvent = [TGEvent randomTestEvent];
     testEvent.user = user;
+    testEvent.tgObjectId = @"491852323";
     [testEvent.images setValue:testImage forKey:@"profile_thumbnail"];
     
     NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:testEvent];
     TGEvent *unarchivedEvent = [NSKeyedUnarchiver unarchiveObjectWithData:archivedData];
     expect(unarchivedEvent.type).to.equal(testEvent.type);
     expect(unarchivedEvent.user.userId).to.equal(user.userId);
+    expect(unarchivedEvent.tgObjectId).to.equal(@"491852323");
     expect(unarchivedEvent.images.allValues.count).to.equal(1);
 }
 

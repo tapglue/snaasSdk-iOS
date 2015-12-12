@@ -249,16 +249,16 @@
     expect(user.images).to.beKindOf([NSDictionary class]);
     TGImage *profileImage = [user.images objectForKey:@"profile_thumb"];
     expect(profileImage).to.beKindOf([TGImage class]);
-    expect(profileImage.url).to.equal([NSURL URLWithString:@"http://images.tapglue.com/1/demouser/profile.jpg"]);
+    expect(profileImage.url).to.equal(@"http://images.tapglue.com/1/demouser/profile.jpg");
 }
 
 // [Correct] From JSON to User with connection counts
 - (void)testConnectionCountsForUserInitWithDictionary {
     NSDictionary *userData = @{ @"id":@(858667),
                                 @"user_name":@"acc-1-app-1-user-2",
-                                @"friends" : @12,
-                                @"followers" : @123,
-                                @"following" : @57
+                                @"friend_count" : @12,
+                                @"follower_count" : @123,
+                                @"followed_count" : @57
                                 };
     
     TGUser *user = [[TGUser alloc] initWithDictionary:userData];
@@ -843,32 +843,87 @@
 
 #pragma mark - Current User
 
-//- (void)testArchiveAndLoadCurrentUser {
-//
-//    NSDictionary *userData = @{
-//                               @"id":@(858667),
-//                               @"custom_id":@"123456abc",
-//                               @"social_ids":@{
-//                                       @"abook":@"acc-1-app-1-user-2-abk",
-//                                       @"facebook":@"acc-1-app-1-user-2-fb",
-//                                       @"gplus":@"acc-1-app-1-user-2-gpl",
-//                                       @"twitter":@"acc-1-app-1-user-2-tw"
-//                                       },
-//                               @"user_name":@"acc-1-app-1-user-2",
-//                               @"first_name":@"acc-1-app-1-user-2-first-name",
-//                               @"last_name":@"acc-1-app-1-user-2-last-name",
-//                               @"email":@"acc-1-app-1-user-2@tapglue-test.com",
-//                               @"url":@"app://tapglue.com/users/1/demouser",
-//                               @"metadata" : @{
-//                                       @"foo" : @"bar",
-//                                       @"amount" : @12,
-//                                       @"progress" : @0.95
-//                                       },
-//                               @"created_at": @"2015-06-01T08:44:57.144996856Z",
-//                               @"updated_at": @"2014-02-10T06:25:10.144996856Z"
-//                               };
-//    TGUser *user = [[TGUser alloc] initWithDictionary:userData];
-//    [TGUser setCurrentUser:user];
-//}
+- (void)testArchiveAndLoadCurrentUser {
+    // need to comment out currentUser mock in TGEventManagerTests 
+    [Tapglue setUpWithAppToken:self.appToken];
+    
+    NSDictionary *userData = @{
+                               @"id":@(858667),
+                               @"custom_id":@"123456abc",
+                               @"social_ids":@{
+                                       @"abook":@"acc-1-app-1-user-2-abk",
+                                       @"facebook":@"acc-1-app-1-user-2-fb",
+                                       @"gplus":@"acc-1-app-1-user-2-gpl",
+                                       @"twitter":@"acc-1-app-1-user-2-tw"
+                                       },
+                               @"user_name":@"acc-1-app-1-user-2",
+                               @"first_name":@"acc-1-app-1-user-2-first-name",
+                               @"last_name":@"acc-1-app-1-user-2-last-name",
+                               @"email":@"acc-1-app-1-user-2@tapglue-test.com",
+                               @"url":@"app://tapglue.com/users/1/demouser",
+                               @"friend_count" : @(14),
+                               @"follower_count" : @(124),
+                               @"followed_count" : @(40),
+                               @"images" : @{
+                                       @"thumbnail" : @{
+                                               @"url" : @"http://images.tapglue.com/img55555555.png",
+                                               @"type" : @"image/png",
+                                               @"height" : @(200),
+                                               @"width" : @(300)
+                                               },
+                                       @"medium" : @{
+                                               @"url" : @"http://images.tapglue.com/img6666.png",
+                                               @"type" : @"image/png",
+                                               @"height" : @(400),
+                                               @"width" : @(600)
+                                               },
+                                       @"large" :  @{
+                                               @"url" : @"http://images.tapglue.com/imageurl634z34z734z7.png",
+                                               @"type" : @"image/png",
+                                               @"height" : @(1280),
+                                               @"width" : @(720)
+                                               }
+                                       },
+                               @"metadata" : @{
+                                       @"foo" : @"bar",
+                                       @"amount" : @12,
+                                       @"progress" : @0.95
+                                       },
+                               @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                               @"updated_at": @"2014-02-10T06:25:10.144996856Z"
+                               };
+    TGUser *user = [[TGUser alloc] initWithDictionary:userData];
+    [TGUser setCurrentUser:user];
+    
+    
+    // setting the current user to nil will remove the data
+    // so to simulate an cold app launch we need to save it and set it back in
+    NSUserDefaults *userDefaults = [Tapglue sharedInstance].userDefaults;
+    id currentUserData = [userDefaults objectForKey:@"current_user"];
+    
+    // remove the user to force reloading it for the user defaults
+    [TGUser setCurrentUser:nil];
+    
+    // reset the user defaults which just have been removed by setting the current user to nil
+    [[Tapglue sharedInstance].userDefaults setObject:currentUserData forKey:@"current_user"];
+
+    TGUser *reloadedCurrentUser = [TGUser currentUser];
+    expect(reloadedCurrentUser.userId).to.equal(@"858667");
+    expect(reloadedCurrentUser.username).to.equal(@"acc-1-app-1-user-2");
+    expect(reloadedCurrentUser.firstName).to.equal(@"acc-1-app-1-user-2-first-name");
+    expect(reloadedCurrentUser.lastName).to.equal(@"acc-1-app-1-user-2-last-name");
+    expect(reloadedCurrentUser.email).to.equal(@"acc-1-app-1-user-2@tapglue-test.com");
+    expect(reloadedCurrentUser.url).to.equal(@"app://tapglue.com/users/1/demouser");
+    expect(reloadedCurrentUser.friendsCount).to.equal(14);
+    expect(reloadedCurrentUser.followersCount).to.equal(124);
+    expect(reloadedCurrentUser.followingCount).to.equal(40);
+    expect(reloadedCurrentUser.metadata).to.equal(@{
+                    @"foo" : @"bar",
+                    @"amount" : @12,
+                    @"progress" : @0.95
+                    });
+    
+    expect(reloadedCurrentUser.images.count).to.equal(3);
+}
 
 @end

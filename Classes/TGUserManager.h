@@ -38,6 +38,9 @@ extern NSString *const TGUserManagerAPIEndpointCurrentUser;
  */
 extern NSString *const TGUserManagerAPIEndpointUsers;
 
+extern NSString *const TGUserManagerConnectionStatePending;
+extern NSString *const TGUserManagerConnectionStateConfirmed;
+extern NSString *const TGUserManagerConnectionStateRejected;
 
 /*!
  @typedef Determines the connection type.
@@ -113,12 +116,31 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
 - (void)logoutWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
- @abstract Search users.
+ @abstract Search users with term.
  @discussion This will search for users for a given term.
 
  @param searchString Term for which users should be searched.
  */
-- (void)searchUsersWithSearchString:(NSString*)searchString andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
+- (void)searchUsersWithSearchString:(NSString*)searchString andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
+
+/*!
+ @abstract Search users with emails.
+ @discussion This will search for users for a set of email adresses.
+ 
+ @param emails Adresses for which users are being searched.
+ */
+- (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
+
+/*!
+ @abstract Search users with socialIds.
+ @discussion This will search for users for a set of socialIds.
+ 
+ @param socialPlatform Name of the platform where the ids come from.
+ @param socialUserIds Set of socialIds from the users.
+ */
+- (void)searchUsersOnSocialPlatform:(NSString*)socialPlatform
+                 withSocialUsersIds:(NSArray*)socialUserIds
+                 andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
 #pragma mark - Connections
 
@@ -133,6 +155,17 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
                                        forUser:(TGUser*)user
                            withCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
 
+
+/*!
+ @abstract Retrieve the connections of a user wit ha state.
+ @discussion This will retrieve the connections of a certain user with a specific state.
+ 
+ @param connectionState The connection state that should be retrieved.
+ */
+- (void)retrieveConnectionsForCurrentUserOfState:(TGConnectionState)connectionState
+                             withCompletionBlock:(void (^)(NSArray *incoming, NSArray *outgoing, NSError *error))completionBlock;
+
+    
 /*!
  @abstract Create a connection for a user.
  @discussion This will create a certain type of connection for the currentUser.
@@ -140,10 +173,11 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
  @param connectionType The connection type that should be created.
  @param toUser The user towards which the connection should be created for.
  @param withEvent Whether an event to appear for the associated user's feed should be created for the new collection.
+ @param state The conncetion state. One of the followwing values: 'pending', 'confirmed', 'rejected'
  */
 - (void)createConnectionOfType:(TGConnectionType)connectionType
                         toUser:(TGUser*)toUser
-                     withEvent:(BOOL)withEvent
+                      andState:(TGConnectionState)connectionState
            withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!

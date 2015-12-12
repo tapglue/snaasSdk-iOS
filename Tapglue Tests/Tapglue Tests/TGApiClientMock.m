@@ -40,14 +40,6 @@
     if (!self.isOffline) {
 
         completionBlock(nil, nil);
-        // TODO: mock response if not offline
-
-
-//        return [super makeRequestWithHTTPMethod:method
-//                              atEndPoint:endPoint
-//                       withURLParameters:urlParams
-//                              andPayload:bodyObject
-//                      andCompletionBlock:completionBlock];
     }
     else {
         NSError *error = [NSError tg_errorWithCode:1000 userInfo:nil];

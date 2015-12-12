@@ -33,7 +33,7 @@
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
         expect([Tapglue cachedFeedForCurrentUser]).to.beKindOfOrNil([NSArray class]);
 
-        [Tapglue retrieveFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
+        [Tapglue retrieveEventsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
             expect(error).to.beNil();
             expect([Tapglue cachedFeedForCurrentUser]).to.beKindOfOrNil([NSArray class]);
             expect([Tapglue cachedFeedForCurrentUser]).to.equal(events);
