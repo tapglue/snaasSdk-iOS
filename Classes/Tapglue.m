@@ -292,7 +292,7 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveUnreadFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
++ (void)retrieveUnreadNewsFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:YES withCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
         if (completionBlock) {
             completionBlock(events, error);
@@ -389,7 +389,7 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)followUsersWithSocialsIds:(NSArray *)toSocialUsersIds
-        onPlatfromWithSocialIdKey:(NSString *)socialIdKey
+        onPlatformWithSocialIdKey:(NSString *)socialIdKey
               withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createSocialConnectionsForCurrentUserOnPlatformWithSocialIdKey:socialIdKey
                                                                   ofType:TGConnectionTypeFollow
@@ -398,7 +398,7 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)friendUsersWithSocialsIds:(NSArray *)toSocialUsersIds
-                  onPlatfromWithSocialIdKey:(NSString *)socialIdKey
+                  onPlatformWithSocialIdKey:(NSString *)socialIdKey
                         withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createSocialConnectionsForCurrentUserOnPlatformWithSocialIdKey:socialIdKey
                                                                   ofType:TGConnectionTypeFriend
@@ -427,7 +427,7 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager addEvent:event];
 }
 
-+ (void)deleteEventEventWithType:(NSString*)type onObjectWithId:(NSString*)objectId {
++ (void)deleteEventWithType:(NSString*)type onObjectWithId:(NSString*)objectId {
     NSMutableArray *predicates = [NSMutableArray array];
     [predicates addObject:[NSPredicate predicateWithFormat:@"type=%@", type]];
     [predicates addObject:[NSPredicate predicateWithFormat:@"object.objectId=%@", type]];
@@ -443,8 +443,8 @@ static Tapglue* sharedInstance = nil;
     }
 }
 
-+ (void)deleteEventEventWithType:(NSString*)type onObject:(TGEventObject*)object {
-    [self deleteEventEventWithType:type onObjectWithId:object.objectId];
++ (void)deleteEventWithType:(NSString*)type onObject:(TGEventObject*)object {
+    [self deleteEventWithType:type onObjectWithId:object.objectId];
 }
 
 + (void)deleteEvent:(TGEvent*)event {
@@ -518,6 +518,11 @@ static Tapglue* sharedInstance = nil;
     [self retrieveEventsWithQuery:query andCompletionBlock:completionBlock];
 }
 
++ (void)retrieveEventsForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
+    [self retrieveEventsWithQuery:query andCompletionBlock:completionBlock];
+}
+
 + (void)retrieveEventsWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     [[self sharedInstance].eventManager retrieveEventsWithQuery:query andCompletionBlock:completionBlock];
 }
@@ -540,6 +545,11 @@ static Tapglue* sharedInstance = nil;
     [self retrieveEventsForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
++ (void)retrieveEventsForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
+    [[self sharedInstance].eventManager retrieveEventsForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+}
+
 + (void)retrieveEventsForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     [[self sharedInstance].eventManager retrieveEventsForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
@@ -560,6 +570,11 @@ static Tapglue* sharedInstance = nil;
     
     TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventType:eventType andObjectWithId:objectId];
     [self retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+}
+
++ (void)retrieveEventsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
+    [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
 + (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
