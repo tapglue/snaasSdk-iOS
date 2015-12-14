@@ -389,7 +389,7 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)followUsersWithSocialsIds:(NSArray *)toSocialUsersIds
-        onPlatfromWithSocialIdKey:(NSString *)socialIdKey
+        onPlatformWithSocialIdKey:(NSString *)socialIdKey
               withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createSocialConnectionsForCurrentUserOnPlatformWithSocialIdKey:socialIdKey
                                                                   ofType:TGConnectionTypeFollow
@@ -398,7 +398,7 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)friendUsersWithSocialsIds:(NSArray *)toSocialUsersIds
-                  onPlatfromWithSocialIdKey:(NSString *)socialIdKey
+                  onPlatformWithSocialIdKey:(NSString *)socialIdKey
                         withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager createSocialConnectionsForCurrentUserOnPlatformWithSocialIdKey:socialIdKey
                                                                   ofType:TGConnectionTypeFriend

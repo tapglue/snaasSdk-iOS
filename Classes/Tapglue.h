@@ -298,7 +298,7 @@
  @param socialIdKey The socialId of the user who is creating the connections.
  */
 + (void)followUsersWithSocialsIds:(NSArray*)toSocialUsersIds
-        onPlatfromWithSocialIdKey:(NSString*)socialIdKey
+        onPlatformWithSocialIdKey:(NSString*)socialIdKey
               withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
@@ -309,7 +309,7 @@
  @param socialIdKey The socialId of the user who is creating the connections.
  */
 + (void)friendUsersWithSocialsIds:(NSArray*)toSocialUsersIds
-                  onPlatfromWithSocialIdKey:(NSString*)socialIdKey
+                  onPlatformWithSocialIdKey:(NSString*)socialIdKey
                         withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 #pragma mark - Events
