@@ -698,7 +698,7 @@
 // [Correct] Retrieve unread news feed
 - (void)testUnreadFeed {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-        [Tapglue retrieveUnreadFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSError *error) {
+        [Tapglue retrieveUnreadNewsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSError *error) {
             expect(events).toNot.beNil();
             expect(events.count).to.beGreaterThanOrEqualTo(0);
             expect(error).to.beNil();

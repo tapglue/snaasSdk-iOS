@@ -292,7 +292,7 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserOnlyUnread:NO withCompletionBlock:completionBlock];
 }
 
-+ (void)retrieveUnreadFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
++ (void)retrieveUnreadNewsFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock {
     [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserOnlyUnread:YES withCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
         if (completionBlock) {
             completionBlock(events, error);

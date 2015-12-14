@@ -421,7 +421,7 @@
  @abstract Retrieve unread events of news feed for the currentUser.
  @discussion This will retrieve the unread events of the news feed for the currentUser.
  */
-+ (void)retrieveUnreadFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
++ (void)retrieveUnreadNewsFeedForCurrentUserWithCompletionBlock:(void (^)(NSArray *events, NSError *error))completionBlock;
 
 /*!
  @abstract Retrieve unread events count of news feed for the currentUser.
