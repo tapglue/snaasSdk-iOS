@@ -456,6 +456,12 @@
 + (void)retrieveEventsForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
+ @abstract Retrieve events for a set of event types.
+ @discussion This will all events for a set of event types.
+ */
++ (void)retrieveEventsForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+/*!
  @abstract Retrieve all events that match a query.
  @discussion This will retrieve all events matching the query object.
  */

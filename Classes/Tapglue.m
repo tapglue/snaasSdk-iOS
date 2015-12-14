@@ -518,6 +518,11 @@ static Tapglue* sharedInstance = nil;
     [self retrieveEventsWithQuery:query andCompletionBlock:completionBlock];
 }
 
++ (void)retrieveEventsForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
+    [self retrieveEventsWithQuery:query andCompletionBlock:completionBlock];
+}
+
 + (void)retrieveEventsWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     [[self sharedInstance].eventManager retrieveEventsWithQuery:query andCompletionBlock:completionBlock];
 }

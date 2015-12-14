@@ -1096,7 +1096,7 @@
                                 NSArray *types = @[eventType];
                                 
                                 // Retrieve Events with Query
-                                [Tapglue retrieveNewsFeedForCurrentUserForEventTypes:types withCompletionBlock:^(NSArray *posts, NSArray *events, NSError *error) {
+                                [Tapglue retrieveEventsForEventTypes:types withCompletionBlock:^(NSArray *events, NSError *error) {
                                     expect(success).to.beTruthy();
                                     expect(error).to.beNil();
                                     
