@@ -427,7 +427,7 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager addEvent:event];
 }
 
-+ (void)deleteEventEventWithType:(NSString*)type onObjectWithId:(NSString*)objectId {
++ (void)deleteEventWithType:(NSString*)type onObjectWithId:(NSString*)objectId {
     NSMutableArray *predicates = [NSMutableArray array];
     [predicates addObject:[NSPredicate predicateWithFormat:@"type=%@", type]];
     [predicates addObject:[NSPredicate predicateWithFormat:@"object.objectId=%@", type]];
@@ -443,8 +443,8 @@ static Tapglue* sharedInstance = nil;
     }
 }
 
-+ (void)deleteEventEventWithType:(NSString*)type onObject:(TGEventObject*)object {
-    [self deleteEventEventWithType:type onObjectWithId:object.objectId];
++ (void)deleteEventWithType:(NSString*)type onObject:(TGEventObject*)object {
+    [self deleteEventWithType:type onObjectWithId:object.objectId];
 }
 
 + (void)deleteEvent:(TGEvent*)event {
@@ -545,6 +545,11 @@ static Tapglue* sharedInstance = nil;
     [self retrieveEventsForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
++ (void)retrieveEventsForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
+    [[self sharedInstance].eventManager retrieveEventsForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+}
+
 + (void)retrieveEventsForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
     [[self sharedInstance].eventManager retrieveEventsForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
@@ -565,6 +570,11 @@ static Tapglue* sharedInstance = nil;
     
     TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventType:eventType andObjectWithId:objectId];
     [self retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
+}
+
++ (void)retrieveEventsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {
+    TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
+    [[self sharedInstance].eventManager retrieveEventsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
 + (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery *)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock {

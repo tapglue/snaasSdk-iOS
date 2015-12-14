@@ -359,7 +359,7 @@
  @param type The type of the event.
  @param objectId The objectId of the event.
  */
-+ (void)deleteEventEventWithType:(NSString*)type onObjectWithId:(NSString*)objectId; // #1
++ (void)deleteEventWithType:(NSString*)type onObjectWithId:(NSString*)objectId; // #1
 
 /*!
  @abstract Delete an event with type and object.
@@ -368,7 +368,7 @@
  @param type The type of the event.
  @param object The object asociated with the event.
  */
-+ (void)deleteEventEventWithType:(NSString*)type onObject:(TGEventObject*)object;  // overloading  #1
++ (void)deleteEventWithType:(NSString*)type onObject:(TGEventObject*)object;  // overloading  #1
 
 
 /*!
@@ -435,7 +435,7 @@
 
 #pragma mark - Queries -
 
-#pragma mark Events queries
+#pragma mark All Events Queries
 
 /*!
  @abstract Retrieve all events of a type.
@@ -467,7 +467,7 @@
  */
 + (void)retrieveEventsWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-#pragma mark Current user event queries
+#pragma mark currentUser Events Queries
 
 /*!
  @abstract Retrieve current user events of a type.
@@ -488,12 +488,18 @@
 + (void)retrieveEventsForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
+ @abstract Retrieve currentUser events for a set of event types.
+ @discussion This will retrieve currentUser events for a set of event types.
+ */
++ (void)retrieveEventsForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+/*!
  @abstract Retrieve current user events that match a query.
  @discussion This will retrieve current user events matching the query object.
  */
 + (void)retrieveEventsForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-#pragma mark Events Feed queries
+#pragma mark Events Feed Queries
 
 /*!
  @abstract Retrieve feed events of a type.
@@ -514,12 +520,18 @@
 + (void)retrieveEventsFeedForCurrentUserForObjectWithId:(NSString*)objectId andEventType:(NSString*)eventType withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
 /*!
+ @abstract Retrieve events feed for a set of event types.
+ @discussion This will retrieve a events feed for a set of event types.
+ */
++ (void)retrieveEventsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
+
+/*!
  @abstract Retrieve feed events that match a query.
  @discussion This will retrieve feed events matching the query object.
  */
 + (void)retrieveEventsFeedForCurrentUserWithQuery:(TGQuery*)query andCompletionBlock:(TGGetEventListCompletionBlock)completionBlock;
 
-#pragma mark News Feed queries
+#pragma mark News Feed Queries
 
 /*!
  @abstract Retrieve news feed that match a query.
