@@ -165,7 +165,7 @@
  @abstract Delete a like for a post.
  @discussion This will delete a like for a post.
  
- @param like The like object that is being deleted.
+ @param post The post object that is being deleted.
  */
 + (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
