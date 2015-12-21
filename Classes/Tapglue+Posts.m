@@ -114,7 +114,7 @@
 }
 
 + (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [[self postsManager] deleteLike:like withCompletionBlock:completionBlock];
+    [[self postsManager] deleteLike:post withCompletionBlock:completionBlock];
 }
 
 + (void)retrieveLikesForPost:(TGPost*)post
