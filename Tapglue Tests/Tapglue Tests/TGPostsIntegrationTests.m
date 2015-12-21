@@ -306,7 +306,7 @@
                     expect(like).toNot.beNil();
                 
                     // Delete Like
-                    [Tapglue deleteLike:like withCompletionBlock:^(BOOL success, NSError *error) {
+                    [Tapglue deleteLike:post withCompletionBlock:^(BOOL success, NSError *error) {
                         expect(success).to.beTruthy();
                         expect(error).to.beNil();
                         
@@ -348,7 +348,7 @@
                     expect(like).toNot.beNil();
                     
                     // Delete Like
-                    [Tapglue deleteLike:like withCompletionBlock:^(BOOL success, NSError *error) {
+                    [Tapglue deleteLike:post withCompletionBlock:^(BOOL success, NSError *error) {
                         expect(success).to.beTruthy();
                         expect(error).to.beNil();
                         

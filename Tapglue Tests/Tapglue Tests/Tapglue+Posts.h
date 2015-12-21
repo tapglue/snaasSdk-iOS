@@ -167,7 +167,7 @@
  
  @param like The like object that is being deleted.
  */
-+ (void)deleteLike:(TGPostLike*)like withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 
 /*!

@@ -192,8 +192,8 @@
     return like;
 }
 
-- (void)deleteLike:(TGPostLike*)like withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    [self.client DELETE:[TGApiRoutesBuilder routeForLike:like] withCompletionBlock:completionBlock];
+- (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [self.client DELETE:[TGApiRoutesBuilder routeForLikesOnPostWithId:post.objectId] withCompletionBlock:completionBlock];
 }
 
 - (void)retrieveLikesForPostWithId:(NSString*)postId

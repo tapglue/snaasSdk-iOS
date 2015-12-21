@@ -113,7 +113,7 @@
     return [[self postsManager] createLikeForPost:post withCompletionBlock:completionBlock];
 }
 
-+ (void)deleteLike:(TGPostLike*)like withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
++ (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self postsManager] deleteLike:like withCompletionBlock:completionBlock];
 }
 
