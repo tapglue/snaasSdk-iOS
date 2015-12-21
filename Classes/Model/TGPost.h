@@ -68,5 +68,11 @@
  */
 @property (nonatomic, assign, readonly) NSInteger sharesCount;
 
+#pragma mark Helper
+/*!
+ @abstract The status if a post is liked or not.
+ */
+@property (nonatomic, assign, readonly) BOOL isLiked;
+
 
 @end

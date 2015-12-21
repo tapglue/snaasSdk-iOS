@@ -30,6 +30,7 @@ static NSString *const TGPostTagsJsonKey = @"tags";
 static NSString *const TGPostVisibilityJsonKey = @"visibility";
 static NSString *const TGPostAttachmentsJsonKey = @"attachments";
 static NSString *const TGPostUserIdJsonKey = @"user_id";
+static NSString *const TGPostIsLikedKey = @"is_liked";
 
 @interface TGPost ()
 @property (nonatomic, strong) NSMutableArray *mutableAttachemnts;
@@ -113,6 +114,7 @@ static NSString *const TGPostUserIdJsonKey = @"user_id";
 - (NSDictionary*)jsonMappingForReading {
     NSMutableDictionary *mapping = [self jsonMappingForWriting].mutableCopy;
     [mapping addEntriesFromDictionary:@{
+                                        TGPostIsLikedKey : @"isLiked",
                                         @"counts.comments" : @"commentsCount",
                                         @"counts.likes" : @"likesCount",
                                         @"counts.shares" : @"sharesCount"
