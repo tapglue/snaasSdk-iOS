@@ -42,4 +42,10 @@
  */
 - (TGPostLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+/*!
+ @abstract Unlike a post.
+ @discussion Unlike a post.
+ */
+- (void)unlikeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 @end

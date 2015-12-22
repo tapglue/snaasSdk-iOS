@@ -36,4 +36,8 @@
     return [[Tapglue sharedInstance].postsManager createLikeForPost:self withCompletionBlock:completionBlock];
 }
 
+- (void)unlikeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[Tapglue sharedInstance].postsManager deleteLike:self withCompletionBlock:completionBlock];
+}
+
 @end
