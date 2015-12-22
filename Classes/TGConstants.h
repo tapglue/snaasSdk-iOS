@@ -33,6 +33,32 @@ typedef NS_ENUM(NSInteger, TGVisibility) {
     TGVisibilityPublic = 30
 };
 
+#pragma mark - Social Platform Keys
+
+/*!
+ @abstract Defines the Social Platform Key for Facebook.
+ @constant TGPlatformKeyFacebook holds the key for the social platform Facebook.
+ */
+static NSString *const TGPlatformKeyFacebook = @"facebok";
+
+/*!
+ @abstract Defines the Social Platform Key for Twitter.
+ @constant TGPlatformKeyFacebook holds the key for the social platform Twitter.
+ */
+static NSString *const TGPlatformKeyTwitter = @"twitter";
+
+/*!
+ @abstract Defines the Social Platform Key for Google.
+ @constant TGPlatformKeyFacebook holds the key for the social platform Google.
+ */
+static NSString *const TGPlatformKeyGoogle = @"google";
+
+/*!
+ @abstract Defines the Social Platform Key for a custom platform.
+ @constant TGPlatformKeyFacebook holds the key for a custom platform.
+ */
+static NSString *const TGPlatformKeyCustom = @"custom";
+
 
 #pragma mark - Errors
 
