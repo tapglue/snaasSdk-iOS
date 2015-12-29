@@ -136,32 +136,32 @@
 /*!
  @abstract The number of friends the user has.
  */
-@property (nonatomic, assign, readonly) NSInteger friendsCount;
+@property (nonatomic, assign) NSInteger friendsCount;
 
 /*!
  @abstract The number of followers the user has.
  */
-@property (nonatomic, assign, readonly) NSInteger followersCount;
+@property (nonatomic, assign) NSInteger followersCount;
 
 /*!
  @abstract The number of users following the user.
  */
-@property (nonatomic, assign, readonly) NSInteger followingCount;
+@property (nonatomic, assign) NSInteger followingCount;
 
 /*!
  @abstract Indicate if the user is friend with the current user.
  */
-@property (nonatomic, assign, readonly) BOOL isFriend;
+@property (nonatomic, assign) BOOL isFriend;
 
 /*!
  @abstract Indicate if the user is following the current user.
  */
-@property (nonatomic, assign, readonly) BOOL isFollower;
+@property (nonatomic, assign) BOOL isFollower;
 
 /*!
  @abstract Indicate if the user is followed by the current user.
  */
-@property (nonatomic, assign, readonly) BOOL isFollowed;
+@property (nonatomic, assign) BOOL isFollowed;
 
 
 #pragma mark - Current User
