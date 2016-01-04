@@ -29,14 +29,14 @@
 
 - (void)testFeedCache {
     [Tapglue setUpWithAppToken:self.appToken andConfig:self.config];
-    expect([Tapglue cachedFeedForCurrentUser]).to.beNil();
+    expect([Tapglue cachedEventsFeedForCurrentUser]).to.beNil();
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-        expect([Tapglue cachedFeedForCurrentUser]).to.beKindOfOrNil([NSArray class]);
+        expect([Tapglue cachedEventsFeedForCurrentUser]).to.beKindOfOrNil([NSArray class]);
 
         [Tapglue retrieveEventsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
             expect(error).to.beNil();
-            expect([Tapglue cachedFeedForCurrentUser]).to.beKindOfOrNil([NSArray class]);
-            expect([Tapglue cachedFeedForCurrentUser]).to.equal(events);
+            expect([Tapglue cachedEventsFeedForCurrentUser]).to.beKindOfOrNil([NSArray class]);
+            expect([Tapglue cachedEventsFeedForCurrentUser]).to.equal(events);
 
             XCTAssertGreaterThan(events.count, 0, @"This test only works properly if the feed is not empty");
 
@@ -46,7 +46,7 @@
             expect([Tapglue sharedInstance]).toNot.equal(tgInstance);
 
 
-            NSArray *cachedFeed = [Tapglue cachedFeedForCurrentUser];
+            NSArray *cachedFeed = [Tapglue cachedEventsFeedForCurrentUser];
             expect(cachedFeed).to.beKindOf([NSArray class]);
             expect(cachedFeed.count).to.equal(events.count);
 
