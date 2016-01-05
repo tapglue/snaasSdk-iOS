@@ -304,15 +304,15 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveFeedUnreadCountForCurrentWithCompletionBlock:completionBlock];
 }
 
-+ (NSArray*)cachedFeedForCurrentUser {
++ (NSArray*)cachedEventsFeedForCurrentUser {
     return [self sharedInstance].eventManager.cachedFeed;
 }
 
-+ (NSArray*)cachedUnreadFeedForCurrentUser {
++ (NSArray*)cachedUnreadEventsFeedForCurrentUser {
     return [self sharedInstance].eventManager.cachedUnreadFeed;
 }
 
-+ (NSInteger)cachedUnreadCountForCurrentUser {
++ (NSInteger)cachedUnreadEventsCountForCurrentUser {
     return [self sharedInstance].eventManager.unreadCount;
 }
 

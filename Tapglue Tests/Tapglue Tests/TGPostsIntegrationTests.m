@@ -91,7 +91,7 @@
 // [Correct] CRUD Post
 - (void)testCRUDPost {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-        
+                  
         // Create TGPost Object
         TGPost *post = [TGPost new];
         post.visibility = TGVisibilityPublic;

@@ -429,9 +429,9 @@
  */
 + (void)retrieveUnreadCountForCurrentWithCompletionBlock:(void (^)(NSInteger unreadCount, NSError *error))completionBlock;
 
-+ (NSArray*)cachedFeedForCurrentUser;
-+ (NSArray*)cachedUnreadFeedForCurrentUser;
-+ (NSInteger)cachedUnreadCountForCurrentUser;
++ (NSArray*)cachedEventsFeedForCurrentUser;
++ (NSArray*)cachedUnreadEventsFeedForCurrentUser;
++ (NSInteger)cachedUnreadEventsCountForCurrentUser;
 
 #pragma mark - Queries -
 
