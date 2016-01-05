@@ -125,6 +125,14 @@
 - (void)setPassword:(NSString*)password;
 
 /*!
+ @abstract User password setter (unhashed).
+ @discussion The setter to specify an unhashed user password.
+ 
+ @param password The user password.
+ */
+- (void)setUnhashedPassword:(NSString*)password;
+
+/*!
  @abstract Hashed password.
  @discussion The hashedPassword contains the password hashed with PBKDF2.
  */
