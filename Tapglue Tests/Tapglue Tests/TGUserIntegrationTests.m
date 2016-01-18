@@ -513,7 +513,7 @@
             expect(error).to.beNil();
 
             [Tapglue loginWithUsernameOrEmail:TGTestUserEmail
-                                  andPasswort:TGTestPassword
+                                  andPassword:TGTestPassword
                           withCompletionBlock:^(BOOL success, NSError *error) {
                               // Retrieve User
                               [Tapglue retrieveCurrentUserWithCompletionBlock:^(TGUser *user, NSError *error) {
@@ -781,7 +781,7 @@
 //                expect([error.userInfo objectForKey:TGErrorHTTPStatusCodeKey]).to.equal(400);
 
                 [Tapglue loginWithUsernameOrEmail:TGTestUserEmail
-                                      andPasswort:TGTestPassword
+                                      andPassword:TGTestPassword
                               withCompletionBlock:^(BOOL success, NSError *error) {
 
                                   expect(success).to.beTruthy();
@@ -852,7 +852,7 @@
 
                 // Login User
                 [Tapglue loginWithUsernameOrEmail:TGTestUserEmail
-                                      andPasswort:TGTestPassword
+                                      andPassword:TGTestPassword
                               withCompletionBlock:^(BOOL success, NSError *error) {
 
                                   expect(success).to.beTruthy();
@@ -881,7 +881,7 @@
         expect(error).to.beNil();
 
         [Tapglue loginWithUsernameOrEmail:TGTestUserEmail
-                              andPasswort:TGTestPassword
+                              andPassword:TGTestPassword
                       withCompletionBlock:^(BOOL success, NSError *error) {
 
                           expect(success).to.beTruthy();
@@ -999,7 +999,7 @@
 - (void)testSearchUsersByEmails {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
         
-        [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+        [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
             expect(error).to.beNil();
             expect(success).to.beTruthy();
             
@@ -1030,7 +1030,7 @@
             expect(error).to.beNil();
             expect(success).to.beTruthy();
             
-            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(error).to.beNil();
                 expect(success).to.beTruthy();
                 

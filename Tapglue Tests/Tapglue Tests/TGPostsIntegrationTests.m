@@ -59,7 +59,7 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
     
-    [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+    [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
         expect(success).will.beTruthy();
         expect(error).will.beNil();
         
@@ -69,7 +69,7 @@
             expect(error).will.beNil();
             expect([TGUser currentUser]).to.beNil();
             
-            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).will.beTruthy();
                 expect(error).will.beNil();
                 

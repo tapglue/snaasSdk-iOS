@@ -123,7 +123,18 @@
  @param password The password of the user will be hashed with PBKDF2 by default.
  */
 + (void)loginWithUsernameOrEmail:(NSString*)usernameOrEmail
-                     andPasswort:(NSString*)password
+                     andPassword:(NSString*)password
+             withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+/*!
+ @abstract Login a user with username or email an unhashed password.
+ @discussion This will login a user by providing a username or email adress and a password and create a currentUser.
+ 
+ @param usernameOrEmail The username or email of the user.
+ @param password The password of the user will be plain text without any hashing.
+ */
++ (void)loginWithUsernameOrEmail:(NSString*)usernameOrEmail
+                     andUnhashedPassword:(NSString*)password
              withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!

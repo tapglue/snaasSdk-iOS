@@ -56,7 +56,7 @@ NSString *const TGSearchTerm = @"TGConnectionUser";
 
 - (void)loginWithWithCompletionBlock:(void (^)(BOOL success))completionBlock {
     [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail
-                          andPasswort:TGPersistentPassword
+                          andPassword:TGPersistentPassword
                   withCompletionBlock:^(BOOL success, NSError *error) {
         expect(success).will.beTruthy();
         expect(error).will.beNil();

@@ -246,10 +246,18 @@ static Tapglue* sharedInstance = nil;
 }
 
 + (void)loginWithUsernameOrEmail:(NSString *)usernameOrEmail
-                     andPasswort:(NSString *)password
+                     andPassword:(NSString *)password
              withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self sharedInstance].userManager loginWithUsernameOrEmail:usernameOrEmail
-                                                    andPasswort:password
+                                                    andPassword:password
+                                            withCompletionBlock:completionBlock];
+}
+
++ (void)loginWithUsernameOrEmail:(NSString *)usernameOrEmail
+                     andUnhashedPassword:(NSString *)password
+             withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].userManager loginWithUsernameOrEmail:usernameOrEmail
+                                                    andUnhashedPassword:password
                                             withCompletionBlock:completionBlock];
 }
 
