@@ -174,13 +174,11 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 }
 
 - (void)handleLogoutResponse:(BOOL)success withError:(NSError*)responseError andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    if (success) {
-        [self clearCurrentUserData];
-    }
-    else {
+    if (!success) {
         TGLog(@"Logout from server failed");
-        [self clearCurrentUserData];
     }
+    
+    [self clearCurrentUserData];
 
     if (completionBlock) {
         completionBlock(success, responseError);
