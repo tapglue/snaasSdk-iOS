@@ -67,7 +67,7 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
     
-    [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+    [Tapglue loginWithUsernameOrEmail:TGPersistentUserEmail andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
         expect(success).will.beTruthy();
         expect(error).will.beNil();
         
@@ -77,7 +77,7 @@
             expect(error).will.beNil();
             expect([TGUser currentUser]).to.beNil();
             
-            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPasswort:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue loginWithUsernameOrEmail:TGSearchTerm andPassword:TGPersistentPassword withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).will.beTruthy();
                 expect(error).will.beNil();
                 
@@ -214,7 +214,7 @@
                         expect(error).to.beNil();
                         
                         // Login User A
-                        [Tapglue loginWithUsernameOrEmail:userAName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                        [Tapglue loginWithUsernameOrEmail:userAName andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
                             expect(success).to.beTruthy();
                             expect(error).to.beNil();
                             
@@ -245,7 +245,7 @@
                                             expect(error).will.beNil();
                                             
                                             // Login User B
-                                            [Tapglue loginWithUsernameOrEmail:userBName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                                            [Tapglue loginWithUsernameOrEmail:userBName andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
                                                 expect(success).will.beTruthy();
                                                 expect(error).will.beNil();
                                                     
@@ -599,7 +599,7 @@
                         expect(error).to.beNil();
                         
                         // Login User A
-                        [Tapglue loginWithUsernameOrEmail:userAName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                        [Tapglue loginWithUsernameOrEmail:userAName andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
                             expect(success).to.beTruthy();
                             expect(error).to.beNil();
                             
@@ -631,7 +631,7 @@
                                             expect([TGUser currentUser]).to.beNil();
                                             
                                             // Login User B
-                                            [Tapglue loginWithUsernameOrEmail:userBName andPasswort:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
+                                            [Tapglue loginWithUsernameOrEmail:userBName andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
                                                 expect(success).will.beTruthy();
                                                 expect(error).will.beNil();
                                                 

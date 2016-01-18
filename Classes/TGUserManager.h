@@ -100,7 +100,18 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
  @param usernameOrEmail The password of the user.
  */
 - (void)loginWithUsernameOrEmail:(NSString*)usernameOrEmail
-                     andPasswort:(NSString*)password
+                     andPassword:(NSString*)password
+             withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+/*!
+ @abstract Login a user.
+ @discussion This will login a user with a username or an email adress.
+ 
+ @param usernameOrEmail The username or email of the user.
+ @param usernameOrEmail The password of the user.
+ */
+- (void)loginWithUsernameOrEmail:(NSString*)usernameOrEmail
+                     andUnhashedPassword:(NSString*)password
              withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!

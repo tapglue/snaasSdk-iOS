@@ -70,12 +70,29 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 
 - (void)loginWithUsernameOrEmail:(NSString *)usernameOrEmail
-                     andPasswort:(NSString *)password
+                     andPassword:(NSString *)password
              withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
 
     NSDictionary *loginData = @{@"username": usernameOrEmail,
                                 @"password": [TGUser hashPassword:password]};
 
+    NSString *route = [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"login"];
+    
+    [self.client POST:route withURLParameters:nil andPayload:loginData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [self handleLoginResponse:jsonResponse
+                        withError:error
+                      requestUser:nil
+               andCompletionBlock:completionBlock];
+    }];
+}
+
+- (void)loginWithUsernameOrEmail:(NSString *)usernameOrEmail
+                     andUnhashedPassword:(NSString *)password
+             withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    
+    NSDictionary *loginData = @{@"username": usernameOrEmail,
+                                @"password": password};
+    
     NSString *route = [TGUserManagerAPIEndpointCurrentUser stringByAppendingPathComponent:@"login"];
     
     [self.client POST:route withURLParameters:nil andPayload:loginData andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
