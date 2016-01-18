@@ -175,14 +175,11 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 
 - (void)handleLogoutResponse:(BOOL)success withError:(NSError*)responseError andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     if (success) {
-        [TGUser setCurrentUser:nil];
-        NSUserDefaults *tgUserDefaults = [Tapglue sharedInstance].userDefaults;
-        [tgUserDefaults removeObjectForKey:TapglueUserDefaultsKeySessionToken];
-        [tgUserDefaults synchronize];
+        [self clearCurrentUserData];
     }
     else {
-        TGLog(@"Logout failed");
-        //TODO: improve error handling: e.g. if the backend returns a 404 also remove current user and tread it as success
+        TGLog(@"Logout from server failed");
+        [self clearCurrentUserData];
     }
 
     if (completionBlock) {
@@ -356,8 +353,17 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     [self.client DELETE:route withURLParameters:nil andCompletionBlock:completionBlock];
 }
 
+#pragma mark - Helper
+
 - (NSString*)stringFromConnectionType:(TGConnectionType)connectionType {
     return connectionType == TGConnectionTypeFriend ? @"friend" : @"follow";
+}
+
+- (void)clearCurrentUserData {
+    [TGUser setCurrentUser:nil];
+    NSUserDefaults *tgUserDefaults = [Tapglue sharedInstance].userDefaults;
+    [tgUserDefaults removeObjectForKey:TapglueUserDefaultsKeySessionToken];
+    [tgUserDefaults synchronize];
 }
 
 @end
