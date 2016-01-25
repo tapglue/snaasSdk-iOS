@@ -86,10 +86,10 @@ Simply call `setUpWithAppToken: andConfig:` and define a config like in the foll
 
 // Create config object
 TGConfiguration *customConfig = [TGConfiguration defaultConfiguration];
-    
+
 // Configure custom settings
 customConfig.loggingEnabled = true;
-    
+
 // Initialize the SDK with app token and config
 [Tapglue setUpWithAppToken:tapglueToken andConfig:customConfig];
 ```
@@ -160,7 +160,7 @@ When you successfully create or login a user, we store it as the `currentUser` b
 
 ```objective-c
 TGUser *user = [[TGUser alloc] init];
-    
+
 if (user.isCurrentUser) {
     // User is currentUser
 } else {
@@ -180,7 +180,7 @@ If users want to update their profile information you can update it with the `sa
 
 ```objective-c
 TGUser *user = [TGUser currentUser]
-        
+
 user.username = @"changedUsername";
 [user saveWithCompletionBlock:^(BOOL success, NSError *error) {
 	if (success) {
@@ -197,7 +197,7 @@ To delete the current user you can perform `deleteWithCompletionBlock`.
 
 ```objective-c
 TGUser *user = [TGUser currentUser]
-        
+
 [user deleteWithCompletionBlock:^(BOOL success, NSError *error) {
 	if (success) {
   	// Implement success after login.
@@ -235,7 +235,7 @@ If you want to search for multiple e-mails and get back a list of users. This is
 ```objective-c
 // Specify list of emails
 NSArray *emails = @[@"user@mail.com", @"user2@mail.com"];
-        
+
 // Search users
 [Tapglue searchUsersWithEmails:emails andCompletionBlock:^(NSArray *users, NSError *error) {
     if users != nil && error == nil {
@@ -253,7 +253,7 @@ A similar behaviour can be achieved if you want to sync users from another netwo
 ```objective-c
 // Specify list of socialIds
 NSArray *socialIds = @[@"1234567", @"7654321"];
-        
+
 // Search users
 [Tapglue searchUsersOnSocialPlatform:TGPlatformKeyFacebook withSocialUsersIds:socialIds andCompletionBlock:^(NSArray *users, NSError *error) {
     if users != nil && error == nil {
@@ -307,10 +307,10 @@ NSArray *friendsIds = ... // retrieve users
          onPlatfromWithSocialIdKey:@"twitter"
                withCompletionBlock:^(BOOL success, NSError *error) {
                    if (success) {
-                        // friends added successfully 
+                        // friends added successfully
                    }
                    else {
-                        // Error handling 
+                        // Error handling
                    }
                }];
 ```
@@ -324,18 +324,18 @@ Here is a concrete example, of how to fetch friends from the Facebook SDK:
 FBSDKGraphRequest *myFriendsRequest = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me/friends" parameters:nil];
 
 [myFriendsRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-        
+
     if (result && !error) {
         // request succeeded > found frined
-        NSArray *friendsIds = [result valueForKeyPath:@"data.id"]; 
+        NSArray *friendsIds = [result valueForKeyPath:@"data.id"];
         [Tapglue friendUsersWithSocialsIds:friendsIds
                  onPlatfromWithSocialIdKey:TGUserSocialIdFacebookKey
                        withCompletionBlock:^(BOOL success, NSError *error) {
                            if (success) {
-                                // friends added successfully 
+                                // friends added successfully
                            }
                            else {
-                                // Error Handling 
+                                // Error Handling
                            }
                        }];           
     } else {
@@ -384,37 +384,37 @@ In the last example you create a `TGEvent` object first that creates all informa
 ```objective-c
 // Create TGEvent object
 TGEvent *event = [[TGEvent alloc] init];
-    
+
 event.type = @"like";
 event.language = @"en";
 event.location = @"berlin";
 event.latitude = 52.520007;
 event.longitude = 13.404954;
-    
+
 // Create object
 TGEventObject *object = [[TGEventObject alloc] init];
-    
+
 object.objectId = @"article_123";
 object.type = @"article";
 object.url = @"app://articles/article_123";
 [object setDisplayName:@"article title" forLanguage:@"en"];
 [object setDisplayName:@"artikel titel" forLanguage:@"de"];
-    
+
 event.object = object;
-    
+
 event.metadata = @{
                    @"foo" : @"bar",
                    @"amount" : @12,
                    @"progress" : @0.95
    	               };
-    
+
 // Send event
 [Tapglue createEvent:event];
 ```
 
 ## Event visibilities
 
-Besides the attributes that you attach to each event, you can specify different visibilities. Those 
+Besides the attributes that you attach to each event, you can specify different visibilities. Those
 
 - `TGVisibility.Private`
 - `TGVisibility.Connection`
@@ -446,17 +446,17 @@ In the last example you create a `TGPost` object first that creates all informat
 TGPost *post = [TGPost new];
 post.visibility = TGVisibilityPublic;
 post.tags = @[@"fitness",@"running"];
-        
+
 // Create Attachment
 [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
-        
+
 // Create Post
 [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
 		if (success) {
 			// Success handling
 		}
 		else {
-			// Error handling 
+			// Error handling
 		}
 }];
 ```
@@ -492,7 +492,7 @@ NSString *comment = @"This is the comment of the post.";
 			// Success handling
 		}
 		else {
-			// Error handling 
+			// Error handling
 		}
 }];
 ```
@@ -512,7 +512,7 @@ The first one requires a post object, the second one a `postId` only. Comments c
 			// Success handling
 		}
 		else {
-			// Error handling 
+			// Error handling
 		}
 }];
 ```
@@ -543,7 +543,7 @@ The first option is the main method to create a like. This requires to pass the 
 			// Success handling
 		}
 		else {
-			// Error handling 
+			// Error handling
 		}
 }];
 ```
@@ -563,7 +563,7 @@ Simply run the following to retrieve them:
 			// Success handling
 		}
 		else {
-			// Error handling 
+			// Error handling
 		}
 }];
 ```
@@ -580,7 +580,7 @@ If a user unlikes a post again, use following method:
 			// Success handling
 		}
 		else {
-			// Error handling 
+			// Error handling
 		}
 }];
 ```
@@ -799,7 +799,7 @@ You can turn on Tapglue logging by initialising the SDK with a custom configurat
 ```objective-c
 // Create config object
 TGConfiguration *customConfig = [TGConfiguration defaultConfiguration];
-    
+
 // Configure custom settings
 customConfig.loggingEnabled = true;
 ```
@@ -826,3 +826,7 @@ Most methods will provide you either a value or an error. We recommend to always
 
 This SDK is provided under Apache 2.0 license. For the full license, please see the [LICENSE](LICENSE) file that
 ships with this SDK.
+
+# PR
+
+TODO: Implement Comments & Likes on external objects
