@@ -1111,4 +1111,19 @@
     }];
 }
 
+// [Correct] Create a like on an objectId
+- (void)testCreateLikeOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        [Tapglue createLikeForObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [expectation fulfill];
+        }];
+    }];
+}
+
 @end

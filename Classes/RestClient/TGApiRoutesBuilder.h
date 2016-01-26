@@ -83,4 +83,8 @@
 
 + (NSString*)routeForLikeWithId:(NSString*)likeId onPostWithId:(NSString*)postId;
 
+#pragma mark - Likes
+
++ (NSString*)routeForLikeOnObjectId:(NSString *)objectId;
+
 @end

@@ -168,4 +168,12 @@ extern NSString *const TGEventManagerAPIEndpointEvents;
  */
 - (void)retrieveFeedUnreadCountForCurrentWithCompletionBlock:(void (^)(NSInteger, NSError *))completionBlock;
 
+#pragma mark - Likes
+
+/*!
+ @abstract Create a like event on a custom object.
+ @discussion This will create a like event on a custom object.
+ */
+- (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 @end

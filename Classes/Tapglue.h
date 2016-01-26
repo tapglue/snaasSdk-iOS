@@ -556,6 +556,18 @@
  */
 + (void)retrieveNewsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
+#pragma mark Comments
+
+#pragma mark Likes
+
+/*!
+ @abstract Create a like for an objectId.
+ @discussion This will create a like for an objectId.
+ 
+ @param objectId The objectId for which a like is being created.
+ */
++ (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 #pragma mark - Raw Rest -
 
 /*!

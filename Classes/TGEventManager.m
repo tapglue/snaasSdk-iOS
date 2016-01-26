@@ -257,7 +257,20 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     [self retrieveEventWithId:eventId forUserWithID:nil withCompletionBlock:completionBlock];
 }
 
+#pragma mark Likes
 
+- (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    NSString *route = [TGApiRoutesBuilder routeForLikeOnObjectId:objectId];
+    [self.client POST:route withURLParameters:nil andPayload:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (!error) {
+            if (completionBlock) {
+                completionBlock(YES, nil);
+            }
+        } else if (completionBlock) {
+            completionBlock(NO, error);
+        }
+    }];
+}
 
 #pragma mark collection
 

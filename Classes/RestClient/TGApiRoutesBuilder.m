@@ -28,6 +28,7 @@ static NSString * const TGApiRouteCurrentUser = @"me";
 static NSString * const TGApiRouteFeed = @"feed";
 static NSString * const TGApiRoutePosts = @"posts";
 static NSString * const TGApiRouteEvents = @"events";
+static NSString * const TGApiRouteExternals = @"externals";
 static NSString * const TGApiRouteComments = @"comments";
 static NSString * const TGApiRouteLikes = @"likes";
 
@@ -98,6 +99,12 @@ static NSString * const TGApiRouteLikes = @"likes";
 + (NSString*)routeForLikeWithId:(NSString*)likeId onPostWithId:(NSString*)postId {
     NSParameterAssert(likeId);
     return [[self routeForLikesOnPostWithId:postId] stringByAppendingPathComponent:likeId];
+}
+
+#pragma mark - Likes
+
++ (NSString*)routeForLikeOnObjectId:(NSString *)objectId {
+    return [[[self baseRouteForFeeds] stringByAppendingPathComponent:TGApiRouteExternals] stringByAppendingPathComponent:objectId];
 }
 
 #pragma mark - Helper 
