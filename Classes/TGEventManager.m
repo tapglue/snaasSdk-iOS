@@ -279,6 +279,11 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     return objectComment;
 }
 
+-(void)deleteComment:(TGPostComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    NSString *route = [TGApiRoutesBuilder routeForCommentWithId:comment.objectId onObjectWithId:objectId];
+    [self.client DELETE:route withCompletionBlock:completionBlock];
+}
+
 #pragma mark - Likes -
 
 - (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {

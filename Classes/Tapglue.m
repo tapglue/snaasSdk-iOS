@@ -606,6 +606,10 @@ static Tapglue* sharedInstance = nil;
     return [[self sharedInstance].eventManager createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:completionBlock];
 }
 
++ (void)deleteComment:(TGPostComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager deleteComment:(TGPostComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:completionBlock];
+}
+
 #pragma mark - Likes -
 
 + (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {

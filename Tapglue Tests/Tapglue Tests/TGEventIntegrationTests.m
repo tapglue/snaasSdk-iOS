@@ -1188,4 +1188,27 @@
     }];
 }
 
+// [Correct] Delete a comment on a custom object
+- (void)testDeleteCommentOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        NSString *comment = [NSString randomStringWithLength:10];
+        
+        TGPostComment* objectComment = [Tapglue createComment:comment forObjectWithId:objectId withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            NSLog(@"CommentId = %@", objectComment.objectId);
+            
+            [Tapglue deleteComment:objectComment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                [expectation fulfill];
+            }];
+        }];
+    }];
+}
+
 @end

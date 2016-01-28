@@ -86,6 +86,7 @@
 #pragma mark - Comments -
 
 + (NSString*)routeForCommentOnObjectId:(NSString *)objectId;
++ (NSString*)routeForCommentWithId:(NSString*)commentId onObjectWithId:(NSString*)objectId;
 
 #pragma mark - Likes -
 

@@ -570,6 +570,14 @@
                                    forObjectWithId:(NSString*)objectId
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+/*!
+ @abstract Deletes a comment for an objectId.
+ @discussion This will delete a comment for an objectId.
+ 
+ @param objectId The objectId for which a comment is being deleted.
+ */
++ (void)deleteComment:(TGPostComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 #pragma mark Likes
 
 /*!
