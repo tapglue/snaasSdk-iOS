@@ -576,6 +576,15 @@
  */
 + (void)deleteLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+/*!
+ @abstract Retrieve likes for an objectId.
+ @discussion This will retrieve all likes for a objectId.
+ 
+ @param objectI The objectId for which likes are retrieved.
+ */
++ (void)retrieveLikesForObjectWithId:(NSString*)objectId
+               withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
+
 #pragma mark - Raw Rest -
 
 /*!

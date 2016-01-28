@@ -285,6 +285,30 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     }];
 }
 
+- (void)retrieveLikesForObjectWithId:(NSString*)objectId andCompletionBlock:(void (^)(NSArray *Likes, NSError *error))completionBlock {
+    NSString *route = [TGApiRoutesBuilder routeForLikeOnObjectId:objectId];
+    [self.client GET:route withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        
+        if (!error) {
+            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+            
+            NSArray *likeDictionaries = [jsonResponse objectForKey:@"likes"];
+            NSMutableArray *likes = [NSMutableArray arrayWithCapacity:likeDictionaries.count];
+            for (NSDictionary *data in likeDictionaries) {
+                [likes addObject:[[TGPostLike alloc] initWithDictionary:data]];
+            }
+            
+            if (completionBlock) {
+                completionBlock(likes, nil);
+            }
+        }
+        else if(completionBlock) {
+            completionBlock(nil, error);
+        }
+    }];
+}
+
 #pragma mark collection
 
 

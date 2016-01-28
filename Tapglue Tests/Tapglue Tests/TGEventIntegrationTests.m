@@ -1146,4 +1146,30 @@
     }];
 }
 
+// [Correct] Retrieve likes on an objectId
+- (void)testRetrieveLikesOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        [Tapglue createLikeForObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [Tapglue retrieveLikesForObjectWithId:objectId withCompletionBlock:^(NSArray *likes, NSError *error) {
+                expect(likes).toNot.beNil();
+                expect(likes.count).to.equal(1);
+                expect(error).to.beNil();
+                
+                [Tapglue deleteLikeForObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    }];
+}
+
 @end

@@ -182,4 +182,10 @@ extern NSString *const TGEventManagerAPIEndpointEvents;
  */
 - (void)deleteLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+/*!
+ @abstract Retrieves like events on a custom object.
+ @discussion This will retrieve like events on a custom object.
+ */
+- (void)retrieveLikesForObjectWithId:(NSString*)objectId andCompletionBlock:(void (^)(NSArray *Likes, NSError *error))completionBlock;
+
 @end
