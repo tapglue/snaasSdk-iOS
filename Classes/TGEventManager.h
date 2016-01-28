@@ -176,4 +176,10 @@ extern NSString *const TGEventManagerAPIEndpointEvents;
  */
 - (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+/*!
+ @abstract Delete a like event on a custom object.
+ @discussion This will delete a like event on a custom object.
+ */
+- (void)deleteLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 @end

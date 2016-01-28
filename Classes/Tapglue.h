@@ -568,6 +568,14 @@
  */
 + (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+/*!
+ @abstract Deletes a like for an objectId.
+ @discussion This will delete a like for an objectId.
+ 
+ @param objectId The objectId for which a like is being deleted.
+ */
++ (void)deleteLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 #pragma mark - Raw Rest -
 
 /*!

@@ -272,6 +272,19 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     }];
 }
 
+- (void)deleteLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    NSString *route = [TGApiRoutesBuilder routeForLikeOnObjectId:objectId];
+    [self.client DELETE:route withCompletionBlock:^(BOOL success, NSError *error) {
+        if (!error) {
+            if (completionBlock) {
+                completionBlock(YES, nil);
+            }
+        } else if (completionBlock) {
+            completionBlock(NO, error);
+        }
+    }];
+}
+
 #pragma mark collection
 
 

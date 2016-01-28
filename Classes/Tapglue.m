@@ -604,6 +604,10 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager createLikeForObjectWithId:objectId andCompletionBlock:completionBlock];
 }
 
++ (void)deleteLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager deleteLikeForObjectWithId:objectId andCompletionBlock:completionBlock];
+}
+
 #pragma mark - Raw Rest -
 
 + (NSURLSessionDataTask*) makeRestRequestWithHTTPMethod:(NSString*)method
