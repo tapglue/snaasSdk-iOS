@@ -104,7 +104,7 @@ static NSString * const TGApiRouteLikes = @"likes";
 #pragma mark - Likes
 
 + (NSString*)routeForLikeOnObjectId:(NSString *)objectId {
-    return [[[self baseRouteForFeeds] stringByAppendingPathComponent:TGApiRouteExternals] stringByAppendingPathComponent:objectId];
+    return [[TGApiRouteExternals stringByAppendingPathComponent:objectId] stringByAppendingPathComponent:TGApiRouteLikes];
 }
 
 #pragma mark - Helper 
