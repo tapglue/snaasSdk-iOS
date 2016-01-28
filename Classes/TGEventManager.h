@@ -168,7 +168,15 @@ extern NSString *const TGEventManagerAPIEndpointEvents;
  */
 - (void)retrieveFeedUnreadCountForCurrentWithCompletionBlock:(void (^)(NSInteger, NSError *))completionBlock;
 
-#pragma mark - Likes
+#pragma mark - Comments -
+
+/*!
+ @abstract Creates a comment on a custom object.
+ @discussion This will create a comment on a custom object.
+ */
+-(TGPostComment*)createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+#pragma mark - Likes -
 
 /*!
  @abstract Create a like event on a custom object.

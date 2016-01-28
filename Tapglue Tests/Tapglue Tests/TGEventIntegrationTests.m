@@ -1172,4 +1172,20 @@
     }];
 }
 
+// [Correct] Create a comment on a custom object
+- (void)testCreateCommentOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        NSString *comment = [NSString randomStringWithLength:10];
+        
+        [Tapglue createComment:comment forObjectWithId:objectId withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [expectation fulfill];
+        }];
+    }];
+}
+
 @end

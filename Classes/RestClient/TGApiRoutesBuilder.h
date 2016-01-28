@@ -83,7 +83,11 @@
 
 + (NSString*)routeForLikeWithId:(NSString*)likeId onPostWithId:(NSString*)postId;
 
-#pragma mark - Likes
+#pragma mark - Comments -
+
++ (NSString*)routeForCommentOnObjectId:(NSString *)objectId;
+
+#pragma mark - Likes -
 
 + (NSString*)routeForLikeOnObjectId:(NSString *)objectId;
 

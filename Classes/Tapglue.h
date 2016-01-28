@@ -23,6 +23,7 @@
 #import "TGUser+Networking.h"
 #import "TGEvent+Networking.h"
 #import "TGEventObject.h"
+#import "TGPostComment.h"
 #import "TGConnection.h"
 #import "TGConfiguration.h"
 #import "TGQuery.h"
@@ -557,6 +558,17 @@
 + (void)retrieveNewsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
 #pragma mark Comments
+
+/*!
+ @abstract Creates a comment on a custom objectId.
+ @discussion This will create a comment on an objectId.
+ 
+ @param comment The content of the comment.
+ @param post The Post object that is being commented.
+ */
++ (TGPostComment*)createComment:(NSString*)comment
+                                   forObjectWithId:(NSString*)objectId
+                       withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 #pragma mark Likes
 

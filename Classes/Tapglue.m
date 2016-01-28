@@ -598,6 +598,14 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
+#pragma mark - Comments -
+
++ (TGPostComment*)createComment:(NSString*)comment
+      forObjectWithId:(NSString*)objectId
+  withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    return [[self sharedInstance].eventManager createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:completionBlock];
+}
+
 #pragma mark - Likes -
 
 + (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {

@@ -27,6 +27,7 @@
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
+#import "TGPostComment.h"
 #import "TGApiRoutesBuilder.h"
 
 NSString *const TGEventManagerAPIEndpointEvents = @"events";
@@ -257,7 +258,28 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     [self retrieveEventWithId:eventId forUserWithID:nil withCompletionBlock:completionBlock];
 }
 
-#pragma mark Likes
+#pragma mark - Comments -
+
+-(TGPostComment*)createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    NSString *route = [TGApiRoutesBuilder routeForCommentOnObjectId:objectId];
+    TGPostComment *objectComment = [[TGPostComment alloc] init];
+    objectComment.content = comment;
+    
+    [self.client POST:route withURLParameters:nil andPayload:objectComment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [objectComment loadDataFromDictionary:jsonResponse]; // update the data
+        if (!error) {
+            if (completionBlock) {
+                completionBlock(YES, nil);
+            }
+        } else if (completionBlock) {
+            completionBlock(NO, error);
+        }
+    }];
+    
+    return objectComment;
+}
+
+#pragma mark - Likes -
 
 - (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     NSString *route = [TGApiRoutesBuilder routeForLikeOnObjectId:objectId];

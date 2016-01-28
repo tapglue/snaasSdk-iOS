@@ -101,7 +101,13 @@ static NSString * const TGApiRouteLikes = @"likes";
     return [[self routeForLikesOnPostWithId:postId] stringByAppendingPathComponent:likeId];
 }
 
-#pragma mark - Likes
+#pragma mark - Comments -
+
++ (NSString*)routeForCommentOnObjectId:(NSString *)objectId {
+    return [[TGApiRouteExternals stringByAppendingPathComponent:objectId] stringByAppendingPathComponent:TGApiRouteComments];
+}
+
+#pragma mark - Likes -
 
 + (NSString*)routeForLikeOnObjectId:(NSString *)objectId {
     return [[TGApiRouteExternals stringByAppendingPathComponent:objectId] stringByAppendingPathComponent:TGApiRouteLikes];
