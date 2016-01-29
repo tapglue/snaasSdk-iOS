@@ -27,6 +27,7 @@
 #import "NSError+TGError.h"
 #import "TGObjectCache.h"
 #import "TGConnection+Private.h"
+#import "TGAPIRoutesBuilder.h"
 
 NSString *const TapglueUserDefaultsKeySessionToken = @"sessionToken";
 NSString *const TGUserManagerAPIEndpointCurrentUser = @"me";
@@ -366,6 +367,15 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     route = [route stringByAppendingPathComponent:[self stringFromConnectionType:connectionType]];
     route = [route stringByAppendingPathComponent:toUser.userId];
     [self.client DELETE:route withURLParameters:nil andCompletionBlock:completionBlock];
+}
+
+#pragma mark - Recommendations
+
+- (void)retrieveUserRecommendationsOfType:(NSString*)type forPeriod:(NSString*)period andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
+    NSString *route = [TGApiRoutesBuilder routeForUserRecommendationsOfType:type andPeriod:period];
+    [self.client GET:route withCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
+    }];
 }
 
 #pragma mark - Helper

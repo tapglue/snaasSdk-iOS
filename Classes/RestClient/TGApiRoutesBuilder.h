@@ -85,6 +85,6 @@
 
 #pragma mark - User recommendations
 
-+ (NSString*)routeForUserRecommendationsActive;
++ (NSString*)routeForUserRecommendationsOfType:(NSString*)type andPeriod:(NSString*)period;
 
 @end

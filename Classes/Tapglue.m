@@ -31,6 +31,7 @@
 #import "TGUserManager.h"
 #import "TGObjectCache.h"
 #import "TGConfiguration.h"
+#import "TGConstants.h"
 
 #import <UIKit/UIKit.h>
 
@@ -288,6 +289,16 @@ static Tapglue* sharedInstance = nil;
                  withSocialUsersIds:(NSArray*)socialUserIds
                  andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
     [[self sharedInstance].userManager searchUsersOnSocialPlatform:socialPlatform withSocialUsersIds:socialUserIds andCompletionBlock:completionBlock];
+}
+
+#pragma mark - User Recommendations
+
++ (void)retrieveUserRecommendationsOfType:(NSString*)type forPeriod:(NSString*)period andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
+    [[self sharedInstance].userManager retrieveUserRecommendationsOfType:type forPeriod:period andCompletionBlock:completionBlock];
+}
+
++ (void)retrieveUserRecommendationsWithCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
+    [[self sharedInstance].userManager retrieveUserRecommendationsOfType:TGUserRecommendationsTypeActive forPeriod:TGUserRecommendationsPeriodDay andCompletionBlock:completionBlock];
 }
 
 #pragma mark - Feed
@@ -596,10 +607,6 @@ static Tapglue* sharedInstance = nil;
 + (void)retrieveNewsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock {
     TGQuery * query = [[self sharedInstance].eventManager composeQueryForEventTypes:types];
     [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
-}
-
-+ (void)retrieveUserRecommendationsOfType:(NSString*)type forPeriod:(NSString*)period andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock {
-    // TODO:
 }
 
 #pragma mark - Raw Rest -

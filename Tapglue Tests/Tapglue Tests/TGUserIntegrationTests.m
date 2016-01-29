@@ -1106,4 +1106,29 @@
     }];
 }
 
+#pragma mark - User Recommendation Tests -
+// [Correct] Retrieve user recommendations
+- (void)testRetrieveUserRecommendations {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        [Tapglue retrieveUserRecommendationsOfType:TGUserRecommendationsTypeActive forPeriod:TGUserRecommendationsPeriodDay andCompletionBlock:^(NSArray *users, NSError *error) {
+            expect(users).toNot.beNil();
+            expect(error).to.beNil();
+            [expectation fulfill];
+        }];
+    }];
+}
+
+// [Correct] Retrieve user recommendations convenience
+- (void)testRetrieveUserRecommendationsConvenient {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        [Tapglue retrieveUserRecommendationsWithCompletionBlock:^(NSArray *users, NSError *error) {
+            expect(users).toNot.beNil();
+            expect(error).to.beNil();
+            [expectation fulfill];
+        }];
+    }];
+}
+
 @end

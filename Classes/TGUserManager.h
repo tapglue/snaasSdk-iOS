@@ -214,5 +214,15 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
                                                                 ofType:(TGConnectionType)connectionType
                                                       toSocialUsersIds:(NSArray*)toSocialUsersIds
                                                    withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+#pragma mark - Recommendations
+
+/*!
+ @abstract Retrieve user recommendatons.
+ @discussion This will retrieve user recommendations based on a type and period.
+ 
+ @param type Type of user recommendation that is being retrieved.
+ @param period Period of user recommendations.
+ */
+- (void)retrieveUserRecommendationsOfType:(NSString*)type forPeriod:(NSString*)period andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock;
 
 @end

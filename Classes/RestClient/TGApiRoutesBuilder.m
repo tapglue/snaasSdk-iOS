@@ -22,6 +22,7 @@
 #import "TGPost.h"
 #import "TGPostComment.h"
 #import "TGPostLike.h"
+#import "TGConstants.h"
 
 static NSString * const TGApiRouteUsers = @"users";
 static NSString * const TGApiRouteCurrentUser = @"me";
@@ -104,8 +105,14 @@ static NSString * const TGApiRouteRecommendationsActive = @"active";
 
 #pragma mark - User recommendations
 
-+ (NSString*)routeForUserRecommendationsActive {
-    return [TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteRecommendationsActive];
++ (NSString*)routeForUserRecommendationsOfType:(NSString*)type andPeriod:(NSString*)period {
+    //TODO: Rewrite to Switch-Case
+    if (type == TGUserRecommendationsTypeActive) {
+        return [[[TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteUsers] stringByAppendingPathComponent:TGApiRouteRecommendationsActive] stringByAppendingPathComponent:period];
+    } else {
+        // Default behaviour is to retrieve the most active users
+        return [[[TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteUsers] stringByAppendingPathComponent:TGApiRouteRecommendationsActive] stringByAppendingPathComponent:period];
+    }
 }
 
 #pragma mark - Helper 
