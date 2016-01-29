@@ -59,6 +59,31 @@ static NSString *const TGPlatformKeyGoogle = @"google";
  */
 static NSString *const TGPlatformKeyCustom = @"custom";
 
+#pragma mark - Recommendation Parameters
+
+/*!
+ @abstract Defines the Type of the Latest User Recommendation.
+ @constant TGUserRecommendationsActive holds the key for for recommending latest users.
+ */
+static NSString *const TGUserRecommendationsLatest = @"latest";
+
+/*!
+ @abstract Defines the Type of the Trending User Recommendation.
+ @constant TGUserRecommendationsActive holds the key for for recommending trending users.
+ */
+static NSString *const TGUserRecommendationsTrending = @"trending";
+
+/*!
+ @abstract Defines the Type of the Active User Recommendation.
+ @constant TGUserRecommendationsActive holds the key for for recommending active users.
+ */
+static NSString *const TGUserRecommendationsActive = @"active";
+
+/*!
+ @abstract Defines the Type of the Random User Recommendation.
+ @constant TGUserRecommendationsActive holds the key for for recommending random users.
+ */
+static NSString *const TGUserRecommendationsRandom = @"random";
 
 #pragma mark - Errors
 
