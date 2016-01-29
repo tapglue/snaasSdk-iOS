@@ -556,6 +556,15 @@
  */
 + (void)retrieveNewsFeedForCurrentUserForEventTypes:(NSArray*)types withCompletionBlock:(TGGetNewsFeedCompletionBlock)completionBlock;
 
+/*!
+ @abstract Retrieve user recommendations.
+ @discussion This will retrieve recommended users for the current user.
+ 
+ @param type The type of the user recommendation (latest, trending, active, random).
+ @param period The period the user recommendations are fetched for.
+ */
++ (void)retrieveUserRecommendationsOfType:(NSString*)type forPeriod:(NSString*)period andCompletionBlock:(void (^)(NSArray *users, NSError *error))completionBlock;
+
 #pragma mark - Raw Rest -
 
 /*!
