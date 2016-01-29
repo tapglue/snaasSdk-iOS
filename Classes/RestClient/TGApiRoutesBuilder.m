@@ -32,7 +32,6 @@ static NSString * const TGApiRouteEvents = @"events";
 static NSString * const TGApiRouteComments = @"comments";
 static NSString * const TGApiRouteLikes = @"likes";
 static NSString * const TGApiRouteRecommendations = @"recommendations";
-static NSString * const TGApiRouteRecommendationsActive = @"active";
 
 @implementation TGApiRoutesBuilder
 
@@ -108,10 +107,10 @@ static NSString * const TGApiRouteRecommendationsActive = @"active";
 + (NSString*)routeForUserRecommendationsOfType:(NSString*)type andPeriod:(NSString*)period {
     //TODO: Rewrite to Switch-Case
     if (type == TGUserRecommendationsTypeActive) {
-        return [[[TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteUsers] stringByAppendingPathComponent:TGApiRouteRecommendationsActive] stringByAppendingPathComponent:period];
+        return [[[TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteUsers] stringByAppendingPathComponent:type] stringByAppendingPathComponent:period];
     } else {
         // Default behaviour is to retrieve the most active users
-        return [[[TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteUsers] stringByAppendingPathComponent:TGApiRouteRecommendationsActive] stringByAppendingPathComponent:period];
+        return [[[TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteUsers] stringByAppendingPathComponent:type] stringByAppendingPathComponent:period];
     }
 }
 
