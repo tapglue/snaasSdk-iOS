@@ -83,4 +83,8 @@
 
 + (NSString*)routeForLikeWithId:(NSString*)likeId onPostWithId:(NSString*)postId;
 
+#pragma mark - User recommendations
+
++ (NSString*)routeForUserRecommendationsActive;
+
 @end

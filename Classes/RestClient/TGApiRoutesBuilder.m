@@ -30,6 +30,8 @@ static NSString * const TGApiRoutePosts = @"posts";
 static NSString * const TGApiRouteEvents = @"events";
 static NSString * const TGApiRouteComments = @"comments";
 static NSString * const TGApiRouteLikes = @"likes";
+static NSString * const TGApiRouteRecommendations = @"recommendations";
+static NSString * const TGApiRouteRecommendationsActive = @"active";
 
 @implementation TGApiRoutesBuilder
 
@@ -98,6 +100,12 @@ static NSString * const TGApiRouteLikes = @"likes";
 + (NSString*)routeForLikeWithId:(NSString*)likeId onPostWithId:(NSString*)postId {
     NSParameterAssert(likeId);
     return [[self routeForLikesOnPostWithId:postId] stringByAppendingPathComponent:likeId];
+}
+
+#pragma mark - User recommendations
+
++ (NSString*)routeForUserRecommendationsActive {
+    return [TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteRecommendationsActive];
 }
 
 #pragma mark - Helper 
