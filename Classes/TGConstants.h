@@ -59,31 +59,51 @@ static NSString *const TGPlatformKeyGoogle = @"google";
  */
 static NSString *const TGPlatformKeyCustom = @"custom";
 
-#pragma mark - Recommendation Parameters
+#pragma mark - Recommendation Types
 
 /*!
  @abstract Defines the Type of the Latest User Recommendation.
- @constant TGUserRecommendationsActive holds the key for for recommending latest users.
+ @constant TGUserRecommendationsTypeLatest holds the key for recommending latest users.
  */
-static NSString *const TGUserRecommendationsLatest = @"latest";
+static NSString *const TGUserRecommendationsTypeLatest = @"latest";
 
 /*!
  @abstract Defines the Type of the Trending User Recommendation.
- @constant TGUserRecommendationsActive holds the key for for recommending trending users.
+ @constant TGUserRecommendationsTypeTrending holds the key for recommending trending users.
  */
-static NSString *const TGUserRecommendationsTrending = @"trending";
+static NSString *const TGUserRecommendationsTypeTrending = @"trending";
 
 /*!
  @abstract Defines the Type of the Active User Recommendation.
- @constant TGUserRecommendationsActive holds the key for for recommending active users.
+ @constant TGUserRecommendationsTypeActive holds the key for recommending active users.
  */
-static NSString *const TGUserRecommendationsActive = @"active";
+static NSString *const TGUserRecommendationsTypeActive = @"active";
 
 /*!
  @abstract Defines the Type of the Random User Recommendation.
- @constant TGUserRecommendationsActive holds the key for for recommending random users.
+ @constant TGUserRecommendationsTypeRandom holds the key for recommending random users.
  */
-static NSString *const TGUserRecommendationsRandom = @"random";
+static NSString *const TGUserRecommendationsTypeRandom = @"random";
+
+#pragma mark - Recommendation periods
+
+/*!
+ @abstract Defines the Period of the User Recommendation for a day.
+ @constant TGUserRecommendationsPeriodDay holds the key for user recommendations for a day.
+ */
+static NSString *const TGUserRecommendationsPeriodDay = @"day";
+
+/*!
+ @abstract Defines the Period of the User Recommendation for a week.
+ @constant TGUserRecommendationsPeriodWeek holds the key for user recommendations for a week.
+ */
+static NSString *const TGUserRecommendationsPeriodWeek = @"week";
+
+/*!
+ @abstract Defines the Type of the Active User Recommendation.
+ @constant TGUserRecommendationsPeriodMonth holds the key for user recommendations for a month.
+ */
+static NSString *const TGUserRecommendationsPeriodMonth = @"month";
 
 #pragma mark - Errors
 
