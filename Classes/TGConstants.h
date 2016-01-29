@@ -62,28 +62,10 @@ static NSString *const TGPlatformKeyCustom = @"custom";
 #pragma mark - Recommendation Types
 
 /*!
- @abstract Defines the Type of the Latest User Recommendation.
- @constant TGUserRecommendationsTypeLatest holds the key for recommending latest users.
- */
-static NSString *const TGUserRecommendationsTypeLatest = @"latest";
-
-/*!
- @abstract Defines the Type of the Trending User Recommendation.
- @constant TGUserRecommendationsTypeTrending holds the key for recommending trending users.
- */
-static NSString *const TGUserRecommendationsTypeTrending = @"trending";
-
-/*!
  @abstract Defines the Type of the Active User Recommendation.
  @constant TGUserRecommendationsTypeActive holds the key for recommending active users.
  */
 static NSString *const TGUserRecommendationsTypeActive = @"active";
-
-/*!
- @abstract Defines the Type of the Random User Recommendation.
- @constant TGUserRecommendationsTypeRandom holds the key for recommending random users.
- */
-static NSString *const TGUserRecommendationsTypeRandom = @"random";
 
 #pragma mark - Recommendation periods
 
