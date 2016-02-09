@@ -1,5 +1,5 @@
 //
-//  TGPostReaction.h
+//  TGReaction.h
 //  Tapglue iOS SDK
 //
 //  Created by Martin Stemmle on 09/12/15.
@@ -25,7 +25,7 @@
 /*!
  @abstract The absract base class for reactions that the user can take on posts.
  */
-@interface TGPostReaction : TGModelObject
+@interface TGReaction : TGModelObject
 
 /*!
  @abstract User who performed the reaction on the post.

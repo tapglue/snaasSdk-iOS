@@ -18,8 +18,8 @@
 //  limitations under the License.
 //
 
-#import "TGPostReaction.h"
+#import "TGReaction.h"
 
-@interface TGPostLike : TGPostReaction
+@interface TGPostLike : TGReaction
 
 @end

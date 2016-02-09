@@ -26,7 +26,7 @@
 #import "NSError+TGError.h"
 #import "TGObjectCache.h"
 #import "TGApiRoutesBuilder.h"
-#import "TGPostReaction+Private.h"
+#import "TGReaction+Private.h"
 #import "TGPostComment.h"
 #import "TGPostLike.h"
 

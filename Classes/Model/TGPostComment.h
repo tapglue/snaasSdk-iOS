@@ -19,9 +19,9 @@
 //
 //
 
-#import "TGPostReaction.h"
+#import "TGReaction.h"
 
-@interface TGPostComment : TGPostReaction
+@interface TGPostComment : TGReaction
 
 /*!
  @abstract Content / text of the comment.

@@ -1,5 +1,5 @@
 //
-//  TGPostReactionTests.m
+//  TGReactionTests.m
 //  Tapglue Tests
 //
 //  Created by Martin Stemmle on 08/12/15.
@@ -22,20 +22,20 @@
 #import "TGUser.h"
 #import "TGPost.h"
 #import "TGAttachment.h"
-#import "TGPostReaction+Private.h"
+#import "TGReaction+Private.h"
 #import "TGPostComment.h"
 #import "TGPostLike.h"
 #import "TGModelObject+Private.h"
 #import "TGEvent+RandomTestEvent.h"
 #import "NSDateFormatter+TGISOFormatter.h"
 
-@interface TGPostReactionTests : TGTestCase
+@interface TGReactionTests : TGTestCase
 @property (nonatomic, strong) TGUser *poster;
 @property (nonatomic, strong) TGUser *reader;
 @property (nonatomic, strong) TGPost *post;
 @end
 
-@implementation TGPostReactionTests
+@implementation TGReactionTests
 
 - (void)setUp {
     [super setUp];
