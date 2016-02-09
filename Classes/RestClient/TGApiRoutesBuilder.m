@@ -22,6 +22,9 @@
 #import "TGPost.h"
 #import "TGComment.h"
 #import "TGLike.h"
+#import "TGPostComment.h"
+#import "TGPostLike.h"
+#import "TGConstants.h"
 
 static NSString * const TGApiRouteUsers = @"users";
 static NSString * const TGApiRouteCurrentUser = @"me";
@@ -31,6 +34,7 @@ static NSString * const TGApiRouteEvents = @"events";
 static NSString * const TGApiRouteExternals = @"externals";
 static NSString * const TGApiRouteComments = @"comments";
 static NSString * const TGApiRouteLikes = @"likes";
+static NSString * const TGApiRouteRecommendations = @"recommendations";
 
 @implementation TGApiRoutesBuilder
 
@@ -101,6 +105,7 @@ static NSString * const TGApiRouteLikes = @"likes";
     return [[self routeForLikesOnPostWithId:postId] stringByAppendingPathComponent:likeId];
 }
 
+
 #pragma mark - Comments -
 
 + (NSString*)routeForCommentOnObjectId:(NSString *)objectId {
@@ -114,6 +119,17 @@ static NSString * const TGApiRouteLikes = @"likes";
 
 + (NSString*)routeForLikeOnObjectId:(NSString *)objectId {
     return [[TGApiRouteExternals stringByAppendingPathComponent:objectId] stringByAppendingPathComponent:TGApiRouteLikes];
+
+#pragma mark - User recommendations
+
++ (NSString*)routeForUserRecommendationsOfType:(NSString*)type andPeriod:(NSString*)period {
+    //TODO: Rewrite to Switch-Case
+    if (type == TGUserRecommendationsTypeActive) {
+        return [[[TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteUsers] stringByAppendingPathComponent:type] stringByAppendingPathComponent:period];
+    } else {
+        // Default behaviour is to retrieve the most active users
+        return [[[TGApiRouteRecommendations stringByAppendingPathComponent:TGApiRouteUsers] stringByAppendingPathComponent:type] stringByAppendingPathComponent:period];
+    }
 }
 
 #pragma mark - Helper 
