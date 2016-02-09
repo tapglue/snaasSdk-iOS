@@ -27,6 +27,7 @@
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
+#import "TGReaction+Private.h"
 #import "TGComment.h"
 #import "TGApiRoutesBuilder.h"
 
@@ -260,10 +261,11 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
 
 #pragma mark - Comments -
 
--(TGComment*)createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+- (TGComment*)createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     NSString *route = [TGApiRoutesBuilder routeForCommentOnObjectId:objectId];
     TGComment *objectComment = [[TGComment alloc] init];
     objectComment.content = comment;
+    objectComment.user = [TGUser currentUser];
     
     [self.client POST:route withURLParameters:nil andPayload:objectComment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [objectComment loadDataFromDictionary:jsonResponse]; // update the data
@@ -279,9 +281,32 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     return objectComment;
 }
 
--(void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+- (void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     NSString *route = [TGApiRoutesBuilder routeForCommentWithId:comment.objectId onObjectWithId:objectId];
     [self.client DELETE:route withCompletionBlock:completionBlock];
+}
+
+- (void)retrieveCommentsForObjectWithId:objectId withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock {
+    [self.client GET:[TGApiRoutesBuilder routeForCommentOnObjectId:objectId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        
+        if (!error) {
+            NSArray *userDictionaries = [[jsonResponse objectForKey:@"users"] allValues];
+            [TGUser createAndCacheObjectsFromDictionaries:userDictionaries];
+            
+            NSArray *commentDictionaries = [jsonResponse objectForKey:@"comments"];
+            NSMutableArray *comments = [NSMutableArray arrayWithCapacity:commentDictionaries.count];
+            for (NSDictionary *data in commentDictionaries) {
+                [comments addObject:[[TGComment alloc] initWithDictionary:data]];
+            }
+            
+            if (completionBlock) {
+                completionBlock(comments, nil);
+            }
+        }
+        else if(completionBlock) {
+            completionBlock(nil, error);
+        }
+    }];
 }
 
 #pragma mark - Likes -

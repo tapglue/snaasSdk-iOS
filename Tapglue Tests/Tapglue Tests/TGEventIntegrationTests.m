@@ -1195,17 +1195,22 @@
         NSString *objectId = [NSString randomStringWithLength:5];
         NSString *comment = [NSString randomStringWithLength:10];
         
-        TGComment* objectComment = [Tapglue createComment:comment forObjectWithId:objectId withCompletionBlock:^(BOOL success, NSError *error) {
+        [Tapglue createComment:comment forObjectWithId:objectId withCompletionBlock:^(BOOL success, NSError *error) {
             expect(success).to.beTruthy();
             expect(error).to.beNil();
             
-            NSLog(@"CommentId = %@", objectComment.objectId);
-            
-            [Tapglue deleteComment:objectComment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue retrieveCommentsForObjectWithId:objectId withCompletionBlock:^(NSArray *comments, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
                 
-                [expectation fulfill];
+                TGComment *comment = comments.firstObject;
+                
+                [Tapglue deleteComment:comment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    
+                    [expectation fulfill];
+                }];iter
             }];
         }];
     }];

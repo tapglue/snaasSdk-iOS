@@ -578,6 +578,15 @@
  */
 + (void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+/*!
+ @abstract Retrieve comments for an objectId.
+ @discussion This will retrieve all comments for an objectId.
+ 
+ @param objectId The objectId for which comments are retrieved.
+ */
++ (void)retrieveCommentsForObjectWithId:(NSString*)objectId
+                  withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
+
 #pragma mark Likes
 
 /*!

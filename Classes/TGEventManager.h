@@ -174,13 +174,19 @@ extern NSString *const TGEventManagerAPIEndpointEvents;
  @abstract Creates a comment on a custom object.
  @discussion This will create a comment on a custom object.
  */
--(TGComment*)createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+- (TGComment*)createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Deletes a comment on a custom object.
  @discussion This will delete a comment on a custom object.
  */
--(void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+- (void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+/*!
+ @abstract Retrieve all comment on an objectId.
+ @discussion This will retrieve all comments on an objectId.
+ */
+- (void)retrieveCommentsForObjectWithId:objectId withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock;
 
 #pragma mark - Likes -
 
