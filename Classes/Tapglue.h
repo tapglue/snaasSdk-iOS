@@ -571,6 +571,14 @@
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
+ @abstract Updates a comment on an objectId.
+ @discussion This will update a comment on a objectId.
+ 
+ @param comment The comment object that is being updated.
+ */
++ (void)updateComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+/*!
  @abstract Deletes a comment for an objectId.
  @discussion This will delete a comment for an objectId.
  

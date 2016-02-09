@@ -281,6 +281,15 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     return objectComment;
 }
 
+- (void)updateComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    NSString *route = [TGApiRoutesBuilder routeForCommentWithId:comment.objectId onObjectWithId:objectId];
+    [self.client PUT:route withURLParameters:nil andPayload:comment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+        if (completionBlock) {
+            completionBlock(error == nil, error);
+        }
+    }];
+}
+
 - (void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     NSString *route = [TGApiRoutesBuilder routeForCommentWithId:comment.objectId onObjectWithId:objectId];
     [self.client DELETE:route withCompletionBlock:completionBlock];

@@ -1189,7 +1189,7 @@
 }
 
 // [Correct] Delete a comment on a custom object
-- (void)testDeleteCommentOnObjectId {
+- (void)testCRUDCommentOnObjectId {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
         
         NSString *objectId = [NSString randomStringWithLength:5];
@@ -1204,13 +1204,19 @@
                 expect(error).to.beNil();
                 
                 TGComment *comment = comments.firstObject;
+                comment.content = @"bad post!";
                 
-                [Tapglue deleteComment:comment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                [Tapglue updateComment:comment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
                     expect(success).to.beTruthy();
                     expect(error).to.beNil();
                     
-                    [expectation fulfill];
-                }];iter
+                    [Tapglue deleteComment:comment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [expectation fulfill];
+                    }];
+                }];
             }];
         }];
     }];
