@@ -20,7 +20,7 @@
 
 #import "TGPost.h"
 
-@class TGPostComment, TGPostLike;
+@class TGPostComment, TGLike;
 
 @interface TGPost (Reactions)
 
@@ -40,7 +40,7 @@
  @abstract Create a like on a post.
  @discussion Create a like on a post.
  */
-- (TGPostLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+- (TGLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Unlike a post.

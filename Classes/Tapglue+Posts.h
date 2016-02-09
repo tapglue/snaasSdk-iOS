@@ -23,7 +23,7 @@
 #import "TGPost+Reactions.h"
 #import "TGAttachment.h"
 #import "TGPostComment.h"
-#import "TGPostLike.h"
+#import "TGLike.h"
 
 @interface Tapglue (Posts)
 
@@ -159,7 +159,7 @@
  
  @param post The post object for which a like is being created.
  */
-+ (TGPostLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (TGLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Delete a like for a post.

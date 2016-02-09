@@ -302,7 +302,7 @@
                     expect(likes).toNot.beNil();
                     expect(error).to.beNil();
 
-                    TGPostLike *like = likes.firstObject;
+                    TGLike *like = likes.firstObject;
                     expect(like).toNot.beNil();
                 
                     // Delete Like
@@ -344,7 +344,7 @@
                     expect(likes).toNot.beNil();
                     expect(error).to.beNil();
                     
-                    TGPostLike *like = likes.firstObject;
+                    TGLike *like = likes.firstObject;
                     expect(like).toNot.beNil();
                     
                     // Delete Like

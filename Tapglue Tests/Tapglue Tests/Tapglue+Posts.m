@@ -109,7 +109,7 @@
 
 #pragma mark - Likes -
 
-+ (TGPostLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
++ (TGLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     return [[self postsManager] createLikeForPost:post withCompletionBlock:completionBlock];
 }
 

@@ -90,10 +90,10 @@
 		78C6F6481C184586002A2382 /* TGPostsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787E81C17392F00AC1B39 /* TGPostsManager.m */; };
 		78C6F65D1C186B12002A2382 /* TGPostComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6581C186B12002A2382 /* TGPostComment.m */; };
 		78C6F65E1C186B12002A2382 /* TGPostComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6581C186B12002A2382 /* TGPostComment.m */; };
-		78C6F65F1C186B12002A2382 /* TGPostLike.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65A1C186B12002A2382 /* TGPostLike.m */; };
-		78C6F6601C186B12002A2382 /* TGPostLike.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65A1C186B12002A2382 /* TGPostLike.m */; };
-		78C6F6611C186B12002A2382 /* TGPostReaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65C1C186B12002A2382 /* TGPostReaction.m */; };
-		78C6F6621C186B12002A2382 /* TGPostReaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65C1C186B12002A2382 /* TGPostReaction.m */; };
+		78C6F65F1C186B12002A2382 /* TGLike.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65A1C186B12002A2382 /* TGLike.m */; };
+		78C6F6601C186B12002A2382 /* TGLike.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65A1C186B12002A2382 /* TGLike.m */; };
+		78C6F6611C186B12002A2382 /* TGReaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65C1C186B12002A2382 /* TGReaction.m */; };
+		78C6F6621C186B12002A2382 /* TGReaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65C1C186B12002A2382 /* TGReaction.m */; };
 		78C6F6641C186B83002A2382 /* TGPostReactionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6631C186B83002A2382 /* TGPostReactionTests.m */; };
 		78CF3D5E1B25CCAF0091B81B /* NSArray+RandomObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D5D1B25CCAF0091B81B /* NSArray+RandomObject.m */; };
 		78CF3D611B25CFF30091B81B /* TGEvent+RandomTestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CF3D601B25CFF30091B81B /* TGEvent+RandomTestEvent.m */; };
@@ -200,12 +200,12 @@
 		78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGApiRoutesBuilder.m; sourceTree = "<group>"; };
 		78C6F6571C186B12002A2382 /* TGPostComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGPostComment.h; path = ../../Classes/Model/TGPostComment.h; sourceTree = "<group>"; };
 		78C6F6581C186B12002A2382 /* TGPostComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGPostComment.m; path = ../../Classes/Model/TGPostComment.m; sourceTree = "<group>"; };
-		78C6F6591C186B12002A2382 /* TGPostLike.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGPostLike.h; path = ../../Classes/Model/TGPostLike.h; sourceTree = "<group>"; };
-		78C6F65A1C186B12002A2382 /* TGPostLike.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGPostLike.m; path = ../../Classes/Model/TGPostLike.m; sourceTree = "<group>"; };
-		78C6F65B1C186B12002A2382 /* TGPostReaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGPostReaction.h; path = ../../Classes/Model/TGPostReaction.h; sourceTree = "<group>"; };
-		78C6F65C1C186B12002A2382 /* TGPostReaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGPostReaction.m; path = ../../Classes/Model/TGPostReaction.m; sourceTree = "<group>"; };
+		78C6F6591C186B12002A2382 /* TGLike.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGLike.h; path = ../../Classes/Model/TGLike.h; sourceTree = "<group>"; };
+		78C6F65A1C186B12002A2382 /* TGLike.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGLike.m; path = ../../Classes/Model/TGLike.m; sourceTree = "<group>"; };
+		78C6F65B1C186B12002A2382 /* TGReaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGReaction.h; path = ../../Classes/Model/TGReaction.h; sourceTree = "<group>"; };
+		78C6F65C1C186B12002A2382 /* TGReaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGReaction.m; path = ../../Classes/Model/TGReaction.m; sourceTree = "<group>"; };
 		78C6F6631C186B83002A2382 /* TGPostReactionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGPostReactionTests.m; sourceTree = "<group>"; };
-		78C6F66A1C18757E002A2382 /* TGPostReaction+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TGPostReaction+Private.h"; path = "../../Classes/Model/TGPostReaction+Private.h"; sourceTree = "<group>"; };
+		78C6F66A1C18757E002A2382 /* TGReaction+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TGReaction+Private.h"; path = "../../Classes/Model/TGReaction+Private.h"; sourceTree = "<group>"; };
 		78CC3E9B1C18997000190616 /* TGApiClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGApiClientTests.m; sourceTree = "<group>"; };
 		78CF3D5C1B25CCAF0091B81B /* NSArray+RandomObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+RandomObject.h"; sourceTree = "<group>"; };
 		78CF3D5D1B25CCAF0091B81B /* NSArray+RandomObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+RandomObject.m"; sourceTree = "<group>"; };
@@ -457,13 +457,13 @@
 				789E19161C171B8800192EE4 /* TGAttachment.h */,
 				78F787E01C1724FA00AC1B39 /* TGAttachment+Private.h */,
 				789E19171C171B8800192EE4 /* TGAttachment.m */,
-				78C6F65B1C186B12002A2382 /* TGPostReaction.h */,
-				78C6F65C1C186B12002A2382 /* TGPostReaction.m */,
-				78C6F66A1C18757E002A2382 /* TGPostReaction+Private.h */,
+				78C6F65B1C186B12002A2382 /* TGReaction.h */,
+				78C6F65C1C186B12002A2382 /* TGReaction.m */,
+				78C6F66A1C18757E002A2382 /* TGReaction+Private.h */,
 				78C6F6571C186B12002A2382 /* TGPostComment.h */,
 				78C6F6581C186B12002A2382 /* TGPostComment.m */,
-				78C6F6591C186B12002A2382 /* TGPostLike.h */,
-				78C6F65A1C186B12002A2382 /* TGPostLike.m */,
+				78C6F6591C186B12002A2382 /* TGLike.h */,
+				78C6F65A1C186B12002A2382 /* TGLike.m */,
 				78E036671C18BB5E00AF53FA /* TGPost+Reactions.h */,
 				78E036681C18BB5E00AF53FA /* TGPost+Reactions.m */,
 			);
@@ -675,7 +675,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78F787ED1C1739B000AC1B39 /* Tapglue+Posts.m in Sources */,
-				78C6F6621C186B12002A2382 /* TGPostReaction.m in Sources */,
+				78C6F6621C186B12002A2382 /* TGReaction.m in Sources */,
 				78F787DF1C1722CB00AC1B39 /* TGAttachment.m in Sources */,
 				9767716A1C188A3900F5333C /* TGPostsIntegrationTests.m in Sources */,
 				783185F41BBAD07E0050F9DB /* TGImage.m in Sources */,
@@ -697,7 +697,7 @@
 				7878EC851B2B24D900BA47F6 /* NSString+TGUtilities.m in Sources */,
 				789E19101C16E41100192EE4 /* TGQuery.m in Sources */,
 				78C6F65E1C186B12002A2382 /* TGPostComment.m in Sources */,
-				78C6F6601C186B12002A2382 /* TGPostLike.m in Sources */,
+				78C6F6601C186B12002A2382 /* TGLike.m in Sources */,
 				7892F2771C18CA85008B57DF /* TGPost+Reactions.m in Sources */,
 				7878EC861B2B24D900BA47F6 /* TGEvent+RandomTestEvent.m in Sources */,
 				7878EC871B2B24D900BA47F6 /* NSURL+TGUtilities.m in Sources */,
@@ -751,7 +751,7 @@
 				78F787E91C17392F00AC1B39 /* TGPostsManager.m in Sources */,
 				78C6D15A1B1DA4CF00D94E6A /* NSURL+TGUtilities.m in Sources */,
 				7878ECAC1B2B279500BA47F6 /* TGApiClientMock.m in Sources */,
-				78C6F65F1C186B12002A2382 /* TGPostLike.m in Sources */,
+				78C6F65F1C186B12002A2382 /* TGLike.m in Sources */,
 				78D7366A1B1F60D000BE194D /* TGEventObjectTests.m in Sources */,
 				78AA607D1C15CB2F007F56D5 /* TGQueryTests.m in Sources */,
 				97285B421B1F4AFA00D4CAC7 /* TGEventObject.m in Sources */,
@@ -774,7 +774,7 @@
 				788DBF8D1B21E6E40058C1C2 /* TGSetupTests.m in Sources */,
 				78DBCC5F1B20893B009986BA /* NSDictionary+TGUtilities.m in Sources */,
 				7866BFAF1C1886BA00F28FCA /* TGApiClient+TGObject.m in Sources */,
-				78C6F6611C186B12002A2382 /* TGPostReaction.m in Sources */,
+				78C6F6611C186B12002A2382 /* TGReaction.m in Sources */,
 				78CF3D5E1B25CCAF0091B81B /* NSArray+RandomObject.m in Sources */,
 				78AA609C1C15F47E007F56D5 /* TGConnectionTests.m in Sources */,
 				78AA60931C15D9E1007F56D5 /* TGQuery.m in Sources */,

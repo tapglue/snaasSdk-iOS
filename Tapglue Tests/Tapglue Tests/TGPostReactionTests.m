@@ -24,7 +24,7 @@
 #import "TGAttachment.h"
 #import "TGReaction+Private.h"
 #import "TGPostComment.h"
-#import "TGPostLike.h"
+#import "TGLike.h"
 #import "TGModelObject+Private.h"
 #import "TGEvent+RandomTestEvent.h"
 #import "NSDateFormatter+TGISOFormatter.h"
@@ -129,7 +129,7 @@
 }
 
 - (void)testInitLikeWithDictionary {
-    TGPostLike *like = [[TGPostLike alloc] initWithDictionary:@{ @"id": @"12743631303647840",
+    TGLike *like = [[TGLike alloc] initWithDictionary:@{ @"id": @"12743631303647840",
                                                                  @"post_id": @"471739965702621007",
                                                                  @"user_id": @"998667",
                                                                  @"created_at": @"2015-06-01T08:44:57.144996856Z",
@@ -147,7 +147,7 @@
 
 
 - (void)testJsonDictionaryForLike {
-    TGPostLike *like = [TGPostLike new];
+    TGLike *like = [TGLike new];
     like.post = self.post;
     like.user = self.reader;
     

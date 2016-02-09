@@ -32,7 +32,7 @@
 
 #pragma mark - Likes
 
-- (TGPostLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+- (TGLike*)likeWithCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     return [[Tapglue sharedInstance].postsManager createLikeForPost:self withCompletionBlock:completionBlock];
 }
 

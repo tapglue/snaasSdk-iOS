@@ -323,7 +323,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
             NSArray *likeDictionaries = [jsonResponse objectForKey:@"likes"];
             NSMutableArray *likes = [NSMutableArray arrayWithCapacity:likeDictionaries.count];
             for (NSDictionary *data in likeDictionaries) {
-                [likes addObject:[[TGPostLike alloc] initWithDictionary:data]];
+                [likes addObject:[[TGLike alloc] initWithDictionary:data]];
             }
             
             if (completionBlock) {

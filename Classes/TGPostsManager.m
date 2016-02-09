@@ -28,7 +28,7 @@
 #import "TGApiRoutesBuilder.h"
 #import "TGReaction+Private.h"
 #import "TGPostComment.h"
-#import "TGPostLike.h"
+#import "TGLike.h"
 
 @implementation TGPostsManager
 
@@ -173,8 +173,8 @@
 
 #pragma mark - Likes -
 
-- (TGPostLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    TGPostLike *like = [[TGPostLike alloc] init];
+- (TGLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    TGLike *like = [[TGLike alloc] init];
     like.post = post;
     like.user = [TGUser currentUser];
     
@@ -207,7 +207,7 @@
             NSArray *likeDictionaries = [jsonResponse objectForKey:@"likes"];
             NSMutableArray *likes = [NSMutableArray arrayWithCapacity:likeDictionaries.count];
             for (NSDictionary *data in likeDictionaries) {
-                [likes addObject:[[TGPostLike alloc] initWithDictionary:data]];
+                [likes addObject:[[TGLike alloc] initWithDictionary:data]];
             }
             
             if (completionBlock) {
