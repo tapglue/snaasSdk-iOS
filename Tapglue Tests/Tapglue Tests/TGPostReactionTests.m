@@ -23,7 +23,7 @@
 #import "TGPost.h"
 #import "TGAttachment.h"
 #import "TGReaction+Private.h"
-#import "TGPostComment.h"
+#import "TGComment.h"
 #import "TGLike.h"
 #import "TGModelObject+Private.h"
 #import "TGEvent+RandomTestEvent.h"
@@ -74,7 +74,7 @@
 
 
 - (void)testInitCommentWithDictionary {
-    TGPostComment *comment = [[TGPostComment alloc] initWithDictionary:@{ @"id": @"12743631303647840",
+    TGComment *comment = [[TGComment alloc] initWithDictionary:@{ @"id": @"12743631303647840",
                                                                          @"post_id": @"471739965702621007",
                                                                          @"user_id": @"998667",
                                                                          @"content": @"Do like.",
@@ -94,7 +94,7 @@
 
 
 - (void)testJsonDictionaryForComment {
-    TGPostComment *comment = [TGPostComment new];
+    TGComment *comment = [TGComment new];
     comment.post = self.post;
     comment.user = self.reader;
     comment.content = @"funny 😀";
@@ -110,7 +110,7 @@
 }
 
 - (void)testLoadDataOnComment {
-    TGPostComment *comment = [TGPostComment new];
+    TGComment *comment = [TGComment new];
     comment.post = self.post;
     comment.user = self.reader;
     comment.content = @"funny 😀";

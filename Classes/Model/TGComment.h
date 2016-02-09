@@ -1,5 +1,5 @@
 //
-//  TGPostComment.h
+//  TGComment.h
 //  Tapglue iOS SDK
 //
 //  Created by Martin Stemmle on 09/12/15.
@@ -21,7 +21,7 @@
 
 #import "TGReaction.h"
 
-@interface TGPostComment : TGReaction
+@interface TGComment : TGReaction
 
 /*!
  @abstract Content / text of the comment.

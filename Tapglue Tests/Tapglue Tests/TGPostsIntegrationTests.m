@@ -206,7 +206,7 @@
                     expect(comments).toNot.beNil();
                     expect(error).to.beNil();
                     
-                    TGPostComment *comment = comments.firstObject;
+                    TGComment *comment = comments.firstObject;
                     comment.content = @"bad post!";
                     
                     // Update Comment
@@ -254,7 +254,7 @@
                     expect(comments).toNot.beNil();
                     expect(error).to.beNil();
                     
-                    TGPostComment *comment = comments.firstObject;
+                    TGComment *comment = comments.firstObject;
                     comment.content = @"bad post!";
                     
                     // Update Comment

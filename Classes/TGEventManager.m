@@ -27,7 +27,7 @@
 #import "TGLogger.h"
 #import "Tapglue+Private.h"
 #import "TGUserManager.h"
-#import "TGPostComment.h"
+#import "TGComment.h"
 #import "TGApiRoutesBuilder.h"
 
 NSString *const TGEventManagerAPIEndpointEvents = @"events";
@@ -260,9 +260,9 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
 
 #pragma mark - Comments -
 
--(TGPostComment*)createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+-(TGComment*)createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     NSString *route = [TGApiRoutesBuilder routeForCommentOnObjectId:objectId];
-    TGPostComment *objectComment = [[TGPostComment alloc] init];
+    TGComment *objectComment = [[TGComment alloc] init];
     objectComment.content = comment;
     
     [self.client POST:route withURLParameters:nil andPayload:objectComment.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
@@ -279,7 +279,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
     return objectComment;
 }
 
--(void)deleteComment:(TGPostComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+-(void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     NSString *route = [TGApiRoutesBuilder routeForCommentWithId:comment.objectId onObjectWithId:objectId];
     [self.client DELETE:route withCompletionBlock:completionBlock];
 }

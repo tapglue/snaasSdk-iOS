@@ -23,7 +23,7 @@
 #import "TGUser+Networking.h"
 #import "TGEvent+Networking.h"
 #import "TGEventObject.h"
-#import "TGPostComment.h"
+#import "TGComment.h"
 #import "TGConnection.h"
 #import "TGConfiguration.h"
 #import "TGQuery.h"
@@ -566,7 +566,7 @@
  @param comment The content of the comment.
  @param post The Post object that is being commented.
  */
-+ (TGPostComment*)createComment:(NSString*)comment
++ (TGComment*)createComment:(NSString*)comment
                                    forObjectWithId:(NSString*)objectId
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
@@ -576,7 +576,7 @@
  
  @param objectId The objectId for which a comment is being deleted.
  */
-+ (void)deleteComment:(TGPostComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 #pragma mark Likes
 

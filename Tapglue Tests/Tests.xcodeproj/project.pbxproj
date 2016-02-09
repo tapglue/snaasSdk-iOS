@@ -88,8 +88,8 @@
 		78C6F6461C182FCB002A2382 /* TGApiRoutesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */; };
 		78C6F6471C1843BE002A2382 /* TGPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 789E19121C17122F00192EE4 /* TGPost.m */; };
 		78C6F6481C184586002A2382 /* TGPostsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F787E81C17392F00AC1B39 /* TGPostsManager.m */; };
-		78C6F65D1C186B12002A2382 /* TGPostComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6581C186B12002A2382 /* TGPostComment.m */; };
-		78C6F65E1C186B12002A2382 /* TGPostComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6581C186B12002A2382 /* TGPostComment.m */; };
+		78C6F65D1C186B12002A2382 /* TGComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6581C186B12002A2382 /* TGComment.m */; };
+		78C6F65E1C186B12002A2382 /* TGComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F6581C186B12002A2382 /* TGComment.m */; };
 		78C6F65F1C186B12002A2382 /* TGLike.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65A1C186B12002A2382 /* TGLike.m */; };
 		78C6F6601C186B12002A2382 /* TGLike.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65A1C186B12002A2382 /* TGLike.m */; };
 		78C6F6611C186B12002A2382 /* TGReaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C6F65C1C186B12002A2382 /* TGReaction.m */; };
@@ -198,8 +198,8 @@
 		78C6D1641B1DBE2100D94E6A /* NSString+TGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TGUtilities.m"; sourceTree = "<group>"; };
 		78C6F6431C182FC6002A2382 /* TGApiRoutesBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGApiRoutesBuilder.h; sourceTree = "<group>"; };
 		78C6F6441C182FC6002A2382 /* TGApiRoutesBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGApiRoutesBuilder.m; sourceTree = "<group>"; };
-		78C6F6571C186B12002A2382 /* TGPostComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGPostComment.h; path = ../../Classes/Model/TGPostComment.h; sourceTree = "<group>"; };
-		78C6F6581C186B12002A2382 /* TGPostComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGPostComment.m; path = ../../Classes/Model/TGPostComment.m; sourceTree = "<group>"; };
+		78C6F6571C186B12002A2382 /* TGComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGComment.h; path = ../../Classes/Model/TGComment.h; sourceTree = "<group>"; };
+		78C6F6581C186B12002A2382 /* TGComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGComment.m; path = ../../Classes/Model/TGComment.m; sourceTree = "<group>"; };
 		78C6F6591C186B12002A2382 /* TGLike.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGLike.h; path = ../../Classes/Model/TGLike.h; sourceTree = "<group>"; };
 		78C6F65A1C186B12002A2382 /* TGLike.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TGLike.m; path = ../../Classes/Model/TGLike.m; sourceTree = "<group>"; };
 		78C6F65B1C186B12002A2382 /* TGReaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TGReaction.h; path = ../../Classes/Model/TGReaction.h; sourceTree = "<group>"; };
@@ -460,8 +460,8 @@
 				78C6F65B1C186B12002A2382 /* TGReaction.h */,
 				78C6F65C1C186B12002A2382 /* TGReaction.m */,
 				78C6F66A1C18757E002A2382 /* TGReaction+Private.h */,
-				78C6F6571C186B12002A2382 /* TGPostComment.h */,
-				78C6F6581C186B12002A2382 /* TGPostComment.m */,
+				78C6F6571C186B12002A2382 /* TGComment.h */,
+				78C6F6581C186B12002A2382 /* TGComment.m */,
 				78C6F6591C186B12002A2382 /* TGLike.h */,
 				78C6F65A1C186B12002A2382 /* TGLike.m */,
 				78E036671C18BB5E00AF53FA /* TGPost+Reactions.h */,
@@ -696,7 +696,7 @@
 				7878EC841B2B24D900BA47F6 /* UIDevice+TGUtilities.m in Sources */,
 				7878EC851B2B24D900BA47F6 /* NSString+TGUtilities.m in Sources */,
 				789E19101C16E41100192EE4 /* TGQuery.m in Sources */,
-				78C6F65E1C186B12002A2382 /* TGPostComment.m in Sources */,
+				78C6F65E1C186B12002A2382 /* TGComment.m in Sources */,
 				78C6F6601C186B12002A2382 /* TGLike.m in Sources */,
 				7892F2771C18CA85008B57DF /* TGPost+Reactions.m in Sources */,
 				7878EC861B2B24D900BA47F6 /* TGEvent+RandomTestEvent.m in Sources */,
@@ -755,7 +755,7 @@
 				78D7366A1B1F60D000BE194D /* TGEventObjectTests.m in Sources */,
 				78AA607D1C15CB2F007F56D5 /* TGQueryTests.m in Sources */,
 				97285B421B1F4AFA00D4CAC7 /* TGEventObject.m in Sources */,
-				78C6F65D1C186B12002A2382 /* TGPostComment.m in Sources */,
+				78C6F65D1C186B12002A2382 /* TGComment.m in Sources */,
 				78C34FA71B26F8DD00286D78 /* EXPMatchers+beKindOfOrNil.m in Sources */,
 				788DBF8B1B21D4870058C1C2 /* TGBaseManager.m in Sources */,
 				78DBCC621B20AD23009986BA /* TGEventManager.m in Sources */,

@@ -1195,7 +1195,7 @@
         NSString *objectId = [NSString randomStringWithLength:5];
         NSString *comment = [NSString randomStringWithLength:10];
         
-        TGPostComment* objectComment = [Tapglue createComment:comment forObjectWithId:objectId withCompletionBlock:^(BOOL success, NSError *error) {
+        TGComment* objectComment = [Tapglue createComment:comment forObjectWithId:objectId withCompletionBlock:^(BOOL success, NSError *error) {
             expect(success).to.beTruthy();
             expect(error).to.beNil();
             

@@ -27,7 +27,7 @@
 #import "TGObjectCache.h"
 #import "TGApiRoutesBuilder.h"
 #import "TGReaction+Private.h"
-#import "TGPostComment.h"
+#import "TGComment.h"
 #import "TGLike.h"
 
 @implementation TGPostsManager
@@ -121,11 +121,11 @@
 
 #pragma mark - Comments -
 
-- (TGPostComment*)createCommentWithContent:(NSString*)commentContent
+- (TGComment*)createCommentWithContent:(NSString*)commentContent
                                    forPost:(TGPost*)post
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     
-    TGPostComment *comment = [[TGPostComment alloc] init];
+    TGComment *comment = [[TGComment alloc] init];
     comment.content = commentContent;
     comment.post = post;
     comment.user = [TGUser currentUser];
@@ -137,13 +137,13 @@
     return comment;
 }
 
-- (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+- (void)updateComment:(TGComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [self.client updateObject:comment
                       atRoute:[TGApiRoutesBuilder routeForComment:comment]
           withCompletionBlock:completionBlock];
 }
 
-- (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+- (void)deleteComment:(TGComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [self.client DELETE:[TGApiRoutesBuilder routeForComment:comment] withCompletionBlock:completionBlock];
 }
 
@@ -158,7 +158,7 @@
             NSArray *commentDictionaries = [jsonResponse objectForKey:@"comments"];
             NSMutableArray *comments = [NSMutableArray arrayWithCapacity:commentDictionaries.count];
             for (NSDictionary *data in commentDictionaries) {
-                [comments addObject:[[TGPostComment alloc] initWithDictionary:data]];
+                [comments addObject:[[TGComment alloc] initWithDictionary:data]];
             }
 
             if (completionBlock) {

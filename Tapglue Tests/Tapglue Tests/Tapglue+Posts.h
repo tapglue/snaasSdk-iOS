@@ -22,7 +22,7 @@
 #import "TGPost.h"
 #import "TGPost+Reactions.h"
 #import "TGAttachment.h"
-#import "TGPostComment.h"
+#import "TGComment.h"
 #import "TGLike.h"
 
 @interface Tapglue (Posts)
@@ -113,7 +113,7 @@
  @param commentContent The content of the comment.
  @param post The Post object that is being commented.
  */
-+ (TGPostComment*)createCommentWithContent:(NSString*)commentContent
++ (TGComment*)createCommentWithContent:(NSString*)commentContent
                                    forPost:(TGPost*)post
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
@@ -123,7 +123,7 @@
  
  @param comment The comment object that is being updated.
  */
-+ (void)updateComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)updateComment:(TGComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Deletes a comment on a post.
@@ -131,7 +131,7 @@
  
  @param comment The comment object that is being deleted.
  */
-+ (void)deleteComment:(TGPostComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)deleteComment:(TGComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Retrieve comments for a post.
