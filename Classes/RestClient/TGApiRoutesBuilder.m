@@ -20,6 +20,8 @@
 
 #import "TGApiRoutesBuilder.h"
 #import "TGPost.h"
+#import "TGComment.h"
+#import "TGLike.h"
 #import "TGPostComment.h"
 #import "TGPostLike.h"
 #import "TGConstants.h"
@@ -29,6 +31,7 @@ static NSString * const TGApiRouteCurrentUser = @"me";
 static NSString * const TGApiRouteFeed = @"feed";
 static NSString * const TGApiRoutePosts = @"posts";
 static NSString * const TGApiRouteEvents = @"events";
+static NSString * const TGApiRouteExternals = @"externals";
 static NSString * const TGApiRouteComments = @"comments";
 static NSString * const TGApiRouteLikes = @"likes";
 static NSString * const TGApiRouteRecommendations = @"recommendations";
@@ -80,7 +83,7 @@ static NSString * const TGApiRouteRecommendations = @"recommendations";
     return [[self routeForPostWithId:postId] stringByAppendingPathComponent:TGApiRouteComments];
 }
 
-+ (NSString*)routeForComment:(TGPostComment *)comment {
++ (NSString*)routeForComment:(TGComment *)comment {
     return [self routeForCommentWithId:comment.objectId onPostWithId:comment.post.objectId];
 }
             
@@ -89,7 +92,7 @@ static NSString * const TGApiRouteRecommendations = @"recommendations";
     return [[self routeForCommentsOnPostWithId:postId] stringByAppendingPathComponent:commentId];
 }
 
-+ (NSString*)routeForLike:(TGPostLike *)like {
++ (NSString*)routeForLike:(TGLike *)like {
     return [self routeForLikeWithId:like.objectId onPostWithId:like.post.objectId];
 }
 
@@ -101,6 +104,21 @@ static NSString * const TGApiRouteRecommendations = @"recommendations";
     NSParameterAssert(likeId);
     return [[self routeForLikesOnPostWithId:postId] stringByAppendingPathComponent:likeId];
 }
+
+
+#pragma mark - Comments -
+
++ (NSString*)routeForCommentOnObjectId:(NSString *)objectId {
+    return [[TGApiRouteExternals stringByAppendingPathComponent:objectId] stringByAppendingPathComponent:TGApiRouteComments];
+}
+
++ (NSString*)routeForCommentWithId:(NSString*)commentId onObjectWithId:(NSString*)objectId {
+    return [[[TGApiRouteExternals stringByAppendingPathComponent:objectId] stringByAppendingPathComponent:TGApiRouteComments] stringByAppendingPathComponent:commentId];
+}
+#pragma mark - Likes -
+
++ (NSString*)routeForLikeOnObjectId:(NSString *)objectId {
+    return [[TGApiRouteExternals stringByAppendingPathComponent:objectId] stringByAppendingPathComponent:TGApiRouteLikes];
 
 #pragma mark - User recommendations
 

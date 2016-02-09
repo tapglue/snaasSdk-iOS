@@ -1111,4 +1111,115 @@
     }];
 }
 
+// [Correct] Create a like on an objectId
+- (void)testCreateLikeOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        [Tapglue createLikeForObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [expectation fulfill];
+        }];
+    }];
+}
+
+// [Correct] Delete a like on an objectId
+- (void)testDeleteLikeOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        [Tapglue createLikeForObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [Tapglue deleteLikeForObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                [expectation fulfill];
+            }];
+        }];
+    }];
+}
+
+// [Correct] Retrieve likes on an objectId
+- (void)testRetrieveLikesOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        
+        [Tapglue createLikeForObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [Tapglue retrieveLikesForObjectWithId:objectId withCompletionBlock:^(NSArray *likes, NSError *error) {
+                expect(likes).toNot.beNil();
+                expect(likes.count).to.equal(1);
+                expect(error).to.beNil();
+                
+                [Tapglue deleteLikeForObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    
+                    [expectation fulfill];
+                }];
+            }];
+        }];
+    }];
+}
+
+// [Correct] Create a comment on a custom object
+- (void)testCreateCommentOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        NSString *comment = [NSString randomStringWithLength:10];
+        
+        [Tapglue createComment:comment forObjectWithId:objectId withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [expectation fulfill];
+        }];
+    }];
+}
+
+// [Correct] Delete a comment on a custom object
+- (void)testCRUDCommentOnObjectId {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSString *objectId = [NSString randomStringWithLength:5];
+        NSString *comment = [NSString randomStringWithLength:10];
+        
+        [Tapglue createComment:comment forObjectWithId:objectId withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [Tapglue retrieveCommentsForObjectWithId:objectId withCompletionBlock:^(NSArray *comments, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                
+                TGComment *comment = comments.firstObject;
+                comment.content = @"bad post!";
+                
+                [Tapglue updateComment:comment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                    expect(success).to.beTruthy();
+                    expect(error).to.beNil();
+                    
+                    [Tapglue deleteComment:comment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [expectation fulfill];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
 @end

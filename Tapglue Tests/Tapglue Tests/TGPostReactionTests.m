@@ -1,5 +1,5 @@
 //
-//  TGPostReactionTests.m
+//  TGReactionTests.m
 //  Tapglue Tests
 //
 //  Created by Martin Stemmle on 08/12/15.
@@ -22,20 +22,20 @@
 #import "TGUser.h"
 #import "TGPost.h"
 #import "TGAttachment.h"
-#import "TGPostReaction+Private.h"
-#import "TGPostComment.h"
-#import "TGPostLike.h"
+#import "TGReaction+Private.h"
+#import "TGComment.h"
+#import "TGLike.h"
 #import "TGModelObject+Private.h"
 #import "TGEvent+RandomTestEvent.h"
 #import "NSDateFormatter+TGISOFormatter.h"
 
-@interface TGPostReactionTests : TGTestCase
+@interface TGReactionTests : TGTestCase
 @property (nonatomic, strong) TGUser *poster;
 @property (nonatomic, strong) TGUser *reader;
 @property (nonatomic, strong) TGPost *post;
 @end
 
-@implementation TGPostReactionTests
+@implementation TGReactionTests
 
 - (void)setUp {
     [super setUp];
@@ -74,7 +74,7 @@
 
 
 - (void)testInitCommentWithDictionary {
-    TGPostComment *comment = [[TGPostComment alloc] initWithDictionary:@{ @"id": @"12743631303647840",
+    TGComment *comment = [[TGComment alloc] initWithDictionary:@{ @"id": @"12743631303647840",
                                                                          @"post_id": @"471739965702621007",
                                                                          @"user_id": @"998667",
                                                                          @"content": @"Do like.",
@@ -94,7 +94,7 @@
 
 
 - (void)testJsonDictionaryForComment {
-    TGPostComment *comment = [TGPostComment new];
+    TGComment *comment = [TGComment new];
     comment.post = self.post;
     comment.user = self.reader;
     comment.content = @"funny 😀";
@@ -110,7 +110,7 @@
 }
 
 - (void)testLoadDataOnComment {
-    TGPostComment *comment = [TGPostComment new];
+    TGComment *comment = [TGComment new];
     comment.post = self.post;
     comment.user = self.reader;
     comment.content = @"funny 😀";
@@ -129,7 +129,7 @@
 }
 
 - (void)testInitLikeWithDictionary {
-    TGPostLike *like = [[TGPostLike alloc] initWithDictionary:@{ @"id": @"12743631303647840",
+    TGLike *like = [[TGLike alloc] initWithDictionary:@{ @"id": @"12743631303647840",
                                                                  @"post_id": @"471739965702621007",
                                                                  @"user_id": @"998667",
                                                                  @"created_at": @"2015-06-01T08:44:57.144996856Z",
@@ -147,7 +147,7 @@
 
 
 - (void)testJsonDictionaryForLike {
-    TGPostLike *like = [TGPostLike new];
+    TGLike *like = [TGLike new];
     like.post = self.post;
     like.user = self.reader;
     

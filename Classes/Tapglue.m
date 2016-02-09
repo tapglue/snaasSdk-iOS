@@ -609,6 +609,42 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].eventManager retrieveNewsFeedForCurrentUserWithQuery:query andCompletionBlock:completionBlock];
 }
 
+#pragma mark - Comments -
+
++ (TGComment*)createComment:(NSString*)comment
+      forObjectWithId:(NSString*)objectId
+  withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    return [[self sharedInstance].eventManager createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:completionBlock];
+}
+
++ (void)updateComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager updateComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:completionBlock];
+}
+
++ (void)deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager deleteComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:completionBlock];
+}
+
++ (void)retrieveCommentsForObjectWithId:(NSString*)objectId
+                    withCompletionBlock:(void (^)(NSArray *comments, NSError *error))completionBlock {
+    [[self sharedInstance].eventManager retrieveCommentsForObjectWithId:objectId withCompletionBlock:completionBlock];
+}
+
+#pragma mark - Likes -
+
++ (void)createLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager createLikeForObjectWithId:objectId andCompletionBlock:completionBlock];
+}
+
++ (void)deleteLikeForObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self sharedInstance].eventManager deleteLikeForObjectWithId:objectId andCompletionBlock:completionBlock];
+}
+
++ (void)retrieveLikesForObjectWithId:(NSString*)objectId
+                 withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock {
+    [[self sharedInstance].eventManager retrieveLikesForObjectWithId:objectId andCompletionBlock:completionBlock];
+}
+
 #pragma mark - Raw Rest -
 
 + (NSURLSessionDataTask*) makeRestRequestWithHTTPMethod:(NSString*)method
