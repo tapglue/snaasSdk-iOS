@@ -25,7 +25,10 @@
 
 - (NSDictionary*)jsonMapping {
     // left side: json attribute name , right side: model property name
-    return @{ @"content" : @"content" };
+    return @{
+             @"content" : @"content",
+             @"external_id" : @"externalId"
+             };
 }
 
 - (NSDictionary*)jsonMappingForWriting {

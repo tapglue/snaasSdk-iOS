@@ -28,4 +28,9 @@
  */
 @property (nonatomic, strong) NSString *content;
 
+/*!
+ @abstract Id of the external object.
+ */
+@property (nonatomic, strong) NSString *externalId;
+
 @end
