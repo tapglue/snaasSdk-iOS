@@ -22,9 +22,6 @@
 #import "TGPost.h"
 #import "TGComment.h"
 #import "TGLike.h"
-#import "TGPostComment.h"
-#import "TGPostLike.h"
-#import "TGConstants.h"
 
 static NSString * const TGApiRouteUsers = @"users";
 static NSString * const TGApiRouteCurrentUser = @"me";
@@ -86,7 +83,7 @@ static NSString * const TGApiRouteRecommendations = @"recommendations";
 + (NSString*)routeForComment:(TGComment *)comment {
     return [self routeForCommentWithId:comment.objectId onPostWithId:comment.post.objectId];
 }
-            
+
 + (NSString*)routeForCommentWithId:(NSString*)commentId onPostWithId:(NSString*)postId {
     NSParameterAssert(commentId);
     return [[self routeForCommentsOnPostWithId:postId] stringByAppendingPathComponent:commentId];
@@ -105,7 +102,6 @@ static NSString * const TGApiRouteRecommendations = @"recommendations";
     return [[self routeForLikesOnPostWithId:postId] stringByAppendingPathComponent:likeId];
 }
 
-
 #pragma mark - Comments -
 
 + (NSString*)routeForCommentOnObjectId:(NSString *)objectId {
@@ -119,6 +115,7 @@ static NSString * const TGApiRouteRecommendations = @"recommendations";
 
 + (NSString*)routeForLikeOnObjectId:(NSString *)objectId {
     return [[TGApiRouteExternals stringByAppendingPathComponent:objectId] stringByAppendingPathComponent:TGApiRouteLikes];
+}
 
 #pragma mark - User recommendations
 
@@ -132,7 +129,7 @@ static NSString * const TGApiRouteRecommendations = @"recommendations";
     }
 }
 
-#pragma mark - Helper 
+#pragma mark - Helper
 
 /*!
  @param userId The userId for aonther user or `nil` for the current user.
