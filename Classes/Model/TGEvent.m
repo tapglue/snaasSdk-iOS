@@ -42,9 +42,11 @@ static NSString *const TGEventTargetKey = @"target";
     TGEvent *event = [cache objectWithObjectId:[eventData tg_stringValueForKey:TGModelObjectIdJsonKey]];
     if (!event) {
         event = [[TGEvent alloc] initWithDictionary:eventData];
-        if (event) { // user will be nil if the userData is invalid
+        if (event) { // event will be nil if the userData is invalid
             [cache addObject:event];
         }
+    } else {
+         [event loadDataFromDictionary:eventData]; // update the existing with new data
     }
     return event;
 }
