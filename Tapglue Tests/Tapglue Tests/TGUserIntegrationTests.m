@@ -1017,6 +1017,29 @@
     }];
 }
 
+- (void)testSearchUsersByEmailWithVeryLongQuery {
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"test will fail"];
+    
+    NSMutableArray *emails = [NSMutableArray arrayWithObjects:@"TGTestUser14@tapglue.com", nil];
+    for (int i = 0; i < 3000; i++) {
+        [emails addObject:@"user@email.com"];
+    }
+    
+    [Tapglue searchUsersWithEmails:emails andCompletionBlock:^(NSArray *users, NSError *error) {
+        expect(error).to.beNil;
+        expect(users.count).to.equal(1);
+        
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:30.0 handler:^(NSError *error) {
+        if(error) {
+            XCTFail(@"Expectation Failed with error: %@", error);
+        }
+    }];
+}
+
 - (void)testSearchUsersBySocialIds {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
         
