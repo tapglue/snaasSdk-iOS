@@ -1027,8 +1027,7 @@
     }
     
     [Tapglue searchUsersWithEmails:emails andCompletionBlock:^(NSArray *users, NSError *error) {
-        expect(error).to.beNil;
-        expect(users.count).to.equal(1);
+        expect(error).notTo.beNil();
         
         [expectation fulfill];
     }];
