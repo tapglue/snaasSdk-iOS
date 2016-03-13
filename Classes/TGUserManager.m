@@ -134,8 +134,10 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
 }
 
 - (void)searchUsersWithEmails:(NSArray*)emails andCompletionBlock:(TGGetUserListCompletionBlock)completionBlock {
-    NSString *queryString = [emails componentsJoinedByString:@"&email="];
-    [self.client GET:TGUserManagerAPIEndpointSearch withURLParameters:@{@"email" : queryString} andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
+    NSDictionary *payload = @{
+                              @"emails" : emails
+                              };
+    [self.client POST:[TGUserManagerAPIEndpointSearch stringByAppendingPathComponent:@"emails"] withURLParameters: nil andPayload: payload andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
         [self handleUserListResponse:jsonResponse withError:error andCompletionBlock:completionBlock];
     }];
 }
