@@ -1,4 +1,12 @@
 # SDK Changelog
+## 1.1.1 (2016-03-12)
+
+This includes the following changes:
+
+### Changed
+
+- Update email search internally (no interface changes)
+
 
 ## 1.1 (2015-12-14)
 
