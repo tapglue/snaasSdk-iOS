@@ -368,6 +368,14 @@
                 [Tapglue retrieveEventsForCurrentUserOfType:@"tg_like" withCompletionBlock:^(NSArray *events, NSError *error) {
                     expect(events).notTo.beNil();
                     expect(events.count).to.equal(1);
+                    TGEvent* event = events[0];
+                    expect(event.post.objectId).to.equal(post.objectId);
+                    
+                    for(TGEvent* event in events) {
+                        [Tapglue deleteEventWithId:event.eventId withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                        }];
+                    }
                     
                     // Delete Post
                     [Tapglue deletePostWithId:post.objectId withCompletionBlock:^(BOOL success, NSError *error) {
