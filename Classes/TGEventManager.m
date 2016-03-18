@@ -32,6 +32,7 @@
 #import "TGApiRoutesBuilder.h"
 
 NSString *const TGEventManagerAPIEndpointEvents = @"events";
+NSDictionary* typesWithPost;
 
 @interface TGEventManager ()
 @property (nonatomic, strong, readwrite) NSArray *cachedFeed;
@@ -50,6 +51,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
         self.serialQueue = dispatch_queue_create(queueLabel.UTF8String, DISPATCH_QUEUE_SERIAL);
         [self unarchive];
     }
+    typesWithPost = [NSDictionary dictionaryWithObject:@"tg_like" forKey: @"tg_like"];
     return self;
 }
 
@@ -515,7 +517,7 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
 
     for (NSDictionary *eventData in eventDictionaries) {
         TGEvent *newEvent = [TGEvent createOrLoadWithDictionary:eventData];
-        if([newEvent.type  isEqual: @"tg_like"]) {
+        if([typesWithPost  objectForKey:newEvent.type] != nil) {
             newEvent.post = [TGPost objectWithId:newEvent.tgObjectId];
         }
         [events addObject:newEvent];
