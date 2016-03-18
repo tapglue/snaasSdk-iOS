@@ -29,3 +29,6 @@ DerivedData
 #Pods/
 Tapglue Tests/Pods
 Podfile.lock
+
+#local file system
+.DS_store

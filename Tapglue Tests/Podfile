@@ -6,6 +6,7 @@ inhibit_all_warnings!
 
 target :ios do
   platform :ios, '7.0'
-  link_with 'Tests'
+  target 'Tests'
+  target 'Tapglue IntegrationTests'
   pod 'Expecta', '~> 1.0.0'
 end
