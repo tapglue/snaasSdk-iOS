@@ -504,11 +504,20 @@ NSString *const TGEventManagerAPIEndpointEvents = @"events";
 }
 
 - (NSArray*)eventsFromJsonResponse:(NSDictionary*)jsonResponse {
+    NSDictionary *postDictionaries = [jsonResponse objectForKey:@"post_map"];
+    
+    for(NSDictionary *postData in postDictionaries) {
+        [TGPost createOrLoadWithDictionary:postDictionaries[postData]];
+    }
+    
     NSArray *eventDictionaries = [jsonResponse objectForKey:@"events"];
     NSMutableArray *events = [NSMutableArray arrayWithCapacity:eventDictionaries.count];
 
     for (NSDictionary *eventData in eventDictionaries) {
         TGEvent *newEvent = [TGEvent createOrLoadWithDictionary:eventData];
+        if([newEvent.type  isEqual: @"tg_like"]) {
+            newEvent.post = [TGPost objectWithId:newEvent.tgObjectId];
+        }
         [events addObject:newEvent];
     }
     return events;
