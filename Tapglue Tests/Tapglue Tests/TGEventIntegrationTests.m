@@ -448,20 +448,6 @@
 
 #pragma mark - Negative
 
-// [Negative] Create Event with Wrong Type (too long)
-- (void)testCreateEventWithWrongTypeLong {
-    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-
-        // Create Event
-        [Tapglue createEventWithType:@"abcdef123456abcdef123456abcdef123456" withCompletionBlock:^(BOOL success, NSError *error) {
-            expect(success).to.beFalsy();
-            expect(error).to.beTruthy();
-
-            [expectation fulfill];
-        }];
-    }];
-}
-
 // [Negative] Create Event with Wrong Type (too short)
 - (void)testCreateEventWithWrongTypeShort {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {

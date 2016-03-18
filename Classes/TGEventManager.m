@@ -512,6 +512,11 @@ NSDictionary* typesWithPost;
         [TGPost createOrLoadWithDictionary:postDictionaries[postData]];
     }
     
+    NSDictionary *userDictionaries = [jsonResponse objectForKey:@"users"];
+    for(NSDictionary *userData in userDictionaries) {
+        [TGUser createOrLoadWithDictionary:userDictionaries[userData]];
+    }
+    
     NSArray *eventDictionaries = [jsonResponse objectForKey:@"events"];
     NSMutableArray *events = [NSMutableArray arrayWithCapacity:eventDictionaries.count];
 
