@@ -345,6 +345,52 @@
     }];
 }
 
+
+
+// [Correct] Create and Retrieve Event with Type for current user
+- (void)testCreateAndRetrieveEventWithTGLikeEvent {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        // Create TGPost Object
+        TGPost *post = [TGPost new];
+        post.visibility = TGVisibilityPublic;
+        post.tags = @[@"fitness",@"running"];
+        
+        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        
+        // Create Post
+        [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            
+            [post likeWithCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                [Tapglue retrieveEventsForCurrentUserOfType:@"tg_like" withCompletionBlock:^(NSArray *events, NSError *error) {
+                    expect(events).notTo.beNil();
+                    expect(events.count).to.equal(1);
+                    TGEvent* event = events[0];
+                    expect(event.post.objectId).to.equal(post.objectId);
+                    
+                    for(TGEvent* event in events) {
+                        [Tapglue deleteEventWithId:event.eventId withCompletionBlock:^(BOOL success, NSError *error) {
+                            expect(success).to.beTruthy();
+                        }];
+                    }
+                    
+                    // Delete Post
+                    [Tapglue deletePostWithId:post.objectId withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [expectation fulfill];
+                    }];
+
+                }];
+            }];
+        }];
+    }];
+}
+
 // [Correct] Create and Delete Event
 - (void)testCreateAndDeleteTGEvent {
     [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
@@ -401,20 +447,6 @@
 }
 
 #pragma mark - Negative
-
-// [Negative] Create Event with Wrong Type (too long)
-- (void)testCreateEventWithWrongTypeLong {
-    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
-
-        // Create Event
-        [Tapglue createEventWithType:@"abcdef123456abcdef123456abcdef123456" withCompletionBlock:^(BOOL success, NSError *error) {
-            expect(success).to.beFalsy();
-            expect(error).to.beTruthy();
-
-            [expectation fulfill];
-        }];
-    }];
-}
 
 // [Negative] Create Event with Wrong Type (too short)
 - (void)testCreateEventWithWrongTypeShort {
