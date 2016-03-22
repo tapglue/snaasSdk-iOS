@@ -370,6 +370,7 @@
                     expect(events.count).to.equal(1);
                     TGEvent* event = events[0];
                     expect(event.post.objectId).to.equal(post.objectId);
+                    expect(event.post.user.userId).to.equal(post.user.userId);
                     
                     for(TGEvent* event in events) {
                         [Tapglue deleteEventWithId:event.eventId withCompletionBlock:^(BOOL success, NSError *error) {
