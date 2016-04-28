@@ -1237,7 +1237,7 @@
                 expect(error).to.beNil();
                 
                 TGComment *comment = comments.firstObject;
-                comment.content = @"bad post!";
+                comment.contents = @{@"en": @"bad post!"};
                 
                 [Tapglue updateComment:comment forObjectWithId:objectId andCompletionBlock:^(BOOL success, NSError *error) {
                     expect(success).to.beTruthy();

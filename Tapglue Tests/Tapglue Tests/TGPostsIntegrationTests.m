@@ -197,7 +197,7 @@
             expect(error).to.beNil();
             
             // Create Comment
-            [Tapglue createCommentWithContent:@"great post!" forPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue createCommentWithContent:@{@"en":@"great post!"} forPost:post withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
                 
@@ -207,7 +207,7 @@
                     expect(error).to.beNil();
                     
                     TGComment *comment = comments.firstObject;
-                    comment.content = @"bad post!";
+                    comment.contents = @{@"en":@"bad post!"};
                     
                     // Update Comment
                     [Tapglue updateComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
@@ -245,7 +245,7 @@
             expect(error).to.beNil();
             
             // Create Comment
-            [post commentWithContent:@"great post!" withCompletionBlock:^(BOOL success, NSError *error) {
+            [post commentWithContent:@{@"en":@"great post!"} withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
                 
@@ -255,7 +255,7 @@
                     expect(error).to.beNil();
                     
                     TGComment *comment = comments.firstObject;
-                    comment.content = @"bad post!";
+                    comment.contents = @{@"en":@"bad post!"};
                     
                     // Update Comment
                     [Tapglue updateComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
