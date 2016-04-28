@@ -53,6 +53,9 @@
 }
 
 - (void)loadContentsFromDictionary:(NSDictionary *)data {
+    if([data objectForKey:@"contents"] == nil) {
+        return;
+    }
     _mutableContents = [NSMutableDictionary new];
     [data[@"contents"] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         NSString *languageTag = key;
