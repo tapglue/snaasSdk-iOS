@@ -32,7 +32,7 @@
 
 #pragma mark CRUD
 
-+ (void)createPostWithText:(NSString*)attachmentText
++ (void)createPostWithText:(NSDictionary*)attachmentText
                      named:(NSString*)attachmentName
        withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
 
@@ -82,7 +82,7 @@
 
 #pragma mark - Comments -
 
-+ (TGComment*)createCommentWithContent:(NSString*)commentContent
++ (TGComment*)createCommentWithContent:(NSDictionary*)commentContent
                                    forPost:(TGPost*)post
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     return [[self postsManager] createCommentWithContent:commentContent forPost:post withCompletionBlock:completionBlock];

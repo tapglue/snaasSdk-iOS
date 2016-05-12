@@ -88,7 +88,7 @@
 
 #pragma mark - Comments -
 
-- (TGComment*)createCommentWithContent:(NSString*)commentContent
+- (TGComment*)createCommentWithContent:(NSDictionary*)commentContent
                                    forPost:(TGPost*)post
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 

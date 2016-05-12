@@ -113,7 +113,7 @@
  @param commentContent The content of the comment.
  @param post The Post object that is being commented.
  */
-+ (TGComment*)createCommentWithContent:(NSString*)commentContent
++ (TGComment*)createCommentWithContent:(NSDictionary*)commentContent
                                    forPost:(TGPost*)post
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
