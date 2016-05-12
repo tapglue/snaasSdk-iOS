@@ -47,7 +47,7 @@
  @param text The text that the post contains.
  @param name The name of the post.
  */
-+ (void)createPostWithText:(NSString*)attachmentText named:(NSString*)attachmentName withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
++ (void)createPostWithText:(NSDictionary*)attachmentText named:(NSString*)attachmentName withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
  @abstract Update a post.
