@@ -53,12 +53,12 @@
                                 @"tags": @[@"fitness",@"running"],
                                 @"attachments" : @[
                                         @{
-                                            @"content": @"http://bit.ly/123.gif",
+                                            @"contents": @{@"en":@"http://bit.ly/123.gif"},
                                             @"name": @"teaser",
                                             @"type": @"url"
                                         },
                                         @{
-                                            @"content": @"Lorem ipsum...",
+                                            @"contents": @{@"es":@"Lorem ipsum..."},
                                             @"name": @"body",
                                             @"type": @"text"
                                         }
@@ -87,12 +87,12 @@
     expect(attachment1).to.beKindOf([TGAttachment class]);
     expect(attachment1.type).to.equal(@"url");
     expect(attachment1.name).to.equal(@"teaser");
-    expect(attachment1.content).to.equal(@"http://bit.ly/123.gif");
+    expect(attachment1.contents[@"en"]).to.equal(@"http://bit.ly/123.gif");
     
     expect(attachment2).to.beKindOf([TGAttachment class]);
     expect(attachment2.type).to.equal(@"text");
     expect(attachment2.name).to.equal(@"body");
-    expect(attachment2.content).to.equal(@"Lorem ipsum...");
+    expect(attachment2.contents[@"es"]).to.equal(@"Lorem ipsum...");
     
     expect(post.commentsCount).to.equal(0);
     expect(post.likesCount).to.equal(0);
@@ -132,6 +132,38 @@
     expect(post.sharesCount).to.equal(1);
 }
 
+- (void)testInitPostWithDictionaryWithNewContents {
+    NSDictionary *postData = @{
+                               @"id" : @(471739965702621007),
+                               @"user_id" : @(858667),
+                               @"visibility": @(30),
+                               @"tags": @[@"fitness",@"running"],
+                               @"attachments" : @[
+                                       @{
+                                           @"contents": @{
+                                                @"en":@"some content",
+                                                @"es":@"algun contenido"
+                                           },
+                                           @"content": @"Lorem ipsum...",
+                                           @"name": @"body",
+                                           @"type": @"text"
+                                           }
+                                       ],
+                               @"counts" : @{
+                                       @"comments": @(3),
+                                       @"likes": @(12),
+                                       @"shares": @(1)
+                                       },
+                               @"created_at": @"2015-06-01T08:44:57.144996856Z",
+                               @"updated_at": @"2014-02-10T06:25:10.144996856Z"};
+    
+    TGPost *post = [[TGPost alloc] initWithDictionary:postData];
+    
+    TGAttachment *attachment = post.attachments[0];
+    
+    expect(attachment.contents[@"en"]).to.equal(@"some content");
+    expect(attachment.contents[@"es"]).to.equal(@"algun contenido");
+}
 
 - (void)testJsonDictionaryWithAll {
 
@@ -139,8 +171,8 @@
     post.objectId = @"858667";
     post.visibility = TGVisibilityPublic;
     post.tags = @[@"fitness",@"running"];
-    [post addAttachment:[TGAttachment attachmentWithText:@"Lorem ipsum..." andName:@"body"]];
-    [post addAttachment:[TGAttachment attachmentWithURL:@"http://bit.ly/123.gif" andName:@"teaser"]];
+    [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"Lorem ipsum..."} andName:@"body"]];
+    [post addAttachment:[TGAttachment attachmentWithURL:@{@"es":@"http://bit.ly/123.gif"} andName:@"teaser"]];
 
     NSDictionary *jsonDictionary = post.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
@@ -162,12 +194,12 @@
     NSArray *jsonAttachments = [jsonDictionary valueForKey:@"attachments"];
     expect(jsonAttachments.count).to.equal(2);
     expect(jsonAttachments).to.contain((@{
-                                         @"content": @"http://bit.ly/123.gif",
+                                          @"contents": @{@"es":@"http://bit.ly/123.gif"},
                                          @"name": @"teaser",
                                          @"type": @"url"
                                          }));
     expect(jsonAttachments).to.contain((@{
-                                         @"content": @"Lorem ipsum...",
+                                          @"contents": @{@"en":@"Lorem ipsum..."},
                                          @"name": @"body",
                                          @"type": @"text"
                                          }));
@@ -175,10 +207,10 @@
 }
 
 
-- (void)testJsonDictionaryWithOnlyTextAttachment {
+- (void)testJsonDictionaryWithTextAttachmentWithTwoEntries {
     
     TGPost *post = [TGPost new];
-    [post addAttachment:[TGAttachment attachmentWithText:@"Lorem ipsum..." andName:@"body"]];
+    [post addAttachment:[TGAttachment attachmentWithText:@{@"en": @"Lorem ipsum...", @"es":@"bacon ipsum..."} andName:@"body"]];
     
     NSDictionary *jsonDictionary = post.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
@@ -193,7 +225,7 @@
     NSArray *jsonAttachments = [jsonDictionary valueForKey:@"attachments"];
     expect(jsonAttachments.count).to.equal(1);
     expect(jsonAttachments).to.contain((@{
-                                          @"content": @"Lorem ipsum...",
+                                          @"contents": @{@"en":@"Lorem ipsum...", @"es": @"bacon ipsum..."},
                                           @"name": @"body",
                                           @"type": @"text"
                                           }));
@@ -203,7 +235,7 @@
 
 - (void)testJsonDictionaryWillNotIncludeCounts {
     TGPost *post = [TGPost new];
-    [post addAttachment:[TGAttachment attachmentWithText:@"Lorem ipsum..." andName:@"body"]];
+    [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"Lorem ipsum..."} andName:@"body"]];
     
     NSDictionary *jsonDictionary = post.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();

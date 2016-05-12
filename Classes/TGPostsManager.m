@@ -121,12 +121,12 @@
 
 #pragma mark - Comments -
 
-- (TGComment*)createCommentWithContent:(NSString*)commentContent
+- (TGComment*)createCommentWithContent:(NSDictionary*)commentContent
                                    forPost:(TGPost*)post
                        withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     
     TGComment *comment = [[TGComment alloc] init];
-    comment.content = commentContent;
+    comment.contents = commentContent;
     comment.post = post;
     comment.user = [TGUser currentUser];
 

@@ -47,7 +47,7 @@
         }];
     }];
     
-    [self waitForExpectationsWithTimeout:30.0 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:3000.0 handler:^(NSError *error) {
         if(error) {
             XCTFail(@"Expectation Failed with error: %@", error);
         }
@@ -97,7 +97,7 @@
         post.visibility = TGVisibilityPublic;
         post.tags = @[@"fitness",@"running"];
         
-        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"This is the Text of the Post."} andName:@"body"]];
         
         // Create Post
         [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
@@ -110,7 +110,7 @@
                 expect(error).to.beNil();
                 
                 // Add URL to Post
-                [post addAttachment:[TGAttachment attachmentWithURL: @"http://bit.ly/123.gif" andName:@"thumb"]];
+                [post addAttachment:[TGAttachment attachmentWithURL: @{@"en":@"http://bit.ly/123.gif"} andName:@"thumb"]];
                 
                 // Update Post
                 [Tapglue updatePost:post withCompletionBlock:^(BOOL success, NSError *error) {
@@ -140,7 +140,7 @@
         post.visibility = TGVisibilityPublic;
         post.tags = @[@"fitness",@"running"];
         
-        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"This is the Text of the Post."} andName:@"body"]];
         
         // Create Post
         [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
@@ -189,7 +189,7 @@
         post.visibility = TGVisibilityPublic;
         post.tags = @[@"fitness",@"running"];
         
-        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"This is the Text of the Post."} andName:@"body"]];
         
         // Create Post
         [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
@@ -197,7 +197,7 @@
             expect(error).to.beNil();
             
             // Create Comment
-            [Tapglue createCommentWithContent:@"great post!" forPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            [Tapglue createCommentWithContent:@{@"en":@"great post!"} forPost:post withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
                 
@@ -207,7 +207,7 @@
                     expect(error).to.beNil();
                     
                     TGComment *comment = comments.firstObject;
-                    comment.content = @"bad post!";
+                    comment.contents = @{@"en":@"bad post!"};
                     
                     // Update Comment
                     [Tapglue updateComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
@@ -237,7 +237,7 @@
         post.visibility = TGVisibilityPublic;
         post.tags = @[@"fitness",@"running"];
         
-        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"This is the Text of the Post."} andName:@"body"]];
         
         // Create Post
         [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
@@ -245,7 +245,7 @@
             expect(error).to.beNil();
             
             // Create Comment
-            [post commentWithContent:@"great post!" withCompletionBlock:^(BOOL success, NSError *error) {
+            [post commentWithContent:@{@"en":@"great post!"} withCompletionBlock:^(BOOL success, NSError *error) {
                 expect(success).to.beTruthy();
                 expect(error).to.beNil();
                 
@@ -255,7 +255,7 @@
                     expect(error).to.beNil();
                     
                     TGComment *comment = comments.firstObject;
-                    comment.content = @"bad post!";
+                    comment.contents = @{@"en":@"bad post!"};
                     
                     // Update Comment
                     [Tapglue updateComment:comment withCompletionBlock:^(BOOL success, NSError *error) {
@@ -285,7 +285,7 @@
         post.visibility = TGVisibilityPublic;
         post.tags = @[@"fitness",@"running"];
         
-        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"This is the Text of the Post."} andName:@"body"]];
         
         // Create Post
         [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
@@ -327,7 +327,7 @@
         post.visibility = TGVisibilityPublic;
         post.tags = @[@"fitness",@"running"];
         
-        [post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
+        [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"This is the Text of the Post."} andName:@"body"]];
         
         // Create Post
         [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {

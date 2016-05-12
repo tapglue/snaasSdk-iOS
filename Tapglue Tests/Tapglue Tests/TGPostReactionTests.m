@@ -77,7 +77,7 @@
     TGComment *comment = [[TGComment alloc] initWithDictionary:@{ @"id": @"12743631303647840",
                                                                          @"post_id": @"471739965702621007",
                                                                          @"user_id": @"998667",
-                                                                         @"content": @"Do like.",
+                                                                         @"contents": @{@"en":@"Do like."},
                                                                          @"created_at": @"2015-06-01T08:44:57.144996856Z",
                                                                          @"updated_at": @"2014-02-10T06:25:10.144996856Z" }];
 
@@ -87,7 +87,7 @@
     expect(comment.objectId).to.equal(@"12743631303647840");
     expect(comment.post).to.equal(self.post);
     expect(comment.user).to.equal(self.reader);
-    expect(comment.content).to.equal(@"Do like.");
+    expect(comment.contents).to.equal(@{@"en":@"Do like."});
     expect(comment.createdAt).to.equal([NSDate dateWithTimeIntervalSince1970:1433148297]);
     expect(comment.updatedAt).to.equal([NSDate dateWithTimeIntervalSince1970:1392013510]);
 }
@@ -97,7 +97,7 @@
     TGComment *comment = [TGComment new];
     comment.post = self.post;
     comment.user = self.reader;
-    comment.content = @"funny 😀";
+    comment.contents = @{@"es":@"funny 😀"};
     
     NSDictionary *jsonDictionary = comment.jsonDictionary;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
@@ -106,14 +106,14 @@
     // Check for correct values
     expect([jsonDictionary valueForKey:@"user_id"]).to.equal(@"998667");
     expect([jsonDictionary valueForKey:@"post_id"]).to.equal(@"471739965702621007");
-    expect([jsonDictionary valueForKey:@"content"]).to.equal(@"funny 😀");
+    expect([jsonDictionary valueForKey:@"contents"]).to.equal(@{@"es":@"funny 😀"});
 }
 
 - (void)testLoadDataOnComment {
     TGComment *comment = [TGComment new];
     comment.post = self.post;
     comment.user = self.reader;
-    comment.content = @"funny 😀";
+    comment.contents = @{@"en":@"funny 😀"};
     
     NSMutableDictionary *jsonDictionary = comment.jsonDictionary.mutableCopy;
     expect([NSJSONSerialization isValidJSONObject:jsonDictionary]).to.beTruthy();
@@ -125,7 +125,7 @@
     expect(comment.objectId).to.equal(@"1092381209");
     expect(comment.user).to.equal(self.reader);
     expect(comment.post).to.equal(self.post);
-    expect(comment.content).to.equal(@"funny 😀");
+    expect(comment.contents).to.equal(@{@"en":@"funny 😀"});
 }
 
 - (void)testInitLikeWithDictionary {
