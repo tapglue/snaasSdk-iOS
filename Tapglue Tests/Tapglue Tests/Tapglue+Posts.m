@@ -32,7 +32,7 @@
 
 #pragma mark CRUD
 
-+ (void)createPostWithText:(NSString*)attachmentText
++ (void)createPostWithText:(NSDictionary*)attachmentText
                      named:(NSString*)attachmentName
        withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
 
