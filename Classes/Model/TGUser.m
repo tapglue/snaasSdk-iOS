@@ -67,6 +67,7 @@ static NSString *const TGUserIsFollowedJsonKey = @"is_followed";
         }
     }
     else {
+        [cache replaceObject:user];
         [user loadDataFromDictionary:userData]; // update the existing with potentially new data
     }
     
