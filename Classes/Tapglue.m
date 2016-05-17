@@ -611,10 +611,10 @@ static Tapglue* sharedInstance = nil;
 
 #pragma mark - Comments -
 
-+ (TGComment*)createComment:(NSString*)comment
++ (TGComment*)createComment:(NSDictionary*)comment
       forObjectWithId:(NSString*)objectId
   withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-    return [[self sharedInstance].eventManager createComment:(NSString*)comment forObjectWithId:objectId andCompletionBlock:completionBlock];
+    return [[self sharedInstance].eventManager createComment:(NSDictionary*)comment forObjectWithId:objectId andCompletionBlock:completionBlock];
 }
 
 + (void)updateComment:(TGComment*)comment forObjectWithId:(NSString*)objectId andCompletionBlock:(TGSucessCompletionBlock)completionBlock {
