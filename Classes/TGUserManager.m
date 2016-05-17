@@ -54,7 +54,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     [self.client PUT:TGUserManagerAPIEndpointCurrentUser withURLParameters:nil andPayload:user.jsonDictionary andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {
 
         if (jsonResponse && !error) {
-            [user loadDataFromDictionary:jsonResponse];
+            [TGUser setCurrentUser:[TGUser createOrLoadWithDictionary:jsonResponse]];
         }
 
         if (completionBlock) {

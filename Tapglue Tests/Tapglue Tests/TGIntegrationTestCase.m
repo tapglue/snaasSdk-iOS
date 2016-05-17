@@ -21,7 +21,7 @@
 #import "TGIntegrationTestCase.h"
 #import "TGUser.h"
 
-NSString *const TGTestUsername = @"TGTestUsername15";
+NSString *const TGTestUsername = @"TGTestUsername15000";
 NSString *const TGTestFirstName = @"TGFirst";
 NSString *const TGTestLastName = @"TGLast";
 NSString *const TGTestUserEmail = @"TGTestUser14@tapglue.com";
