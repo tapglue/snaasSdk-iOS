@@ -27,6 +27,7 @@
 #import "TGConnection.h"
 #import "TGConfiguration.h"
 #import "TGQuery.h"
+@class TGSessionTokenNotifier;
 
 /*!
  @abstract `Tapglue` The primary interface for integrating Tapglue with your app.
@@ -149,6 +150,10 @@
  @discussion This will retrieve the details for the currentUser and overwrite currentUser.
  */
 + (void)logoutWithCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+#pragma mark - session token notifier
+
++ (void)setSessionTokenNotifier:(TGSessionTokenNotifier*)notifier;
 
 #pragma mark   Other Users
 

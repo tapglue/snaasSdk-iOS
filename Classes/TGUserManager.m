@@ -393,4 +393,10 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
     [tgUserDefaults synchronize];
 }
 
+#pragma mark - session token notifier
+
+- (void)setSessionTokenNotifier:(TGSessionTokenNotifier *)notifier {
+    self.notifier = notifier;
+}
+
 @end
