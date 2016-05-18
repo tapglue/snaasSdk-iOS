@@ -273,6 +273,10 @@ static Tapglue* sharedInstance = nil;
 #pragma mark - session token notifier
 
 + (void)setSessionTokenNotifier:(id<TGSessionTokenNotifier>)notifier {
+    NSString *token = [self sharedInstance].client.sessionToken;
+    if(token != nil && [token length] != 0) {
+        [notifier sessionTokenSet:token];
+    }
     [[self sharedInstance].userManager setSessionTokenNotifier:notifier];
 }
 
