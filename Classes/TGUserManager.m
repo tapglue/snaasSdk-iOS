@@ -178,6 +178,7 @@ static NSString *const TGUserManagerAPIEndpointConnections = @"me/connections";
         NSAssert(sessionToken, @"Login should return a session token.");  // ToDo: proper error handling if no session token was returned
 
         [[Tapglue sharedInstance].userDefaults setObject:sessionToken forKey:TapglueUserDefaultsKeySessionToken];
+        [_notifier sessionTokenSet:sessionToken];
         self.client.sessionToken = sessionToken;
 
         [TGUser setCurrentUser:currentUser];
