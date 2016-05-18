@@ -60,7 +60,7 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
  */
 @interface TGUserManager : TGBaseManager
 
-@property(nonatomic) TGSessionTokenNotifier *notifier;
+@property(nonatomic) id<TGSessionTokenNotifier> notifier;
 
 #pragma mark - User
 
@@ -229,6 +229,6 @@ typedef NS_ENUM(NSUInteger, TGConnectionType) {
 
 #pragma mark - sessiontoken notifier
 
-- (void)setSessionTokenNotifier:(TGSessionTokenNotifier*)notifier;
+- (void)setSessionTokenNotifier:(id<TGSessionTokenNotifier>)notifier;
 
 @end

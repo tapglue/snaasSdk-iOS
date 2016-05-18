@@ -27,7 +27,7 @@
 #import "TGConnection.h"
 #import "TGConfiguration.h"
 #import "TGQuery.h"
-@class TGSessionTokenNotifier;
+#import "TGSessionTokenNotifier.h"
 
 /*!
  @abstract `Tapglue` The primary interface for integrating Tapglue with your app.
@@ -153,7 +153,7 @@
 
 #pragma mark - session token notifier
 
-+ (void)setSessionTokenNotifier:(TGSessionTokenNotifier*)notifier;
++ (void)setSessionTokenNotifier:(id<TGSessionTokenNotifier>)notifier;
 
 #pragma mark   Other Users
 
