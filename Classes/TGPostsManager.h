@@ -89,8 +89,8 @@
 #pragma mark - Comments -
 
 - (TGComment*)createCommentWithContent:(NSDictionary*)commentContent
-                                   forPost:(TGPost*)post
-                       withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+                               forPost:(TGPost*)post
+                   withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 - (void)updateComment:(TGComment*)comment withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
@@ -102,6 +102,8 @@
 #pragma mark - Likes
 
 - (TGLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+- (void)createLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 - (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
