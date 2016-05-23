@@ -16,7 +16,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-
+#file system
+.DS_Store
 # Idea
 .idea/
 
