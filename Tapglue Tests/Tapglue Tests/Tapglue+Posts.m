@@ -35,7 +35,7 @@
 + (void)createPostWithText:(NSDictionary*)attachmentText
                      named:(NSString*)attachmentName
        withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
-
+    
     TGPost *post = [[TGPost alloc] init];
     [post addAttachment:[TGAttachment attachmentWithText:attachmentText andName:attachmentName]];
     [self createPost:post withCompletionBlock:completionBlock];
@@ -83,8 +83,8 @@
 #pragma mark - Comments -
 
 + (TGComment*)createCommentWithContent:(NSDictionary*)commentContent
-                                   forPost:(TGPost*)post
-                       withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+                               forPost:(TGPost*)post
+                   withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     return [[self postsManager] createCommentWithContent:commentContent forPost:post withCompletionBlock:completionBlock];
 }
 
@@ -113,17 +113,21 @@
     return [[self postsManager] createLikeForPost:post withCompletionBlock:completionBlock];
 }
 
++ (void)createLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    return [[self postsManager] createLikeForPostWithId:postId withCompletionBlock:completionBlock];
+}
+
 + (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self postsManager] deleteLike:post withCompletionBlock:completionBlock];
 }
 
 + (void)retrieveLikesForPost:(TGPost*)post
-            withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock {
+         withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock {
     [self retrieveLikesForPostWithId:post.objectId withCompletionBlock:completionBlock];
 }
 
 + (void)retrieveLikesForPostWithId:(NSString*)postId
-                  withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock {
+               withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock {
     [[self postsManager] retrieveLikesForPostWithId:postId withCompletionBlock:completionBlock];
 }
 

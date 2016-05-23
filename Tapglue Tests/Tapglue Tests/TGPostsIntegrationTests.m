@@ -360,4 +360,47 @@
     }];
 }
 
+// [Correct] Test Post Like with Id
+- (void)testLikePostWithId
+ {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        // Create TGPost Object
+        TGPost *post = [TGPost new];
+        post.visibility = TGVisibilityPublic;
+        post.tags = @[@"fitness",@"running"];
+        
+        [post addAttachment:[TGAttachment attachmentWithText:@{@"en":@"This is the Text of the Post."} andName:@"body"]];
+        
+        // Create Post
+        [Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
+            expect(success).to.beTruthy();
+            expect(error).to.beNil();
+            expect(post.objectId).toNot.beNil();
+            
+            // Create Like
+            [Tapglue createLikeForPostWithId:post.objectId withCompletionBlock:^(BOOL success, NSError *error) {
+                expect(success).to.beTruthy();
+                expect(error).to.beNil();
+                // Retrieve Likes
+                [Tapglue retrieveLikesForPost:post withCompletionBlock:^(NSArray *likes, NSError *error) {
+                    expect(likes).toNot.beNil();
+                    expect(error).to.beNil();
+                    
+                    TGLike *like = likes.firstObject;
+                    expect(like).toNot.beNil();
+                    
+                    // Delete Like
+                    [Tapglue deleteLike:post withCompletionBlock:^(BOOL success, NSError *error) {
+                        expect(success).to.beTruthy();
+                        expect(error).to.beNil();
+                        
+                        [expectation fulfill];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
 @end
