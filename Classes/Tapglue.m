@@ -270,6 +270,16 @@ static Tapglue* sharedInstance = nil;
     [[self sharedInstance].userManager logoutWithCompletionBlock:completionBlock];
 }
 
+#pragma mark - session token notifier
+
++ (void)setSessionTokenNotifier:(id<TGSessionTokenNotifier>)notifier {
+    NSString *token = [self sharedInstance].client.sessionToken;
+    if(token != nil && [token length] != 0) {
+        [notifier sessionTokenSet:token];
+    }
+    [[self sharedInstance].userManager setSessionTokenNotifier:notifier];
+}
+
 #pragma mark   Other users
 
 + (void)retrieveUserWithId:(NSString*)userId withCompletionBlock:(TGGetUserCompletionBlock)completionBlock {
