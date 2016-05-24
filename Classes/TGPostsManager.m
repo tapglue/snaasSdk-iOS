@@ -209,6 +209,10 @@
     [self.client DELETE:[TGApiRoutesBuilder routeForLikesOnPostWithId:post.objectId] withCompletionBlock:completionBlock];
 }
 
+- (void)deleteLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [self.client DELETE:[TGApiRoutesBuilder routeForLikesOnPostWithId:postId] withCompletionBlock:completionBlock];
+}
+
 - (void)retrieveLikesForPostWithId:(NSString*)postId
                withCompletionBlock:(void (^)(NSArray *Likes, NSError *error))completionBlock {
     [self.client GET:[TGApiRoutesBuilder routeForLikesOnPostWithId:postId] withURLParameters:nil andCompletionBlock:^(NSDictionary *jsonResponse, NSError *error) {

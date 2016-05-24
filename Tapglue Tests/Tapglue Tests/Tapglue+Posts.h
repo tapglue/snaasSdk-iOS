@@ -177,6 +177,14 @@
  */
 + (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+/*!
+ @abstract Delete a like for a post.
+ @discussion This will delete a like for a post with an id.
+ 
+ @param postId The post object id that is being unliked.
+ */
++ (void)deleteLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 
 /*!
  @abstract Retrieve likes for a post.

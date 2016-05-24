@@ -121,6 +121,10 @@
     [[self postsManager] deleteLike:post withCompletionBlock:completionBlock];
 }
 
++ (void)deleteLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self postsManager] deleteLikeForPostWithId:postId withCompletionBlock:completionBlock];
+}
+
 + (void)retrieveLikesForPost:(TGPost*)post
             withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock {
     [self retrieveLikesForPostWithId:post.objectId withCompletionBlock:completionBlock];

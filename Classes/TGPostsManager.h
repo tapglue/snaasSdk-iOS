@@ -107,6 +107,8 @@
 
 - (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
+- (void)deleteLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
 - (void)retrieveLikesForPostWithId:(NSString*)postId
                withCompletionBlock:(void (^)(NSArray *likes, NSError *error))completionBlock;
 
