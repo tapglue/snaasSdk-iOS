@@ -162,12 +162,28 @@
 + (TGLike*)createLikeForPost:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 /*!
+ @abstract Create a like for a post.
+ @discussion This will create a like for a post.
+ 
+ @param postId The post object id for which a like is being created.
+ */
++ (void)createLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+/*!
  @abstract Delete a like for a post.
  @discussion This will delete a like for a post.
  
  @param post The post object that is being unliked.
  */
 + (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
+
+/*!
+ @abstract Delete a like for a post.
+ @discussion This will delete a like for a post with an id.
+ 
+ @param postId The post object id that is being unliked.
+ */
++ (void)deleteLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock;
 
 
 /*!

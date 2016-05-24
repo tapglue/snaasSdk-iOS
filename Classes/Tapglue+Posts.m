@@ -113,8 +113,16 @@
     return [[self postsManager] createLikeForPost:post withCompletionBlock:completionBlock];
 }
 
++ (void)createLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    return [[self postsManager] createLikeForPostWithId:postId withCompletionBlock:completionBlock];
+}
+
 + (void)deleteLike:(TGPost*)post withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
     [[self postsManager] deleteLike:post withCompletionBlock:completionBlock];
+}
+
++ (void)deleteLikeForPostWithId:(NSString*)postId withCompletionBlock:(TGSucessCompletionBlock)completionBlock {
+    [[self postsManager] deleteLikeForPostWithId:postId withCompletionBlock:completionBlock];
 }
 
 + (void)retrieveLikesForPost:(TGPost*)post
