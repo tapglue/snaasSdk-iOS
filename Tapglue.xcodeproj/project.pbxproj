@@ -23,6 +23,8 @@
 		52D8AE6A1D2558BB00AC947E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */; };
 		52D8AE6F1D2558C200AC947E /* AlamofireObjectMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE5D1D2557E200AC947E /* AlamofireObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52D8AE701D2558C200AC947E /* ObjectMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		52E380381D2A847E003A157E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380371D2A847E003A157E /* Router.swift */; };
+		52E3803A1D2A9F3E003A157E /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380391D2A9F3E003A157E /* RouterTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		52D8AE5B1D229A7D00AC947E /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		52D8AE5D1D2557E200AC947E /* AlamofireObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireObjectMapper.framework; path = Carthage/Build/iOS/AlamofireObjectMapper.framework; sourceTree = "<group>"; };
 		52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		52E380371D2A847E003A157E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		52E380391D2A9F3E003A157E /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 				5252C94E1D21BFA9009AADBC /* Info.plist */,
 				52D8AE531D21C4B000AC947E /* Tapglue.swift */,
 				5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */,
+				52E380371D2A847E003A157E /* Router.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -129,8 +134,9 @@
 		5252C9571D21BFA9009AADBC /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				5252C9581D21BFA9009AADBC /* TapglueTests.swift */,
 				5252C95A1D21BFA9009AADBC /* Info.plist */,
+				5252C9581D21BFA9009AADBC /* TapglueTests.swift */,
+				52E380391D2A9F3E003A157E /* RouterTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -267,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */,
+				52E380381D2A847E003A157E /* Router.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* Tapglue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52E3803A1D2A9F3E003A157E /* RouterTest.swift in Sources */,
 				5252C9591D21BFA9009AADBC /* TapglueTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

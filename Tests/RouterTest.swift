@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import Tapglue
 
 class RouterTest: XCTestCase {
     
@@ -20,16 +21,31 @@ class RouterTest: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testRouterPostCreatesRequestWithMethod() {
+        let request = Router.post("/login", payload: ["user_name":"paco"])
+        XCTAssertEqual(request.HTTPMethod, "POST")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func testRouterPostCreatesRequestWithPath() {
+        let request = Router.post("/login", payload: ["a":"b"])
+        XCTAssertEqual(request.URLString, "https://api.tapglue.com/login")
+    }
+    
+    func testRouterPostCreatesRequestWithPayload() {
+        let payload = ["user_name":"paco", "password":"1234"]
+        let request = Router.post("/login", payload: payload)
+        if request.HTTPBody == nil {
+            XCTFail("http body was nil!")
+            return
         }
+        
+        let body = request.HTTPBody!
+        do {
+            let dictionary = try NSJSONSerialization.JSONObjectWithData(body, options: .MutableContainers) as? [String: String]
+            XCTAssertEqual(dictionary!, payload)
+        } catch {
+            XCTFail("could not deserialize JSON")
+        }
+        
     }
-    
 }
