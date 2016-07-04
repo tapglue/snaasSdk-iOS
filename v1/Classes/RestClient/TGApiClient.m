@@ -99,7 +99,7 @@ static NSString *const TGApiClientAppAndDeviceInfoCarrier = @"carrier";
     NSURLSessionDataTask* task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error == nil) {
             NSInteger httpStatusCode = ((NSHTTPURLResponse*)response).statusCode;
-            TGLog(@"backend request finished with HTTP %ld on %@", httpStatusCode, response.URL);
+            TGLog(@"backend request finished with HTTP %ld on [POST] %@", httpStatusCode, response.URL);
         }
         else {
             // Failure
@@ -204,10 +204,10 @@ static NSString *const TGApiClientAppAndDeviceInfoCarrier = @"carrier";
             NSInteger httpStatusCode = ((NSHTTPURLResponse*)response).statusCode;
             NSString *responsePayload = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             if (httpStatusCode < 400) {
-                TGLog(@"backend request finished with HTTP %ld on %@ \n\t\n%@\n", httpStatusCode, response.URL, responsePayload);
+                TGLog(@"backend request finished with HTTP %ld on %@ %@ \n\t\n%@\n", httpStatusCode, method, response.URL, responsePayload);
             }
             else {
-                TGLog(@"backend request finished with HTTP %ld on %@ \n\t\n%@\n", httpStatusCode, response.URL, responsePayload);
+                TGLog(@"backend request finished with HTTP %ld on %@ %@ \n\t\n%@\n", httpStatusCode, method, response.URL, responsePayload);
             }
 
             NSError *error;
