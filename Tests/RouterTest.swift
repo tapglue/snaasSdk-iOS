@@ -7,28 +7,27 @@
 //
 
 import XCTest
+import Nimble
 @testable import Tapglue
 
 class RouterTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
     func testRouterPostCreatesRequestWithMethod() {
         let request = Router.post("/login", payload: ["user_name":"paco"])
-        XCTAssertEqual(request.HTTPMethod, "POST")
+        expect(request.HTTPMethod).to(equal("POST"))
     }
     
     func testRouterPostCreatesRequestWithPath() {
         let request = Router.post("/login", payload: ["a":"b"])
-        XCTAssertEqual(request.URLString, "https://api.tapglue.com/login")
+        expect(request.URLString).to(equal("https://api.tapglue.com/login"))
     }
     
     func testRouterPostCreatesRequestWithPayload() {
@@ -42,10 +41,17 @@ class RouterTest: XCTestCase {
         let body = request.HTTPBody!
         do {
             let dictionary = try NSJSONSerialization.JSONObjectWithData(body, options: .MutableContainers) as? [String: String]
-            XCTAssertEqual(dictionary!, payload)
+            expect(dictionary).to(equal(payload))
         } catch {
             XCTFail("could not deserialize JSON")
         }
+    }
+    
+    func testRouterPostAddsAppTokenHeader() {
+        let request = Router.post("/login", payload: [:])
+        let headers = request.allHTTPHeaderFields!
+        let authorizationHeader = headers["Authorization"]
         
+        expect(authorizationHeader).to(contain("Basic: "))
     }
 }
