@@ -1155,4 +1155,54 @@
     }];
 }
 
+// [Correct] Test follower counts
+- (void)testRetrieveUserFollowerCounts {
+    [self runTestBlockAfterLogin:^(XCTestExpectation *expectation) {
+        
+        NSLog(@"Before");
+        NSLog(@"%ld", (long)[TGUser currentUser].followingCount);
+        NSLog(@"%ld", (long)[TGUser currentUser].followersCount);
+        
+        [Tapglue retrieveCurrentUserWithCompletionBlock:^(TGUser *user, NSError *error) {
+            NSLog(@"Initial Retrieve");
+            NSLog(@"%ld", (long)[TGUser currentUser].followingCount);
+            NSLog(@"%ld", (long)[TGUser currentUser].followersCount);
+            
+            [Tapglue searchUsersWithTerm:@"Brady" andCompletionBlock:^(NSArray *users, NSError *error) {
+                    
+                [Tapglue followUser:users.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
+                    NSLog(@"After follow");
+                    NSLog(@"%ld", (long)[TGUser currentUser].followingCount);
+                    NSLog(@"%ld", (long)[TGUser currentUser].followersCount);
+                    
+                    [Tapglue retrieveCurrentUserWithCompletionBlock:^(TGUser *user, NSError *error) {
+                        NSLog(@"After follow and retrieve");
+                        NSLog(@"%ld", (long)[TGUser currentUser].followingCount);
+                        NSLog(@"%ld", (long)[TGUser currentUser].followersCount);
+                        
+                        [Tapglue searchUsersWithTerm:@"Brady" andCompletionBlock:^(NSArray *userz, NSError *error) {
+                        
+                            [Tapglue unfollowUser:userz.firstObject withCompletionBlock:^(BOOL success, NSError *error) {
+                            NSLog(@"After unfollow");
+                            NSLog(@"%ld", (long)[TGUser currentUser].followingCount);
+                            NSLog(@"%ld", (long)[TGUser currentUser].followersCount);
+                            
+                                [Tapglue retrieveCurrentUserWithCompletionBlock:^(TGUser *user, NSError *error) {
+                                NSLog(@"After unfollow and retrieve");
+                                NSLog(@"%ld", (long)[TGUser currentUser].followingCount);
+                                NSLog(@"%ld", (long)[TGUser currentUser].followersCount);
+                                    
+                                [expectation fulfill];
+                                
+                                }];
+                            
+                            }];
+                        }];
+                    }];
+                }];
+            }];
+        }];
+    }];
+}
+
 @end
