@@ -12,6 +12,7 @@
 		5252C94D1D21BFA9009AADBC /* Tapglue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5252C94C1D21BFA9009AADBC /* Tapglue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5252C9541D21BFA9009AADBC /* Tapglue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5252C9491D21BFA9009AADBC /* Tapglue.framework */; };
 		5252C9591D21BFA9009AADBC /* TapglueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252C9581D21BFA9009AADBC /* TapglueTests.swift */; };
+		52540EE21D2BE2DC0007A9DB /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52540EE11D2BE2DC0007A9DB /* Network.swift */; };
 		528481D71D2AC6050090BA29 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528481D61D2AC6050090BA29 /* Nimble.framework */; };
 		528481D81D2AC60E0090BA29 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 528481D61D2AC6050090BA29 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481D91D2B9ABE0090BA29 /* Configuration.swift */; };
@@ -69,6 +70,7 @@
 		5252C9531D21BFA9009AADBC /* TapglueTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TapglueTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5252C9581D21BFA9009AADBC /* TapglueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapglueTests.swift; sourceTree = "<group>"; };
 		5252C95A1D21BFA9009AADBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52540EE11D2BE2DC0007A9DB /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		528481D61D2AC6050090BA29 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		528481D91D2B9ABE0090BA29 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		528481DB1D2BAFD80090BA29 /* Encoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */,
 				52E380371D2A847E003A157E /* Router.swift */,
 				528481DB1D2BAFD80090BA29 /* Encoder.swift */,
+				52540EE11D2BE2DC0007A9DB /* Network.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				52C93F011D2BD3AC00E166F7 /* User.swift in Sources */,
 				528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */,
 				528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */,
+				52540EE21D2BE2DC0007A9DB /* Network.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* Tapglue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -46,21 +46,22 @@ public class Tapglue {
     }
     
     public func loginUser(username: String, password: String) {
-        let payload = ["user_name": username, "password": password]
-        Alamofire.request(Router.post("/users/login", payload: payload))
-            .validate()
-            .debugLog()
-            .responseObject { (response: Response<User, NSError>) in
-                switch response.result {
-                case .Success(let value):
-                    print(value)
-                case .Failure(let error):
-                    print(error)
-                    if let data = response.data {
-                        let json = String(data: data, encoding: NSUTF8StringEncoding)
-                        print("Failure Response: \(json)")
-                    }
-                }
-        }
+        Network().loginUser(username, password: password).subscribe()
+//        let payload = ["user_name": username, "password": password]
+//        Alamofire.request(Router.post("/users/login", payload: payload))
+//            .validate()
+//            .debugLog()
+//            .responseObject { (response: Response<User, NSError>) in
+//                switch response.result {
+//                case .Success(let value):
+//                    print(value)
+//                case .Failure(let error):
+//                    print(error)
+//                    if let data = response.data {
+//                        let json = String(data: data, encoding: NSUTF8StringEncoding)
+//                        print("Failure Response: \(json)")
+//                    }
+//                }
+//        }
     }
 }
