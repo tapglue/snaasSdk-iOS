@@ -43,7 +43,7 @@ class Router: URLRequestConvertible {
         return Alamofire.ParameterEncoding.JSON.encode(request, parameters: payload).0
     }
 
-    static func post(path: String, payload: [String: AnyObject]) -> NSMutableURLRequest {
+    class func post(path: String, payload: [String: AnyObject]) -> NSMutableURLRequest {
         return Router(method: .POST, path: path, payload: payload).URLRequest
     }
 

@@ -9,6 +9,6 @@
 import Foundation
 
 public class Configuration {
-    public var baseUrl = "https://api.tapglue.com"
+    public var baseUrl = "https://api.tapglue.com/0.4"
     public var appToken = "365612c09fc7d75eb1dc2bee9f127c6d"
 }

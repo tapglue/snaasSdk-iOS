@@ -14,9 +14,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapglue = Tapglue()
-        print("tapglue doing something: \(tapglue.doSomething())")
         
-        tapglue.createUser("paco", password: "1234")
+//        tapglue.createUser("paco", password: "1234")
+        tapglue.loginUser("paco", password: "1234")
         // Do any additional setup after loading the view, typically from a nib.
     }
 

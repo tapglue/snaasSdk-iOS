@@ -17,6 +17,8 @@
 		528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481D91D2B9ABE0090BA29 /* Configuration.swift */; };
 		528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481DB1D2BAFD80090BA29 /* Encoder.swift */; };
 		528481E01D2BB1A10090BA29 /* EncoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481DF1D2BB1A10090BA29 /* EncoderTest.swift */; };
+		52C93EFF1D2BCCFA00E166F7 /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */; };
+		52C93F011D2BD3AC00E166F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C93F001D2BD3AC00E166F7 /* User.swift */; };
 		52D8AE541D21C4B000AC947E /* Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8AE531D21C4B000AC947E /* Tapglue.swift */; };
 		52D8AE561D22978400AC947E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; };
 		52D8AE581D22986300AC947E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; };
@@ -71,6 +73,8 @@
 		528481D91D2B9ABE0090BA29 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		528481DB1D2BAFD80090BA29 /* Encoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
 		528481DF1D2BB1A10090BA29 /* EncoderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncoderTest.swift; sourceTree = "<group>"; };
+		52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
+		52C93F001D2BD3AC00E166F7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		52D8AE531D21C4B000AC947E /* Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tapglue.swift; sourceTree = "<group>"; };
 		52D8AE551D22978400AC947E /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		52D8AE5B1D229A7D00AC947E /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 				52D8AE5D1D2557E200AC947E /* AlamofireObjectMapper.framework */,
 				52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */,
 				52D8AE5B1D229A7D00AC947E /* Cartfile */,
+				52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */,
 				5252C94B1D21BFA9009AADBC /* Sources */,
 				5252C9571D21BFA9009AADBC /* Tests */,
 				5252C94A1D21BFA9009AADBC /* Products */,
@@ -141,6 +146,7 @@
 				52E380371D2A847E003A157E /* Router.swift */,
 				528481D91D2B9ABE0090BA29 /* Configuration.swift */,
 				528481DB1D2BAFD80090BA29 /* Encoder.swift */,
+				52C93F001D2BD3AC00E166F7 /* User.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -250,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D8AE5C1D229A7D00AC947E /* Cartfile in Resources */,
+				52C93EFF1D2BCCFA00E166F7 /* Cartfile.private in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +296,7 @@
 			files = (
 				5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */,
 				52E380381D2A847E003A157E /* Router.swift in Sources */,
+				52C93F011D2BD3AC00E166F7 /* User.swift in Sources */,
 				528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */,
 				528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* Tapglue.swift in Sources */,

@@ -17,7 +17,8 @@ public class Tapglue {
                    "Accept":"Application/json"]
     
     public init() {
-        headers["Authorization"] = "Basic " + encode(appToken + ":")
+        headers["Authorization"] = "Basic " + Encoder.encode(appToken, sessionToken: "")
+        Router.configuration = Configuration()
     }
     
     public func createUser(username: String, password: String) {
@@ -30,6 +31,25 @@ public class Tapglue {
             .debugLog()
             .responseJSON { response in
                 print(response.request)
+                switch response.result {
+                case .Success(let JSON):
+                    print(JSON)
+                case .Failure(let error):
+                    print(error)
+                    if let data = response.data {
+                        let json = String(data: data, encoding: NSUTF8StringEncoding)
+                        print("Failure Response: \(json)")
+                    }
+                }
+        }
+    }
+    
+    public func loginUser(username: String, password: String) {
+        let payload = ["user_name": username, "password": password]
+        Alamofire.request(Router.post("/users/login", payload: payload))
+            .validate()
+            .debugLog()
+            .responseJSON { response in
                 switch response.result {
                 case .Success(let JSON):
                     print(JSON)
