@@ -28,7 +28,7 @@ public class User: Mappable {
     }
     
     public func mapping(map: Map) {
-        username    <- map["username"]
+        username    <- map["user_name"]
         email       <- map["email"]
         firstName   <- map["first_name"]
         lastName    <- map["last_name"]

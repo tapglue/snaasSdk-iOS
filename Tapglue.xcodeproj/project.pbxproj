@@ -139,14 +139,12 @@
 		5252C94B1D21BFA9009AADBC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				52C93F021D2BE08400E166F7 /* Entities */,
+				52C93F031D2BE08400E166F7 /* Internal */,
 				5252C94C1D21BFA9009AADBC /* Tapglue.h */,
 				5252C94E1D21BFA9009AADBC /* Info.plist */,
 				52D8AE531D21C4B000AC947E /* Tapglue.swift */,
-				5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */,
-				52E380371D2A847E003A157E /* Router.swift */,
 				528481D91D2B9ABE0090BA29 /* Configuration.swift */,
-				528481DB1D2BAFD80090BA29 /* Encoder.swift */,
-				52C93F001D2BD3AC00E166F7 /* User.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -154,12 +152,38 @@
 		5252C9571D21BFA9009AADBC /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				52C93F041D2BE14E00E166F7 /* Internal */,
 				5252C95A1D21BFA9009AADBC /* Info.plist */,
 				5252C9581D21BFA9009AADBC /* TapglueTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		52C93F021D2BE08400E166F7 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				52C93F001D2BD3AC00E166F7 /* User.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		52C93F031D2BE08400E166F7 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */,
+				52E380371D2A847E003A157E /* Router.swift */,
+				528481DB1D2BAFD80090BA29 /* Encoder.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		52C93F041D2BE14E00E166F7 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
 				52E380391D2A9F3E003A157E /* RouterTest.swift */,
 				528481DF1D2BB1A10090BA29 /* EncoderTest.swift */,
 			);
-			path = Tests;
+			path = Internal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import AlamofireObjectMapper
 
 public class Tapglue {
     
@@ -49,10 +50,10 @@ public class Tapglue {
         Alamofire.request(Router.post("/users/login", payload: payload))
             .validate()
             .debugLog()
-            .responseJSON { response in
+            .responseObject { (response: Response<User, NSError>) in
                 switch response.result {
-                case .Success(let JSON):
-                    print(JSON)
+                case .Success(let value):
+                    print(value)
                 case .Failure(let error):
                     print(error)
                     if let data = response.data {

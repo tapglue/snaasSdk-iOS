@@ -28,7 +28,7 @@ class RouterTest: XCTestCase {
     
     func testRouterPostCreatesRequestWithPath() {
         let request = Router.post("/login", payload: ["a":"b"])
-        expect(request.URLString).to(equal("https://api.tapglue.com/login"))
+        expect(request.URLString).to(equal("https://api.tapglue.com/0.4/login"))
     }
     
     func testRouterPostCreatesRequestWithPayload() {
