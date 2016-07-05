@@ -42,13 +42,4 @@ public class Tapglue {
                 }
         }
     }
-    
-    public func doSomething() -> Double {
-        return AlamofireVersionNumber
-    }
-
-    func encode(input: String) -> String {
-        let utf8Input = input.dataUsingEncoding(NSUTF8StringEncoding)
-        return utf8Input?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0)) ?? ""
-    }
 }

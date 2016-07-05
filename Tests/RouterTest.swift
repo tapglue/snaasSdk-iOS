@@ -14,6 +14,7 @@ class RouterTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        Router.configuration =  Configuration()
     }
     
     override func tearDown() {
@@ -52,6 +53,6 @@ class RouterTest: XCTestCase {
         let headers = request.allHTTPHeaderFields!
         let authorizationHeader = headers["Authorization"]
         
-        expect(authorizationHeader).to(contain("Basic: "))
+        expect(authorizationHeader).to(contain("Basic "))
     }
 }

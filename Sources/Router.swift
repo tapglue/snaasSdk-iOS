@@ -10,17 +10,37 @@ import Alamofire
 
 class Router: URLRequestConvertible {
 
-    static let baseUrl = "https://api.tapglue.com"
+    static var configuration: Configuration? {
+        didSet {
+            if let configuration = configuration {
+                baseUrl = configuration.baseUrl
+                appToken = configuration.appToken
+            }
+        }
+    }
+    
+    private static var baseUrl = "https://api.tapglue.com"
+    private static var appToken = ""
+    private static var sessionToken = ""
+    private static var headers = ["Authorization":"Basic ",
+                          "User-Agent": "TapglueSDKExample",
+                          "Accept":"Application/json"]
+    
     let method: Alamofire.Method
     let path: String
     let payload: [String: AnyObject]
+    var encodedToken: String {
+        return Encoder.encode(Router.appToken, sessionToken: Router.sessionToken)
+    }
 
     var URLRequest: NSMutableURLRequest {
-       let URL = NSURL(string: Router.baseUrl)!
-       let request = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-       request.HTTPMethod = method.rawValue
+        let URL = NSURL(string: Router.baseUrl)!
+        let request = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+        request.HTTPMethod = method.rawValue
+        request.setValue("Basic " + encodedToken, forHTTPHeaderField: "Authorization")
         
-       return Alamofire.ParameterEncoding.JSON.encode(request, parameters: payload).0
+        
+        return Alamofire.ParameterEncoding.JSON.encode(request, parameters: payload).0
     }
 
     static func post(path: String, payload: [String: AnyObject]) -> NSMutableURLRequest {

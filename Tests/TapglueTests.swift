@@ -22,16 +22,6 @@ class TapglueTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        let tapglue = Tapglue()
-        XCTAssertEqualWithAccuracy(tapglue.doSomething(), 289, accuracy: 0.1)
-        
-        
-//        XCTAssert(tapglue.doSomething() == 289)
-    }
-    
     func testCreateUser() {
         let tapglue = Tapglue()
         tapglue.createUser("paco", password: "1234")
