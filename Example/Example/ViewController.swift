@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         let tapglue = Tapglue()
         
 //        tapglue.createUser("paco", password: "1234")
-        tapglue.loginUser("paco", password: "1234")
+        tapglue.loginUser("paco", password: "1234").subscribe()
         // Do any additional setup after loading the view, typically from a nib.
     }
 

@@ -8,13 +8,17 @@
 
 import XCTest
 import RxSwift
+import Nimble
 @testable import Tapglue
 
 class TapglueTests: XCTestCase {
     
+    let tapglue = Tapglue()
+    let network = TestNetwork()
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        tapglue.network = network
     }
     
     override func tearDown() {
@@ -23,15 +27,50 @@ class TapglueTests: XCTestCase {
     }
     
     func testCreateUser() {
-        let tapglue = Tapglue()
         tapglue.createUser("paco", password: "1234")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func testLoginUser() {
+        var networkUser =  User()
+        _ = tapglue.loginUser("paco", password: "1234").subscribeNext({ user in
+            networkUser = user
+        })
+        expect(networkUser.id).toEventually(equal(network.testUserId))
     }
     
+    func testRefreshCurrentUser() {
+        var networkUser = User()
+        _ = tapglue.refreshCurrentUser().subscribeNext { user in
+            networkUser = user
+        }
+        expect(networkUser.id).toEventually(equal(network.testUserId))
+    }
+}
+
+class TestNetwork: Network {
+    
+    
+    let testUserId = "testUserId"
+    let testUser: User
+    
+    override init() {
+        testUser = User()
+        testUser.id = testUserId
+    }
+    
+    override func loginUser(username: String, password: String) -> Observable<User> {
+        return Observable.create({ observable -> Disposable in
+            observable.on(.Next(self.testUser))
+            observable.on(.Completed)
+            return NopDisposable.instance
+        })
+    }
+    
+    override func refreshCurrentUser() -> Observable<User> {
+        return Observable.create({ observable -> Disposable in
+            observable.on(.Next(self.testUser))
+            observable.on(.Completed)
+            return NopDisposable.instance
+        })
+    }
 }

@@ -23,6 +23,10 @@ public class User: Mappable {
     var sessionToken: String?
     var updatedAt: String?
     
+    init() {
+        
+    }
+    
     required public init?(_ map: Map) {
         
     }

@@ -9,10 +9,12 @@
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
+import RxSwift
 
 public class Tapglue {
     
     let appToken = "365612c09fc7d75eb1dc2bee9f127c6d"
+    var network: Network
     var headers = ["Authorization":"Basic ",
                    "User-Agent": "TapglueSDKExample",
                    "Accept":"Application/json"]
@@ -20,6 +22,7 @@ public class Tapglue {
     public init() {
         headers["Authorization"] = "Basic " + Encoder.encode(appToken, sessionToken: "")
         Router.configuration = Configuration()
+        network = Network()
     }
     
     public func createUser(username: String, password: String) {
@@ -45,23 +48,11 @@ public class Tapglue {
         }
     }
     
-    public func loginUser(username: String, password: String) {
-        Network().loginUser(username, password: password).subscribe()
-//        let payload = ["user_name": username, "password": password]
-//        Alamofire.request(Router.post("/users/login", payload: payload))
-//            .validate()
-//            .debugLog()
-//            .responseObject { (response: Response<User, NSError>) in
-//                switch response.result {
-//                case .Success(let value):
-//                    print(value)
-//                case .Failure(let error):
-//                    print(error)
-//                    if let data = response.data {
-//                        let json = String(data: data, encoding: NSUTF8StringEncoding)
-//                        print("Failure Response: \(json)")
-//                    }
-//                }
-//        }
+    public func loginUser(username: String, password: String) -> Observable<User> {
+        return network.loginUser(username, password: password)
+    }
+
+    public func refreshCurrentUser() -> Observable<User> {
+        return network.refreshCurrentUser()
     }
 }

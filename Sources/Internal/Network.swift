@@ -34,4 +34,10 @@ class Network {
             return NopDisposable.instance
         }
     }
+
+    func refreshCurrentUser() -> Observable<User> {
+        return Observable.create { observer in
+            return NopDisposable.instance
+        }
+    }
 }
