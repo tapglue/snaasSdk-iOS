@@ -21,6 +21,7 @@ class Network {
                     case .Success(let value):
                         print(value)
                         observer.on(.Next(value))
+                        observer.on(.Completed)
                     case .Failure(let error):
                         print(error)
                         observer.on(.Error(error))
