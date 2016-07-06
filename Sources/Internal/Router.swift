@@ -19,7 +19,7 @@ class Router: URLRequestConvertible {
         }
     }
     
-    private static var baseUrl = "https://api.tapglue.com"
+    private static var baseUrl = "https://api.tapglue.com/0.4"
     private static var appToken = ""
     private static var sessionToken = ""
     private static var headers = ["Authorization":"Basic ",
