@@ -16,10 +16,14 @@ class ViewController: UIViewController {
         let tapglue = Tapglue()
         
 //        tapglue.createUser("paco", password: "1234")
-        tapglue.loginUser("paco", password: "1234").subscribe()
+        tapglue.loginUser("paco", password: "1234").subscribeNext { user in
+            print("refreshing current user...")
+            tapglue.refreshCurrentUser().subscribeNext { user in
+                print("user fetched")
+            }
+        }
         // Do any additional setup after loading the view, typically from a nib.
-        print("refreshing current user...")
-        tapglue.refreshCurrentUser().subscribe()
+        
     }
 
     override func didReceiveMemoryWarning() {
