@@ -43,7 +43,7 @@ public class User: Mappable {
         isFriend    <- map["is_friend"]
         isFollowed  <- map["is_followed"]
         isFollowing <- map["is_following"]
-        sessionToken    <- map["sessionToken"]
+        sessionToken    <- map["session_token"]
         updatedAt   <- map["updated_at"]
     }
     

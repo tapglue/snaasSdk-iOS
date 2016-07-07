@@ -18,6 +18,8 @@ class ViewController: UIViewController {
 //        tapglue.createUser("paco", password: "1234")
         tapglue.loginUser("paco", password: "1234").subscribe()
         // Do any additional setup after loading the view, typically from a nib.
+        print("refreshing current user...")
+        tapglue.refreshCurrentUser().subscribe()
     }
 
     override func didReceiveMemoryWarning() {

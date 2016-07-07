@@ -13,6 +13,9 @@ import Nimble
 
 class NetworkTest: XCTestCase {
 
+    let sampleUser = ["user_name":"user1","password":"1234", "session_token":"someToken"]
+    let network = Network()
+    
     override func setUp() {
         super.setUp()
     }
@@ -22,14 +25,31 @@ class NetworkTest: XCTestCase {
     }
 
     func testLogin() {
-        let body = ["user_name":"user1","password":"1234"]
-        stub(http(.POST, uri: "/0.4/users/login"), builder: json(body))
-        let network = Network()
+        stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
         
         var networkUser = User()
         _ = network.loginUser("user2", password: "1234").subscribeNext { user in
             networkUser = user
         }
+        
+        expect(networkUser.username).toEventually(equal("user1"))
+    }
+    
+    func testLoginSetsSessionTokenToRouter() {
+        stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
+        
+        _ = network.loginUser("user2", password: "1234").subscribe()
+        
+        expect(Router.sessionToken).toEventually(equal("someToken"))
+    }
+    
+    func testRefreshCurrentUser() {
+        stub(http(.GET, uri: "/0.4/me"), builder: json(sampleUser))
+        
+        var networkUser = User()
+        _ = network.refreshCurrentUser().subscribeNext({ user in
+            networkUser = user
+        })
         
         expect(networkUser.username).toEventually(equal("user1"))
     }

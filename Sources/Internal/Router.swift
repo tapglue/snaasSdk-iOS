@@ -21,7 +21,7 @@ class Router: URLRequestConvertible {
     
     private static var baseUrl = "https://api.tapglue.com/0.4"
     private static var appToken = ""
-    private static var sessionToken = ""
+    static var sessionToken = ""
     private static var headers = ["Authorization":"Basic ",
                           "User-Agent": "TapglueSDKExample",
                           "Accept":"Application/json"]
@@ -39,12 +39,19 @@ class Router: URLRequestConvertible {
         request.HTTPMethod = method.rawValue
         request.setValue("Basic " + encodedToken, forHTTPHeaderField: "Authorization")
         
-        
-        return Alamofire.ParameterEncoding.JSON.encode(request, parameters: payload).0
+        if method == .POST {
+            return Alamofire.ParameterEncoding.JSON.encode(request, parameters: payload).0
+        } else {
+            return request
+        }
     }
 
     class func post(path: String, payload: [String: AnyObject]) -> NSMutableURLRequest {
         return Router(method: .POST, path: path, payload: payload).URLRequest
+    }
+
+    class func get(path: String) -> NSMutableURLRequest {
+        return Router(method: .GET, path: path, payload: [:]).URLRequest
     }
 
     private init(method: Alamofire.Method, path: String, payload: [String: AnyObject]) {

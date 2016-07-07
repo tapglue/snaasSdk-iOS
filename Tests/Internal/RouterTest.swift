@@ -55,4 +55,14 @@ class RouterTest: XCTestCase {
         
         expect(authorizationHeader).to(contain("Basic "))
     }
+    
+    func testRouterGetCreatesRequestWithMethod() {
+        let request = Router.get("/me")
+        expect(request.HTTPMethod).to(equal("GET"))
+    }
+    
+    func testRouterGetBodyNil() {
+        let request = Router.get("/me")
+        expect(request.HTTPBody).to(beNil())
+    }
 }

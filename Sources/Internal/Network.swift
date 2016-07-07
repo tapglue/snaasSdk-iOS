@@ -32,11 +32,26 @@ class Network {
                     }
             }
             return NopDisposable.instance
+            }.map { (user:User) in
+                Router.sessionToken = user.sessionToken ?? ""
+                return user
         }
     }
 
     func refreshCurrentUser() -> Observable<User> {
         return Observable.create { observer in
+            Alamofire.request(Router.get("/me"))
+                .validate()
+                .debugLog()
+                .responseObject { (response: Response<User, NSError>) in
+                    switch response.result {
+                    case .Success(let value):
+                        observer.on(.Next(value))
+                        observer.on(.Completed)
+                    case .Failure(let error):
+                        observer.on(.Error(error))
+                    }
+                }
             return NopDisposable.instance
         }
     }
