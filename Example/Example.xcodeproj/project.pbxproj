@@ -43,14 +43,7 @@
 			remoteGlobalIDString = 5252C9531D21BFA9009AADBC;
 			remoteInfo = TapglueTests;
 		};
-		52963DAE1D256DDD0008CEF8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 52963DA31D25699C0008CEF8 /* Tapglue.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5252C9481D21BFA9009AADBC;
-			remoteInfo = Tapglue;
-		};
-		52963E461D2584C20008CEF8 /* PBXContainerItemProxy */ = {
+		52C294941D2E75F8005A46EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 52963DA31D25699C0008CEF8 /* Tapglue.xcodeproj */;
 			proxyType = 1;
@@ -184,8 +177,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				52963DAF1D256DDD0008CEF8 /* PBXTargetDependency */,
-				52963E471D2584C20008CEF8 /* PBXTargetDependency */,
+				52C294951D2E75F8005A46EF /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -337,15 +329,10 @@
 			target = 526B176F1D2567DE0086EF95 /* Example */;
 			targetProxy = 526B17851D2567DE0086EF95 /* PBXContainerItemProxy */;
 		};
-		52963DAF1D256DDD0008CEF8 /* PBXTargetDependency */ = {
+		52C294951D2E75F8005A46EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Tapglue;
-			targetProxy = 52963DAE1D256DDD0008CEF8 /* PBXContainerItemProxy */;
-		};
-		52963E471D2584C20008CEF8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Tapglue;
-			targetProxy = 52963E461D2584C20008CEF8 /* PBXContainerItemProxy */;
+			targetProxy = 52C294941D2E75F8005A46EF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

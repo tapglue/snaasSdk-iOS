@@ -25,8 +25,8 @@
 		528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481D91D2B9ABE0090BA29 /* Configuration.swift */; };
 		528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481DB1D2BAFD80090BA29 /* Encoder.swift */; };
 		528481E01D2BB1A10090BA29 /* EncoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481DF1D2BB1A10090BA29 /* EncoderTest.swift */; };
-		5286D54D1D2D50EF00B08877 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5286D54C1D2D50EF00B08877 /* Mockingjay.framework */; };
-		5286D54E1D2D50F400B08877 /* Mockingjay.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5286D54C1D2D50EF00B08877 /* Mockingjay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		52C294911D2E743F005A46EF /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52C294901D2E743F005A46EF /* Mockingjay.framework */; };
+		52C294921D2E7443005A46EF /* Mockingjay.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52C294901D2E743F005A46EF /* Mockingjay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52C93EFF1D2BCCFA00E166F7 /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */; };
 		52C93F011D2BD3AC00E166F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C93F001D2BD3AC00E166F7 /* User.swift */; };
 		52D8AE541D21C4B000AC947E /* Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8AE531D21C4B000AC947E /* Tapglue.swift */; };
@@ -66,8 +66,8 @@
 				52D8AE6F1D2558C200AC947E /* AlamofireObjectMapper.framework in CopyFiles */,
 				52D8AE701D2558C200AC947E /* ObjectMapper.framework in CopyFiles */,
 				52540EE41D2D35B10007A9DB /* RxSwift.framework in CopyFiles */,
-				5286D54E1D2D50F400B08877 /* Mockingjay.framework in CopyFiles */,
 				5233AC361D2D56220076CC02 /* URITemplate.framework in CopyFiles */,
+				52C294921D2E7443005A46EF /* Mockingjay.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +91,7 @@
 		528481D91D2B9ABE0090BA29 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		528481DB1D2BAFD80090BA29 /* Encoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
 		528481DF1D2BB1A10090BA29 /* EncoderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncoderTest.swift; sourceTree = "<group>"; };
-		5286D54C1D2D50EF00B08877 /* Mockingjay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mockingjay.framework; path = Carthage/Build/iOS/Mockingjay.framework; sourceTree = "<group>"; };
+		52C294901D2E743F005A46EF /* Mockingjay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mockingjay.framework; path = Carthage/Build/iOS/Mockingjay.framework; sourceTree = "<group>"; };
 		52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		52C93F001D2BD3AC00E166F7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		52D8AE531D21C4B000AC947E /* Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tapglue.swift; sourceTree = "<group>"; };
@@ -119,7 +119,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5286D54D1D2D50EF00B08877 /* Mockingjay.framework in Frameworks */,
 				5233AC351D2D561B0076CC02 /* URITemplate.framework in Frameworks */,
 				5252C9541D21BFA9009AADBC /* Tapglue.framework in Frameworks */,
 				52D8AE581D22986300AC947E /* Alamofire.framework in Frameworks */,
@@ -127,6 +126,7 @@
 				528481D71D2AC6050090BA29 /* Nimble.framework in Frameworks */,
 				52D8AE6A1D2558BB00AC947E /* ObjectMapper.framework in Frameworks */,
 				52540EE31D2D35AF0007A9DB /* RxSwift.framework in Frameworks */,
+				52C294911D2E743F005A46EF /* Mockingjay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +136,8 @@
 		5252C93F1D21BFA9009AADBC = {
 			isa = PBXGroup;
 			children = (
+				52C294901D2E743F005A46EF /* Mockingjay.framework */,
 				5233AC341D2D561B0076CC02 /* URITemplate.framework */,
-				5286D54C1D2D50EF00B08877 /* Mockingjay.framework */,
 				528481D61D2AC6050090BA29 /* Nimble.framework */,
 				5202B7661D266A0A0069BA06 /* RxSwift.framework */,
 				52D8AE551D22978400AC947E /* Alamofire.framework */,
@@ -236,7 +236,7 @@
 				5252C9451D21BFA9009AADBC /* Frameworks */,
 				5252C9461D21BFA9009AADBC /* Headers */,
 				5252C9471D21BFA9009AADBC /* Resources */,
-				52D8AE571D2297D600AC947E /* ShellScript */,
+				52D8AE571D2297D600AC947E /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -322,7 +322,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		52D8AE571D2297D600AC947E /* ShellScript */ = {
+		52D8AE571D2297D600AC947E /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -333,6 +333,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ObjectMapper.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
