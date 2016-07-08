@@ -75,4 +75,26 @@ class NetworkTest: XCTestCase {
         }
         expect(followers).toNotEventually(contain(sampleUser))
     }
+
+    func testCreateUser() {
+        stub(http(.POST, uri: "/0.4/users"), builder: json(sampleUser))
+        let userToBeCreated = User()
+        userToBeCreated.username = "someUsername"
+        userToBeCreated.password = "1234"
+
+        var createdUser = User()
+        _ = network.createUser(userToBeCreated).subscribeNext { user in
+            createdUser = user
+        }
+        expect(createdUser.username).toEventually(equal("user1"))
+    }
+
+    func testUpdateCurrentUser() {
+        stub(http(.PUT, uri:"/0.4/me"), builder: json(sampleUser))
+        var updatedUser = User();
+        _ = network.updateCurrentUser(updatedUser).subscribeNext { user in
+            updatedUser = user
+        }
+        expect(updatedUser.username).toEventually(equal("user1"))
+    }
 }

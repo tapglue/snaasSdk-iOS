@@ -22,12 +22,7 @@ class TapglueTests: XCTestCase {
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
-    }
-    
-    func testCreateUser() {
-        tapglue.createUser("paco", password: "1234")
     }
     
     func testLoginUser() {
@@ -53,6 +48,22 @@ class TapglueTests: XCTestCase {
         }
         expect(networkFollowers).to(contain(network.testUser))
     }
+
+    func testCreateUser() {
+        var createdUser = User()
+        _ = tapglue.createUser(network.testUser).subscribeNext { user in
+            createdUser = user
+        }
+        expect(createdUser.id).toEventually(equal(network.testUser.id))
+    }
+
+    func testUpdateUser() {
+        var updatedUser = User()
+        _ = tapglue.updateCurrentUser(network.testUser).subscribeNext { user in
+            updatedUser = user
+        }
+        expect(updatedUser.id).to(equal(network.testUser.id))
+    }
 }
 
 class TestNetwork: Network {
@@ -67,25 +78,42 @@ class TestNetwork: Network {
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
-        return Observable.create({ observable -> Disposable in
-            observable.on(.Next(self.testUser))
-            observable.on(.Completed)
+        return Observable.create { observer in
+            observer.on(.Next(self.testUser))
+            observer.on(.Completed)
             return NopDisposable.instance
-        })
+        }
+    }
+
+    override func createUser(user: User) -> Observable<User> {
+        return Observable.create { observer in
+            observer.on(.Next(self.testUser))
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+
     }
     
     override func refreshCurrentUser() -> Observable<User> {
-        return Observable.create({ observable -> Disposable in
-            observable.on(.Next(self.testUser))
-            observable.on(.Completed)
+        return Observable.create { observer in
+            observer.on(.Next(self.testUser))
+            observer.on(.Completed)
             return NopDisposable.instance
-        })
+        }
+    }
+    
+    override func updateCurrentUser(user: User) -> Observable<User> {
+        return Observable.create { observer in
+            observer.on(.Next(self.testUser))
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
     }
 
     override func retrieveFollowers() -> Observable<[User]> {
-        return Observable.create { observable in
-            observable.on(.Next([self.testUser]))
-            observable.on(.Completed)
+        return Observable.create { observer in
+            observer.on(.Next([self.testUser]))
+            observer.on(.Completed)
             return NopDisposable.instance
         }
     }

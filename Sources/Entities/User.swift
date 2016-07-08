@@ -10,6 +10,7 @@ import ObjectMapper
 
 public class User: Mappable {
     public var username: String?
+    public var password: String?
     public var email: String?
     public var firstName: String?
     public var lastName: String?
@@ -47,4 +48,8 @@ public class User: Mappable {
         updatedAt   <- map["updated_at"]
     }
     
+}
+
+func ==(lhs: User, rhs: User) -> Bool {
+    return lhs.id == rhs.id
 }

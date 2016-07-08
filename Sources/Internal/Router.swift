@@ -39,7 +39,7 @@ class Router: URLRequestConvertible {
         request.HTTPMethod = method.rawValue
         request.setValue("Basic " + encodedToken, forHTTPHeaderField: "Authorization")
         
-        if method == .POST {
+        if method == .POST || method == .PUT{
             return Alamofire.ParameterEncoding.JSON.encode(request, parameters: payload).0
         } else {
             return request
@@ -52,6 +52,10 @@ class Router: URLRequestConvertible {
 
     class func get(path: String) -> NSMutableURLRequest {
         return Router(method: .GET, path: path, payload: [:]).URLRequest
+    }
+
+    class func put(path: String, payload: [String: AnyObject]) -> NSMutableURLRequest {
+        return Router(method: .PUT, path: path, payload: payload).URLRequest
     }
 
     private init(method: Alamofire.Method, path: String, payload: [String: AnyObject]) {

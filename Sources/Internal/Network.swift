@@ -21,8 +21,16 @@ class Network {
         }
     }
 
+    func createUser(user: User) -> Observable<User> {
+        return http.execute(Router.post("/users", payload: user.toJSON()))
+    }
+
     func refreshCurrentUser() -> Observable<User> {
         return http.execute(Router.get("/me"))
+    }
+
+    func updateCurrentUser(user: User) -> Observable<User> {
+        return http.execute(Router.put("/me", payload: user.toJSON()))
     }
 
     func retrieveFollowers() -> Observable<[User]> {

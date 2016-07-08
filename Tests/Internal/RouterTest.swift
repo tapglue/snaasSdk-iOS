@@ -65,4 +65,26 @@ class RouterTest: XCTestCase {
         let request = Router.get("/me")
         expect(request.HTTPBody).to(beNil())
     }
+
+    func testRouterPutCreatesRequestWithMethod() {
+        let request = Router.put("/me", payload: [:])
+        expect(request.HTTPMethod).to(equal("PUT"))
+    }
+
+    func testRouterPutCreatesRequestWithPayload() {
+        let payload = ["user_name":"paco", "password":"1234"]
+        let request = Router.put("/login", payload: payload)
+        if request.HTTPBody == nil {
+            fail("http body was nil!")
+            return
+        }
+        
+        let body = request.HTTPBody!
+        do {
+            let dictionary = try NSJSONSerialization.JSONObjectWithData(body, options: .MutableContainers) as? [String: String]
+            expect(dictionary).to(equal(payload))
+        } catch {
+            fail("could not deserialize JSON")
+        }
+    }
 }
