@@ -15,6 +15,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         let tapglue = Tapglue()
         
+        let user = User()
+        user.username = "username123149239ei"
+        user.password = "1234"
+        user.firstName = "Antoine"
+        user.lastName = "Griezmann"
+        
+        _ = tapglue.createUser(user).subscribeNext { user in
+            print(user.username)
+        }
+        
+        
 //        tapglue.createUser("paco", password: "1234")
         _ = tapglue.loginUser("paco", password: "1234").subscribeNext { user in
             print("logged in user...")

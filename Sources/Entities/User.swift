@@ -24,7 +24,7 @@ public class User: Mappable {
     public var sessionToken: String?
     public var updatedAt: String?
     
-    init() {
+    public init() {
         
     }
     
