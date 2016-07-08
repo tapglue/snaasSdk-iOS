@@ -27,6 +27,7 @@
 		52BA9FE31D2E9A46005B4622 /* URITemplate.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52BA9FDF1D2E9A3F005B4622 /* URITemplate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52BA9FE41D2E9B33005B4622 /* Matchers+Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5233AC371D2E32910076CC02 /* Matchers+Payload.swift */; };
 		52BA9FE51D2E9B33005B4622 /* NSInputStream+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5233AC391D2E3B710076CC02 /* NSInputStream+String.swift */; };
+		52BA9FE71D2F8098005B4622 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BA9FE61D2F8098005B4622 /* Http.swift */; };
 		52C93EFF1D2BCCFA00E166F7 /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */; };
 		52C93F011D2BD3AC00E166F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C93F001D2BD3AC00E166F7 /* User.swift */; };
 		52D8AE541D21C4B000AC947E /* Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8AE531D21C4B000AC947E /* Tapglue.swift */; };
@@ -92,6 +93,7 @@
 		528481DF1D2BB1A10090BA29 /* EncoderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncoderTest.swift; sourceTree = "<group>"; };
 		52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mockingjay.framework; path = Carthage/Build/iOS/Mockingjay.framework; sourceTree = "<group>"; };
 		52BA9FDF1D2E9A3F005B4622 /* URITemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = URITemplate.framework; path = Carthage/Build/iOS/URITemplate.framework; sourceTree = "<group>"; };
+		52BA9FE61D2F8098005B4622 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 		52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		52C93F001D2BD3AC00E166F7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		52D8AE531D21C4B000AC947E /* Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tapglue.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				52E380371D2A847E003A157E /* Router.swift */,
 				528481DB1D2BAFD80090BA29 /* Encoder.swift */,
 				52540EE11D2BE2DC0007A9DB /* Network.swift */,
+				52BA9FE61D2F8098005B4622 /* Http.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				52C93F011D2BD3AC00E166F7 /* User.swift in Sources */,
 				528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */,
 				528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */,
+				52BA9FE71D2F8098005B4622 /* Http.swift in Sources */,
 				52540EE21D2BE2DC0007A9DB /* Network.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* Tapglue.swift in Sources */,
 			);

@@ -39,24 +39,6 @@ class Network {
     }
 
     func refreshCurrentUser() -> Observable<User> {
-        return Observable.create { observer in
-            Alamofire.request(Router.get("/me"))
-                .validate()
-                .debugLog()
-                .responseObject { (response: Response<User, NSError>) in
-                    switch response.result {
-                    case .Success(let value):
-                        observer.on(.Next(value))
-                        observer.on(.Completed)
-                    case .Failure(let error):
-                        observer.on(.Error(error))
-                        if let data = response.data {
-                            let json = String(data: data, encoding: NSUTF8StringEncoding)
-                            print("Failure Response: \(json)")
-                        }
-                    }
-                }
-            return NopDisposable.instance
-        }
+        return Http().execute(Router.get("/me"))
     }
 }
