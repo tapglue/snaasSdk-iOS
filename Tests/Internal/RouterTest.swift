@@ -87,4 +87,9 @@ class RouterTest: XCTestCase {
             fail("could not deserialize JSON")
         }
     }
+
+    func testRouterDeleteCreatesRequestWithMethod() {
+        let request = Router.delete("/me")
+        expect(request.HTTPMethod).to(equal("DELETE"))
+    }
 }

@@ -33,6 +33,10 @@ class Network {
         return http.execute(Router.put("/me", payload: user.toJSON()))
     }
 
+    func deleteCurrentUser() -> Observable<Void> {
+        return http.execute(Router.delete("/me"))
+    }
+
     func retrieveFollowers() -> Observable<[User]> {
         return http.execute(Router.get("/me/followers")).map { (userFeed:UserFeed) in
             return userFeed.users

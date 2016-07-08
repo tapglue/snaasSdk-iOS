@@ -64,6 +64,14 @@ class TapglueTests: XCTestCase {
         }
         expect(updatedUser.id).to(equal(network.testUser.id))
     }
+
+    func testDeleteUser() {
+        var wasDeleted = false
+        _ = tapglue.deleteCurrentUser().subscribeCompleted { void in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTruthy())
+    }
 }
 
 class TestNetwork: Network {
@@ -105,6 +113,13 @@ class TestNetwork: Network {
     override func updateCurrentUser(user: User) -> Observable<User> {
         return Observable.create { observer in
             observer.on(.Next(self.testUser))
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+    }
+
+    override func deleteCurrentUser() -> Observable<Void> {
+        return Observable.create { observer in
             observer.on(.Completed)
             return NopDisposable.instance
         }

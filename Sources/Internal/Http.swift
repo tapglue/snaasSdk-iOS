@@ -34,4 +34,25 @@ class Http {
             return NopDisposable.instance
         }
     }
+    
+    func execute(request:NSMutableURLRequest) -> Observable<Void> {
+        return Observable.create {observer in
+            Alamofire.request(request)
+                .validate()
+                .debugLog()
+                .responseJSON { response in
+                    switch(response.result) {
+                    case .Success:
+                        observer.on(.Completed)
+                    case .Failure(let error):
+                        observer.on(.Error(error))
+                        if let data = response.data {
+                            let json = String(data: data, encoding: NSUTF8StringEncoding)
+                            print("Failure Response: \(json)")
+                        }
+                    }
+            }
+            return NopDisposable.instance
+        }
+    }
 }

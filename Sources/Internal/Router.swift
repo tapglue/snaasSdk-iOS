@@ -58,6 +58,10 @@ class Router: URLRequestConvertible {
         return Router(method: .PUT, path: path, payload: payload).URLRequest
     }
 
+    class func delete(path: String) -> NSMutableURLRequest {
+        return Router(method: .DELETE, path: path, payload: [:]).URLRequest
+    }
+
     private init(method: Alamofire.Method, path: String, payload: [String: AnyObject]) {
         self.method = method
         self.path = path

@@ -97,4 +97,13 @@ class NetworkTest: XCTestCase {
         }
         expect(updatedUser.username).toEventually(equal("user1"))
     }
+
+    func testDeleteCurrentUser() {
+        stub(http(.DELETE, uri:"/0.4/me"), builder: http(204))
+        var wasDeleted = false
+        _ = network.deleteCurrentUser().subscribeCompleted { _ in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTruthy())
+    }
 }

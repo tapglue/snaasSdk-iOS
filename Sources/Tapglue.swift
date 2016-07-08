@@ -35,6 +35,10 @@ public class Tapglue {
     public func refreshCurrentUser() -> Observable<User> {
         return network.refreshCurrentUser()
     }
+    
+    public func deleteCurrentUser() -> Observable<Void> {
+        return network.deleteCurrentUser()
+    }
 
     public func retrieveFollowers() -> Observable<[User]> {
         return network.retrieveFollowers()
