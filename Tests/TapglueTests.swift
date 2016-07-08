@@ -45,6 +45,14 @@ class TapglueTests: XCTestCase {
         }
         expect(networkUser.id).toEventually(equal(network.testUserId))
     }
+
+    func testRetrieveFollowers() {
+        var networkFollowers = [User]()
+        _ = tapglue.retrieveFollowers().subscribeNext { users in
+            networkFollowers = users
+        }
+        expect(networkFollowers).to(contain(network.testUser))
+    }
 }
 
 class TestNetwork: Network {
@@ -72,5 +80,13 @@ class TestNetwork: Network {
             observable.on(.Completed)
             return NopDisposable.instance
         })
+    }
+
+    override func retrieveFollowers() -> Observable<[User]> {
+        return Observable.create { observable in
+            observable.on(.Next([self.testUser]))
+            observable.on(.Completed)
+            return NopDisposable.instance
+        }
     }
 }

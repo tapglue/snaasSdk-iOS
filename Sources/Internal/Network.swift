@@ -24,4 +24,10 @@ class Network {
     func refreshCurrentUser() -> Observable<User> {
         return http.execute(Router.get("/me"))
     }
+
+    func retrieveFollowers() -> Observable<[User]> {
+        return http.execute(Router.get("/me/followers")).map { (userFeed:UserFeed) in
+            return userFeed.users
+        }
+    }
 }

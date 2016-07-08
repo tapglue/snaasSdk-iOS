@@ -13,11 +13,13 @@ import Nimble
 
 class NetworkTest: XCTestCase {
 
-    let sampleUser = ["user_name":"user1","password":"1234", "session_token":"someToken"]
+    let sampleUser = ["user_name":"user1","id_string":"someId213","password":"1234", "session_token":"someToken"]
+    var sampleUserFeed = [String: AnyObject]()
     let network = Network()
     
     override func setUp() {
         super.setUp()
+        sampleUserFeed["users"] = [sampleUser]
     }
     
     override func tearDown() {
@@ -52,5 +54,25 @@ class NetworkTest: XCTestCase {
         })
         
         expect(networkUser.username).toEventually(equal("user1"))
+    }
+
+    func testRetrieveFollowersReturnsEmptyArrayWhenNone() {
+        sampleUserFeed["users"] = [User]()
+        stub(http(.GET, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))
+        var followers: [User]?
+        _ = network.retrieveFollowers().subscribeNext { users in
+            followers = users
+        }
+
+        expect(followers).toNotEventually(beNil())
+    }
+    
+    func testRetrieveFollowers() {
+        stub(http(.GET, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))
+        var followers = [User]()
+        _ = network.retrieveFollowers().subscribeNext { users in
+            followers = users
+        }
+        expect(followers).toNotEventually(contain(sampleUser))
     }
 }
