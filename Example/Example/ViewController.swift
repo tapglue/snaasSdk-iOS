@@ -16,10 +16,13 @@ class ViewController: UIViewController {
         let tapglue = Tapglue()
         
 //        tapglue.createUser("paco", password: "1234")
-        tapglue.loginUser("paco", password: "1234").subscribeNext { user in
+        _ = tapglue.loginUser("paco", password: "1234").subscribeNext { user in
+            print("logged in user...")
+            print(user.id)
             print("refreshing current user...")
-            tapglue.refreshCurrentUser().subscribeNext { user in
+            _ = tapglue.refreshCurrentUser().subscribeNext { user in
                 print("user fetched")
+                print(user.username)
             }
         }
         // Do any additional setup after loading the view, typically from a nib.

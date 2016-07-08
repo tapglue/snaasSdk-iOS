@@ -9,19 +9,19 @@
 import ObjectMapper
 
 public class User: Mappable {
-    var username: String?
-    var email: String?
-    var firstName: String?
-    var lastName: String?
-    var followedCount: Int?
-    var followerCount: Int?
-    var friendCount: Int?
-    var id: String?
-    var isFriend: Bool?
-    var isFollowed: Bool?
-    var isFollowing: Bool?
-    var sessionToken: String?
-    var updatedAt: String?
+    public var username: String?
+    public var email: String?
+    public var firstName: String?
+    public var lastName: String?
+    public var followedCount: Int?
+    public var followerCount: Int?
+    public var friendCount: Int?
+    public var id: String?
+    public var isFriend: Bool?
+    public var isFollowed: Bool?
+    public var isFollowing: Bool?
+    public var sessionToken: String?
+    public var updatedAt: String?
     
     init() {
         
