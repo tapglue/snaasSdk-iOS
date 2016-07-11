@@ -33,8 +33,16 @@ class Network {
         return http.execute(Router.put("/me", payload: user.toJSON()))
     }
 
+    func logout() -> Observable<Void> {
+        return http.execute(Router.delete("/me/logout"))
+    }
+
     func deleteCurrentUser() -> Observable<Void> {
         return http.execute(Router.delete("/me"))
+    }
+
+    func retrieveUser(id: String) -> Observable<User> {
+        return http.execute(Router.get("/users/" + id))
     }
 
     func retrieveFollowers() -> Observable<[User]> {

@@ -41,14 +41,6 @@ class TapglueTests: XCTestCase {
         expect(networkUser.id).toEventually(equal(network.testUserId))
     }
 
-    func testRetrieveFollowers() {
-        var networkFollowers = [User]()
-        _ = tapglue.retrieveFollowers().subscribeNext { users in
-            networkFollowers = users
-        }
-        expect(networkFollowers).to(contain(network.testUser))
-    }
-
     func testCreateUser() {
         var createdUser = User()
         _ = tapglue.createUser(network.testUser).subscribeNext { user in
@@ -65,12 +57,36 @@ class TapglueTests: XCTestCase {
         expect(updatedUser.id).to(equal(network.testUser.id))
     }
 
+    func testLogout() {
+        var wasLoggedout = false
+        _ = tapglue.logout().subscribeCompleted { _ in
+            wasLoggedout = true
+        }
+        expect(wasLoggedout).toEventually(beTruthy())
+    }
+
     func testDeleteUser() {
         var wasDeleted = false
         _ = tapglue.deleteCurrentUser().subscribeCompleted { void in
             wasDeleted = true
         }
         expect(wasDeleted).toEventually(beTruthy())
+    }
+
+    func testRetrieveUser() {
+        var networkUser = User()
+        _ = tapglue.retrieveUser("1234").subscribeNext { user in
+            networkUser = user
+        }
+        expect(networkUser.id).toEventually(equal(network.testUser.id))
+    }
+
+    func testRetrieveFollowers() {
+        var networkFollowers = [User]()
+        _ = tapglue.retrieveFollowers().subscribeNext { users in
+            networkFollowers = users
+        }
+        expect(networkFollowers).to(contain(network.testUser))
     }
 }
 
@@ -118,8 +134,23 @@ class TestNetwork: Network {
         }
     }
 
+    override func logout() -> Observable<Void> {
+        return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+    }
+
     override func deleteCurrentUser() -> Observable<Void> {
         return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+    }
+
+    override func retrieveUser(id: String) -> Observable<User> {
+        return Observable.create { observer in 
+            observer.on(.Next(self.testUser))
             observer.on(.Completed)
             return NopDisposable.instance
         }

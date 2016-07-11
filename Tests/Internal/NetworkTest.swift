@@ -66,15 +66,6 @@ class NetworkTest: XCTestCase {
 
         expect(followers).toNotEventually(beNil())
     }
-    
-    func testRetrieveFollowers() {
-        stub(http(.GET, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))
-        var followers = [User]()
-        _ = network.retrieveFollowers().subscribeNext { users in
-            followers = users
-        }
-        expect(followers).toNotEventually(contain(sampleUser))
-    }
 
     func testCreateUser() {
         stub(http(.POST, uri: "/0.4/users"), builder: json(sampleUser))
@@ -98,6 +89,15 @@ class NetworkTest: XCTestCase {
         expect(updatedUser.username).toEventually(equal("user1"))
     }
 
+    func testLogout() {
+        stub(http(.DELETE, uri:"/0.4/me/logout"), builder: http(204))
+        var wasLoggedout = false
+        _ = network.logout().subscribeCompleted { _ in
+            wasLoggedout = true
+        }
+        expect(wasLoggedout).toEventually(beTruthy())
+    }
+
     func testDeleteCurrentUser() {
         stub(http(.DELETE, uri:"/0.4/me"), builder: http(204))
         var wasDeleted = false
@@ -105,5 +105,23 @@ class NetworkTest: XCTestCase {
             wasDeleted = true
         }
         expect(wasDeleted).toEventually(beTruthy())
+    }
+
+    func testRetrieveUser() {
+        stub(http(.GET, uri:"/0.4/users/1234"), builder: json(sampleUser))
+        var networkUser = User()
+        _ = network.retrieveUser("1234").subscribeNext { user in
+            networkUser = user
+        }
+        expect(networkUser.username).toEventually(equal("user1"))
+    }
+    
+    func testRetrieveFollowers() {
+        stub(http(.GET, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))
+        var followers = [User]()
+        _ = network.retrieveFollowers().subscribeNext { users in
+            followers = users
+        }
+        expect(followers).toNotEventually(contain(sampleUser))
     }
 }

@@ -35,6 +35,10 @@ public class Tapglue {
     public func refreshCurrentUser() -> Observable<User> {
         return network.refreshCurrentUser()
     }
+
+    public func logout() -> Observable<Void> {
+        return network.logout()
+    }
     
     public func deleteCurrentUser() -> Observable<Void> {
         return network.deleteCurrentUser()
@@ -42,5 +46,9 @@ public class Tapglue {
 
     public func retrieveFollowers() -> Observable<[User]> {
         return network.retrieveFollowers()
+    }
+
+    public func retrieveUser(id: String) -> Observable<User> {
+        return network.retrieveUser(id)
     }
 }
