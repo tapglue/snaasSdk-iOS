@@ -22,6 +22,7 @@
 		528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481DB1D2BAFD80090BA29 /* Encoder.swift */; };
 		528481E01D2BB1A10090BA29 /* EncoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481DF1D2BB1A10090BA29 /* EncoderTest.swift */; };
 		529A3D231D2FC6C60069BF10 /* User+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D221D2FC6C60069BF10 /* User+Equatable.swift */; };
+		529A3D261D33C5AB0069BF10 /* UIDevice+Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */; };
 		52BA9FE01D2E9A3F005B4622 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */; };
 		52BA9FE11D2E9A3F005B4622 /* URITemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BA9FDF1D2E9A3F005B4622 /* URITemplate.framework */; };
 		52BA9FE21D2E9A46005B4622 /* Mockingjay.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -94,6 +95,7 @@
 		528481DB1D2BAFD80090BA29 /* Encoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
 		528481DF1D2BB1A10090BA29 /* EncoderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncoderTest.swift; sourceTree = "<group>"; };
 		529A3D221D2FC6C60069BF10 /* User+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Equatable.swift"; sourceTree = "<group>"; };
+		529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Tapglue.swift"; sourceTree = "<group>"; };
 		52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mockingjay.framework; path = Carthage/Build/iOS/Mockingjay.framework; sourceTree = "<group>"; };
 		52BA9FDF1D2E9A3F005B4622 /* URITemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = URITemplate.framework; path = Carthage/Build/iOS/URITemplate.framework; sourceTree = "<group>"; };
 		52BA9FE61D2F8098005B4622 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				528481DB1D2BAFD80090BA29 /* Encoder.swift */,
 				52540EE11D2BE2DC0007A9DB /* Network.swift */,
 				52BA9FE61D2F8098005B4622 /* Http.swift */,
+				529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				529A3D261D33C5AB0069BF10 /* UIDevice+Tapglue.swift in Sources */,
 				5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */,
 				52BA9FEA1D2FA56A005B4622 /* UserFeed.swift in Sources */,
 				52E380381D2A847E003A157E /* Router.swift in Sources */,

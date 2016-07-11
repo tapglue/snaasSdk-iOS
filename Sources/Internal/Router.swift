@@ -19,13 +19,10 @@ class Router: URLRequestConvertible {
         }
     }
     
+    static let sdkVersion = "2.0.0"
     private static var baseUrl = "https://api.tapglue.com/0.4"
     private static var appToken = ""
     static var sessionToken = ""
-    private static var headers = ["Authorization":"Basic ",
-                          "User-Agent": "TapglueSDKExample",
-                          "Accept":"Application/json"]
-    
     let method: Alamofire.Method
     let path: String
     let payload: [String: AnyObject]
@@ -38,6 +35,14 @@ class Router: URLRequestConvertible {
         let request = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         request.HTTPMethod = method.rawValue
         request.setValue("Basic " + encodedToken, forHTTPHeaderField: "Authorization")
+        request.setValue("iOS", forHTTPHeaderField: "X-Tapglue-OS")
+        request.setValue("Apple", forHTTPHeaderField: "X-Tapglue-Manufacturer")
+        request.setValue(Router.sdkVersion, forHTTPHeaderField: "X-Tapglue-SDKVersion")
+        request.setValue(NSTimeZone.localTimeZone().abbreviation ?? "", 
+            forHTTPHeaderField: "X-Tapglue-Timezone")
+        request.setValue(UIDevice.currentDevice().identifierForVendor?.UUIDString ?? "", forHTTPHeaderField: "X-Tapglue-IDFV")
+        request.setValue(UIDevice.currentDevice().tapglueModelName, forHTTPHeaderField: "X-Tapglue-Model")
+        request.setValue(UIDevice.currentDevice().systemVersion, forHTTPHeaderField: "X-Tapglue-OSVersion")
         
         if method == .POST || method == .PUT{
             return Alamofire.ParameterEncoding.JSON.encode(request, parameters: payload).0

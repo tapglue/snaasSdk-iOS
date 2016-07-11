@@ -92,4 +92,60 @@ class RouterTest: XCTestCase {
         let request = Router.delete("/me")
         expect(request.HTTPMethod).to(equal("DELETE"))
     }
+    
+    func testRouterAddsOSHeader() {
+        let request = Router.post("/login", payload: [:])
+        let headers = request.allHTTPHeaderFields!
+        let header = headers["X-Tapglue-OS"]
+        
+        expect(header).to(equal("iOS"))
+    }
+    
+    func testRouterAddsManufacturerHeader() {
+        let request = Router.post("/login", payload: [:])
+        let headers = request.allHTTPHeaderFields!
+        let header = headers["X-Tapglue-Manufacturer"]
+        
+        expect(header).to(equal("Apple"))
+    }
+
+    func testRouterAddsSDKVersionHeader() {
+        let request = Router.get("/me")
+        let headers = request.allHTTPHeaderFields!
+        let header = headers["X-Tapglue-SDKVersion"]
+
+        expect(header).to(equal(Router.sdkVersion))
+    }
+    
+    func testRouterAddsTimezoneHeader() {
+        let request = Router.get("/me")
+        let headers = request.allHTTPHeaderFields!
+        let header = headers["X-Tapglue-Timezone"]
+        
+        expect(header).to(equal(NSTimeZone.localTimeZone().abbreviation!))
+    }
+
+    func testRouterAddsDeviceIdHeader() {
+        let request = Router.get("/me")
+        let headers = request.allHTTPHeaderFields!
+        let header = headers["X-Tapglue-IDFV"]
+        
+        expect(header).toNot(beEmpty())
+    }
+    
+    func testRouterAddsModelHeader() {
+        let request = Router.get("/me")
+        let headers = request.allHTTPHeaderFields!
+        let header = headers["X-Tapglue-Model"]
+        
+        expect(header).toNot(beEmpty())
+    }
+    
+    func testRouterAddsOsVersionHeader() {
+        let request = Router.get("/me")
+        let headers = request.allHTTPHeaderFields!
+        let header = headers["X-Tapglue-OSVersion"]
+        
+        expect(header).toNot(beEmpty())
+    }
 }
