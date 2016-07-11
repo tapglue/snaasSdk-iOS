@@ -15,8 +15,8 @@ public class Tapglue {
     
     var network: Network
     
-    public init() {
-        Router.configuration = Configuration()
+    public init(configuration: Configuration) {
+        Router.configuration = configuration
         network = Network()
     }
     

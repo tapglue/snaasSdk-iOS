@@ -13,7 +13,7 @@ import Nimble
 
 class TapglueTests: XCTestCase {
     
-    let tapglue = Tapglue()
+    let tapglue = Tapglue(configuration: Configuration())
     let network = TestNetwork()
     
     override func setUp() {
