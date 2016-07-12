@@ -20,4 +20,24 @@ public class Tapglue {
     public func loginUser(username: String, password: String, completionHandler: (user: User?, error: ErrorType?) -> ()) {
         rxTapglue.loginUser(username, password: password).unwrap(completionHandler)
     }
+
+    public func createUser(user: User, completionHandler: (user: User?, error: ErrorType?) -> ()) {
+        rxTapglue.createUser(user).unwrap(completionHandler)
+    }
+
+    public func updateCurrentUser(user: User, completionHandler: (user: User?, error: ErrorType?) -> ()) {
+        rxTapglue.updateCurrentUser(user).unwrap(completionHandler)
+    }
+
+    public func refreshCurrentUser(completionHandler: (user: User?, error: ErrorType?) -> ()) {
+        rxTapglue.refreshCurrentUser().unwrap(completionHandler)
+    }
+
+    public func retrieveUser(id: String, completionHandler: (user:User?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveUser(id).unwrap(completionHandler)
+    }
+
+    public func retrieveFollowers(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveFollowers().unwrap(completionHandler)
+    }
 }

@@ -12,8 +12,13 @@ import Nimble
 
 class TapglueTest: XCTestCase {
 
+    let userId = "testUserId"
+    let tapglue = Tapglue(configuration: Configuration())
+    let network = TestNetwork()
+
     override func setUp() {
         super.setUp()
+        tapglue.rxTapglue.network = network
     }
     
     override func tearDown() {
@@ -21,15 +26,51 @@ class TapglueTest: XCTestCase {
     }
 
     func testLogin() {
-        let tapglue = Tapglue(configuration: Configuration())
-        tapglue.rxTapglue.network = TestNetwork()
-        
         var callbackUser = User()
-        tapglue.loginUser("user1", password: "1234") {
-            user, error in
+        tapglue.loginUser("user1", password: "1234") { user, error in
             callbackUser = user!
         }
         
-        expect(callbackUser.id).toEventually(equal("testUserId"))
+        expect(callbackUser.id).toEventually(equal(userId))
+    }
+
+    func testCreateUser() {
+        var callbackUser = User()
+        tapglue.createUser(User()) { user, error in
+            callbackUser = user!
+        }
+        expect(callbackUser.id).toEventually(equal(userId))
+    }
+
+    func testUpdateCurrentUser() {
+        var callbackUser = User()
+        tapglue.updateCurrentUser(User()) { user, error in
+            callbackUser = user!
+        }
+        expect(callbackUser.id).toEventually(equal(userId))
+    }
+
+    func testRefreshCurrentUser() {
+        var callbackUser = User()
+        tapglue.refreshCurrentUser() { user, error in
+            callbackUser = user!
+        }
+        expect(callbackUser.id).toEventually(equal(userId))
+    }
+
+    func testRetrieveUser() {
+        var callbackUser = User()
+        tapglue.retrieveUser("id") { user, error in
+            callbackUser = user!
+        }
+        expect(callbackUser.id).toEventually(equal(userId))
+    }
+
+    func testRetrieveFollowers() {
+        var callbackUsers = [User]()
+        tapglue.retrieveFollowers() { users, error in
+            callbackUsers = users!
+        }
+        expect(callbackUsers).toEventually(contain(network.testUser))
     }
 }
