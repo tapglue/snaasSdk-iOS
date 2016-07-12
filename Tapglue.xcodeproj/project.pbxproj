@@ -26,6 +26,7 @@
 		529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D271D34CB2C0069BF10 /* Tapglue.swift */; };
 		529A3D2A1D34D0B80069BF10 /* TapglueTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D291D34D0B80069BF10 /* TapglueTest.swift */; };
 		529A3D2E1D34D97F0069BF10 /* Observable+unwrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D2D1D34D97F0069BF10 /* Observable+unwrapping.swift */; };
+		529A3D301D34E1F20069BF10 /* Observable+Unwrappingtest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D2F1D34E1F20069BF10 /* Observable+Unwrappingtest.swift */; };
 		52BA9FE01D2E9A3F005B4622 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */; };
 		52BA9FE11D2E9A3F005B4622 /* URITemplate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BA9FDF1D2E9A3F005B4622 /* URITemplate.framework */; };
 		52BA9FE21D2E9A46005B4622 /* Mockingjay.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -102,6 +103,7 @@
 		529A3D271D34CB2C0069BF10 /* Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tapglue.swift; sourceTree = "<group>"; };
 		529A3D291D34D0B80069BF10 /* TapglueTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapglueTest.swift; sourceTree = "<group>"; };
 		529A3D2D1D34D97F0069BF10 /* Observable+unwrapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+unwrapping.swift"; sourceTree = "<group>"; };
+		529A3D2F1D34E1F20069BF10 /* Observable+Unwrappingtest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Unwrappingtest.swift"; sourceTree = "<group>"; };
 		52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mockingjay.framework; path = Carthage/Build/iOS/Mockingjay.framework; sourceTree = "<group>"; };
 		52BA9FDF1D2E9A3F005B4622 /* URITemplate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = URITemplate.framework; path = Carthage/Build/iOS/URITemplate.framework; sourceTree = "<group>"; };
 		52BA9FE61D2F8098005B4622 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				5252C9581D21BFA9009AADBC /* RxTapglueTests.swift */,
 				529A3D221D2FC6C60069BF10 /* User+Equatable.swift */,
 				529A3D291D34D0B80069BF10 /* TapglueTest.swift */,
+				529A3D2F1D34E1F20069BF10 /* Observable+Unwrappingtest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				52BA9FE51D2E9B33005B4622 /* NSInputStream+String.swift in Sources */,
 				528481E01D2BB1A10090BA29 /* EncoderTest.swift in Sources */,
 				52E3803A1D2A9F3E003A157E /* RouterTest.swift in Sources */,
+				529A3D301D34E1F20069BF10 /* Observable+Unwrappingtest.swift in Sources */,
 				52540EE91D2D4D090007A9DB /* NetworkTest.swift in Sources */,
 				529A3D2A1D34D0B80069BF10 /* TapglueTest.swift in Sources */,
 				5252C9591D21BFA9009AADBC /* RxTapglueTests.swift in Sources */,
