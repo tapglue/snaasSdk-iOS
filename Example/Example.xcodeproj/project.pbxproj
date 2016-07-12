@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5202B76C1D266A920069BA06 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5202B76B1D266A920069BA06 /* RxSwift.framework */; };
+		5215FB691D35152700142FCE /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5215FB681D35152700142FCE /* RxBlocking.framework */; };
+		5215FB6C1D3516EE00142FCE /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5215FB6B1D3516EE00142FCE /* Nimble.framework */; };
+		5215FB6F1D3517D200142FCE /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5215FB6B1D3516EE00142FCE /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		526B17741D2567DE0086EF95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526B17731D2567DE0086EF95 /* AppDelegate.swift */; };
 		526B17761D2567DE0086EF95 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526B17751D2567DE0086EF95 /* ViewController.swift */; };
 		526B17791D2567DE0086EF95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526B17771D2567DE0086EF95 /* Main.storyboard */; };
@@ -19,6 +22,7 @@
 		52963E111D257B720008CEF8 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963E0A1D257B720008CEF8 /* ObjectMapper.framework */; };
 		52963E441D2584C20008CEF8 /* Tapglue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963DA91D25699C0008CEF8 /* Tapglue.framework */; };
 		52963E451D2584C20008CEF8 /* Tapglue.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52963DA91D25699C0008CEF8 /* Tapglue.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		529A3D321D35140B0069BF10 /* UserInteractionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D311D35140B0069BF10 /* UserInteractionTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5215FB6E1D3517C800142FCE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5215FB6F1D3517D200142FCE /* Nimble.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		52963E481D2584C30008CEF8 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -68,6 +82,8 @@
 
 /* Begin PBXFileReference section */
 		5202B76B1D266A920069BA06 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		5215FB681D35152700142FCE /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		5215FB6B1D3516EE00142FCE /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		526B17701D2567DE0086EF95 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526B17731D2567DE0086EF95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		526B17751D2567DE0086EF95 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +98,7 @@
 		52963E081D257B720008CEF8 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		52963E091D257B720008CEF8 /* AlamofireObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireObjectMapper.framework; path = Carthage/Build/iOS/AlamofireObjectMapper.framework; sourceTree = "<group>"; };
 		52963E0A1D257B720008CEF8 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		529A3D311D35140B0069BF10 /* UserInteractionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractionTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +111,7 @@
 				52963E111D257B720008CEF8 /* ObjectMapper.framework in Frameworks */,
 				5202B76C1D266A920069BA06 /* RxSwift.framework in Frameworks */,
 				52963E441D2584C20008CEF8 /* Tapglue.framework in Frameworks */,
+				5215FB691D35152700142FCE /* RxBlocking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5215FB6C1D3516EE00142FCE /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +129,8 @@
 		526B17671D2567DE0086EF95 = {
 			isa = PBXGroup;
 			children = (
+				5215FB6B1D3516EE00142FCE /* Nimble.framework */,
+				5215FB681D35152700142FCE /* RxBlocking.framework */,
 				5202B76B1D266A920069BA06 /* RxSwift.framework */,
 				52963E081D257B720008CEF8 /* Alamofire.framework */,
 				52963E091D257B720008CEF8 /* AlamofireObjectMapper.framework */,
@@ -148,6 +169,7 @@
 			children = (
 				526B17881D2567DE0086EF95 /* ExampleTests.swift */,
 				526B178A1D2567DE0086EF95 /* Info.plist */,
+				529A3D311D35140B0069BF10 /* UserInteractionTest.swift */,
 			);
 			path = ExampleTests;
 			sourceTree = "<group>";
@@ -191,6 +213,7 @@
 				526B17801D2567DE0086EF95 /* Sources */,
 				526B17811D2567DE0086EF95 /* Frameworks */,
 				526B17821D2567DE0086EF95 /* Resources */,
+				5215FB6E1D3517C800142FCE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -294,6 +317,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/AlamofireObjectMapper.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
 			);
 			outputPaths = (
 			);
@@ -318,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				526B17891D2567DE0086EF95 /* ExampleTests.swift in Sources */,
+				529A3D321D35140B0069BF10 /* UserInteractionTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +504,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapglue.ExampleTests;
@@ -491,6 +520,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapglue.ExampleTests;

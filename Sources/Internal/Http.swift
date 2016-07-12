@@ -18,6 +18,7 @@ class Http {
                 .validate()
                 .debugLog()
                 .responseObject { (response: Response<T, NSError>) in
+                    print(response.result.debugDescription)
                     switch(response.result) {
                     case .Success(let value):
                         print(value)
