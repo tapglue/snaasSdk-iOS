@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tapglue = Tapglue(configuration: Configuration())
+        let tapglue = RxTapglue(configuration: Configuration())
         
         let user = User()
         user.username = "username123149239ei"

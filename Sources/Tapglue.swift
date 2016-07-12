@@ -1,54 +1,23 @@
 //
-//  Tapglue.swift
+//  File.swift
 //  Tapglue
 //
-//  Created by John Nilsen on 6/27/16.
+//  Created by John Nilsen on 7/12/16.
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
 import Foundation
-import Alamofire
-import AlamofireObjectMapper
 import RxSwift
 
 public class Tapglue {
-    
-    var network: Network
+    let disposeBag = DisposeBag()
+    let rxTapglue: RxTapglue
     
     public init(configuration: Configuration) {
-        Router.configuration = configuration
-        network = Network()
+        rxTapglue = RxTapglue(configuration: configuration)
     }
     
-    public func createUser(user: User) -> Observable<User> {
-        return network.createUser(user)
-    }
-    
-    public func loginUser(username: String, password: String) -> Observable<User> {
-        return network.loginUser(username, password: password)
-    }
-
-    public func updateCurrentUser(user: User) -> Observable<User> {
-        return network.updateCurrentUser(user)
-    }
-
-    public func refreshCurrentUser() -> Observable<User> {
-        return network.refreshCurrentUser()
-    }
-
-    public func logout() -> Observable<Void> {
-        return network.logout()
-    }
-    
-    public func deleteCurrentUser() -> Observable<Void> {
-        return network.deleteCurrentUser()
-    }
-
-    public func retrieveFollowers() -> Observable<[User]> {
-        return network.retrieveFollowers()
-    }
-
-    public func retrieveUser(id: String) -> Observable<User> {
-        return network.retrieveUser(id)
+    public func loginUser(username: String, password: String, completionHandler: (user: User?, error: ErrorType?) -> ()) {
+        rxTapglue.loginUser(username, password: password).unwrap(completionHandler)
     }
 }
