@@ -102,36 +102,19 @@ class TestNetwork: Network {
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
-        return Observable.create { observer in
-            observer.on(.Next(self.testUser))
-            observer.on(.Completed)
-            return NopDisposable.instance
-        }
+        return Observable.just(testUser)
     }
 
     override func createUser(user: User) -> Observable<User> {
-        return Observable.create { observer in
-            observer.on(.Next(self.testUser))
-            observer.on(.Completed)
-            return NopDisposable.instance
-        }
-
+        return Observable.just(testUser)
     }
     
     override func refreshCurrentUser() -> Observable<User> {
-        return Observable.create { observer in
-            observer.on(.Next(self.testUser))
-            observer.on(.Completed)
-            return NopDisposable.instance
-        }
+        return Observable.just(testUser)
     }
     
     override func updateCurrentUser(user: User) -> Observable<User> {
-        return Observable.create { observer in
-            observer.on(.Next(self.testUser))
-            observer.on(.Completed)
-            return NopDisposable.instance
-        }
+        return Observable.just(testUser)
     }
 
     override func logout() -> Observable<Void> {
@@ -149,18 +132,10 @@ class TestNetwork: Network {
     }
 
     override func retrieveUser(id: String) -> Observable<User> {
-        return Observable.create { observer in 
-            observer.on(.Next(self.testUser))
-            observer.on(.Completed)
-            return NopDisposable.instance
-        }
+        return Observable.just(testUser)
     }
 
     override func retrieveFollowers() -> Observable<[User]> {
-        return Observable.create { observer in
-            observer.on(.Next([self.testUser]))
-            observer.on(.Completed)
-            return NopDisposable.instance
-        }
+        return Observable.just([testUser])
     }
 }
