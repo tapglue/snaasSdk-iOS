@@ -25,7 +25,7 @@ class Observable_Unwrappingtest: XCTestCase {
         let expectedUser = User()
         expectedUser.id = "expectedId"
         var unwrappedUser = User();
-        Observable.just(expectedUser).unwrap { (user, error) in
+        Observable.just(expectedUser).unwrap { (user: User?, error) in
             unwrappedUser = expectedUser
         }
         expect(unwrappedUser.id).toEventually(equal(expectedUser.id))
@@ -37,6 +37,27 @@ class Observable_Unwrappingtest: XCTestCase {
             expectedError = error
         }
         
+        expect(expectedError).toEventuallyNot(beNil())
+    }
+    
+    func testUnwrappingEmptyObservable() {
+        let obs: Observable<Void> = Observable.empty()
+        var wasSuccessful = false
+        obs.unwrap { (success: Bool, error) in
+            wasSuccessful = success
+        }
+        expect(wasSuccessful).toEventually(beTrue())
+    }
+    
+    func testUnwrappingEmptyErrorObservable() {
+        let obs: Observable<Void> = Observable.error(TestError())
+        var wasSuccessful = true
+        var expectedError: ErrorType?
+        obs.unwrap { (success: Bool, error) in
+            wasSuccessful = success
+            expectedError = error
+        }
+        expect(wasSuccessful).toEventually(beFalse())
         expect(expectedError).toEventuallyNot(beNil())
     }
 }

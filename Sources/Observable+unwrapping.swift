@@ -22,4 +22,17 @@ extension Observable {
             }
         }.addDisposableTo(DisposeBag())
     }
+    
+    func unwrap(completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+        self.subscribe { event in
+            switch(event) {
+            case .Next:
+                break
+            case .Error(let error):
+                completionHandler(success: false, error: error)
+            case .Completed:
+                completionHandler(success: true, error: nil)
+            }
+        }.addDisposableTo(DisposeBag())
+    }
 }
