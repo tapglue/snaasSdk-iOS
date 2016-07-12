@@ -33,6 +33,14 @@ public class Tapglue {
         rxTapglue.refreshCurrentUser().unwrap(completionHandler)
     }
 
+    public func logout(completionHandler: (success:Bool, error:ErrorType?) -> ()) {
+        rxTapglue.logout().unwrap(completionHandler)
+    }
+
+    public func deleteCurrentUser(completionHandler: (success:Bool, error:ErrorType?) -> ()) {
+        rxTapglue.deleteCurrentUser().unwrap(completionHandler)
+    }
+
     public func retrieveUser(id: String, completionHandler: (user:User?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveUser(id).unwrap(completionHandler)
     }

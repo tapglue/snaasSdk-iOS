@@ -58,6 +58,22 @@ class TapglueTest: XCTestCase {
         expect(callbackUser.id).toEventually(equal(userId))
     }
 
+    func testLogout() {
+        var wasLoggedOut = false
+        tapglue.logout() { success, error in 
+            wasLoggedOut = success
+        }
+        expect(wasLoggedOut).toEventually(beTrue())
+    }
+
+    func testDeleteUser() {
+        var wasDeleted = false
+        tapglue.deleteCurrentUser() { success, error in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTrue())
+    }
+
     func testRetrieveUser() {
         var callbackUser = User()
         tapglue.retrieveUser("id") { user, error in
