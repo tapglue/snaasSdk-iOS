@@ -14,10 +14,14 @@ import RxSwift
 public class RxTapglue {
     
     var network: Network
+    let disposeBag = DisposeBag()
     
     public init(configuration: Configuration) {
         Router.configuration = configuration
         network = Network()
+        network.sendAnalytics().subscribeError { _ in
+            
+        }.addDisposableTo(disposeBag)
     }
     
     public func createUser(user: User) -> Observable<User> {

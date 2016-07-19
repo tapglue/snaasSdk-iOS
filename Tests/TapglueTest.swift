@@ -8,16 +8,20 @@
 
 import XCTest
 import Nimble
+import Mockingjay
 @testable import Tapglue
 
 class TapglueTest: XCTestCase {
 
     let userId = "testUserId"
-    let tapglue = Tapglue(configuration: Configuration())
+    var tapglue: Tapglue!
     let network = TestNetwork()
 
     override func setUp() {
         super.setUp()
+        stub(http(.POST, uri: "/0.4/analytics"), builder: http(204))
+        
+        tapglue = Tapglue(configuration: Configuration())
         tapglue.rxTapglue.network = network
     }
     

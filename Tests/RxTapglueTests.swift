@@ -8,23 +8,30 @@
 
 import XCTest
 import RxSwift
+import Mockingjay
 import Nimble
 @testable import Tapglue
 
 class TapglueTests: XCTestCase {
     
-    let tapglue = RxTapglue(configuration: Configuration())
+    let configuration = Configuration()
+    var tapglue: RxTapglue!
     let network = TestNetwork()
+    
+    var analyticsSent = false
     
     override func setUp() {
         super.setUp()
+        stub(http(.POST, uri: "/0.4/analytics"), builder: http(204))
+        
+        tapglue = RxTapglue(configuration: Configuration())
         tapglue.network = network
     }
     
     override func tearDown() {
         super.tearDown()
     }
-    
+
     func testLoginUser() {
         var networkUser =  User()
         _ = tapglue.loginUser("paco", password: "1234").subscribeNext({ user in
@@ -99,6 +106,13 @@ class TestNetwork: Network {
     override init() {
         testUser = User()
         testUser.id = testUserId
+    }
+
+    override func sendAnalytics() -> Observable<Void> {
+        return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {

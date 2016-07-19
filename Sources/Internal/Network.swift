@@ -10,7 +10,17 @@ import Alamofire
 import RxSwift
 
 class Network {
+    static var analyticsSent = false
     let http = Http()
+
+    init() {
+        if !Network.analyticsSent {
+            Network.analyticsSent = true
+            http.execute(Router.post("/analytics", payload: [:])).subscribeError({ error in
+                Network.analyticsSent = false
+            }).addDisposableTo(DisposeBag())
+        }
+    }
     
     func loginUser(username: String, password:String) -> Observable<User> {
         let payload = ["user_name": username, "password": password]
@@ -48,6 +58,12 @@ class Network {
     func retrieveFollowers() -> Observable<[User]> {
         return http.execute(Router.get("/me/followers")).map { (userFeed:UserFeed) in
             return userFeed.users
+        }
+    }
+
+    func sendAnalytics() -> Observable<Void> {
+        return Observable.create {observer in
+            return NopDisposable.instance
         }
     }
 }

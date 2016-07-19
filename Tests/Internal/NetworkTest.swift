@@ -15,10 +15,15 @@ class NetworkTest: XCTestCase {
 
     let sampleUser = ["user_name":"user1","id_string":"someId213","password":"1234", "session_token":"someToken"]
     var sampleUserFeed = [String: AnyObject]()
-    let network = Network()
+    var network: Network!
+
+    var analyticsSent = false
     
     override func setUp() {
         super.setUp()
+        stub(http(.POST, uri: "/0.4/analytics"), builder: analyticsBuilder)
+
+        network = Network()
         sampleUserFeed["users"] = [sampleUser]
     }
     
@@ -26,6 +31,16 @@ class NetworkTest: XCTestCase {
         super.tearDown()
     }
 
+    func analyticsBuilder(request: NSURLRequest) -> Response {
+        analyticsSent = true
+        let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!
+        return .Success(response, nil)
+    }
+
+    func testAnalyticsSentOnInstantiation() {
+        expect(self.analyticsSent).toEventually(beTrue())
+    }
+    
     func testLogin() {
         stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
         
