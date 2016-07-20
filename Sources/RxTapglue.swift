@@ -13,8 +13,28 @@ import RxSwift
 
 public class RxTapglue {
     
+    static let tapglueDefaults = "tapglueDefaults"
+    static let currentUserTag = "currentUser"
+    
     var network: Network
     let disposeBag = DisposeBag()
+    public private(set) var currentUser: User? {
+        get {
+            let userDictionary = NSUserDefaults(suiteName: RxTapglue.tapglueDefaults)?.dictionaryForKey(RxTapglue.currentUserTag)
+            
+            if let userDictionary = userDictionary {
+                return User(JSON: userDictionary)
+            }
+            return nil
+        }
+        set {
+            if let user = newValue {
+                NSUserDefaults(suiteName: RxTapglue.tapglueDefaults)?.setObject(user.toJSON(), forKey: RxTapglue.currentUserTag)
+            } else {
+                NSUserDefaults(suiteName: RxTapglue.tapglueDefaults)?.removeObjectForKey(RxTapglue.currentUserTag)
+            }
+        }
+    }
     
     public init(configuration: Configuration) {
         Router.configuration = configuration
@@ -29,7 +49,10 @@ public class RxTapglue {
     }
     
     public func loginUser(username: String, password: String) -> Observable<User> {
-        return network.loginUser(username, password: password)
+        return network.loginUser(username, password: password).map { user in
+            self.currentUser = user
+            return user
+        }
     }
 
     public func updateCurrentUser(user: User) -> Observable<User> {

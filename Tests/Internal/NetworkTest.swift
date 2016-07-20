@@ -22,6 +22,7 @@ class NetworkTest: XCTestCase {
     override func setUp() {
         super.setUp()
         stub(http(.POST, uri: "/0.4/analytics"), builder: analyticsBuilder)
+        Network.analyticsSent = false
 
         network = Network()
         sampleUserFeed["users"] = [sampleUser]
