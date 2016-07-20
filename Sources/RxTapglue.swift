@@ -17,7 +17,6 @@ public class RxTapglue {
     static let currentUserTag = "currentUser"
     
     var network: Network
-    let disposeBag = DisposeBag()
     public private(set) var currentUser: User? {
         get {
             let userDictionary = NSUserDefaults(suiteName: RxTapglue.tapglueDefaults)?.dictionaryForKey(RxTapglue.currentUserTag)
@@ -39,9 +38,6 @@ public class RxTapglue {
     public init(configuration: Configuration) {
         Router.configuration = configuration
         network = Network()
-        network.sendAnalytics().subscribeError { _ in
-            
-        }.addDisposableTo(disposeBag)
     }
     
     public func createUser(user: User) -> Observable<User> {

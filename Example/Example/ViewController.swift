@@ -24,8 +24,8 @@ class ViewController: UIViewController {
 //            }
 //            
 //        }
-        
-        print(tapglue.currentUser?.username)
+//        
+//        print(tapglue.currentUser?.username)
     }
 
     override func didReceiveMemoryWarning() {

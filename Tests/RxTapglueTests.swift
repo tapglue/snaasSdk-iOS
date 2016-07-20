@@ -107,13 +107,6 @@ class TestNetwork: Network {
         testUser = User()
         testUser.id = testUserId
     }
-
-    override func sendAnalytics() -> Observable<Void> {
-        return Observable.create { observer in
-            observer.on(.Completed)
-            return NopDisposable.instance
-        }
-    }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
         return Observable.just(testUser)

@@ -13,6 +13,12 @@ public class Tapglue {
     let disposeBag = DisposeBag()
     let rxTapglue: RxTapglue
     
+    var currentUser: User? {
+        get {
+            return rxTapglue.currentUser
+        }
+    }
+    
     public init(configuration: Configuration) {
         rxTapglue = RxTapglue(configuration: configuration)
     }

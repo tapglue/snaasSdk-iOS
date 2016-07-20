@@ -57,4 +57,14 @@ class UserInteractionTest: XCTestCase {
         }
         expect(wasRefreshed).toEventually(beTrue())
     }
+    
+    func testCurrentUserPersistedAfterLogin() {
+        expect(self.tapglue.currentUser).toNot(beNil())
+    }
+    
+    func testDifferentInstanceReturnsCurrentUser() {
+        let altInstance = RxTapglue(configuration: Configuration())
+        expect(altInstance.currentUser).toNot(beNil())
+        expect(altInstance.currentUser?.username).to(equal(tapglue.currentUser?.username))
+    }
 }

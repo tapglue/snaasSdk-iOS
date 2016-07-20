@@ -60,10 +60,4 @@ class Network {
             return userFeed.users
         }
     }
-
-    func sendAnalytics() -> Observable<Void> {
-        return Observable.create {observer in
-            return NopDisposable.instance
-        }
-    }
 }
