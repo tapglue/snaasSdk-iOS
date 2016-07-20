@@ -16,22 +16,15 @@ public class RxTapglue {
     static let tapglueDefaults = "tapglueDefaults"
     static let currentUserTag = "currentUser"
     
+    var userStore = UserStore()
+    
     var network: Network
     public private(set) var currentUser: User? {
         get {
-            let userDictionary = NSUserDefaults(suiteName: RxTapglue.tapglueDefaults)?.dictionaryForKey(RxTapglue.currentUserTag)
-            
-            if let userDictionary = userDictionary {
-                return User(JSON: userDictionary)
-            }
-            return nil
+            return userStore.user
         }
         set {
-            if let user = newValue {
-                NSUserDefaults(suiteName: RxTapglue.tapglueDefaults)?.setObject(user.toJSON(), forKey: RxTapglue.currentUserTag)
-            } else {
-                NSUserDefaults(suiteName: RxTapglue.tapglueDefaults)?.removeObjectForKey(RxTapglue.currentUserTag)
-            }
+            userStore.user = newValue
         }
     }
     
@@ -45,26 +38,27 @@ public class RxTapglue {
     }
     
     public func loginUser(username: String, password: String) -> Observable<User> {
-        return network.loginUser(username, password: password).map { user in
-            self.currentUser = user
-            return user
-        }
+        return network.loginUser(username, password: password).map(toCurrentUserMap)
     }
 
     public func updateCurrentUser(user: User) -> Observable<User> {
-        return network.updateCurrentUser(user)
+        return network.updateCurrentUser(user).map(toCurrentUserMap)
     }
 
     public func refreshCurrentUser() -> Observable<User> {
-        return network.refreshCurrentUser()
+        return network.refreshCurrentUser().map(toCurrentUserMap)
     }
 
     public func logout() -> Observable<Void> {
-        return network.logout()
+        return network.logout().doOnCompleted {
+            self.currentUser = nil
+        }
     }
     
     public func deleteCurrentUser() -> Observable<Void> {
-        return network.deleteCurrentUser()
+        return network.deleteCurrentUser().doOnCompleted {
+            self.currentUser = nil
+        }
     }
 
     public func retrieveFollowers() -> Observable<[User]> {
@@ -73,5 +67,10 @@ public class RxTapglue {
 
     public func retrieveUser(id: String) -> Observable<User> {
         return network.retrieveUser(id)
+    }
+
+    private func toCurrentUserMap(user: User) -> User {
+        currentUser = user
+        return user
     }
 }

@@ -12,11 +12,12 @@ import Mockingjay
 import Nimble
 @testable import Tapglue
 
-class TapglueTests: XCTestCase {
+class RxTapglueTests: XCTestCase {
     
     let configuration = Configuration()
     var tapglue: RxTapglue!
     let network = TestNetwork()
+    let userStore = TestUserStore()
     
     var analyticsSent = false
     
@@ -26,6 +27,7 @@ class TapglueTests: XCTestCase {
         
         tapglue = RxTapglue(configuration: Configuration())
         tapglue.network = network
+        tapglue.userStore = userStore
     }
     
     override func tearDown() {
@@ -40,12 +42,27 @@ class TapglueTests: XCTestCase {
         expect(networkUser.id).toEventually(equal(network.testUserId))
     }
     
+    func testLoginSetsCurrentUserToStore() {
+        _ = tapglue.loginUser("paco", password: "1234").subscribe()
+        expect(self.userStore.wasSet).toEventually(beTrue())
+    }
+    
+    func testCurrentUserFetchFromStore() {
+        let currentUser = tapglue.currentUser
+        expect(currentUser?.username).toEventually(equal(self.userStore.testUserName))
+    }
+    
     func testRefreshCurrentUser() {
         var networkUser = User()
         _ = tapglue.refreshCurrentUser().subscribeNext { user in
             networkUser = user
         }
         expect(networkUser.id).toEventually(equal(network.testUserId))
+    }
+
+    func testRefreshCurrentUserSetsToStore() {
+        _ = tapglue.refreshCurrentUser().subscribe()
+        expect(self.userStore.wasSet).toEventually(beTrue())
     }
 
     func testCreateUser() {
@@ -64,6 +81,11 @@ class TapglueTests: XCTestCase {
         expect(updatedUser.id).to(equal(network.testUser.id))
     }
 
+    func testUpdateCurrentUserSetsToStore() {
+        _ = tapglue.updateCurrentUser(User()).subscribe()
+        expect(self.userStore.wasSet).toEventually(beTrue())
+    }
+
     func testLogout() {
         var wasLoggedout = false
         _ = tapglue.logout().subscribeCompleted { _ in
@@ -72,12 +94,22 @@ class TapglueTests: XCTestCase {
         expect(wasLoggedout).toEventually(beTruthy())
     }
 
+    func testLogoutResetsStore() {
+        _ = tapglue.logout().subscribe()
+        expect(self.userStore.wasReset).toEventually(beTrue())
+    }
+
     func testDeleteUser() {
         var wasDeleted = false
         _ = tapglue.deleteCurrentUser().subscribeCompleted { void in
             wasDeleted = true
         }
         expect(wasDeleted).toEventually(beTruthy())
+    }
+
+    func testDeleteUserResetsStore() {
+        _ = tapglue.deleteCurrentUser().subscribe()
+        expect(self.userStore.wasReset).toEventually(beTrue())
     }
 
     func testRetrieveUser() {
@@ -144,5 +176,25 @@ class TestNetwork: Network {
 
     override func retrieveFollowers() -> Observable<[User]> {
         return Observable.just([testUser])
+    }
+}
+
+class TestUserStore: UserStore {
+    var wasSet = false
+    var wasReset = false
+    let testUserName = "TestUserStoreUsername"
+    
+    override var user: User? {
+        get {
+            let returnValue = User()
+            returnValue.username = testUserName
+            return returnValue
+        }
+        set {
+            if newValue == nil {
+                wasReset = true
+            }
+            wasSet = true
+        }
     }
 }

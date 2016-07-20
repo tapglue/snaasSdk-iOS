@@ -67,4 +67,10 @@ class UserInteractionTest: XCTestCase {
         expect(altInstance.currentUser).toNot(beNil())
         expect(altInstance.currentUser?.username).to(equal(tapglue.currentUser?.username))
     }
+    
+    func testLogoutDeletesCurrentUserProperty() throws {
+        print(tapglue.currentUser?.username)
+        try tapglue.logout().toBlocking().first()
+        expect(self.tapglue.currentUser).toEventually(beNil())
+    }
 }
