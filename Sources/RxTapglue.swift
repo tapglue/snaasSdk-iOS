@@ -13,9 +13,6 @@ import RxSwift
 
 public class RxTapglue {
     
-    static let tapglueDefaults = "tapglueDefaults"
-    static let currentUserTag = "currentUser"
-    
     var userStore = UserStore()
     
     var network: Network
@@ -31,6 +28,10 @@ public class RxTapglue {
     public init(configuration: Configuration) {
         Router.configuration = configuration
         network = Network()
+        
+        if let sessionToken = currentUser?.sessionToken {
+            Router.sessionToken = sessionToken
+        }
     }
     
     public func createUser(user: User) -> Observable<User> {
