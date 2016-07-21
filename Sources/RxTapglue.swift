@@ -88,7 +88,6 @@ public class RxTapglue {
     }
     
     public func deletePost(id: String) -> Observable<Void> {
-        return network.deletePost(id).doOnCompleted {
-        }
+        return network.deletePost(id)
     }
 }
