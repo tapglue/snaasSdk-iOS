@@ -131,12 +131,35 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testCreatePost() {
-        var networkFollowers = [User]()
         var createdPost = Post()
         _ = tapglue.createPost(network.testPost).subscribeNext { post in
             createdPost = post
         }
-        expect(createdPost.tags).toEventually(equal(network.testPost.tags))
+        expect(createdPost.id).toEventually(equal(network.testPost.id))
+    }
+    
+    func testRetrievePost() {
+        var networkPost = Post()
+        _ = tapglue.retrievePost("1234").subscribeNext { post in
+            networkPost = post
+        }
+        expect(networkPost.id).toEventually(equal(network.testPost.id))
+    }
+    
+    func testUpdatePost() {
+        var updatedPost = Post()
+        _ = tapglue.updatePost(network.testPost).subscribeNext { post in
+            updatedPost = post
+        }
+        expect(updatedPost.id).to(equal(network.testPost.id))
+    }
+    
+    func testDeletePost() {
+        var wasDeleted = false
+        _ = tapglue.deletePost("1234").subscribeCompleted { void in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTruthy())
     }
 }
 
@@ -146,13 +169,13 @@ class TestNetwork: Network {
     let testUserId = "testUserId"
     let testUser: User
     let testPost: Post
-    let testPostTags = ["tag1","tag2"]
+    let testPostId = "testPostId"
     
     override init() {
         testUser = User()
         testUser.id = testUserId
         testPost = Post()
-        testPost.tags = testPostTags
+        testPost.id = testPostId
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
