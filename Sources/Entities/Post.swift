@@ -12,7 +12,7 @@ public class Post: Mappable {
     public var id: String?
     public var visibility: Int?
     public var tags: [String]?
-    public var attachments: Attachment?
+    public var attachments: [Attachment]?
     public var counts: [String:Int]?
     public var createdAt: String?
     public var updatedAt: String?
