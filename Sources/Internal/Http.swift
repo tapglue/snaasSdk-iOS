@@ -49,8 +49,8 @@ class Http {
         }
     }
 
-    private func handleError<T>(data: NSData?,
-                    onObserver observer: AnyObserver<T>, withDefaultError error: NSError) {
+    private func handleError<T>(data: NSData?, onObserver observer: AnyObserver<T>,
+                                withDefaultError error: NSError) {
         if let data = data {
             let json = String(data: data, encoding: NSUTF8StringEncoding)!
             if let errorFeed = Mapper<ErrorFeed>().map(json) {

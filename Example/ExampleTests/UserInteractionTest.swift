@@ -73,4 +73,13 @@ class UserInteractionTest: XCTestCase {
         try tapglue.logout().toBlocking().first()
         expect(self.tapglue.currentUser).toEventually(beNil())
     }
+    
+    func testUserLoginError() {
+        var tapglueError: TapglueError?
+        _ = tapglue.loginUser(username, password: "wrongPassword").subscribeError { error in
+            tapglueError = error as! TapglueError
+        }
+        
+        expect(tapglueError?.code ?? -1).toEventually(equal(0))
+    }
 }
