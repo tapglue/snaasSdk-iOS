@@ -18,7 +18,6 @@ class RxTapglueTests: XCTestCase {
     var tapglue: RxTapglue!
     let network = TestNetwork()
     let userStore = TestUserStore()
-    let postStore = TestPostStore()
     
     var analyticsSent = false
     
@@ -29,7 +28,6 @@ class RxTapglueTests: XCTestCase {
         tapglue = RxTapglue(configuration: Configuration())
         tapglue.network = network
         tapglue.userStore = userStore
-        tapglue.postStore = postStore
     }
     
     override func tearDown() {
@@ -131,7 +129,7 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testCreatePost() {
-        var createdPost = Post()
+        var createdPost = Post(visibility: .Public, attachments: [])
         _ = tapglue.createPost(network.testPost).subscribeNext { post in
             createdPost = post
         }
@@ -139,7 +137,7 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testRetrievePost() {
-        var networkPost = Post()
+        var networkPost = Post(visibility: .Private, attachments: [])
         _ = tapglue.retrievePost("1234").subscribeNext { post in
             networkPost = post
         }
@@ -147,7 +145,7 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testUpdatePost() {
-        var updatedPost = Post()
+        var updatedPost = Post(visibility: .Connections, attachments: [])
         _ = tapglue.updatePost(network.testPost).subscribeNext { post in
             updatedPost = post
         }
@@ -174,7 +172,7 @@ class TestNetwork: Network {
     override init() {
         testUser = User()
         testUser.id = testUserId
-        testPost = Post()
+        testPost = Post(visibility: .Connections, attachments: [])
         testPost.id = testPostId
     }
     
@@ -219,6 +217,21 @@ class TestNetwork: Network {
     override func createPost(post: Post) -> Observable<Post> {
         return Observable.just(testPost)
     }
+
+    override func retrievePost(id: String) -> Observable<Post> {
+        return Observable.just(testPost)
+    }
+
+    override func updatePost(post: Post) -> Observable<Post> {
+        return Observable.just(testPost)
+    }
+
+    override func deletePost(id: String) -> Observable<Void> {
+        return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+    }
 }
 
 class TestUserStore: UserStore {
@@ -230,26 +243,6 @@ class TestUserStore: UserStore {
         get {
             let returnValue = User()
             returnValue.username = testUserName
-            return returnValue
-        }
-        set {
-            if newValue == nil {
-                wasReset = true
-            }
-            wasSet = true
-        }
-    }
-}
-
-class TestPostStore: PostStore {
-    var wasSet = false
-    var wasReset = false
-    let testUserName = "TestPostStoreUsername"
-    
-    override var post: Post? {
-        get {
-            let returnValue = Post()
-            returnValue.tags = testTags
             return returnValue
         }
         set {
