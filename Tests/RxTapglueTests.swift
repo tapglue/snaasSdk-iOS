@@ -127,6 +127,38 @@ class RxTapglueTests: XCTestCase {
         }
         expect(networkFollowers).to(contain(network.testUser))
     }
+    
+    func testCreatePost() {
+        var createdPost = Post(visibility: .Public, attachments: [])
+        _ = tapglue.createPost(network.testPost).subscribeNext { post in
+            createdPost = post
+        }
+        expect(createdPost.id).toEventually(equal(network.testPost.id))
+    }
+    
+    func testRetrievePost() {
+        var networkPost = Post(visibility: .Private, attachments: [])
+        _ = tapglue.retrievePost("1234").subscribeNext { post in
+            networkPost = post
+        }
+        expect(networkPost.id).toEventually(equal(network.testPost.id))
+    }
+    
+    func testUpdatePost() {
+        var updatedPost = Post(visibility: .Connections, attachments: [])
+        _ = tapglue.updatePost(network.testPost).subscribeNext { post in
+            updatedPost = post
+        }
+        expect(updatedPost.id).to(equal(network.testPost.id))
+    }
+    
+    func testDeletePost() {
+        var wasDeleted = false
+        _ = tapglue.deletePost("1234").subscribeCompleted { void in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTruthy())
+    }
 }
 
 class TestNetwork: Network {
@@ -134,10 +166,14 @@ class TestNetwork: Network {
     
     let testUserId = "testUserId"
     let testUser: User
+    let testPost: Post
+    let testPostId = "testPostId"
     
     override init() {
         testUser = User()
         testUser.id = testUserId
+        testPost = Post(visibility: .Connections, attachments: [])
+        testPost.id = testPostId
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
@@ -176,6 +212,25 @@ class TestNetwork: Network {
 
     override func retrieveFollowers() -> Observable<[User]> {
         return Observable.just([testUser])
+    }
+    
+    override func createPost(post: Post) -> Observable<Post> {
+        return Observable.just(testPost)
+    }
+
+    override func retrievePost(id: String) -> Observable<Post> {
+        return Observable.just(testPost)
+    }
+
+    override func updatePost(post: Post) -> Observable<Post> {
+        return Observable.just(testPost)
+    }
+
+    override func deletePost(id: String) -> Observable<Void> {
+        return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
     }
 }
 

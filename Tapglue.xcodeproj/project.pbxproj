@@ -54,6 +54,7 @@
 		52D8AE701D2558C200AC947E /* ObjectMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52E380381D2A847E003A157E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380371D2A847E003A157E /* Router.swift */; };
 		52E3803A1D2A9F3E003A157E /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380391D2A9F3E003A157E /* RouterTest.swift */; };
+		9753AB5D1D40BA22005154F0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9753AB5C1D40BA22005154F0 /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		52E380371D2A847E003A157E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		52E380391D2A9F3E003A157E /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
+		9753AB5C1D40BA22005154F0 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				52C93F001D2BD3AC00E166F7 /* User.swift */,
+				9753AB5C1D40BA22005154F0 /* Post.swift */,
 				52BF703C1D40BADF00D88AAC /* TapglueError.swift */,
 			);
 			path = Entities;
@@ -397,6 +400,7 @@
 				52BA9FEA1D2FA56A005B4622 /* UserFeed.swift in Sources */,
 				5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */,
 				52E380381D2A847E003A157E /* Router.swift in Sources */,
+				9753AB5D1D40BA22005154F0 /* Post.swift in Sources */,
 				52C93F011D2BD3AC00E166F7 /* User.swift in Sources */,
 				528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */,
 				528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */,
