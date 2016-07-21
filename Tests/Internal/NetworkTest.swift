@@ -28,7 +28,7 @@ class NetworkTest: XCTestCase {
 
         network = Network()
         sampleUserFeed["users"] = [sampleUser]
-        samplePost = ["visibility": 20, "attachments": [], "id_string": "postIdString"]
+        samplePost = ["visibility": 20, "attachments": [], "id": "postIdString"]
     }
     
     override func tearDown() {

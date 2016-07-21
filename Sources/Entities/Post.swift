@@ -27,7 +27,7 @@ public class Post: Mappable {
     }
     
     public func mapping(map: Map) {
-        id          <- map["id_string"]
+        id          <- map["id"]
         visibility  <- map["visibility"]
         tags        <- map["tags"]
         attachments <- map["attachments"]

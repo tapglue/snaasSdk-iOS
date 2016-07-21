@@ -42,8 +42,7 @@ class PostTest: XCTestCase {
         }
     }
     
-    func testPostCreate() {
-        
+    func testCreatePost() {
         let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
         let post = Post(visibility: .Connections, attachments: [attachment])
         
@@ -54,4 +53,18 @@ class PostTest: XCTestCase {
         
         expect(networkPost?.id).toEventuallyNot(beNil())
     }
+    
+    func testDeletePost() throws {
+        let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
+        let post = Post(visibility: .Connections, attachments: [attachment])
+        let networkPost = try tapglue.createPost(post).toBlocking().first()!
+
+        var wasDeleted = false
+        _ = tapglue.deletePost(networkPost.id!).subscribeCompleted {
+            wasDeleted = true
+        }
+
+        expect(wasDeleted).toEventually(beTrue())
+    }
+    
 }
