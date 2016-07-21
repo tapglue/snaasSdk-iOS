@@ -18,6 +18,7 @@ class RxTapglueTests: XCTestCase {
     var tapglue: RxTapglue!
     let network = TestNetwork()
     let userStore = TestUserStore()
+    let postStore = TestPostStore()
     
     var analyticsSent = false
     
@@ -28,6 +29,7 @@ class RxTapglueTests: XCTestCase {
         tapglue = RxTapglue(configuration: Configuration())
         tapglue.network = network
         tapglue.userStore = userStore
+        tapglue.postStore = postStore
     }
     
     override func tearDown() {
@@ -127,6 +129,15 @@ class RxTapglueTests: XCTestCase {
         }
         expect(networkFollowers).to(contain(network.testUser))
     }
+    
+    func testCreatePost() {
+        var networkFollowers = [User]()
+        var createdPost = Post()
+        _ = tapglue.createPost(network.testPost).subscribeNext { post in
+            createdPost = post
+        }
+        expect(createdPost.tags).toEventually(equal(network.testPost.tags))
+    }
 }
 
 class TestNetwork: Network {
@@ -134,10 +145,14 @@ class TestNetwork: Network {
     
     let testUserId = "testUserId"
     let testUser: User
+    let testPost: Post
+    let testPostTags = ["tag1","tag2"]
     
     override init() {
         testUser = User()
         testUser.id = testUserId
+        testPost = Post()
+        testPost.tags = testPostTags
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
@@ -177,6 +192,10 @@ class TestNetwork: Network {
     override func retrieveFollowers() -> Observable<[User]> {
         return Observable.just([testUser])
     }
+    
+    override func createPost(post: Post) -> Observable<Post> {
+        return Observable.just(testPost)
+    }
 }
 
 class TestUserStore: UserStore {
@@ -188,6 +207,26 @@ class TestUserStore: UserStore {
         get {
             let returnValue = User()
             returnValue.username = testUserName
+            return returnValue
+        }
+        set {
+            if newValue == nil {
+                wasReset = true
+            }
+            wasSet = true
+        }
+    }
+}
+
+class TestPostStore: PostStore {
+    var wasSet = false
+    var wasReset = false
+    let testUserName = "TestPostStoreUsername"
+    
+    override var post: Post? {
+        get {
+            let returnValue = Post()
+            returnValue.tags = testTags
             return returnValue
         }
         set {
