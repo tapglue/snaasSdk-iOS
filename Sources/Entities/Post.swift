@@ -10,15 +10,16 @@ import ObjectMapper
 
 public class Post: Mappable {
     public var id: String?
-    public var visibility: Int?
+    public var visibility: Visibility?
     public var tags: [String]?
     public var attachments: [Attachment]?
     public var counts: [String:Int]?
     public var createdAt: String?
     public var updatedAt: String?
     
-    public init() {
-        
+    public init(visibility: Visibility, attachments: [Attachment]) {
+        self.visibility = visibility
+        self.attachments = attachments
     }
     
     required public init?(_ map: Map) {
@@ -40,10 +41,12 @@ public class Post: Mappable {
 public class Attachment: Mappable {
     public var contents: [String:String]?
     public var name: String?
-    public var type: String?
+    public var type: Type?
     
-    public init() {
-        
+    public init (contents:[String:String], name: String, type: Type) {
+        self.contents = contents
+        self.name = name
+        self.type = type
     }
     
     required public init?(_ map: Map) {
@@ -55,4 +58,12 @@ public class Attachment: Mappable {
         name        <- map["name"]
         type        <- map["type"]
     }
+}
+
+public enum Visibility: Int {
+    case Private = 10, Connections = 20, Public = 30
+}
+
+public enum Type: String {
+    case Text = "text", URL = "url", Image = "image"
 }

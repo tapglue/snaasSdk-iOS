@@ -43,19 +43,15 @@ class PostTest: XCTestCase {
     }
     
     func testPostCreate() {
-        var post = Post()
-        post.visibility = 10
-        var attachment = Attachment()
-        attachment.name = "my attachment"
-        attachment.type = "text"
-        attachment.contents = ["en":"contet"]
-        post.attachments = [attachment]
         
-        var networkPost = Post()
-        tapglue.createPost(post).subscribeNext { post in
+        let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
+        let post = Post(visibility: .Connections, attachments: [attachment])
+        
+        var networkPost: Post?
+        _ = tapglue.createPost(post).subscribeNext { post in
             networkPost = post
         }
         
-        expect(networkPost.id).toEventuallyNot(beNil())
+        expect(networkPost?.id ?? "").toEventuallyNot(beNil())
     }
 }
