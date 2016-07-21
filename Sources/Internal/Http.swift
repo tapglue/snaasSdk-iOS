@@ -1,4 +1,4 @@
-//
+    //
 //  Http.swift
 //  Tapglue
 //
@@ -25,14 +25,7 @@ class Http {
                         observer.on(.Next(value))
                         observer.on(.Completed)
                     case .Failure(let error):
-                        if let data = response.data {
-                            let json = String(data: data, encoding: NSUTF8StringEncoding)!
-                            if let tapglueError = Mapper<TapglueError>().map(json) {
-                                observer.on(.Error(tapglueError))
-                            } else {
-                                observer.on(.Error(error))
-                            }
-                        }
+                        self.handleError(response.data, onObserver: observer, withDefaultError:error)
                     }
                 }
             return NopDisposable.instance
@@ -49,14 +42,23 @@ class Http {
                     case .Success:
                         observer.on(.Completed)
                     case .Failure(let error):
-                        observer.on(.Error(error))
-                        if let data = response.data {
-                            let json = String(data: data, encoding: NSUTF8StringEncoding)
-                            print("Failure Response: \(json)")
-                        }
+                        self.handleError(response.data, onObserver: observer, withDefaultError: error)
                     }
             }
             return NopDisposable.instance
+        }
+    }
+
+    private func handleError<T>(data: NSData?,
+                    onObserver observer: AnyObserver<T>, withDefaultError error: NSError) {
+        if let data = data {
+            let json = String(data: data, encoding: NSUTF8StringEncoding)!
+            if let errorFeed = Mapper<ErrorFeed>().map(json) {
+                let tapglueErrors = errorFeed.errors!
+                observer.on(.Error(tapglueErrors[0]))
+            } else {
+                observer.on(.Error(error))
+            }
         }
     }
 }

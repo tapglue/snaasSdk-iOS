@@ -12,6 +12,10 @@ public class TapglueError: Mappable, ErrorType {
     public var code: Int?
     public var message: String?
     
+    init() {
+        
+    }
+    
     required public init?(_ map: Map) {
         
     }

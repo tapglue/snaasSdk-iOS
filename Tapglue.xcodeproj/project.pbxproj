@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5202B7671D266A0A0069BA06 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5202B7661D266A0A0069BA06 /* RxSwift.framework */; };
 		5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */; };
+		5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */; };
 		5252C94D1D21BFA9009AADBC /* Tapglue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5252C94C1D21BFA9009AADBC /* Tapglue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5252C9541D21BFA9009AADBC /* Tapglue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5252C9491D21BFA9009AADBC /* Tapglue.framework */; };
 		5252C9591D21BFA9009AADBC /* RxTapglueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252C9581D21BFA9009AADBC /* RxTapglueTests.swift */; };
@@ -87,6 +88,7 @@
 /* Begin PBXFileReference section */
 		5202B7661D266A0A0069BA06 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+Logging.swift"; sourceTree = "<group>"; };
+		5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorFeed.swift; sourceTree = "<group>"; };
 		5233AC371D2E32910076CC02 /* Matchers+Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Matchers+Payload.swift"; sourceTree = "<group>"; };
 		5233AC391D2E3B710076CC02 /* NSInputStream+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSInputStream+String.swift"; sourceTree = "<group>"; };
 		5252C9491D21BFA9009AADBC /* Tapglue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tapglue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				52BA9FE91D2FA56A005B4622 /* UserFeed.swift */,
+				5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				529A3D2E1D34D97F0069BF10 /* Observable+unwrapping.swift in Sources */,
 				5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */,
 				52BA9FEA1D2FA56A005B4622 /* UserFeed.swift in Sources */,
+				5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */,
 				52E380381D2A847E003A157E /* Router.swift in Sources */,
 				52C93F011D2BD3AC00E166F7 /* User.swift in Sources */,
 				528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */,
