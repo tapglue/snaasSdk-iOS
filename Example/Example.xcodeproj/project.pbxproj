@@ -23,6 +23,7 @@
 		52963E451D2584C20008CEF8 /* Tapglue.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52963DA91D25699C0008CEF8 /* Tapglue.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		529A3D321D35140B0069BF10 /* LoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D311D35140B0069BF10 /* LoginTest.swift */; };
 		52F3F0811D3532CC00762963 /* UserInteractionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3F0801D3532CC00762963 /* UserInteractionTest.swift */; };
+		9753AB611D40C94C005154F0 /* PostTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9753AB601D40C94C005154F0 /* PostTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		52963E0A1D257B720008CEF8 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		529A3D311D35140B0069BF10 /* LoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTest.swift; sourceTree = "<group>"; };
 		52F3F0801D3532CC00762963 /* UserInteractionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractionTest.swift; sourceTree = "<group>"; };
+		9753AB601D40C94C005154F0 /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				526B178A1D2567DE0086EF95 /* Info.plist */,
 				529A3D311D35140B0069BF10 /* LoginTest.swift */,
 				52F3F0801D3532CC00762963 /* UserInteractionTest.swift */,
+				9753AB601D40C94C005154F0 /* PostTest.swift */,
 			);
 			path = ExampleTests;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 			files = (
 				529A3D321D35140B0069BF10 /* LoginTest.swift in Sources */,
 				52F3F0811D3532CC00762963 /* UserInteractionTest.swift in Sources */,
+				9753AB611D40C94C005154F0 /* PostTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
