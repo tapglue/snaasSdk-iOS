@@ -25,10 +25,13 @@ class Http {
                         observer.on(.Next(value))
                         observer.on(.Completed)
                     case .Failure(let error):
-                        observer.on(.Error(error))
                         if let data = response.data {
-                            let json = String(data: data, encoding: NSUTF8StringEncoding)
-                            print("Failure Response: \(json)")
+                            let json = String(data: data, encoding: NSUTF8StringEncoding)!
+                            if let tapglueError = Mapper<TapglueError>().map(json) {
+                                observer.on(.Error(tapglueError))
+                            } else {
+                                observer.on(.Error(error))
+                            }
                         }
                     }
                 }
