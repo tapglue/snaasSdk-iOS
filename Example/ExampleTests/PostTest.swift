@@ -18,6 +18,9 @@ class PostTest: XCTestCase {
     let password = "PostTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
     var user = User()
+
+    let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
+    var post: Post!
     
     override func setUp() {
         super.setUp()
@@ -27,6 +30,8 @@ class PostTest: XCTestCase {
         do {
             user = try tapglue.createUser(user).toBlocking().first()!
             user = try tapglue.loginUser(username, password: password).toBlocking().first()!
+
+            post = Post(visibility: .Connections, attachments: [attachment])
         } catch {
             fail("failed to create and login user for integration tests")
         }
@@ -43,9 +48,6 @@ class PostTest: XCTestCase {
     }
     
     func testCreatePost() {
-        let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
-        let post = Post(visibility: .Connections, attachments: [attachment])
-        
         var networkPost: Post?
         _ = tapglue.createPost(post).subscribeNext { post in
             networkPost = post
@@ -55,8 +57,6 @@ class PostTest: XCTestCase {
     }
     
     func testDeletePost() throws {
-        let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
-        let post = Post(visibility: .Connections, attachments: [attachment])
         let networkPost = try tapglue.createPost(post).toBlocking().first()!
 
         var wasDeleted = false
@@ -66,5 +66,18 @@ class PostTest: XCTestCase {
 
         expect(wasDeleted).toEventually(beTrue())
     }
-    
+
+    func testRetrievePost() throws {
+        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+        let retrievedPost = try tapglue.retrievePost(createdPost.id!).toBlocking().first()!
+        expect(createdPost.id!).to(equal(retrievedPost.id!))
+    }
+
+    func testUpdatePost() throws {
+        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+        createdPost.attachments!.append(Attachment(contents: ["es":"contenidos"], name: "spanish", type: .Text))
+        let updatedPost = try tapglue.updatePost(createdPost).toBlocking().first()
+        
+        expect(updatedPost?.attachments?.count).to(equal(2))
+    }
 }
