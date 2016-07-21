@@ -52,6 +52,6 @@ class PostTest: XCTestCase {
             networkPost = post
         }
         
-        expect(networkPost?.id ?? "").toEventuallyNot(beNil())
+        expect(networkPost?.id).toEventuallyNot(beNil())
     }
 }
