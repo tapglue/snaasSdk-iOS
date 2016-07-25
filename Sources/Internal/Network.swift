@@ -60,4 +60,20 @@ class Network {
             return userFeed.users
         }
     }
+    
+    func createPost(post: Post) -> Observable<Post> {
+        return http.execute(Router.post("/posts", payload: post.toJSON()))
+    }
+    
+    func retrievePost(id: String) -> Observable<Post> {
+        return http.execute(Router.get("/posts/" + id))
+    }
+    
+    func updatePost(post: Post) -> Observable<Post> {
+        return http.execute(Router.put("/posts/" + post.id!, payload: post.toJSON()))
+    }
+    
+    func deletePost(id: String) -> Observable<Void> {
+        return http.execute(Router.delete("/posts/" + id))
+    }
 }

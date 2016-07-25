@@ -13,13 +13,14 @@ class Router: URLRequestConvertible {
     static var configuration: Configuration? {
         didSet {
             if let configuration = configuration {
-                baseUrl = configuration.baseUrl
+                baseUrl = configuration.baseUrl + Router.apiVersion
                 appToken = configuration.appToken
             }
         }
     }
     
     static let sdkVersion = "2.0.0"
+    private static let apiVersion = "/0.4"
     private static var baseUrl = "https://api.tapglue.com/0.4"
     private static var appToken = ""
     static var sessionToken = ""

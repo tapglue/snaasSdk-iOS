@@ -13,7 +13,9 @@ import Nimble
 
 class NetworkTest: XCTestCase {
 
+    let postId = "postIdString"
     let sampleUser = ["user_name":"user1","id_string":"someId213","password":"1234", "session_token":"someToken"]
+    var samplePost: [String:AnyObject]!
     var sampleUserFeed = [String: AnyObject]()
     var network: Network!
 
@@ -26,6 +28,7 @@ class NetworkTest: XCTestCase {
 
         network = Network()
         sampleUserFeed["users"] = [sampleUser]
+        samplePost = ["visibility": 20, "attachments": [], "id": "postIdString"]
     }
     
     override func tearDown() {
@@ -139,5 +142,44 @@ class NetworkTest: XCTestCase {
             followers = users
         }
         expect(followers).toNotEventually(contain(sampleUser))
+    }
+
+    func testCreatePost() {
+        stub(http(.POST, uri: "/0.4/posts"), builder: json(samplePost))
+        var networkPost: Post?
+        let post = Post(visibility: .Public, attachments: [])
+        _ = network.createPost(post).subscribeNext { post in
+            networkPost = post
+        }
+        expect(networkPost?.id).toEventually(equal(postId))
+    }
+
+    func testRetrievePost() {
+        stub(http(.GET, uri: "/0.4/posts/" + postId), builder: json(samplePost))
+        var networkPost: Post?
+        _ = network.retrievePost(postId).subscribeNext { post in
+            networkPost = post
+        }
+        expect(networkPost?.id).toEventually(equal(postId))
+    }
+
+    func testUpdatePost() {
+        stub(http(.PUT, uri: "/0.4/posts/" + postId), builder: json(samplePost))
+        var networkPost: Post?
+        let post = Post(visibility: .Private, attachments: [])
+        post.id = postId
+        _ = network.updatePost(post).subscribeNext {post in
+            networkPost = post
+        }
+        expect(networkPost?.id).toEventually(equal(postId))
+    }
+
+    func testDeletePost() {
+        stub(http(.DELETE, uri: "/0.4/posts/" + postId), builder: http(204))
+        var wasDeleted = false
+        _ = network.deletePost(postId).subscribeCompleted {
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTrue())
     }
 }

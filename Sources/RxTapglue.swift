@@ -74,4 +74,20 @@ public class RxTapglue {
         currentUser = user
         return user
     }
+    
+    public func createPost(post: Post) -> Observable<Post> {
+        return network.createPost(post)
+    }
+    
+    public func retrievePost(id: String) -> Observable<Post> {
+        return network.retrievePost(id)
+    }
+    
+    public func updatePost(post: Post) -> Observable<Post> {
+        return network.updatePost(post)
+    }
+    
+    public func deletePost(id: String) -> Observable<Void> {
+        return network.deletePost(id)
+    }
 }
