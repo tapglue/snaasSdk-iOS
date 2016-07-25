@@ -127,6 +127,14 @@ class RxTapglueTests: XCTestCase {
         }
         expect(networkFollowers).to(contain(network.testUser))
     }
+
+    func testRetrieveFollowings() {
+        var networkFollowings = [User]()
+        _ = tapglue.retrieveFollowings().subscribeNext { users in
+            networkFollowings = users
+        }
+        expect(networkFollowings).to(contain(network.testUser))
+    }
     
     func testCreatePost() {
         var createdPost = Post(visibility: .Public, attachments: [])
@@ -211,6 +219,10 @@ class TestNetwork: Network {
     }
 
     override func retrieveFollowers() -> Observable<[User]> {
+        return Observable.just([testUser])
+    }
+
+    override func retrieveFollowings() -> Observable<[User]> {
         return Observable.just([testUser])
     }
     

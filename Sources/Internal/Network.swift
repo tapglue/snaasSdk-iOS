@@ -60,6 +60,12 @@ class Network {
             return userFeed.users
         }
     }
+
+    func retrieveFollowings() -> Observable<[User]> {
+        return http.execute(Router.get("/me/followings")).map { (userFeed:UserFeed) in
+            return userFeed.users
+        }
+    }
     
     func createPost(post: Post) -> Observable<Post> {
         return http.execute(Router.post("/posts", payload: post.toJSON()))
