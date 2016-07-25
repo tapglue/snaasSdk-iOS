@@ -14,7 +14,8 @@ import Nimble
 class NetworkTest: XCTestCase {
 
     let postId = "postIdString"
-    let sampleUser = ["user_name":"user1","id_string":"someId213","password":"1234", "session_token":"someToken"]
+    let userId = "someId213"
+    var sampleUser: [String: AnyObject]!
     var samplePost: [String:AnyObject]!
     var sampleUserFeed = [String: AnyObject]()
     var network: Network!
@@ -27,6 +28,7 @@ class NetworkTest: XCTestCase {
         Network.analyticsSent = false
 
         network = Network()
+        sampleUser = ["user_name":"user1","id_string": userId,"password":"1234", "session_token":"someToken"]
         sampleUserFeed["users"] = [sampleUser]
         samplePost = ["visibility": 20, "attachments": [], "id": "postIdString"]
     }
@@ -142,7 +144,7 @@ class NetworkTest: XCTestCase {
             followers = users
         }
         expect(followers.count).toEventually(equal(1))
-        expect(followers[0].username).toEventually(equal("user1"))
+        expect(followers.first?.username).toEventually(equal("user1"))
     }
 
     func testRetrieveFollowings() {
@@ -152,7 +154,17 @@ class NetworkTest: XCTestCase {
             followings = users
         }
         expect(followings.count).toEventually(equal(1))
-        expect(followings[0].username).toEventually(equal("user1"))
+        expect(followings.first?.username).toEventually(equal("user1"))
+    }
+
+    func testRetrieveFollowersForUserId() {
+        stub(http(.GET, uri: "/0.4/users/" + userId + "/followers"), builder: json(sampleUserFeed))
+        var followers = [User]()
+        _ = network.retrieveFollowersForUserId(userId).subscribeNext { users in
+            followers = users
+        }
+        expect(followers.count).toEventually(equal(1))
+        expect(followers.first?.id).toEventually(equal(userId))
     }
 
     func testCreatePost() {
