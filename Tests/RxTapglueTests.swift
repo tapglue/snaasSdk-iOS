@@ -19,8 +19,6 @@ class RxTapglueTests: XCTestCase {
     let network = TestNetwork()
     let userStore = TestUserStore()
     
-    var analyticsSent = false
-    
     override func setUp() {
         super.setUp()
         stub(http(.POST, uri: "/0.4/analytics"), builder: http(204))
