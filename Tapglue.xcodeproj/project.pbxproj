@@ -10,6 +10,7 @@
 		5202B7671D266A0A0069BA06 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5202B7661D266A0A0069BA06 /* RxSwift.framework */; };
 		5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */; };
 		5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */; };
+		5211EB931D460F2B0030CF9C /* Tapglue.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 5211EB921D460F2B0030CF9C /* Tapglue.podspec */; };
 		5252C94D1D21BFA9009AADBC /* Tapglue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5252C94C1D21BFA9009AADBC /* Tapglue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5252C9541D21BFA9009AADBC /* Tapglue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5252C9491D21BFA9009AADBC /* Tapglue.framework */; };
 		5252C9591D21BFA9009AADBC /* RxTapglueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252C9581D21BFA9009AADBC /* RxTapglueTests.swift */; };
@@ -89,6 +90,7 @@
 		5202B7661D266A0A0069BA06 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+Logging.swift"; sourceTree = "<group>"; };
 		5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorFeed.swift; sourceTree = "<group>"; };
+		5211EB921D460F2B0030CF9C /* Tapglue.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tapglue.podspec; sourceTree = "<group>"; };
 		5233AC371D2E32910076CC02 /* Matchers+Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Matchers+Payload.swift"; sourceTree = "<group>"; };
 		5233AC391D2E3B710076CC02 /* NSInputStream+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSInputStream+String.swift"; sourceTree = "<group>"; };
 		5252C9491D21BFA9009AADBC /* Tapglue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tapglue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +162,7 @@
 		5252C93F1D21BFA9009AADBC = {
 			isa = PBXGroup;
 			children = (
+				5211EB921D460F2B0030CF9C /* Tapglue.podspec */,
 				52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */,
 				52BA9FDF1D2E9A3F005B4622 /* URITemplate.framework */,
 				528481D61D2AC6050090BA29 /* Nimble.framework */,
@@ -352,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D8AE5C1D229A7D00AC947E /* Cartfile in Resources */,
+				5211EB931D460F2B0030CF9C /* Tapglue.podspec in Resources */,
 				52C93EFF1D2BCCFA00E166F7 /* Cartfile.private in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
