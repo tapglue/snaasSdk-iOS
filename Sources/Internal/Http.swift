@@ -27,8 +27,8 @@ class Http {
                             observer.on(.Next(object))
                         } else {
                             if let nf = T.self as? NullableFeed.Type {
-                                let object = nf.init()
-                                observer.on(.Next(object as! T))
+                                let defaultObject = nf.init()
+                                observer.on(.Next(defaultObject as! T))
                             }
                         }
                         observer.on(.Completed)
