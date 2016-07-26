@@ -54,6 +54,14 @@ class Network {
     func retrieveUser(id: String) -> Observable<User> {
         return http.execute(Router.get("/users/" + id))
     }
+    
+    func createConnection(connection: Connection) -> Observable<Connection> {
+        return http.execute(Router.put("/me/connections", payload: connection.toJSON()))
+    }
+
+    func deleteConnection(toUserId userId: String, type: ConnectionType) -> Observable<Void> {
+        return http.execute(Router.delete("/me/connections/" + type.rawValue + "/" + userId))
+    }
 
     func retrieveFollowers() -> Observable<[User]> {
         return http.execute(Router.get("/me/followers")).map { (userFeed:UserFeed) in

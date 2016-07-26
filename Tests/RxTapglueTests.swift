@@ -118,6 +118,27 @@ class RxTapglueTests: XCTestCase {
         expect(networkUser.id).toEventually(equal(network.testUser.id))
     }
 
+    func testCreateConnection() {
+        let connection = Connection(toUserId:"232", type: .Follow, state: .Confirmed)
+        var networkConnection: Connection?
+        _ = tapglue.createConnection(connection).subscribeNext { connection in
+            networkConnection = connection
+        }
+        expect(networkConnection).toEventuallyNot(beNil())
+    }
+
+    func testDeleteConnection() {
+        let userId = "2131"
+        let type = ConnectionType.Follow
+        var wasDeleted = false
+
+        _ = tapglue.deleteConnection(toUserId: userId, type: type).subscribeCompleted {
+            wasDeleted = true
+        }
+
+        expect(wasDeleted).toEventually(beTrue())
+    }
+
     func testRetrieveFollowers() {
         var networkFollowers = [User]()
         _ = tapglue.retrieveFollowers().subscribeNext { users in
@@ -189,10 +210,12 @@ class TestNetwork: Network {
     let testUserId = "testUserId"
     let testUser: User
     let testPost: Post
+    let testConnection: Connection
     let testPostId = "testPostId"
     
     override init() {
         testUser = User()
+        testConnection = Connection(toUserId: "213", type: .Follow, state: .Confirmed)
         testUser.id = testUserId
         testPost = Post(visibility: .Connections, attachments: [])
         testPost.id = testPostId
@@ -230,6 +253,17 @@ class TestNetwork: Network {
 
     override func retrieveUser(id: String) -> Observable<User> {
         return Observable.just(testUser)
+    }
+    
+    override func createConnection(connection: Connection) -> Observable<Connection> {
+        return Observable.just(testConnection)
+    }
+
+    override func deleteConnection(toUserId userId: String, type: ConnectionType) -> Observable<Void> {
+        return Observable.create {observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
     }
 
     override func retrieveFollowers() -> Observable<[User]> {

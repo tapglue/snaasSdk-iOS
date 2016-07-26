@@ -62,6 +62,15 @@ public class RxTapglue {
         }
     }
 
+    public func createConnection(connection: Connection) -> Observable<Connection> {
+        return network.createConnection(connection)
+    }
+
+    public func deleteConnection(toUserId userId: String, type: ConnectionType) 
+                            -> Observable<Void> {
+        return network.deleteConnection(toUserId: userId, type: type)
+    }
+
     public func retrieveFollowers() -> Observable<[User]> {
         return network.retrieveFollowers()
     }

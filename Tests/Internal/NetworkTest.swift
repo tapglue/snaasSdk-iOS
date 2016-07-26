@@ -18,6 +18,7 @@ class NetworkTest: XCTestCase {
     var sampleUser: [String: AnyObject]!
     var samplePost: [String:AnyObject]!
     var sampleUserFeed = [String: AnyObject]()
+    var sampleConnection: [String:AnyObject]!
     var network: Network!
 
     var analyticsSent = false
@@ -31,6 +32,7 @@ class NetworkTest: XCTestCase {
         sampleUser = ["user_name":"user1","id_string": userId,"password":"1234", "session_token":"someToken"]
         sampleUserFeed["users"] = [sampleUser]
         samplePost = ["visibility": 20, "attachments": [], "id": "postIdString"]
+        sampleConnection = ["user_to_id_string": userId, "type":"follow", "state":"confirmed"]
     }
     
     override func tearDown() {
@@ -135,6 +137,26 @@ class NetworkTest: XCTestCase {
             networkUser = user
         }
         expect(networkUser.username).toEventually(equal("user1"))
+    }
+
+    func testCreateConnection() {
+        stub(http(.PUT, uri: "/0.4/me/connections"), builder: json(sampleConnection))
+        var networkConnection: Connection?
+        let connection = Connection(toUserId: "2123", type: .Follow, state: .Confirmed)
+        _ = network.createConnection(connection).subscribeNext { connection in
+            networkConnection = connection
+        }
+        expect(networkConnection?.userToId).toEventually(equal(userId))
+        expect(networkConnection?.type).toEventually(equal(ConnectionType.Follow))
+    }
+
+    func testDeleteConnection() {
+        stub(http(.DELETE, uri: "/0.4/me/connections/follow/"+userId), builder: http(204))
+        var wasDeleted = false
+        _ = network.deleteConnection(toUserId: userId, type: .Follow).subscribeCompleted {
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTrue())
     }
     
     func testRetrieveFollowers() {
