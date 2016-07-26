@@ -9,11 +9,15 @@
 import Foundation
 import ObjectMapper
 
-class UserFeed: Mappable {
+class UserFeed: NullableFeed {
     var users: [User]?
     
     required init?(_ map: Map) {
         
+    }
+    
+    required init() {
+        self.users = [User]()
     }
     
     func mapping(map: Map) {

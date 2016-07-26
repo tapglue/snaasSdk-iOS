@@ -19,6 +19,7 @@
 		52540EE41D2D35B10007A9DB /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5202B7661D266A0A0069BA06 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52540EE91D2D4D090007A9DB /* NetworkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52540EE81D2D4D090007A9DB /* NetworkTest.swift */; };
 		528079C81D474843000194AC /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079C71D474843000194AC /* Connection.swift */; };
+		528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079CC1D47A32F000194AC /* NullableFeed.swift */; };
 		528481D71D2AC6050090BA29 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528481D61D2AC6050090BA29 /* Nimble.framework */; };
 		528481D81D2AC60E0090BA29 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 528481D61D2AC6050090BA29 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481D91D2B9ABE0090BA29 /* Configuration.swift */; };
@@ -104,6 +105,7 @@
 		52540EE11D2BE2DC0007A9DB /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		52540EE81D2D4D090007A9DB /* NetworkTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTest.swift; sourceTree = "<group>"; };
 		528079C71D474843000194AC /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		528079CC1D47A32F000194AC /* NullableFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NullableFeed.swift; sourceTree = "<group>"; };
 		528481D61D2AC6050090BA29 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		528481D91D2B9ABE0090BA29 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		528481DB1D2BAFD80090BA29 /* Encoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			children = (
 				52BA9FE91D2FA56A005B4622 /* UserFeed.swift */,
 				5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */,
+				528079CC1D47A32F000194AC /* NullableFeed.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */,
 				52BA9FE71D2F8098005B4622 /* Http.swift in Sources */,
 				528079C81D474843000194AC /* Connection.swift in Sources */,
+				528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */,
 				52540EE21D2BE2DC0007A9DB /* Network.swift in Sources */,
 				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
 				52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */,
