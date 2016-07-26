@@ -16,6 +16,7 @@
 		526B17791D2567DE0086EF95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526B17771D2567DE0086EF95 /* Main.storyboard */; };
 		526B177B1D2567DE0086EF95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526B177A1D2567DE0086EF95 /* Assets.xcassets */; };
 		526B177E1D2567DE0086EF95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526B177C1D2567DE0086EF95 /* LaunchScreen.storyboard */; };
+		528079CA1D477E6B000194AC /* ConnectionIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079C91D477E6B000194AC /* ConnectionIntegrationTest.swift */; };
 		52963E0F1D257B720008CEF8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963E081D257B720008CEF8 /* Alamofire.framework */; };
 		52963E101D257B720008CEF8 /* AlamofireObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963E091D257B720008CEF8 /* AlamofireObjectMapper.framework */; };
 		52963E111D257B720008CEF8 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963E0A1D257B720008CEF8 /* ObjectMapper.framework */; };
@@ -94,6 +95,7 @@
 		526B177F1D2567DE0086EF95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526B17841D2567DE0086EF95 /* ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526B178A1D2567DE0086EF95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		528079C91D477E6B000194AC /* ConnectionIntegrationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionIntegrationTest.swift; sourceTree = "<group>"; };
 		52963DA31D25699C0008CEF8 /* Tapglue.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tapglue.xcodeproj; path = ../Tapglue.xcodeproj; sourceTree = "<group>"; };
 		52963E081D257B720008CEF8 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		52963E091D257B720008CEF8 /* AlamofireObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireObjectMapper.framework; path = Carthage/Build/iOS/AlamofireObjectMapper.framework; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				529A3D311D35140B0069BF10 /* LoginTest.swift */,
 				52F3F0801D3532CC00762963 /* UserInteractionTest.swift */,
 				9753AB601D40C94C005154F0 /* PostTest.swift */,
+				528079C91D477E6B000194AC /* ConnectionIntegrationTest.swift */,
 			);
 			path = ExampleTests;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 			files = (
 				529A3D321D35140B0069BF10 /* LoginTest.swift in Sources */,
 				52F3F0811D3532CC00762963 /* UserInteractionTest.swift in Sources */,
+				528079CA1D477E6B000194AC /* ConnectionIntegrationTest.swift in Sources */,
 				9753AB611D40C94C005154F0 /* PostTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

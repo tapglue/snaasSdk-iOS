@@ -170,7 +170,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveFollowings() {
-        stub(http(.GET, uri: "/0.4/me/followings"), builder: json(sampleUserFeed))
+        stub(http(.GET, uri: "/0.4/me/follows"), builder: json(sampleUserFeed))
         var followings = [User]()
         _ = network.retrieveFollowings().subscribeNext {users in
             followings = users
@@ -190,7 +190,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveFollowingsForUserId() {
-        stub(http(.GET, uri: "/0.4/users/" + userId + "/followings"), 
+        stub(http(.GET, uri: "/0.4/users/" + userId + "/follows"),
                     builder: json(sampleUserFeed))
         var followings = [User]()
         _ = network.retrieveFollowingsForUserId(userId).subscribeNext { users in

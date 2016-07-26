@@ -65,25 +65,25 @@ class Network {
 
     func retrieveFollowers() -> Observable<[User]> {
         return http.execute(Router.get("/me/followers")).map { (userFeed:UserFeed) in
-            return userFeed.users
+            return userFeed.users ?? [User]()
         }
     }
 
     func retrieveFollowings() -> Observable<[User]> {
-        return http.execute(Router.get("/me/followings")).map { (userFeed:UserFeed) in
-            return userFeed.users
+        return http.execute(Router.get("/me/follows")).map { (userFeed:UserFeed) in
+            return userFeed.users ?? [User]()
         }
     }
 
     func retrieveFollowersForUserId(id: String) -> Observable<[User]> {
         return http.execute(Router.get("/users/" + id + "/followers")).map { (userFeed: UserFeed) in
-            return userFeed.users
+            return userFeed.users ?? [User]()
         }
     }
 
     func retrieveFollowingsForUserId(id: String) -> Observable<[User]> {
-        return http.execute(Router.get("/users/" + id + "/followings")).map { (userFeed:UserFeed) in
-            return userFeed.users
+        return http.execute(Router.get("/users/" + id + "/follows")).map { (userFeed:UserFeed) in
+            return userFeed.users ?? [User]()
         }
     }
     

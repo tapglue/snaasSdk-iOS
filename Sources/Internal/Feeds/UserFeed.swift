@@ -10,7 +10,7 @@ import Foundation
 import ObjectMapper
 
 class UserFeed: Mappable {
-    var users = [User]()
+    var users: [User]?
     
     required init?(_ map: Map) {
         
