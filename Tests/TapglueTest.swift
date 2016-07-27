@@ -93,4 +93,38 @@ class TapglueTest: XCTestCase {
         }
         expect(callbackUsers).toEventually(contain(network.testUser))
     }
+
+    func testCreatePost() {
+        var callbackPost: Post?
+        let post = Post(visibility: .Private, attachments: [Attachment]())
+        tapglue.createPost(post) { post, error in
+            callbackPost = post
+        }
+        expect(callbackPost).toEventuallyNot(beNil())
+    }
+
+    func testRetrievePost() {
+        var callbackPost: Post?
+        tapglue.retrievePost("postId") { post, error in
+            callbackPost = post
+        }
+        expect(callbackPost).toEventuallyNot(beNil())
+    }
+
+    func testUpdatePost() {
+        var callbackPost: Post?
+        let post = Post(visibility: .Public, attachments: [Attachment]())
+        tapglue.updatePost(post) { post, error in
+            callbackPost = post
+        }
+        expect(callbackPost).toEventuallyNot(beNil())
+    }
+
+    func testDeletePost() {
+        var wasDeleted = false
+        tapglue.deletePost("postId") { success, error in
+            wasDeleted = success
+        }
+        expect(wasDeleted).toEventually(beTrue())
+    }
 }

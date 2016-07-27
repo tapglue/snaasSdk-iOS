@@ -54,4 +54,20 @@ public class Tapglue {
     public func retrieveFollowers(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveFollowers().unwrap(completionHandler)
     }
+
+    public func createPost(post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
+        rxTapglue.createPost(post).unwrap(completionHandler)
+    }
+
+    public func retrievePost(id: String, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
+        rxTapglue.retrievePost(id).unwrap(completionHandler)
+    }
+
+    public func updatePost(post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
+        rxTapglue.updatePost(post).unwrap(completionHandler)
+    }
+
+    public func deletePost(id: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+        rxTapglue.deletePost(id).unwrap(completionHandler)
+    }
 }
