@@ -95,4 +95,28 @@ class ConnectionIntegrationTest: XCTestCase {
         
         _ = try tapglue.deleteConnection(toUserId: user2.id!, type: .Follow).toBlocking().first()
     }
+
+    func testRetrieveFollowersForUser() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
+
+        let followers = try tapglue.retrieveFollowersForUserId(user2.id!).toBlocking().first()!
+        
+        expect(followers.count).to(equal(1))
+        expect(followers[0].id).to(equal((user1.id!)))
+        
+        _ = try tapglue.deleteConnection(toUserId: user2.id!, type: .Follow).toBlocking().first()
+    }
+
+    func testRetrieveFollowingsForUser() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
+
+        let followings = try tapglue.retrieveFollowingsForUserId(user1.id!).toBlocking().first()!
+        
+        expect(followings.count).to(equal(1))
+        expect(followings[0].id).to(equal((user2.id!)))
+        
+        _ = try tapglue.deleteConnection(toUserId: user2.id!, type: .Follow).toBlocking().first()
+    }
 }
