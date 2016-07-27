@@ -86,9 +86,50 @@ class TapglueTest: XCTestCase {
         expect(callbackUser.id).toEventually(equal(userId))
     }
 
+    func testCreateConnection() {
+        var callbackConnection: Connection?
+        let connection = Connection(toUserId: "userId", type: .Follow, state: .Confirmed)
+        tapglue.createConnection(connection) { connection, error in
+            callbackConnection = connection
+        }
+        expect(callbackConnection).toEventuallyNot(beNil())
+    }
+
+    func testDeleteConnection() {
+        var wasDeleted = false
+        tapglue.deleteConnection(toUserId: "userId", type: .Follow) { success, error in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTrue())
+    }
+
     func testRetrieveFollowers() {
         var callbackUsers = [User]()
         tapglue.retrieveFollowers() { users, error in
+            callbackUsers = users!
+        }
+        expect(callbackUsers).toEventually(contain(network.testUser))
+    }
+
+    func testRetrieveFollowings() {
+        var callbackUsers =  [User]()
+        tapglue.retrieveFollowings() { users, error in
+            callbackUsers = users!
+        }
+        expect(callbackUsers).toEventually(contain(network.testUser))
+    }
+
+    func testRetrieveFollowersForUserId() {
+        var callbackUsers = [User]()
+        tapglue.retrieveFollowersForUserId("userId") { users, error in
+            callbackUsers = users!
+        }
+        expect(callbackUsers).toEventually(contain(network.testUser))
+    }
+
+    func testRetrieveFollowingsForUserId() {
+        var callbackUsers = [User]()
+        tapglue.retrieveFollowingsForUserId("userId") { users, error in
             callbackUsers = users!
         }
         expect(callbackUsers).toEventually(contain(network.testUser))
