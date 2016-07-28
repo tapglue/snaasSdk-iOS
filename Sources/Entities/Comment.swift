@@ -17,6 +17,7 @@ public class Comment: Mappable {
     public var privateFields: String?
     public var createdAt: String?
     public var updatedAt: String?
+    public var user: User?
     
     required public init?(_ map: Map) {
         

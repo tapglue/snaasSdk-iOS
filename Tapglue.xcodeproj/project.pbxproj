@@ -49,11 +49,8 @@
 		52D8AE581D22986300AC947E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; };
 		52D8AE5A1D229A3500AC947E /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52D8AE5C1D229A7D00AC947E /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 52D8AE5B1D229A7D00AC947E /* Cartfile */; };
-		52D8AE631D2557E200AC947E /* AlamofireObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE5D1D2557E200AC947E /* AlamofireObjectMapper.framework */; };
 		52D8AE641D2557E200AC947E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */; };
-		52D8AE691D2558BB00AC947E /* AlamofireObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE5D1D2557E200AC947E /* AlamofireObjectMapper.framework */; };
 		52D8AE6A1D2558BB00AC947E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */; };
-		52D8AE6F1D2558C200AC947E /* AlamofireObjectMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE5D1D2557E200AC947E /* AlamofireObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52D8AE701D2558C200AC947E /* ObjectMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52E380381D2A847E003A157E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380371D2A847E003A157E /* Router.swift */; };
 		52E3803A1D2A9F3E003A157E /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380391D2A9F3E003A157E /* RouterTest.swift */; };
@@ -82,7 +79,6 @@
 			files = (
 				528481D81D2AC60E0090BA29 /* Nimble.framework in CopyFiles */,
 				52D8AE5A1D229A3500AC947E /* Alamofire.framework in CopyFiles */,
-				52D8AE6F1D2558C200AC947E /* AlamofireObjectMapper.framework in CopyFiles */,
 				52D8AE701D2558C200AC947E /* ObjectMapper.framework in CopyFiles */,
 				52540EE41D2D35B10007A9DB /* RxSwift.framework in CopyFiles */,
 				52BA9FE21D2E9A46005B4622 /* Mockingjay.framework in CopyFiles */,
@@ -131,7 +127,6 @@
 		52D8AE531D21C4B000AC947E /* RxTapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTapglue.swift; sourceTree = "<group>"; };
 		52D8AE551D22978400AC947E /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		52D8AE5B1D229A7D00AC947E /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
-		52D8AE5D1D2557E200AC947E /* AlamofireObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireObjectMapper.framework; path = Carthage/Build/iOS/AlamofireObjectMapper.framework; sourceTree = "<group>"; };
 		52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		52E380371D2A847E003A157E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		52E380391D2A9F3E003A157E /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
@@ -147,7 +142,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D8AE561D22978400AC947E /* Alamofire.framework in Frameworks */,
-				52D8AE631D2557E200AC947E /* AlamofireObjectMapper.framework in Frameworks */,
 				52D8AE641D2557E200AC947E /* ObjectMapper.framework in Frameworks */,
 				5202B7671D266A0A0069BA06 /* RxSwift.framework in Frameworks */,
 			);
@@ -159,7 +153,6 @@
 			files = (
 				5252C9541D21BFA9009AADBC /* Tapglue.framework in Frameworks */,
 				52D8AE581D22986300AC947E /* Alamofire.framework in Frameworks */,
-				52D8AE691D2558BB00AC947E /* AlamofireObjectMapper.framework in Frameworks */,
 				528481D71D2AC6050090BA29 /* Nimble.framework in Frameworks */,
 				52D8AE6A1D2558BB00AC947E /* ObjectMapper.framework in Frameworks */,
 				52540EE31D2D35AF0007A9DB /* RxSwift.framework in Frameworks */,
@@ -180,7 +173,6 @@
 				528481D61D2AC6050090BA29 /* Nimble.framework */,
 				5202B7661D266A0A0069BA06 /* RxSwift.framework */,
 				52D8AE551D22978400AC947E /* Alamofire.framework */,
-				52D8AE5D1D2557E200AC947E /* AlamofireObjectMapper.framework */,
 				52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */,
 				52D8AE5B1D229A7D00AC947E /* Cartfile */,
 				52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */,
@@ -395,7 +387,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/AlamofireObjectMapper.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ObjectMapper.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 			);

@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import AlamofireObjectMapper
 import RxSwift
 
 public class RxTapglue {
@@ -124,7 +123,7 @@ public class RxTapglue {
         return network.updateComment(comment)
     }
     
-    public func deleteComment(comment: Comment) -> Observable<Void> {
-        return network.deleteComment(comment)
+    public func deleteComment(forPostId postId: String, commentId: String) -> Observable<Void> {
+        return network.deleteComment(postId, commentId: commentId)
     }
 }

@@ -107,7 +107,7 @@ public class Tapglue {
         rxTapglue.updateComment(comment).unwrap(completionHandler)
     }
     
-    public func deleteComment(comment: Comment, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
-        rxTapglue.deleteComment(comment).unwrap(completionHandler)
+    public func deleteComment(forPostId postId: String, commentId: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+        rxTapglue.deleteComment(forPostId: postId, commentId: commentId).unwrap(completionHandler)
     }
 }

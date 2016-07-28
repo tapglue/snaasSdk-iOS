@@ -13,7 +13,7 @@ import Nimble
 
 class NetworkTest: XCTestCase {
 
-    let postId = "postIdString"
+    let postId = "postId123"
     let commentId = "commentIdString"
     let userId = "someId213"
     var sampleUser: [String: AnyObject]!
@@ -34,8 +34,9 @@ class NetworkTest: XCTestCase {
         network = Network()
         sampleUser = ["user_name":"user1","id_string": userId,"password":"1234", "session_token":"someToken"]
         sampleUserFeed["users"] = [sampleUser]
-        samplePost = ["visibility": 20, "attachments": [], "id": "postIdString"]
-        sampleComment = ["contents":["en":"content"], postId:"postIdString"]
+        samplePost = ["visibility": 20, "attachments": [], "id": postId]
+        sampleComment = ["contents":["en":"content"], "post_id":postId, "id":commentId, "user_id": userId]
+        sampleCommentFeed = ["comments": [sampleComment], "users": [userId: sampleUser]]
         sampleConnection = ["user_to_id_string": userId, "type":"follow", "state":"confirmed"]
     }
     
@@ -254,7 +255,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveComments() {
-        stub(http(.GET, uri: "/0.4/posts/" + postId + "/comments"),                    builder: json(sampleCommentFeed))
+        stub(http(.GET, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleCommentFeed))
         var postComments = [Comment]()
         _ = network.retrieveComments(postId).subscribeNext { comments in
             postComments = comments
@@ -263,8 +264,18 @@ class NetworkTest: XCTestCase {
         expect(postComments.first?.id).toEventually(equal(commentId))
     }
     
+    func testRetrieveCommentsMapsUsers() {
+        stub(http(.GET, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleCommentFeed))
+        var postComments = [Comment]()
+        _ = network.retrieveComments(postId).subscribeNext { comments in
+            postComments = comments
+        }
+        expect(postComments.first?.user).toEventuallyNot(beNil())
+        expect(postComments.first?.user?.id).toEventually(equal(userId))
+    }
+    
     func testUpdateComment() {
-        stub(http(.PUT, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleComment))
+        stub(http(.PUT, uri: "/0.4/posts/" + postId + "/comments/" + commentId), builder: json(sampleComment))
         var networkComment: Comment?
         let comment = Comment(contents: ["en":"content"], postId: postId)
         comment.id = commentId
@@ -275,10 +286,9 @@ class NetworkTest: XCTestCase {
     }
     
     func testDeleteComment() {
-        stub(http(.DELETE, uri: "/0.4/posts/" + postId + "/comments" + commentId), builder: http(204))
-        let comment = Comment(contents: ["en":"content"], postId: postId)
+        stub(http(.DELETE, uri: "/0.4/posts/" + postId + "/comments/" + commentId), builder: http(204))
         var wasDeleted = false
-        _ = network.deleteComment(comment).subscribeCompleted {
+        _ = network.deleteComment(postId, commentId: commentId).subscribeCompleted {
             wasDeleted = true
         }
         expect(wasDeleted).toEventually(beTrue())

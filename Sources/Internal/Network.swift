@@ -110,15 +110,19 @@ class Network {
 
     func retrieveComments(postId: String) -> Observable<[Comment]> {
         return http.execute(Router.get("/posts/" + postId + "/comments")).map { (commentFeed:CommentFeed) in
+            for comment in commentFeed.comments ?? [Comment]() {
+                comment.user = commentFeed.users?[comment.userId ?? ""]
+            }
+            
             return commentFeed.comments ?? [Comment]()
         }
     }
     
     func updateComment(comment: Comment) -> Observable<Comment> {
-        return http.execute(Router.put("/posts/" + comment.postId! + "/comments", payload: comment.toJSON()))
+        return http.execute(Router.put("/posts/" + comment.postId! + "/comments/" + comment.id!, payload: comment.toJSON()))
     }
     
-    func deleteComment(comment: Comment) -> Observable<Void> {
-        return http.execute(Router.delete("/posts/" + comment.postId! + "/comments" + comment.id!))
+    func deleteComment(postId: String, commentId: String) -> Observable<Void> {
+        return http.execute(Router.delete("/posts/" + postId + "/comments/" + commentId))
     }
 }

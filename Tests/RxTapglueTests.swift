@@ -204,11 +204,12 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testCreateComment() {
-        var createdComment = Comment(contents: ["en":"content"], postId: "testPostId")
-        _ = tapglue.createComment(network.testComment).subscribeNext { comment in
-            createdComment = comment
+        let comment = Comment(contents: ["en":"content"], postId: "testPostId")
+        var networkComment: Comment?
+        _ = tapglue.createComment(comment).subscribeNext { comment in
+            networkComment = comment
         }
-        expect(createdComment.id).toEventually(equal(network.testComment.id))
+        expect(networkComment?.id).toEventually(equal(network.testComment.id))
     }
     
     func testRetrieveComments() {
@@ -228,9 +229,8 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testDeleteComment() {
-        let comment = Comment(contents: ["en":"content"], postId: "testPostId")
         var wasDeleted = false
-        _ = tapglue.deleteComment(comment).subscribeCompleted { void in
+        _ = tapglue.deleteComment(forPostId: "postId", commentId: "commentId").subscribeCompleted { void in
             wasDeleted = true
         }
         expect(wasDeleted).toEventually(beTruthy())
@@ -255,6 +255,7 @@ class TestNetwork: Network {
         testPost = Post(visibility: .Connections, attachments: [])
         testPost.id = testPostId
         testComment = Comment(contents: ["en":"myComment"], postId: "testPostId")
+        testComment.id = testCommentId
         
     }
     
@@ -350,7 +351,7 @@ class TestNetwork: Network {
         return Observable.just(testComment)
     }
     
-    override func deleteComment(comment: Comment) -> Observable<Void> {
+    override func deleteComment(postId: String, commentId: String) -> Observable<Void> {
         return Observable.create { observer in
             observer.on(.Completed)
             return NopDisposable.instance
