@@ -20,7 +20,15 @@ class Router: URLRequestConvertible {
     }
     
     static let sdkVersion = "2.0.0"
-    static var sessionTokenListener: SessionTokenListener?
+    static var sessionTokenListener: SessionTokenListener? {
+        didSet {
+            if let sessionToken = sessionToken {
+                if let sessionTokenListener = sessionTokenListener {
+                    sessionTokenListener.sessionTokenSet(sessionToken)
+                }
+            }
+        }
+    }
     private static let apiVersion = "/0.4"
     private static var baseUrl = "https://api.tapglue.com/0.4"
     private static var appToken = ""

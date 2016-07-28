@@ -21,6 +21,8 @@ public class TapglueSims : NSObject, SessionTokenListener {
     public init(withConfiguration config: Configuration, environment: Environment) {
         self.appToken = config.appToken
         api = DefaultSimsApi(url: config.baseUrl, environment: environment)
+        super.init()
+        Router.sessionTokenListener = self
     }
     
     public func registerSimsNotificationSettings(application: UIApplication) {
