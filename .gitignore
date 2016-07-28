@@ -30,3 +30,6 @@ DerivedData
 #Pods/
 Tapglue Tests/Pods
 Podfile.lock
+#Carthage
+Carthage/*
+Example/Carthage/*
