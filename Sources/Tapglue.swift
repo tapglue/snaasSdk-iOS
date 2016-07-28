@@ -94,4 +94,20 @@ public class Tapglue {
     public func deletePost(id: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
         rxTapglue.deletePost(id).unwrap(completionHandler)
     }
+    public func createComment(comment: Comment, completionHandler: (comment: Comment?, error: ErrorType?) -> ()) {
+        rxTapglue.createComment(comment).unwrap(completionHandler)
+    }
+    
+    // TODO: Comments List
+    public func retrieveComments(postId: String, completionHandler: (comments: [Comment]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveComments(postId).unwrap(completionHandler)
+    }
+    
+    public func updateComment(comment: Comment, completionHandler: (comment: Comment?, error: ErrorType?) -> ()) {
+        rxTapglue.updateComment(comment).unwrap(completionHandler)
+    }
+    
+    public func deleteComment(comment: Comment, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+        rxTapglue.deleteComment(comment).unwrap(completionHandler)
+    }
 }

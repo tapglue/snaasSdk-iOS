@@ -58,6 +58,9 @@
 		52E380381D2A847E003A157E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380371D2A847E003A157E /* Router.swift */; };
 		52E3803A1D2A9F3E003A157E /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380391D2A9F3E003A157E /* RouterTest.swift */; };
 		9753AB5D1D40BA22005154F0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9753AB5C1D40BA22005154F0 /* Post.swift */; };
+		97D3D9741D4A03D0004DC146 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3D9731D4A03D0004DC146 /* Comment.swift */; };
+		97D3D9761D4A07E7004DC146 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3D9751D4A07E7004DC146 /* Like.swift */; };
+		97D3D97A1D4A2AA5004DC146 /* CommentFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3D9791D4A2AA5004DC146 /* CommentFeed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +136,9 @@
 		52E380371D2A847E003A157E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		52E380391D2A9F3E003A157E /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
 		9753AB5C1D40BA22005154F0 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		97D3D9731D4A03D0004DC146 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		97D3D9751D4A07E7004DC146 /* Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
+		97D3D9791D4A2AA5004DC146 /* CommentFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentFeed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				52BA9FE91D2FA56A005B4622 /* UserFeed.swift */,
+				97D3D9791D4A2AA5004DC146 /* CommentFeed.swift */,
 				5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */,
 				528079CC1D47A32F000194AC /* NullableFeed.swift */,
 			);
@@ -236,6 +243,8 @@
 			children = (
 				52C93F001D2BD3AC00E166F7 /* User.swift */,
 				9753AB5C1D40BA22005154F0 /* Post.swift */,
+				97D3D9731D4A03D0004DC146 /* Comment.swift */,
+				97D3D9751D4A07E7004DC146 /* Like.swift */,
 				52BF703C1D40BADF00D88AAC /* TapglueError.swift */,
 				528079C71D474843000194AC /* Connection.swift */,
 			);
@@ -418,8 +427,11 @@
 				528079C81D474843000194AC /* Connection.swift in Sources */,
 				528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */,
 				52540EE21D2BE2DC0007A9DB /* Network.swift in Sources */,
+				97D3D9761D4A07E7004DC146 /* Like.swift in Sources */,
 				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
 				52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */,
+				97D3D97A1D4A2AA5004DC146 /* CommentFeed.swift in Sources */,
+				97D3D9741D4A03D0004DC146 /* Comment.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */,
 				52BF70391D3FAA4100D88AAC /* UserStore.swift in Sources */,
 			);

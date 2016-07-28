@@ -202,6 +202,39 @@ class RxTapglueTests: XCTestCase {
         }
         expect(wasDeleted).toEventually(beTruthy())
     }
+    
+    func testCreateComment() {
+        var createdComment = Comment(contents: ["en":"content"], postId: "testPostId")
+        _ = tapglue.createComment(network.testComment).subscribeNext { comment in
+            createdComment = comment
+        }
+        expect(createdComment.id).toEventually(equal(network.testComment.id))
+    }
+    
+    func testRetrieveComments() {
+        var networkComments = [Comment]()
+        _ = tapglue.retrieveComments(network.testPostId).subscribeNext { comments in
+            networkComments = comments
+        }
+        expect(networkComments).to(contain(network.testComment))
+    }
+    
+    func testUpdateComment() {
+        var updatedComment = Comment(contents: ["en":"content"], postId: "testPostId")
+        _ = tapglue.updateComment(network.testComment).subscribeNext { comment in
+            updatedComment = comment
+        }
+        expect(updatedComment.id).to(equal(network.testComment.id))
+    }
+    
+    func testDeleteComment() {
+        let comment = Comment(contents: ["en":"content"], postId: "testPostId")
+        var wasDeleted = false
+        _ = tapglue.deleteComment(comment).subscribeCompleted { void in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTruthy())
+    }
 }
 
 class TestNetwork: Network {
@@ -210,8 +243,10 @@ class TestNetwork: Network {
     let testUserId = "testUserId"
     let testUser: User
     let testPost: Post
+    let testComment: Comment
     let testConnection: Connection
     let testPostId = "testPostId"
+    let testCommentId = "testCommentId"
     
     override init() {
         testUser = User()
@@ -219,6 +254,8 @@ class TestNetwork: Network {
         testUser.id = testUserId
         testPost = Post(visibility: .Connections, attachments: [])
         testPost.id = testPostId
+        testComment = Comment(contents: ["en":"myComment"], postId: "testPostId")
+        
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
@@ -300,6 +337,26 @@ class TestNetwork: Network {
             return NopDisposable.instance
         }
     }
+    
+    override func createComment(comment: Comment) -> Observable<Comment> {
+        return Observable.just(testComment)
+    }
+    
+    override func retrieveComments(postId: String) -> Observable<[Comment]> {
+        return Observable.just([testComment])
+    }
+    
+    override func updateComment(comment: Comment) -> Observable<Comment> {
+        return Observable.just(testComment)
+    }
+    
+    override func deleteComment(comment: Comment) -> Observable<Void> {
+        return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+    }
+    
 }
 
 class TestUserStore: UserStore {

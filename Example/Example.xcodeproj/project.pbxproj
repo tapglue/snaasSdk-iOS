@@ -25,6 +25,7 @@
 		529A3D321D35140B0069BF10 /* LoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D311D35140B0069BF10 /* LoginTest.swift */; };
 		52F3F0811D3532CC00762963 /* UserInteractionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F3F0801D3532CC00762963 /* UserInteractionTest.swift */; };
 		9753AB611D40C94C005154F0 /* PostTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9753AB601D40C94C005154F0 /* PostTest.swift */; };
+		97D3D97C1D4A3348004DC146 /* CommentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3D97B1D4A3348004DC146 /* CommentTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		529A3D311D35140B0069BF10 /* LoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTest.swift; sourceTree = "<group>"; };
 		52F3F0801D3532CC00762963 /* UserInteractionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractionTest.swift; sourceTree = "<group>"; };
 		9753AB601D40C94C005154F0 /* PostTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTest.swift; sourceTree = "<group>"; };
+		97D3D97B1D4A3348004DC146 /* CommentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 				529A3D311D35140B0069BF10 /* LoginTest.swift */,
 				52F3F0801D3532CC00762963 /* UserInteractionTest.swift */,
 				9753AB601D40C94C005154F0 /* PostTest.swift */,
+				97D3D97B1D4A3348004DC146 /* CommentTest.swift */,
 				528079C91D477E6B000194AC /* ConnectionIntegrationTest.swift */,
 			);
 			path = ExampleTests;
@@ -348,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				529A3D321D35140B0069BF10 /* LoginTest.swift in Sources */,
+				97D3D97C1D4A3348004DC146 /* CommentTest.swift in Sources */,
 				52F3F0811D3532CC00762963 /* UserInteractionTest.swift in Sources */,
 				528079CA1D477E6B000194AC /* ConnectionIntegrationTest.swift in Sources */,
 				9753AB611D40C94C005154F0 /* PostTest.swift in Sources */,
