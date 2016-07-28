@@ -79,6 +79,15 @@ public class Tapglue {
         rxTapglue.retrieveFollowingsForUserId(id).unwrap(completionHandler)
     }
 
+    public func retrieveFriends(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveFriends().unwrap(completionHandler)
+    }
+
+    public func retrieveFriendsForUserId(id: String,
+            completionHandler:(users: [User]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveFriendsForUserId(id).unwrap(completionHandler)
+    }
+
     public func createPost(post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
         rxTapglue.createPost(post).unwrap(completionHandler)
     }

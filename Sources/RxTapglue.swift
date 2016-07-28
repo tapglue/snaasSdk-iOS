@@ -86,6 +86,14 @@ public class RxTapglue {
         return network.retrieveFollowingsForUserId(id)
     }
 
+    public func retrieveFriends() -> Observable<[User]> {
+        return network.retrieveFriends()
+    }
+
+    public func retrieveFriendsForUserId(id: String) -> Observable<[User]> {
+        return network.retrieveFriendsForUserId(id)
+    }
+
     public func retrieveUser(id: String) -> Observable<User> {
         return network.retrieveUser(id)
     }

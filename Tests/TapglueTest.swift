@@ -135,6 +135,22 @@ class TapglueTest: XCTestCase {
         expect(callbackUsers).toEventually(contain(network.testUser))
     }
 
+    func testRetrieveFriends() {
+        var callbackUsers =  [User]()
+        tapglue.retrieveFriends() { users, error in
+            callbackUsers = users!
+        }
+        expect(callbackUsers).toEventually(contain(network.testUser))
+    }
+
+    func testRetrieveFriendsForUserId() {
+        var callbackUsers = [User]()
+        tapglue.retrieveFriendsForUserId(network.testUserId) { users, error in
+            callbackUsers = users!
+        }
+        expect(callbackUsers).toEventually(contain(network.testUser))
+    }
+
     func testCreatePost() {
         var callbackPost: Post?
         let post = Post(visibility: .Private, attachments: [Attachment]())
