@@ -122,11 +122,11 @@ class Network {
 
     func retrieveComments(postId: String) -> Observable<[Comment]> {
         return http.execute(Router.get("/posts/" + postId + "/comments")).map { (commentFeed:CommentFeed) in
-            for comment in commentFeed.comments ?? [Comment]() {
+            let comments = commentFeed.comments?.map { comment -> Comment in
                 comment.user = commentFeed.users?[comment.userId ?? ""]
+                return comment
             }
-            
-            return commentFeed.comments ?? [Comment]()
+            return comments ?? [Comment]()
         }
     }
     
