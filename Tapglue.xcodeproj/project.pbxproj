@@ -11,6 +11,9 @@
 		5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */; };
 		5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */; };
 		5211EB931D460F2B0030CF9C /* Tapglue.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 5211EB921D460F2B0030CF9C /* Tapglue.podspec */; };
+		521DE9001D49F36D00AA5A9F /* DefaultSimsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DE8FD1D49F36D00AA5A9F /* DefaultSimsApi.swift */; };
+		521DE9011D49F36D00AA5A9F /* SimsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DE8FE1D49F36D00AA5A9F /* SimsApi.swift */; };
+		521DE9021D49F36D00AA5A9F /* TapglueSims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DE8FF1D49F36D00AA5A9F /* TapglueSims.swift */; };
 		5252C94D1D21BFA9009AADBC /* Tapglue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5252C94C1D21BFA9009AADBC /* Tapglue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5252C9541D21BFA9009AADBC /* Tapglue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5252C9491D21BFA9009AADBC /* Tapglue.framework */; };
 		5252C9591D21BFA9009AADBC /* RxTapglueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252C9581D21BFA9009AADBC /* RxTapglueTests.swift */; };
@@ -94,6 +97,9 @@
 		5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+Logging.swift"; sourceTree = "<group>"; };
 		5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorFeed.swift; sourceTree = "<group>"; };
 		5211EB921D460F2B0030CF9C /* Tapglue.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tapglue.podspec; sourceTree = "<group>"; };
+		521DE8FD1D49F36D00AA5A9F /* DefaultSimsApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSimsApi.swift; sourceTree = "<group>"; };
+		521DE8FE1D49F36D00AA5A9F /* SimsApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimsApi.swift; sourceTree = "<group>"; };
+		521DE8FF1D49F36D00AA5A9F /* TapglueSims.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapglueSims.swift; sourceTree = "<group>"; };
 		5233AC371D2E32910076CC02 /* Matchers+Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Matchers+Payload.swift"; sourceTree = "<group>"; };
 		5233AC391D2E3B710076CC02 /* NSInputStream+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSInputStream+String.swift"; sourceTree = "<group>"; };
 		5252C9491D21BFA9009AADBC /* Tapglue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tapglue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +171,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		521DE8FC1D49F36D00AA5A9F /* Sims */ = {
+			isa = PBXGroup;
+			children = (
+				521DE8FD1D49F36D00AA5A9F /* DefaultSimsApi.swift */,
+				521DE8FE1D49F36D00AA5A9F /* SimsApi.swift */,
+				521DE8FF1D49F36D00AA5A9F /* TapglueSims.swift */,
+			);
+			path = Sims;
+			sourceTree = "<group>";
+		};
 		5252C93F1D21BFA9009AADBC = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +212,7 @@
 		5252C94B1D21BFA9009AADBC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				521DE8FC1D49F36D00AA5A9F /* Sims */,
 				52C93F021D2BE08400E166F7 /* Entities */,
 				52C93F031D2BE08400E166F7 /* Internal */,
 				5252C94C1D21BFA9009AADBC /* Tapglue.h */,
@@ -417,10 +434,13 @@
 				52BA9FE71D2F8098005B4622 /* Http.swift in Sources */,
 				528079C81D474843000194AC /* Connection.swift in Sources */,
 				528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */,
+				521DE9001D49F36D00AA5A9F /* DefaultSimsApi.swift in Sources */,
 				52540EE21D2BE2DC0007A9DB /* Network.swift in Sources */,
 				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
 				52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */,
+				521DE9011D49F36D00AA5A9F /* SimsApi.swift in Sources */,
+				521DE9021D49F36D00AA5A9F /* TapglueSims.swift in Sources */,
 				52BF70391D3FAA4100D88AAC /* UserStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

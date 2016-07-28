@@ -19,6 +19,7 @@ class Http {
                 .validate()
                 .debugLog()
                 .responseJSON { (response:Response<AnyObject, NSError>) in
+                    print(response.response?.statusCode)
                     print(response.result.value)
                     switch(response.result) {
                     case .Success(let value):
@@ -46,6 +47,7 @@ class Http {
                 .validate()
                 .debugLog()
                 .responseJSON { response in
+                    print(response.response?.statusCode)
                     switch(response.result) {
                     case .Success:
                         observer.on(.Completed)

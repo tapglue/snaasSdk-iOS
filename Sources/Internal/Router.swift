@@ -20,15 +20,22 @@ class Router: URLRequestConvertible {
     }
     
     static let sdkVersion = "2.0.0"
+    static var sessionTokenListener: SessionTokenListener?
     private static let apiVersion = "/0.4"
     private static var baseUrl = "https://api.tapglue.com/0.4"
     private static var appToken = ""
-    static var sessionToken = ""
+    static var sessionToken: String? {
+        didSet {
+            if let sessionTokenListener = sessionTokenListener {
+                sessionTokenListener.sessionTokenSet(sessionToken)
+            }
+        }
+    }
     let method: Alamofire.Method
     let path: String
     let payload: [String: AnyObject]
     var encodedToken: String {
-        return Encoder.encode(Router.appToken, sessionToken: Router.sessionToken)
+        return Encoder.encode(Router.appToken, sessionToken: Router.sessionToken ?? "")
     }
 
     var URLRequest: NSMutableURLRequest {
@@ -73,4 +80,8 @@ class Router: URLRequestConvertible {
         self.path = path
         self.payload = payload
     }
+}
+
+protocol SessionTokenListener {
+    func sessionTokenSet(sessionToken: String?)
 }

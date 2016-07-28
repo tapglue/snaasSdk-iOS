@@ -200,6 +200,26 @@ class NetworkTest: XCTestCase {
         expect(followings.first?.id).toEventually(equal(userId))
     }
 
+    func testRetrieveFriends() {
+        stub(http(.GET, uri: "/0.4/me/friends"), builder: json(sampleUserFeed))
+        var friends = [User]()
+        _ = network.retrieveFriends().subscribeNext { users in
+            friends = users
+        }
+        expect(friends.count).toEventually(equal(1))
+        expect(friends.first?.id).toEventually(equal(userId))
+    }
+
+    func testRetrieveFriendsForUserId() {
+        stub(http(.GET, uri: "/0.4/users/"+userId+"/friends"), builder: json(sampleUserFeed))
+        var friends = [User]()
+        _ = network.retrieveFriendsForUserId(userId).subscribeNext { users in
+            friends = users
+        }
+        expect(friends.count).toEventually(equal(1))
+        expect(friends.first?.id).toEventually(equal(userId))
+    }
+
     func testCreatePost() {
         stub(http(.POST, uri: "/0.4/posts"), builder: json(samplePost))
         var networkPost: Post?

@@ -170,6 +170,22 @@ class RxTapglueTests: XCTestCase {
         }
         expect(networkFollowings).to(contain(network.testUser))
     }
+
+    func testRetrieveFriends() {
+        var networkFriends = [User]()
+        _ = tapglue.retrieveFriends().subscribeNext { users in
+            networkFriends = users
+        }
+        expect(networkFriends).to(contain(network.testUser))
+    }
+
+    func testRetrieveFriendsForUserId() {
+        var networkFriends = [User]()
+        _ = tapglue.retrieveFriendsForUserId(network.testUserId).subscribeNext { users in
+            networkFriends = users
+        }
+        expect(networkFriends).to(contain(network.testUser))
+    }
     
     func testCreatePost() {
         var createdPost = Post(visibility: .Public, attachments: [])
@@ -279,6 +295,14 @@ class TestNetwork: Network {
     }
 
     override func retrieveFollowingsForUserId(id: String) -> Observable<[User]> {
+        return Observable.just([testUser])
+    }
+
+    override func retrieveFriendsForUserId(id: String) -> Observable<[User]> {
+        return Observable.just([testUser])
+    }
+
+    override func retrieveFriends() -> Observable<[User]> {
         return Observable.just([testUser])
     }
     
