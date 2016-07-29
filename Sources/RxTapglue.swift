@@ -127,8 +127,8 @@ public class RxTapglue {
         return network.retrieveComments(postId)
     }
     
-    public func updateComment(comment: Comment) -> Observable<Comment> {
-        return network.updateComment(comment)
+    public func updateComment(postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
+        return network.updateComment(postId, commentId: commentId, comment: comment)
     }
     
     public func deleteComment(forPostId postId: String, commentId: String) -> Observable<Void> {

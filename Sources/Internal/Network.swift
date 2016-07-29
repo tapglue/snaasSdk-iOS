@@ -130,8 +130,8 @@ class Network {
         }
     }
     
-    func updateComment(comment: Comment) -> Observable<Comment> {
-        return http.execute(Router.put("/posts/" + comment.postId! + "/comments/" + comment.id!, payload: comment.toJSON()))
+    func updateComment(postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
+        return http.execute(Router.put("/posts/" + postId + "/comments/" + commentId, payload: comment.toJSON()))
     }
     
     func deleteComment(postId: String, commentId: String) -> Observable<Void> {

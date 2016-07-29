@@ -107,13 +107,12 @@ public class Tapglue {
         rxTapglue.createComment(comment).unwrap(completionHandler)
     }
     
-    // TODO: Comments List
     public func retrieveComments(postId: String, completionHandler: (comments: [Comment]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveComments(postId).unwrap(completionHandler)
     }
     
-    public func updateComment(comment: Comment, completionHandler: (comment: Comment?, error: ErrorType?) -> ()) {
-        rxTapglue.updateComment(comment).unwrap(completionHandler)
+    public func updateComment(postId: String, commentId: String, comment: Comment, completionHandler: (comment: Comment?, error: ErrorType?) -> ()) {
+        rxTapglue.updateComment(postId, commentId: commentId,comment: comment).unwrap(completionHandler)
     }
     
     public func deleteComment(forPostId postId: String, commentId: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
