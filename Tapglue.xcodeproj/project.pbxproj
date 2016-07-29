@@ -47,6 +47,8 @@
 		52BF703F1D40CB0A00D88AAC /* HttpTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF703E1D40CB0A00D88AAC /* HttpTest.swift */; };
 		52C93EFF1D2BCCFA00E166F7 /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */; };
 		52C93F011D2BD3AC00E166F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C93F001D2BD3AC00E166F7 /* User.swift */; };
+		52D3EFD31D4B5F3A00E1BA77 /* Connections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */; };
+		52D3EFD51D4B7D2100E1BA77 /* ConnectionsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D3EFD41D4B7D2100E1BA77 /* ConnectionsFeed.swift */; };
 		52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8AE531D21C4B000AC947E /* RxTapglue.swift */; };
 		52D8AE561D22978400AC947E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; };
 		52D8AE581D22986300AC947E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; };
@@ -127,6 +129,8 @@
 		52BF703E1D40CB0A00D88AAC /* HttpTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTest.swift; sourceTree = "<group>"; };
 		52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		52C93F001D2BD3AC00E166F7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connections.swift; sourceTree = "<group>"; };
+		52D3EFD41D4B7D2100E1BA77 /* ConnectionsFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionsFeed.swift; sourceTree = "<group>"; };
 		52D8AE531D21C4B000AC947E /* RxTapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTapglue.swift; sourceTree = "<group>"; };
 		52D8AE551D22978400AC947E /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		52D8AE5B1D229A7D00AC947E /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				52BA9FE91D2FA56A005B4622 /* UserFeed.swift */,
 				5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */,
 				528079CC1D47A32F000194AC /* NullableFeed.swift */,
+				52D3EFD41D4B7D2100E1BA77 /* ConnectionsFeed.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				9753AB5C1D40BA22005154F0 /* Post.swift */,
 				52BF703C1D40BADF00D88AAC /* TapglueError.swift */,
 				528079C71D474843000194AC /* Connection.swift */,
+				52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -422,11 +428,13 @@
 				52C93F011D2BD3AC00E166F7 /* User.swift in Sources */,
 				528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */,
 				528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */,
+				52D3EFD51D4B7D2100E1BA77 /* ConnectionsFeed.swift in Sources */,
 				52BA9FE71D2F8098005B4622 /* Http.swift in Sources */,
 				528079C81D474843000194AC /* Connection.swift in Sources */,
 				528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */,
 				521DE9001D49F36D00AA5A9F /* DefaultSimsApi.swift in Sources */,
 				52540EE21D2BE2DC0007A9DB /* Network.swift in Sources */,
+				52D3EFD31D4B5F3A00E1BA77 /* Connections.swift in Sources */,
 				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
 				52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */,

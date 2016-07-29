@@ -13,6 +13,8 @@ public class Connection: Mappable {
     public var userFromId: String?
     public var type: ConnectionType?
     public var state: ConnectionState?
+    public var userTo: User?
+    public var userFrom: User?
 
     public init(toUserId userId: String, type: ConnectionType, state: ConnectionState) {
         self.userToId = userId

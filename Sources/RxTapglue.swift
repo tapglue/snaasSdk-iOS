@@ -94,6 +94,10 @@ public class RxTapglue {
         return network.retrieveFriendsForUserId(id)
     }
 
+    public func retrievePendingConnections() -> Observable<Connections> {
+        return network.retrievePendingConnections()
+    }
+
     public func retrieveUser(id: String) -> Observable<User> {
         return network.retrieveUser(id)
     }

@@ -98,6 +98,25 @@ class Network {
             return feed.users ?? [User]()
         }
     }
+
+    func retrievePendingConnections() -> Observable<Connections> {
+        return http.execute(Router.get("/me/connections/pending")).map { (feed:ConnectionsFeed) in
+            let connections = Connections()
+            connections.incoming = feed.incoming?.map { connection -> Connection in
+                connection.userFrom = feed.users?.filter { user -> Bool in
+                    user.id == connection.userFromId
+                }.first
+                return connection
+            }
+            connections.outgoing = feed.outgoing?.map { connection -> Connection in
+                connection.userTo = feed.users?.filter { user -> Bool in
+                    user.id == connection.userToId
+                }.first
+                return connection
+            }
+            return connections
+        }
+    }
     
     func createPost(post: Post) -> Observable<Post> {
         return http.execute(Router.post("/posts", payload: post.toJSON()))
