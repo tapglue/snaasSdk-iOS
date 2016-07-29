@@ -124,6 +124,10 @@ public class Tapglue {
         rxTapglue.createLike(forPostId: postId).unwrap(completionHandler)
     }
     
+    public func retrieveLikes(postId: String, completionHandler: (likes: [Like]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveLikes(postId).unwrap(completionHandler)
+    }
+    
     public func deleteLike(forPostId postId: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
         rxTapglue.deleteLike(forPostId: postId).unwrap(completionHandler)
     }

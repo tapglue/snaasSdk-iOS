@@ -57,6 +57,7 @@
 		52D8AE701D2558C200AC947E /* ObjectMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52E380381D2A847E003A157E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380371D2A847E003A157E /* Router.swift */; };
 		52E3803A1D2A9F3E003A157E /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380391D2A9F3E003A157E /* RouterTest.swift */; };
+		970D29221D4B820200847756 /* LikeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D29211D4B820200847756 /* LikeFeed.swift */; };
 		9753AB5D1D40BA22005154F0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9753AB5C1D40BA22005154F0 /* Post.swift */; };
 		97D3D9741D4A03D0004DC146 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3D9731D4A03D0004DC146 /* Comment.swift */; };
 		97D3D9761D4A07E7004DC146 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3D9751D4A07E7004DC146 /* Like.swift */; };
@@ -136,6 +137,7 @@
 		52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		52E380371D2A847E003A157E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		52E380391D2A9F3E003A157E /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
+		970D29211D4B820200847756 /* LikeFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeFeed.swift; sourceTree = "<group>"; };
 		9753AB5C1D40BA22005154F0 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		97D3D9731D4A03D0004DC146 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		97D3D9751D4A07E7004DC146 /* Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			children = (
 				52BA9FE91D2FA56A005B4622 /* UserFeed.swift */,
 				97D3D9791D4A2AA5004DC146 /* CommentFeed.swift */,
+				970D29211D4B820200847756 /* LikeFeed.swift */,
 				5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */,
 				528079CC1D47A32F000194AC /* NullableFeed.swift */,
 			);
@@ -428,6 +431,7 @@
 				5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */,
 				52E380381D2A847E003A157E /* Router.swift in Sources */,
 				9753AB5D1D40BA22005154F0 /* Post.swift in Sources */,
+				970D29221D4B820200847756 /* LikeFeed.swift in Sources */,
 				52C93F011D2BD3AC00E166F7 /* User.swift in Sources */,
 				528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */,
 				528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */,
