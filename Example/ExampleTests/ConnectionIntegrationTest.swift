@@ -165,4 +165,25 @@ class ConnectionIntegrationTest: XCTestCase {
         expect(outgoing?.count).to(equal(1))
         expect(outgoing?.first?.userTo?.id).to(equal(user2.id))
     }
+    
+    func testRetrieveRejectedConnectionsForIncoming() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Rejected)).toBlocking().first()
+        
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+        let connections = try tapglue.retrieveRejectedConnections().toBlocking().first()!
+        let incoming = connections.incoming
+        expect(incoming?.count).to(equal(1))
+        expect(incoming?.first?.userFrom?.id).to(equal(user1.id))
+    }
+    
+    func testRetrieveRejectedConnectionsForOutgoing() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Rejected)).toBlocking().first()
+        
+        let connections = try tapglue.retrieveRejectedConnections().toBlocking().first()!
+        let outgoing = connections.outgoing
+        expect(outgoing?.count).to(equal(1))
+        expect(outgoing?.first?.userTo?.id).to(equal(user2.id))
+    }
 }

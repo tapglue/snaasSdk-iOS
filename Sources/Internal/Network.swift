@@ -100,21 +100,14 @@ class Network {
     }
 
     func retrievePendingConnections() -> Observable<Connections> {
-        return http.execute(Router.get("/me/connections/pending")).map { (feed:ConnectionsFeed) in
-            let connections = Connections()
-            connections.incoming = feed.incoming?.map { connection -> Connection in
-                connection.userFrom = feed.users?.filter { user -> Bool in
-                    user.id == connection.userFromId
-                }.first
-                return connection
-            }
-            connections.outgoing = feed.outgoing?.map { connection -> Connection in
-                connection.userTo = feed.users?.filter { user -> Bool in
-                    user.id == connection.userToId
-                }.first
-                return connection
-            }
-            return connections
+        return http.execute(Router.get("/me/connections/pending")).map {
+            self.convertToConnections($0)
+        }
+    }
+
+    func retrieveRejectedConnections() -> Observable<Connections> {
+        return http.execute(Router.get("/me/connections/rejected")).map {
+            self.convertToConnections($0)
         }
     }
     
@@ -174,5 +167,22 @@ class Network {
     
     func deleteLike(forPostId postId: String) -> Observable<Void> {
         return http.execute(Router.delete("/posts/" + postId + "/likes"))
+    }
+    
+    private func convertToConnections(feed: ConnectionsFeed) -> Connections {
+        let connections = Connections()
+        connections.incoming = feed.incoming?.map { connection -> Connection in
+            connection.userFrom = feed.users?.filter { user -> Bool in
+                user.id == connection.userFromId
+                }.first
+            return connection
+        }
+        connections.outgoing = feed.outgoing?.map { connection -> Connection in
+            connection.userTo = feed.users?.filter { user -> Bool in
+                user.id == connection.userToId
+                }.first
+            return connection
+        }
+        return connections
     }
 }

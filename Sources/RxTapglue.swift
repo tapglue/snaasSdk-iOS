@@ -98,6 +98,10 @@ public class RxTapglue {
         return network.retrievePendingConnections()
     }
 
+    public func retrieveRejectedConnections() -> Observable<Connections> {
+        return network.retrieveRejectedConnections()
+    }
+
     public func retrieveUser(id: String) -> Observable<User> {
         return network.retrieveUser(id)
     }

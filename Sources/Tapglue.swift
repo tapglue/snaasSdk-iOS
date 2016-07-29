@@ -93,6 +93,11 @@ public class Tapglue {
         rxTapglue.retrievePendingConnections().unwrap(completionHandler)
     }
 
+    public func retrieveRejectedConnections(completionHandler: (connections: Connections?,
+            error:ErrorType?) -> ()) {
+        rxTapglue.retrieveRejectedConnections().unwrap(completionHandler)
+    }
+
     public func createPost(post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
         rxTapglue.createPost(post).unwrap(completionHandler)
     }

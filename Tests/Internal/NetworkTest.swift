@@ -260,6 +260,33 @@ class NetworkTest: XCTestCase {
         expect(networkConnections?.outgoing?.first?.userTo).toEventuallyNot(beNil())
     }
 
+    func testRetrieveRejectedConnections() {
+        stub(http(.GET, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
+        var networkConnections: Connections?
+        _ = network.retrieveRejectedConnections().subscribeNext { connections in
+            networkConnections =  connections
+        }
+        expect(networkConnections).toEventuallyNot(beNil())
+    }
+    
+    func testRetrieveRejectedConnectionsMapsIncomingUser() {
+        stub(http(.GET, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
+        var networkConnections: Connections?
+        _ = network.retrieveRejectedConnections().subscribeNext { connections in
+            networkConnections =  connections
+        }
+        expect(networkConnections?.incoming?.first?.userFrom).toEventuallyNot(beNil())
+    }
+    
+    func testRetrieveRejectedConnectionsMapsOutgoingUser() {
+        stub(http(.GET, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
+        var networkConnections: Connections?
+        _ = network.retrieveRejectedConnections().subscribeNext { connections in
+            networkConnections =  connections
+        }
+        expect(networkConnections?.outgoing?.first?.userTo).toEventuallyNot(beNil())
+    }
+
     func testCreatePost() {
         stub(http(.POST, uri: "/0.4/posts"), builder: json(samplePost))
         var networkPost: Post?

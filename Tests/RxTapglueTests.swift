@@ -194,6 +194,14 @@ class RxTapglueTests: XCTestCase {
         }
         expect(networkConnections).toEventuallyNot(beNil())
     }
+
+    func testRetrieveRejectedConnections() {
+        var networkConnections: Connections?
+        _ = tapglue.retrieveRejectedConnections().subscribeNext { connections in
+            networkConnections = connections
+        }
+        expect(networkConnections).toEventuallyNot(beNil())
+    }
     
     func testCreatePost() {
         var createdPost = Post(visibility: .Public, attachments: [])
@@ -383,6 +391,10 @@ class TestNetwork: Network {
     }
 
     override func retrievePendingConnections() -> Observable<Connections> {
+        return Observable.just(testConnections)
+    }
+
+    override func retrieveRejectedConnections() -> Observable<Connections> {
         return Observable.just(testConnections)
     }
     

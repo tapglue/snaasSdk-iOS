@@ -159,6 +159,14 @@ class TapglueTest: XCTestCase {
         expect(callbackConnections).toEventuallyNot(beNil())
     }
 
+    func testRetrieveRejectedConnections() {
+        var callbackConnections: Connections?
+        tapglue.retrieveRejectedConnections() { connections, error in
+            callbackConnections = connections
+        }
+        expect(callbackConnections).toEventuallyNot(beNil())
+    }
+
     func testCreatePost() {
         var callbackPost: Post?
         let post = Post(visibility: .Private, attachments: [Attachment]())
