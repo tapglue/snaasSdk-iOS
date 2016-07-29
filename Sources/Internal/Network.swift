@@ -133,4 +133,46 @@ class Network {
     func deletePost(id: String) -> Observable<Void> {
         return http.execute(Router.delete("/posts/" + id))
     }
+    
+    func createComment(comment: Comment) -> Observable<Comment> {
+        return http.execute(Router.post("/posts/" + comment.postId! + "/comments", payload: comment.toJSON()))
+    }
+    
+
+    func retrieveComments(postId: String) -> Observable<[Comment]> {
+        return http.execute(Router.get("/posts/" + postId + "/comments")).map { (commentFeed:CommentFeed) in
+            let comments = commentFeed.comments?.map { comment -> Comment in
+                comment.user = commentFeed.users?[comment.userId ?? ""]
+                return comment
+            }
+            return comments ?? [Comment]()
+        }
+    }
+    
+    func updateComment(postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
+        return http.execute(Router.put("/posts/" + postId + "/comments/" + commentId, payload: comment.toJSON()))
+    }
+    
+    func deleteComment(postId: String, commentId: String) -> Observable<Void> {
+        return http.execute(Router.delete("/posts/" + postId + "/comments/" + commentId))
+    }
+    
+    func createLike(forPostId postId: String) -> Observable<Like> {
+        let like = Like(postId: postId)
+        return http.execute(Router.post("/posts/" + postId + "/likes", payload: like.toJSON()))
+    }
+    
+    func retrieveLikes(postId: String) -> Observable<[Like]> {
+        return http.execute(Router.get("/posts/" + postId + "/likes")).map { (likeFeed:LikeFeed) in
+            let likes = likeFeed.likes?.map { like -> Like in
+                like.user = likeFeed.users?[like.userId ?? ""]
+                return like
+            }
+            return likes ?? [Like]()
+        }
+    }
+    
+    func deleteLike(forPostId postId: String) -> Observable<Void> {
+        return http.execute(Router.delete("/posts/" + postId + "/likes"))
+    }
 }

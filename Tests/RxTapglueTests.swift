@@ -226,6 +226,63 @@ class RxTapglueTests: XCTestCase {
         }
         expect(wasDeleted).toEventually(beTruthy())
     }
+    
+    func testCreateComment() {
+        let comment = Comment(contents: ["en":"content"], postId: "testPostId")
+        var networkComment: Comment?
+        _ = tapglue.createComment(comment).subscribeNext { comment in
+            networkComment = comment
+        }
+        expect(networkComment?.id).toEventually(equal(network.testComment.id))
+    }
+    
+    func testRetrieveComments() {
+        var networkComments = [Comment]()
+        _ = tapglue.retrieveComments(network.testPostId).subscribeNext { comments in
+            networkComments = comments
+        }
+        expect(networkComments).to(contain(network.testComment))
+    }
+    
+    func testUpdateComment() {
+        var updatedComment = Comment(contents: ["en":"content"], postId: "testPostId")
+        _ = tapglue.updateComment(network.testPostId, commentId: network.testCommentId, comment: network.testComment).subscribeNext { comment in
+            updatedComment = comment
+        }
+        expect(updatedComment.id).to(equal(network.testComment.id))
+    }
+    
+    func testDeleteComment() {
+        var wasDeleted = false
+        _ = tapglue.deleteComment(forPostId: "postId", commentId: "commentId").subscribeCompleted { void in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTruthy())
+    }
+    
+    func testCreateLike() {
+        var networkLike: Like?
+        _ = tapglue.createLike(forPostId: "testPostId").subscribeNext { like in
+            networkLike = like
+        }
+        expect(networkLike?.id).toEventually(equal(network.testLike.id))
+    }
+    
+    func testRetrieveLikes() {
+        var networkLikes = [Like]()
+        _ = tapglue.retrieveLikes(network.testPostId).subscribeNext { likes in
+            networkLikes = likes
+        }
+        expect(networkLikes).to(contain(network.testLike))
+    }
+    
+    func testDeleteLike() {
+        var wasDeleted = false
+        _ = tapglue.deleteLike(forPostId: "postId").subscribeCompleted { void in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTruthy())
+    }
 }
 
 class TestNetwork: Network {
@@ -234,8 +291,12 @@ class TestNetwork: Network {
     let testUserId = "testUserId"
     let testUser: User
     let testPost: Post
+    let testComment: Comment
+    let testLike: Like
+    let testLikeId = "testLikeId"
     let testConnection: Connection
     let testPostId = "testPostId"
+    let testCommentId = "testCommentId"
     let testConnections: Connections
     
     override init() {
@@ -244,6 +305,10 @@ class TestNetwork: Network {
         testUser.id = testUserId
         testPost = Post(visibility: .Connections, attachments: [])
         testPost.id = testPostId
+        testComment = Comment(contents: ["en":"myComment"], postId: testPostId)
+        testComment.id = testCommentId
+        testLike = Like(postId: testPostId)
+        testLike.id = testLikeId
         testConnections = Connections()
         testConnections.incoming = [testConnection]
     }
@@ -339,6 +404,41 @@ class TestNetwork: Network {
             return NopDisposable.instance
         }
     }
+    
+    override func createComment(comment: Comment) -> Observable<Comment> {
+        return Observable.just(testComment)
+    }
+    
+    override func retrieveComments(postId: String) -> Observable<[Comment]> {
+        return Observable.just([testComment])
+    }
+    
+    override func updateComment(postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
+        return Observable.just(testComment)
+    }
+    
+    override func deleteComment(postId: String, commentId: String) -> Observable<Void> {
+        return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+    }
+    
+    override func createLike(forPostId postId: String) -> Observable<Like> {
+        return Observable.just(testLike)
+    }
+    
+    override func retrieveLikes(postId: String) -> Observable<[Like]> {
+        return Observable.just([testLike])
+    }
+    
+    override func deleteLike(forPostId postId: String) -> Observable<Void> {
+        return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+    }
+    
 }
 
 class TestUserStore: UserStore {
