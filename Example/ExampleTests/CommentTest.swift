@@ -72,7 +72,7 @@ class CommentTest: XCTestCase {
         let comment = Comment(contents: ["en":"content"], postId: post.id!)
         let createdComment = try tapglue.createComment(comment).toBlocking().first()!
         createdComment.contents!["es-ES"] = "contenidos"
-        let updatedComment = try tapglue.updateComment(createdComment).toBlocking().first()!
+        let updatedComment = try tapglue.updateComment(post.id!, commentId: createdComment.id!, comment: createdComment).toBlocking().first()!
         expect(updatedComment.contents!["es-ES"]).to(equal("contenidos"))
     }
     

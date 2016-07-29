@@ -320,7 +320,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testCreateLike() {
-        stub(http(.POST, uri: "/0.4/posts/" + postId + "/likes"), builder: json(sampleComment))
+        stub(http(.POST, uri: "/0.4/posts/" + postId + "/likes"), builder: json(sampleLike))
         var networkLike: Like?
         _ = network.createLike(forPostId: postId).subscribeNext { like in
             networkLike = like
