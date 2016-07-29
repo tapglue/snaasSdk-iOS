@@ -238,7 +238,7 @@ class RxTapglueTests: XCTestCase {
     
     func testUpdateComment() {
         var updatedComment = Comment(contents: ["en":"content"], postId: "testPostId")
-        _ = tapglue.updateComment(network.testComment).subscribeNext { comment in
+        _ = tapglue.updateComment(network.testPostId, commentId: network.testCommentId, comment: network.testComment).subscribeNext { comment in
             updatedComment = comment
         }
         expect(updatedComment.id).to(equal(network.testComment.id))
@@ -371,7 +371,7 @@ class TestNetwork: Network {
         return Observable.just([testComment])
     }
     
-    override func updateComment(comment: Comment) -> Observable<Comment> {
+    override func updateComment(postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
         return Observable.just(testComment)
     }
     
