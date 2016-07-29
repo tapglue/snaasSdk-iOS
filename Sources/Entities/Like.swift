@@ -15,9 +15,14 @@ public class Like: Mappable {
     public var userId: String?
     public var createdAt: String?
     public var updatedAt: String?
+    public var user: User?
     
     required public init?(_ map: Map) {
         
+    }
+    
+    public init (postId: String) {
+        self.postId = postId
     }
     
     public func mapping(map: Map) {

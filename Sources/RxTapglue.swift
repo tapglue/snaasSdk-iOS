@@ -134,4 +134,12 @@ public class RxTapglue {
     public func deleteComment(forPostId postId: String, commentId: String) -> Observable<Void> {
         return network.deleteComment(postId, commentId: commentId)
     }
+    
+    public func createLike(forPostId postId: String) -> Observable<Like> {
+        return network.createLike(forPostId: postId)
+    }
+    
+    public func deleteLike(forPostId postId: String) -> Observable<Void> {
+        return network.deleteLike(forPostId: postId)
+    }
 }

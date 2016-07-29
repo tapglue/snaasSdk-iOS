@@ -137,4 +137,13 @@ class Network {
     func deleteComment(postId: String, commentId: String) -> Observable<Void> {
         return http.execute(Router.delete("/posts/" + postId + "/comments/" + commentId))
     }
+    
+    func createLike(forPostId postId: String) -> Observable<Like> {
+        let like = Like(postId: postId)
+        return http.execute(Router.post("/posts/" + postId + "/likes", payload: like.toJSON()))
+    }
+    
+    func deleteLike(forPostId postId: String) -> Observable<Void> {
+        return http.execute(Router.delete("/posts/" + postId + "/likes"))
+    }
 }
