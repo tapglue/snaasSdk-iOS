@@ -251,6 +251,30 @@ class RxTapglueTests: XCTestCase {
         }
         expect(wasDeleted).toEventually(beTruthy())
     }
+    
+    func testCreateLike() {
+        var networkLike: Like?
+        _ = tapglue.createLike(forPostId: "testPostId").subscribeNext { like in
+            networkLike = like
+        }
+        expect(networkLike?.id).toEventually(equal(network.testLike.id))
+    }
+    
+    func testRetrieveLikes() {
+        var networkLikes = [Like]()
+        _ = tapglue.retrieveLikes(network.testPostId).subscribeNext { likes in
+            networkLikes = likes
+        }
+        expect(networkLikes).to(contain(network.testLike))
+    }
+    
+    func testDeleteLike() {
+        var wasDeleted = false
+        _ = tapglue.deleteLike(forPostId: "postId").subscribeCompleted { void in
+            wasDeleted = true
+        }
+        expect(wasDeleted).toEventually(beTruthy())
+    }
 }
 
 class TestNetwork: Network {
