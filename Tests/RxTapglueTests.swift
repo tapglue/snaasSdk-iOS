@@ -260,6 +260,8 @@ class TestNetwork: Network {
     let testUser: User
     let testPost: Post
     let testComment: Comment
+    let testLike: Like
+    let testLikeId = "testLikeId"
     let testConnection: Connection
     let testPostId = "testPostId"
     let testCommentId = "testCommentId"
@@ -270,8 +272,10 @@ class TestNetwork: Network {
         testUser.id = testUserId
         testPost = Post(visibility: .Connections, attachments: [])
         testPost.id = testPostId
-        testComment = Comment(contents: ["en":"myComment"], postId: "testPostId")
+        testComment = Comment(contents: ["en":"myComment"], postId: testPostId)
         testComment.id = testCommentId
+        testLike = Like(postId: testPostId)
+        testLike.id = testLikeId
         
     }
     
@@ -376,6 +380,21 @@ class TestNetwork: Network {
     }
     
     override func deleteComment(postId: String, commentId: String) -> Observable<Void> {
+        return Observable.create { observer in
+            observer.on(.Completed)
+            return NopDisposable.instance
+        }
+    }
+    
+    override func createLike(forPostId postId: String) -> Observable<Like> {
+        return Observable.just(testLike)
+    }
+    
+    override func retrieveLikes(postId: String) -> Observable<[Like]> {
+        return Observable.just([testLike])
+    }
+    
+    override func deleteLike(forPostId postId: String) -> Observable<Void> {
         return Observable.create { observer in
             observer.on(.Completed)
             return NopDisposable.instance
