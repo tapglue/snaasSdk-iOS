@@ -25,6 +25,7 @@ class NetworkTest: XCTestCase {
     var sampleCommentFeed = [String: AnyObject]()
     var sampleLikeFeed = [String: AnyObject]()
     var sampleConnection: [String:AnyObject]!
+    var sampleConnectionsFeed: [String: AnyObject]!
     var network: Network!
 
     var analyticsSent = false
@@ -42,7 +43,9 @@ class NetworkTest: XCTestCase {
         sampleCommentFeed = ["comments": [sampleComment], "users": [userId: sampleUser]]
         sampleLike = ["post_id":postId, "id":likeId, "user_id": userId]
         sampleLikeFeed = ["likes": [sampleLike], "users": [userId: sampleUser]]
-        sampleConnection = ["user_to_id_string": userId, "type":"follow", "state":"confirmed"]
+        sampleConnection = ["user_to_id_string": userId, "user_from_id_string": userId, "type":"follow", "state":"confirmed"]
+        sampleConnectionsFeed = ["incoming": [sampleConnection], "outgoing": [sampleConnection],
+            "users":[sampleUser]]
     }
     
     override func tearDown() {
@@ -228,6 +231,33 @@ class NetworkTest: XCTestCase {
         }
         expect(friends.count).toEventually(equal(1))
         expect(friends.first?.id).toEventually(equal(userId))
+    }
+
+    func testRetrievePendingConnections() {
+        stub(http(.GET, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
+        var networkConnections: Connections?
+        _ = network.retrievePendingConnections().subscribeNext { connections in
+            networkConnections =  connections
+        }
+        expect(networkConnections).toEventuallyNot(beNil())
+    }
+    
+    func testRetrievePendingConnectionsMapsIncomingUser() {
+        stub(http(.GET, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
+        var networkConnections: Connections?
+        _ = network.retrievePendingConnections().subscribeNext { connections in
+            networkConnections =  connections
+        }
+        expect(networkConnections?.incoming?.first?.userFrom).toEventuallyNot(beNil())
+    }
+    
+    func testRetrievePendingConnectionsMapsOutgoingUser() {
+        stub(http(.GET, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
+        var networkConnections: Connections?
+        _ = network.retrievePendingConnections().subscribeNext { connections in
+            networkConnections =  connections
+        }
+        expect(networkConnections?.outgoing?.first?.userTo).toEventuallyNot(beNil())
     }
 
     func testCreatePost() {

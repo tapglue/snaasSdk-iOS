@@ -186,6 +186,14 @@ class RxTapglueTests: XCTestCase {
         }
         expect(networkFriends).to(contain(network.testUser))
     }
+
+    func testRetrievePendingConnections() {
+        var networkConnections: Connections?
+        _ = tapglue.retrievePendingConnections().subscribeNext { connections in
+            networkConnections = connections
+        }
+        expect(networkConnections).toEventuallyNot(beNil())
+    }
     
     func testCreatePost() {
         var createdPost = Post(visibility: .Public, attachments: [])
@@ -289,6 +297,7 @@ class TestNetwork: Network {
     let testConnection: Connection
     let testPostId = "testPostId"
     let testCommentId = "testCommentId"
+    let testConnections: Connections
     
     override init() {
         testUser = User()
@@ -300,7 +309,8 @@ class TestNetwork: Network {
         testComment.id = testCommentId
         testLike = Like(postId: testPostId)
         testLike.id = testLikeId
-        
+        testConnections = Connections()
+        testConnections.incoming = [testConnection]
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
@@ -370,6 +380,10 @@ class TestNetwork: Network {
 
     override func retrieveFriends() -> Observable<[User]> {
         return Observable.just([testUser])
+    }
+
+    override func retrievePendingConnections() -> Observable<Connections> {
+        return Observable.just(testConnections)
     }
     
     override func createPost(post: Post) -> Observable<Post> {
