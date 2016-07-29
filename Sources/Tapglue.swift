@@ -88,6 +88,11 @@ public class Tapglue {
         rxTapglue.retrieveFriendsForUserId(id).unwrap(completionHandler)
     }
 
+    public func retrievePendingConnections(completionHandler: (connections: Connections?, 
+            error: ErrorType?) -> ()) {
+        rxTapglue.retrievePendingConnections().unwrap(completionHandler)
+    }
+
     public func createPost(post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
         rxTapglue.createPost(post).unwrap(completionHandler)
     }

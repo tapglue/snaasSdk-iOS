@@ -151,6 +151,14 @@ class TapglueTest: XCTestCase {
         expect(callbackUsers).toEventually(contain(network.testUser))
     }
 
+    func testRetrievePendingConnections() {
+        var callbackConnections: Connections?
+        tapglue.retrievePendingConnections() { connections, error in
+            callbackConnections = connections
+        }
+        expect(callbackConnections).toEventuallyNot(beNil())
+    }
+
     func testCreatePost() {
         var callbackPost: Post?
         let post = Post(visibility: .Private, attachments: [Attachment]())
