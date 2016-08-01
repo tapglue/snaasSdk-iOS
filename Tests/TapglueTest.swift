@@ -103,6 +103,14 @@ class TapglueTest: XCTestCase {
         expect(wasDeleted).toEventually(beTrue())
     }
 
+    func testSearchUsers() {
+        var searchResult = [User]()
+        tapglue.searchUsers(forSearchTerm: "term") { users, error in
+            searchResult = users!
+        }
+        expect(searchResult).toEventually(contain(network.testUser))
+    }
+
     func testRetrieveFollowers() {
         var callbackUsers = [User]()
         tapglue.retrieveFollowers() { users, error in

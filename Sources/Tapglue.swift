@@ -61,6 +61,11 @@ public class Tapglue {
         rxTapglue.deleteConnection(toUserId: userId, type: type).unwrap(completionHandler)
     }
 
+    public func searchUsers(forSearchTerm term: String, completionHandler: (result: [User]?,
+        error: ErrorType?) -> ()) {
+        rxTapglue.searchUsers(forSearchTerm: term).unwrap(completionHandler)
+    }
+
     public func retrieveFollowers(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveFollowers().unwrap(completionHandler)
     }
