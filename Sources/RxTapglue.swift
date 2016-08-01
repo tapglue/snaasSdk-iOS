@@ -61,12 +61,16 @@ public class RxTapglue {
         }
     }
 
+    public func searchUsers(forSearchTerm term: String) -> Observable<[User]> {
+        return network.searchUsers(forSearchTerm: term)
+    }
+
     public func createConnection(connection: Connection) -> Observable<Connection> {
         return network.createConnection(connection)
     }
 
     public func deleteConnection(toUserId userId: String, type: ConnectionType) 
-                            -> Observable<Void> {
+        -> Observable<Void> {
         return network.deleteConnection(toUserId: userId, type: type)
     }
 
@@ -135,7 +139,8 @@ public class RxTapglue {
         return network.retrieveComments(postId)
     }
     
-    public func updateComment(postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
+    public func updateComment(postId: String, commentId: String, comment: Comment) ->
+        Observable<Comment> {
         return network.updateComment(postId, commentId: commentId, comment: comment)
     }
     

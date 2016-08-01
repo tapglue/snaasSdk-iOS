@@ -118,6 +118,14 @@ class RxTapglueTests: XCTestCase {
         expect(networkUser.id).toEventually(equal(network.testUser.id))
     }
 
+    func testSearchUsers() {
+        var networkUsers: [User]?
+        _ = tapglue.searchUsers(forSearchTerm: "someTerm").subscribeNext { users in
+            networkUsers = users
+        }
+        expect(networkUsers).toEventually(contain(network.testUser))
+    }
+
     func testCreateConnection() {
         let connection = Connection(toUserId:"232", type: .Follow, state: .Confirmed)
         var networkConnection: Connection?
@@ -353,6 +361,10 @@ class TestNetwork: Network {
 
     override func retrieveUser(id: String) -> Observable<User> {
         return Observable.just(testUser)
+    }
+
+    override func searchUsers(forSearchTerm term: String) -> Observable<[User]> {
+        return Observable.just([testUser])
     }
     
     override func createConnection(connection: Connection) -> Observable<Connection> {

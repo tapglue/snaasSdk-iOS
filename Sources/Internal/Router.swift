@@ -47,8 +47,8 @@ class Router: URLRequestConvertible {
     }
 
     var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: Router.baseUrl)!
-        let request = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+        let URL = NSURL(string: Router.baseUrl + path)!
+        let request = NSMutableURLRequest(URL: URL)
         request.HTTPMethod = method.rawValue
         request.setValue("Basic " + encodedToken, forHTTPHeaderField: "Authorization")
         request.setValue("iOS", forHTTPHeaderField: "X-Tapglue-OS")

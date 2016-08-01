@@ -59,6 +59,12 @@ class Network {
         return http.execute(Router.put("/me/connections", payload: connection.toJSON()))
     }
 
+    func searchUsers(forSearchTerm term: String) -> Observable<[User]> {
+        return http.execute(Router.get("/users/search?q=" + term)).map { (feed:UserFeed) in
+            return feed.users!
+        }
+    }
+
     func deleteConnection(toUserId userId: String, type: ConnectionType) -> Observable<Void> {
         return http.execute(Router.delete("/me/connections/" + type.rawValue + "/" + userId))
     }
