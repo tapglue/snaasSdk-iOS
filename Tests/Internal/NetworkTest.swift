@@ -162,6 +162,16 @@ class NetworkTest: XCTestCase {
         expect(searchResult.first?.username).toEventually(equal("user1"))
     }
 
+    func testSearchEmail() {
+        stub(http(.POST, uri: "/0.4/users/search/emails"), builder: json(sampleUserFeed))
+        var searchResult = [User]()
+        _ = network.searchEmails(["john@doe.com"]).subscribeNext { users in
+            searchResult = users
+        }
+        expect(searchResult.count).toEventually(equal(1))
+        expect(searchResult.first?.username).toEventually(equal("user1"))
+    }
+
     func testCreateConnection() {
         stub(http(.PUT, uri: "/0.4/me/connections"), builder: json(sampleConnection))
         var networkConnection: Connection?

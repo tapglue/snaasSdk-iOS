@@ -14,6 +14,8 @@ class SearchTest: XCTestCase {
     
     let username1 = "SearchTest1"
     let username2 = "SearchTest2"
+    let email1 = "email1@domain.com"
+    let email2 = "email2@domain.com"
     let password = "SearchTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
     var user1 = User()
@@ -22,9 +24,11 @@ class SearchTest: XCTestCase {
     override func setUp() {
         super.setUp()
         user1.username = username1
+        user1.email = email1
         user1.password = password
         
         user2.username = username2
+        user2.email = email2
         user2.password = password
         
         do {
@@ -74,5 +78,23 @@ class SearchTest: XCTestCase {
             searchResult = users
         }
         expect(searchResult?.count).toEventually(equal(0))
+    }
+    
+    func testEmailSearchWithNoResults() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchEmails(["somerandom@email.com"]).subscribeNext { users in
+            searchResult = users
+        }
+        expect(searchResult?.count).toEventually(equal(0))
+    }
+    
+    func testEmailSearchWithResult() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchEmails([email2]).subscribeNext { users in
+            searchResult = users
+        }
+        expect(searchResult?.count).toEventually(equal(1))
     }
 }

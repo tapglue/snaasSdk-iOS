@@ -111,6 +111,14 @@ class TapglueTest: XCTestCase {
         expect(searchResult).toEventually(contain(network.testUser))
     }
 
+    func testSearchEmails() {
+        var searchResult = [User]()
+        tapglue.searchEmails(["some@email.com"]) { users, error in
+            searchResult = users!
+        }
+        expect(searchResult).toEventually(contain(network.testUser))
+    }
+
     func testRetrieveFollowers() {
         var callbackUsers = [User]()
         tapglue.retrieveFollowers() { users, error in
