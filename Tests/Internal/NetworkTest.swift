@@ -172,6 +172,16 @@ class NetworkTest: XCTestCase {
         expect(searchResult.first?.username).toEventually(equal("user1"))
     }
 
+    func testSearchSocialIds() {
+        stub(http(.POST, uri: "/0.4/users/search/facebook"), builder: json(sampleUserFeed))
+        var searchResult = [User]()
+        _ = network.searchSocialIds(["someId"], onPlatform: "facebook").subscribeNext { users in
+            searchResult = users
+        }
+        expect(searchResult.count).toEventually(equal(1))
+        expect(searchResult.first?.username).toEventually(equal("user1"))
+    }
+
     func testCreateConnection() {
         stub(http(.PUT, uri: "/0.4/me/connections"), builder: json(sampleConnection))
         var networkConnection: Connection?

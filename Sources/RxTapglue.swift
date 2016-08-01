@@ -69,6 +69,11 @@ public class RxTapglue {
         return network.searchEmails(emails)
     }
 
+    public func searchSocialIds(ids: [String], onPlatform platform: String) ->
+        Observable<[User]> {
+        return network.searchSocialIds(ids, onPlatform: platform)
+    }
+
     public func createConnection(connection: Connection) -> Observable<Connection> {
         return network.createConnection(connection)
     }

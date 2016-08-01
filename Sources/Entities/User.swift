@@ -23,6 +23,7 @@ public class User: Mappable {
     public var isFollowing: Bool?
     public var sessionToken: String?
     public var updatedAt: String?
+    public var socialIds: [String: String]?
     
     public init() {
         
@@ -45,6 +46,7 @@ public class User: Mappable {
         isFriend    <- map["is_friend"]
         isFollowed  <- map["is_followed"]
         isFollowing <- map["is_following"]
+        socialIds   <- map["social_ids"]
         sessionToken    <- map["session_token"]
         updatedAt   <- map["updated_at"]
     }

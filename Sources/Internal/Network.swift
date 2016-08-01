@@ -74,6 +74,15 @@ class Network {
         }
     }
 
+    func searchSocialIds(ids: [String], onPlatform platform: String) ->
+        Observable<[User]> {
+        let payload = ["ids":ids]
+        return http.execute(Router.post("/users/search/" + platform, payload: payload)).map { 
+            (feed: UserFeed) in
+            return feed.users!
+        }
+    }
+
     func deleteConnection(toUserId userId: String, type: ConnectionType) -> Observable<Void> {
         return http.execute(Router.delete("/me/connections/" + type.rawValue + "/" + userId))
     }
