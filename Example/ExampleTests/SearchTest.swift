@@ -66,4 +66,13 @@ class SearchTest: XCTestCase {
         expect(searchResult?.count).toEventually(equal(1))
         expect(searchResult?.first?.username).toEventually(equal(username2))
     }
+    
+    func testUserSearchWithInvalidPath() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchUsers(forSearchTerm: "jasd jkshad").subscribeNext { users in
+            searchResult = users
+        }
+        expect(searchResult?.count).toEventually(equal(0))
+    }
 }

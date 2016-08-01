@@ -60,7 +60,9 @@ class Network {
     }
 
     func searchUsers(forSearchTerm term: String) -> Observable<[User]> {
-        return http.execute(Router.get("/users/search?q=" + term)).map { (feed:UserFeed) in
+        return http.execute(Router.get("/users/search?q=" +
+                term.stringByAddingPercentEncodingWithAllowedCharacters(
+                    NSCharacterSet.URLHostAllowedCharacterSet())!)).map { (feed:UserFeed) in
             return feed.users!
         }
     }
