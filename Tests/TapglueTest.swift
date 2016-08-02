@@ -234,4 +234,12 @@ class TapglueTest: XCTestCase {
         }
         expect(wasDeleted).toEventually(beTrue())
     }
+
+    func testRetrievePostsByUser() {
+        var callbackPosts: [Post]?
+        tapglue.retrievePostsByUser("someuser") { posts, error in
+            callbackPosts = posts!
+        }
+        expect(callbackPosts).toEventuallyNot(beNil())
+    }
 }
