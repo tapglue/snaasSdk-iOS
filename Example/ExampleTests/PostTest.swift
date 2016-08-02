@@ -80,4 +80,18 @@ class PostTest: XCTestCase {
         
         expect(updatedPost?.attachments?.count).to(equal(2))
     }
+    
+    func testRetrievePostsByUser() throws {
+        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+        let retrievedPosts = try tapglue.retrievePostsByUser(user.id!).toBlocking().first()!
+        
+        expect(retrievedPosts.first?.id).to(equal(createdPost.id))
+    }
+    
+    func testRetrievePostsByUserMapsUsersToPosts() throws {
+        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+        let retrievedPosts = try tapglue.retrievePostsByUser(user.id!).toBlocking().first()!
+        
+        expect(retrievedPosts.first?.user?.id).to(equal(user.id))
+    }
 }
