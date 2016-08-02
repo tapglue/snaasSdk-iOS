@@ -159,12 +159,14 @@ class Network {
     }
 
     func retrievePostsByUser(userId: String) -> Observable<[Post]> {
-        return http.execute(Router.get("/users/" + userId + "/posts")).map { (feed: PostFeed) in
-            let posts = feed.posts?.map { post -> Post in
-                post.user = feed.users?[post.userId ?? ""]
-                return post
-            }
-            return posts!
+        return http.execute(Router.get("/users/" + userId + "/posts")).map { 
+            self.mapUserToPost($0)
+        }
+    }
+
+    func retrieveAllPosts() -> Observable<[Post]> {
+        return http.execute(Router.get("/posts")).map { 
+            self.mapUserToPost($0)
         }
     }
     
@@ -225,5 +227,13 @@ class Network {
             return connection
         }
         return connections
+    }
+
+    private func mapUserToPost(feed: PostFeed) -> [Post] {
+        let posts = feed.posts?.map { post -> Post in
+            post.user = feed.users?[post.userId ?? ""]
+            return post
+        }
+        return posts!
     }
 }

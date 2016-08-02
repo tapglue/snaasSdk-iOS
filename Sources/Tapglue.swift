@@ -138,6 +138,10 @@ public class Tapglue {
         (post: [Post]?, error: ErrorType?) -> ()) {
         rxTapglue.retrievePostsByUser(userId).unwrap(completionHandler)
     }
+
+    public func retrieveAllPosts(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveAllPosts().unwrap(completionHandler)
+    }
     
     public func createComment(comment: Comment, completionHandler: (comment: Comment?, error: ErrorType?) -> ()) {
         rxTapglue.createComment(comment).unwrap(completionHandler)

@@ -277,6 +277,14 @@ class RxTapglueTests: XCTestCase {
         }
         expect(userPosts).toEventually(contain(network.testPost))
     }
+
+    func testRetrieveAllPosts() {
+        var networkPosts: [Post]?
+        _ = tapglue.retrieveAllPosts().subscribeNext { posts in
+            networkPosts = posts
+        }
+        expect(networkPosts).toEventually(contain(network.testPost))
+    }
     
     func testCreateComment() {
         let comment = Comment(contents: ["en":"content"], postId: "testPostId")

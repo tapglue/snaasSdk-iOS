@@ -17,19 +17,19 @@ class PostTest: XCTestCase {
     let username = "PostTestUser1"
     let password = "PostTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
-    var user = User()
+    var user1 = User()
 
     let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
     var post: Post!
     
     override func setUp() {
         super.setUp()
-        user.username = username
-        user.password = password
+        user1.username = username
+        user1.password = password
         
         do {
-            user = try tapglue.createUser(user).toBlocking().first()!
-            user = try tapglue.loginUser(username, password: password).toBlocking().first()!
+            user1 = try tapglue.createUser(user1).toBlocking().first()!
+            user1 = try tapglue.loginUser(username, password: password).toBlocking().first()!
 
             post = Post(visibility: .Connections, attachments: [attachment])
         } catch {
@@ -83,15 +83,49 @@ class PostTest: XCTestCase {
     
     func testRetrievePostsByUser() throws {
         let createdPost = try tapglue.createPost(post).toBlocking().first()!
-        let retrievedPosts = try tapglue.retrievePostsByUser(user.id!).toBlocking().first()!
+        let retrievedPosts = try tapglue.retrievePostsByUser(user1.id!).toBlocking().first()!
         
         expect(retrievedPosts.first?.id).to(equal(createdPost.id))
     }
     
     func testRetrievePostsByUserMapsUsersToPosts() throws {
         let createdPost = try tapglue.createPost(post).toBlocking().first()!
-        let retrievedPosts = try tapglue.retrievePostsByUser(user.id!).toBlocking().first()!
+        let retrievedPosts = try tapglue.retrievePostsByUser(user1.id!).toBlocking().first()!
         
-        expect(retrievedPosts.first?.user?.id).to(equal(user.id))
+        expect(retrievedPosts.first?.user?.id).to(equal(user1.id))
+    }
+
+    func testRetrieveAllPosts() throws {
+        post.visibility = .Public
+        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+
+        var user2 = User()
+        user2.username = "postTestUser2"
+        user2.password = password
+        user2 = try tapglue.createUser(user2).toBlocking().first()!
+        user2 = try tapglue.loginUser(user2.username!, password: password).toBlocking().first()!
+
+        let retrievedPosts = try tapglue.retrieveAllPosts().toBlocking().first()!
+        
+        expect(retrievedPosts.first?.id).to(equal(createdPost.id))
+        
+        try tapglue.deleteCurrentUser().toBlocking().first()
+    }
+    
+    func testRetrieveAllPostsMapsUsersToPosts() throws {
+        post.visibility = .Public
+        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+        
+        var user2 = User()
+        user2.username = "postTestUser2"
+        user2.password = password
+        user2 = try tapglue.createUser(user2).toBlocking().first()!
+        user2 = try tapglue.loginUser(user2.username!, password: password).toBlocking().first()!
+        
+        let retrievedPosts = try tapglue.retrieveAllPosts().toBlocking().first()!
+        
+        expect(retrievedPosts.first?.user?.id).to(equal(user1.id))
+        
+        try tapglue.deleteCurrentUser().toBlocking().first()
     }
 }

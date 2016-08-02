@@ -389,6 +389,24 @@ class NetworkTest: XCTestCase {
         expect(networkPosts?.first?.user?.id).toEventually(equal(userId))
     }
     
+    func testRetrieveAllPosts() {
+        stub(http(.GET, uri: "/0.4/posts"), builder: json(samplePostFeed))
+        var networkPosts: [Post]?
+        _ = network.retrieveAllPosts().subscribeNext { posts in
+            networkPosts = posts
+        }
+        expect(networkPosts?.first?.id).toEventually(equal(postId))
+    }
+
+    func testRetrieveAllPostsMapsUsersToPosts() {
+        stub(http(.GET, uri: "/0.4/posts"), builder: json(samplePostFeed))
+        var networkPosts: [Post]?
+        _ = network.retrieveAllPosts().subscribeNext { posts in
+            networkPosts = posts
+        }
+        expect(networkPosts?.first?.user?.id).toEventually(equal(userId))
+    }
+
     func testCreateComment() {
         stub(http(.POST, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleComment))
         var networkComment: Comment?
