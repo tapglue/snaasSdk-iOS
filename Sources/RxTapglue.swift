@@ -144,6 +144,10 @@ public class RxTapglue {
     public func deletePost(id: String) -> Observable<Void> {
         return network.deletePost(id)
     }
+
+    public func retrievePostsByUser(userId: String) -> Observable<[Post]> {
+        return network.retrievePostsByUser(userId)
+    }
     
     public func createComment(comment: Comment) -> Observable<Comment> {
         return network.createComment(comment)

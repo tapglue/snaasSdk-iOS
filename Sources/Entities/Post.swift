@@ -13,6 +13,8 @@ public class Post: Mappable {
     public var visibility: Visibility?
     public var tags: [String]?
     public var attachments: [Attachment]?
+    public var userId: String?
+    public var user: User?
     public var counts: [String:Int]?
     public var createdAt: String?
     public var updatedAt: String?
@@ -31,6 +33,7 @@ public class Post: Mappable {
         visibility  <- map["visibility"]
         tags        <- map["tags"]
         attachments <- map["attachments"]
+        userId      <- map["user_id"]
         counts      <- map["counts"]
         createdAt   <- map["created_at"]
         updatedAt   <- map["updated_at"]

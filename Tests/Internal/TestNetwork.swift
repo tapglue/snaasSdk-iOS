@@ -170,6 +170,10 @@ class TestNetwork: Network {
             return NopDisposable.instance
         }
     }
+
+    override func retrievePostsByUser(userId: String) -> Observable<[Post]> {
+        return Observable.just([testPost])
+    }
     
     override func createLike(forPostId postId: String) -> Observable<Like> {
         return Observable.just(testLike)

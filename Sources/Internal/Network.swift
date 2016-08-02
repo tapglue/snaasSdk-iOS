@@ -157,6 +157,16 @@ class Network {
     func deletePost(id: String) -> Observable<Void> {
         return http.execute(Router.delete("/posts/" + id))
     }
+
+    func retrievePostsByUser(userId: String) -> Observable<[Post]> {
+        return http.execute(Router.get("/users/" + userId + "/posts")).map { (feed: PostFeed) in
+            let posts = feed.posts?.map { post -> Post in
+                post.user = feed.users?[post.userId ?? ""]
+                return post
+            }
+            return posts!
+        }
+    }
     
     func createComment(comment: Comment) -> Observable<Comment> {
         return http.execute(Router.post("/posts/" + comment.postId! + "/comments", payload: comment.toJSON()))

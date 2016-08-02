@@ -19,6 +19,7 @@ class NetworkTest: XCTestCase {
     let userId = "someId213"
     var sampleUser: [String: AnyObject]!
     var samplePost: [String:AnyObject]!
+    var samplePostFeed: [String:AnyObject]!
     var sampleComment: [String:AnyObject]!
     var sampleLike: [String:AnyObject]!
     var sampleUserFeed = [String: AnyObject]()
@@ -38,7 +39,8 @@ class NetworkTest: XCTestCase {
         network = Network()
         sampleUser = ["user_name":"user1","id_string": userId,"password":"1234", "session_token":"someToken"]
         sampleUserFeed["users"] = [sampleUser]
-        samplePost = ["visibility": 20, "attachments": [], "id": postId]
+        samplePost = ["visibility": 20, "attachments": [], "id": postId, "user_id":userId]
+        samplePostFeed = ["posts":[samplePost], "users":[userId:sampleUser]]
         sampleComment = ["contents":["en":"content"], "post_id":postId, "id":commentId, "user_id": userId]
         sampleCommentFeed = ["comments": [sampleComment], "users": [userId: sampleUser]]
         sampleLike = ["post_id":postId, "id":likeId, "user_id": userId]
@@ -366,6 +368,25 @@ class NetworkTest: XCTestCase {
             wasDeleted = true
         }
         expect(wasDeleted).toEventually(beTrue())
+    }
+
+    func testRetrievePostsByUser() {
+        stub(http(.GET, uri: "/0.4/users/someId/posts"), builder: json(samplePostFeed))
+        var networkPosts: [Post]?
+        _ = network.retrievePostsByUser("someId").subscribeNext { posts in
+            networkPosts = posts
+        }
+        expect(networkPosts).toEventuallyNot(beNil())
+        expect(networkPosts?.first?.id).toEventually(equal(postId))
+    }
+
+    func testRetrievePostsByUserMapsUserToPost() {
+        stub(http(.GET, uri: "/0.4/users/someId/posts"), builder: json(samplePostFeed))
+        var networkPosts: [Post]?
+        _ = network.retrievePostsByUser("someId").subscribeNext { posts in
+            networkPosts = posts
+        }
+        expect(networkPosts?.first?.user?.id).toEventually(equal(userId))
     }
     
     func testCreateComment() {

@@ -24,6 +24,7 @@
 		5274A3331D5086CB00C72378 /* SocialConnections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3321D5086CB00C72378 /* SocialConnections.swift */; };
 		5274A3351D508A1E00C72378 /* ConnectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3341D508A1E00C72378 /* ConnectionType.swift */; };
 		5274A3371D508E0A00C72378 /* TestNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3361D508E0A00C72378 /* TestNetwork.swift */; };
+		5274A3391D50CD8700C72378 /* PostFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3381D50CD8700C72378 /* PostFeed.swift */; };
 		528079C81D474843000194AC /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079C71D474843000194AC /* Connection.swift */; };
 		528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079CC1D47A32F000194AC /* NullableFeed.swift */; };
 		528481D71D2AC6050090BA29 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528481D61D2AC6050090BA29 /* Nimble.framework */; };
@@ -118,6 +119,7 @@
 		5274A3321D5086CB00C72378 /* SocialConnections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialConnections.swift; sourceTree = "<group>"; };
 		5274A3341D508A1E00C72378 /* ConnectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionType.swift; sourceTree = "<group>"; };
 		5274A3361D508E0A00C72378 /* TestNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetwork.swift; sourceTree = "<group>"; };
+		5274A3381D50CD8700C72378 /* PostFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostFeed.swift; sourceTree = "<group>"; };
 		528079C71D474843000194AC /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		528079CC1D47A32F000194AC /* NullableFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NullableFeed.swift; sourceTree = "<group>"; };
 		528481D61D2AC6050090BA29 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */,
 				528079CC1D47A32F000194AC /* NullableFeed.swift */,
 				52D3EFD41D4B7D2100E1BA77 /* ConnectionsFeed.swift */,
+				5274A3381D50CD8700C72378 /* PostFeed.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				97D3D97A1D4A2AA5004DC146 /* CommentFeed.swift in Sources */,
 				97D3D9741D4A03D0004DC146 /* Comment.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */,
+				5274A3391D50CD8700C72378 /* PostFeed.swift in Sources */,
 				5274A3331D5086CB00C72378 /* SocialConnections.swift in Sources */,
 				521DE9011D49F36D00AA5A9F /* SimsApi.swift in Sources */,
 				521DE9021D49F36D00AA5A9F /* TapglueSims.swift in Sources */,
