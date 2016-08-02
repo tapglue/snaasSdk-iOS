@@ -59,6 +59,17 @@ class Network {
         return http.execute(Router.put("/me/connections", payload: connection.toJSON()))
     }
 
+    func deleteConnection(toUserId userId: String, type: ConnectionType) -> Observable<Void> {
+        return http.execute(Router.delete("/me/connections/" + type.rawValue + "/" + userId))
+    }
+
+    func createSocialConnections(socialConnections: SocialConnections) -> Observable<[User]> {
+        return http.execute(Router.post("/me/connections/social", 
+            payload: socialConnections.toJSON())).map { (feed: UserFeed) in
+                return feed.users!
+            }
+    }
+
     func searchUsers(forSearchTerm term: String) -> Observable<[User]> {
         return http.execute(Router.get("/users/search?q=" +
                 term.stringByAddingPercentEncodingWithAllowedCharacters(
@@ -81,10 +92,6 @@ class Network {
             (feed: UserFeed) in
             return feed.users!
         }
-    }
-
-    func deleteConnection(toUserId userId: String, type: ConnectionType) -> Observable<Void> {
-        return http.execute(Router.delete("/me/connections/" + type.rawValue + "/" + userId))
     }
 
     func retrieveFollowers() -> Observable<[User]> {

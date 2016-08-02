@@ -61,6 +61,11 @@ public class Tapglue {
         rxTapglue.searchEmails(emails).unwrap(completionHandler)
     }
 
+    public func searchSocialIds(ids: [String], onPlatform platform: String,
+        completionHandler: (result: [User]?, error:ErrorType?) -> ()) {
+        rxTapglue.searchSocialIds(ids, onPlatform: platform).unwrap(completionHandler)
+    }
+
     public func createConnection(connection: Connection, 
             completionHandler: (connection: Connection?, error: ErrorType?) -> ()) {
         rxTapglue.createConnection(connection).unwrap(completionHandler)
@@ -69,6 +74,11 @@ public class Tapglue {
     public func deleteConnection(toUserId userId: String, type: 
             ConnectionType, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
         rxTapglue.deleteConnection(toUserId: userId, type: type).unwrap(completionHandler)
+    }
+
+    public func createSocialConnections(socialConnections: SocialConnections, 
+        completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
+        rxTapglue.createSocialConnections(socialConnections).unwrap(completionHandler)
     }
 
     public func retrieveFollowers(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {

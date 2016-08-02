@@ -201,6 +201,18 @@ class NetworkTest: XCTestCase {
         }
         expect(wasDeleted).toEventually(beTrue())
     }
+
+    func testCreateSocialConnections() {
+        stub(http(.POST, uri: "/0.4/me/connections/social"), builder: json(sampleUserFeed))
+        var networkUsers: [User]?
+        let connections = SocialConnections(platform:"f", type: .Follow, userSocialId: "s",
+            socialIds: ["ids"])
+        _ = network.createSocialConnections(connections).subscribeNext { users in
+            networkUsers = users
+        }
+        expect(networkUsers?.count).toEventually(equal(1))
+        expect(networkUsers?.first?.username).toEventually(equal("user1"))
+    }
     
     func testRetrieveFollowers() {
         stub(http(.GET, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))

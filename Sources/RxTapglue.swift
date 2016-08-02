@@ -83,6 +83,11 @@ public class RxTapglue {
         return network.deleteConnection(toUserId: userId, type: type)
     }
 
+    public func createSocialConnections(socialConnections: SocialConnections) ->
+        Observable<[User]> {
+        return network.createSocialConnections(socialConnections)
+    }
+
     public func retrieveFollowers() -> Observable<[User]> {
         return network.retrieveFollowers()
     }

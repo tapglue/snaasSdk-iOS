@@ -18,7 +18,10 @@ class ConnectionIntegrationTest: XCTestCase {
     
     let username1 = "ConnectionInteractionTestUser1"
     let username2 = "ConnectionInteractionTestUser2"
+    let socialId1 = "connectionTestSocialId1"
+    let socialId2 = "connectionTestSocialId2"
     let password = "ConnectionInteractionTestPassword"
+    let socialPlatform = "insta"
     let tapglue = RxTapglue(configuration: Configuration())
     var user1 = User()
     var user2 = User()
@@ -26,9 +29,11 @@ class ConnectionIntegrationTest: XCTestCase {
     override func setUp() {
         super.setUp()
         user1.username = username1
+        user1.socialIds = [socialPlatform: socialId1]
         user1.password = password
         
         user2.username = username2
+        user2.socialIds = [socialPlatform: socialId2]
         user2.password = password
         
         do {
@@ -185,5 +190,13 @@ class ConnectionIntegrationTest: XCTestCase {
         let outgoing = connections.outgoing
         expect(outgoing?.count).to(equal(1))
         expect(outgoing?.first?.userTo?.id).to(equal(user2.id))
+    }
+
+    func testCreateSocialConnections() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        let connections = SocialConnections(platform: socialPlatform, type: .Follow, 
+            userSocialId: socialId1, socialIds: [socialId2])
+        let users = try tapglue.createSocialConnections(connections).toBlocking().first()!
+        expect(users.first?.username).to(equal(username2))
     }
 }

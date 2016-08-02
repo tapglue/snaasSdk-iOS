@@ -17,8 +17,8 @@ class SearchTest: XCTestCase {
     let email1 = "email1@domain.com"
     let email2 = "email2@domain.com"
     let socialPlatform = "socialplatform"
-    let socialId1 = "socialId1"
-    let socialId2 = "socialId2"
+    let socialId1 = "searchSocialId1"
+    let socialId2 = "searchSocialId2"
     let password = "SearchTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
     var user1 = User()

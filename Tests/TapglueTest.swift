@@ -103,6 +103,16 @@ class TapglueTest: XCTestCase {
         expect(wasDeleted).toEventually(beTrue())
     }
 
+    func testCreateSocialConnections() {
+        var callbackUsers: [User]?
+        let connections = SocialConnections(platform: "t", type: .Friend, userSocialId: "id",
+            socialIds: ["ids"])
+        tapglue.createSocialConnections(connections) { users, error in
+            callbackUsers = users
+        }
+        expect(callbackUsers).toEventually(contain(network.testUser))
+    }
+
     func testSearchUsers() {
         var searchResult = [User]()
         tapglue.searchUsers(forSearchTerm: "term") { users, error in
@@ -114,6 +124,14 @@ class TapglueTest: XCTestCase {
     func testSearchEmails() {
         var searchResult = [User]()
         tapglue.searchEmails(["some@email.com"]) { users, error in
+            searchResult = users!
+        }
+        expect(searchResult).toEventually(contain(network.testUser))
+    }
+
+    func testSearchSocialIds() {
+        var searchResult = [User]()
+        tapglue.searchSocialIds(["someSocialId"], onPlatform: "myplatform") { users, error in
             searchResult = users!
         }
         expect(searchResult).toEventually(contain(network.testUser))

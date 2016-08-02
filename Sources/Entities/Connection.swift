@@ -33,10 +33,6 @@ public class Connection: Mappable {
     }
 }
 
-public enum ConnectionType: String {
-    case Follow = "follow", Friend = "friend"
-}
-
 public enum ConnectionState: String {
     case Pending = "pending", Confirmed = "confirmed", Rejected = "rejected"
 }

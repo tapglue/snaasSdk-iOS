@@ -21,6 +21,9 @@
 		52540EE31D2D35AF0007A9DB /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5202B7661D266A0A0069BA06 /* RxSwift.framework */; };
 		52540EE41D2D35B10007A9DB /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5202B7661D266A0A0069BA06 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52540EE91D2D4D090007A9DB /* NetworkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52540EE81D2D4D090007A9DB /* NetworkTest.swift */; };
+		5274A3331D5086CB00C72378 /* SocialConnections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3321D5086CB00C72378 /* SocialConnections.swift */; };
+		5274A3351D508A1E00C72378 /* ConnectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3341D508A1E00C72378 /* ConnectionType.swift */; };
+		5274A3371D508E0A00C72378 /* TestNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3361D508E0A00C72378 /* TestNetwork.swift */; };
 		528079C81D474843000194AC /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079C71D474843000194AC /* Connection.swift */; };
 		528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079CC1D47A32F000194AC /* NullableFeed.swift */; };
 		528481D71D2AC6050090BA29 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528481D61D2AC6050090BA29 /* Nimble.framework */; };
@@ -112,6 +115,9 @@
 		5252C95A1D21BFA9009AADBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52540EE11D2BE2DC0007A9DB /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		52540EE81D2D4D090007A9DB /* NetworkTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTest.swift; sourceTree = "<group>"; };
+		5274A3321D5086CB00C72378 /* SocialConnections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialConnections.swift; sourceTree = "<group>"; };
+		5274A3341D508A1E00C72378 /* ConnectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionType.swift; sourceTree = "<group>"; };
+		5274A3361D508E0A00C72378 /* TestNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNetwork.swift; sourceTree = "<group>"; };
 		528079C71D474843000194AC /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		528079CC1D47A32F000194AC /* NullableFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NullableFeed.swift; sourceTree = "<group>"; };
 		528481D61D2AC6050090BA29 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -265,6 +271,8 @@
 				52BF703C1D40BADF00D88AAC /* TapglueError.swift */,
 				528079C71D474843000194AC /* Connection.swift */,
 				52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */,
+				5274A3321D5086CB00C72378 /* SocialConnections.swift */,
+				5274A3341D508A1E00C72378 /* ConnectionType.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -293,6 +301,7 @@
 				5233AC371D2E32910076CC02 /* Matchers+Payload.swift */,
 				5233AC391D2E3B710076CC02 /* NSInputStream+String.swift */,
 				52BF703E1D40CB0A00D88AAC /* HttpTest.swift */,
+				5274A3361D508E0A00C72378 /* TestNetwork.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -433,6 +442,7 @@
 				529A3D261D33C5AB0069BF10 /* UIDevice+Tapglue.swift in Sources */,
 				529A3D2E1D34D97F0069BF10 /* Observable+unwrapping.swift in Sources */,
 				5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */,
+				5274A3351D508A1E00C72378 /* ConnectionType.swift in Sources */,
 				52BA9FEA1D2FA56A005B4622 /* UserFeed.swift in Sources */,
 				5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */,
 				52E380381D2A847E003A157E /* Router.swift in Sources */,
@@ -454,6 +464,7 @@
 				97D3D97A1D4A2AA5004DC146 /* CommentFeed.swift in Sources */,
 				97D3D9741D4A03D0004DC146 /* Comment.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */,
+				5274A3331D5086CB00C72378 /* SocialConnections.swift in Sources */,
 				521DE9011D49F36D00AA5A9F /* SimsApi.swift in Sources */,
 				521DE9021D49F36D00AA5A9F /* TapglueSims.swift in Sources */,
 				52BF70391D3FAA4100D88AAC /* UserStore.swift in Sources */,
@@ -474,6 +485,7 @@
 				52BF703F1D40CB0A00D88AAC /* HttpTest.swift in Sources */,
 				529A3D2A1D34D0B80069BF10 /* TapglueTest.swift in Sources */,
 				5252C9591D21BFA9009AADBC /* RxTapglueTests.swift in Sources */,
+				5274A3371D508E0A00C72378 /* TestNetwork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
