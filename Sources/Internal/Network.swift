@@ -211,6 +211,12 @@ class Network {
     func deleteLike(forPostId postId: String) -> Observable<Void> {
         return http.execute(Router.delete("/posts/" + postId + "/likes"))
     }
+
+    func retrievePostFeed() -> Observable<[Post]> {
+        return http.execute(Router.get("/me/feed/posts")).map {
+            self.mapUserToPost($0)
+        }
+    }
     
     private func convertToConnections(feed: ConnectionsFeed) -> Connections {
         let connections = Connections()

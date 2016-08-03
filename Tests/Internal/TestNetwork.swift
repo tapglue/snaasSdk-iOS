@@ -193,4 +193,8 @@ class TestNetwork: Network {
             return NopDisposable.instance
         }
     }
+
+    override func retrievePostFeed() -> Observable<[Post]> {
+        return Observable.just([testPost])
+    }
 }

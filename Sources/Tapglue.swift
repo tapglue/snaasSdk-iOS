@@ -170,4 +170,8 @@ public class Tapglue {
     public func deleteLike(forPostId postId: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
         rxTapglue.deleteLike(forPostId: postId).unwrap(completionHandler)
     }
+
+    public func retrievePostFeed(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrievePostFeed().unwrap(completionHandler)
+    }
 }

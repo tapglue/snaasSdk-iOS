@@ -494,4 +494,13 @@ class NetworkTest: XCTestCase {
         }
         expect(wasDeleted).toEventually(beTrue())
     }
+
+    func testRetrievePostFeed() {
+        stub(http(.GET, uri: "/0.4/me/feed/posts"), builder: json(samplePostFeed))
+        var networkPosts: [Post]?
+        _ = network.retrievePostFeed().subscribeNext { posts in
+            networkPosts = posts
+        }
+        expect(networkPosts?.first?.id).toEventually(equal(postId))
+    }
 }

@@ -24,6 +24,7 @@ public class User: Mappable {
     public var sessionToken: String?
     public var updatedAt: String?
     public var socialIds: [String: String]?
+    public var images: [String: Image]?
     
     public init() {
         
@@ -47,10 +48,27 @@ public class User: Mappable {
         isFollowed  <- map["is_followed"]
         isFollowing <- map["is_following"]
         socialIds   <- map["social_ids"]
+        images      <- map["images"]
         sessionToken    <- map["session_token"]
         updatedAt   <- map["updated_at"]
     }
     
+}
+
+public class Image: Mappable {
+    public var url: String?
+    public var width: Int?
+    public var height: Int?
+
+    required public init?(_ map: Map) {
+        
+    }
+    
+    public func mapping(map: Map) {
+        url     <- map["url"]
+        width   <- map["width"]
+        height  <- map["height"]
+    }
 }
 
 func ==(lhs: User, rhs: User) -> Bool {

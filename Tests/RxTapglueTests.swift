@@ -342,6 +342,14 @@ class RxTapglueTests: XCTestCase {
         }
         expect(wasDeleted).toEventually(beTruthy())
     }
+
+    func testRetrievePostFeed() {
+        var networkFeed: [Post]?
+        _ = tapglue.retrievePostFeed().subscribeNext { posts in
+            networkFeed = posts
+        }
+        expect(networkFeed).toEventually(contain(network.testPost))
+    }
 }
 
 class TestUserStore: UserStore {
