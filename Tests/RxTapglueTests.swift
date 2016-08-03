@@ -350,6 +350,14 @@ class RxTapglueTests: XCTestCase {
         }
         expect(networkFeed).toEventually(contain(network.testPost))
     }
+
+    func testRetrieveActivityFeed() {
+        var networkFeed: [Activity]?
+        _ = tapglue.retrieveActivityFeed().subscribeNext { events in
+            networkFeed = events
+        }
+        expect(networkFeed).toEventually(contain(network.testActivity))
+    }
 }
 
 class TestUserStore: UserStore {

@@ -23,6 +23,8 @@ class TestNetwork: Network {
     let testPostId = "testPostId"
     let testCommentId = "testCommentId"
     let testConnections: Connections
+    let testActivity: Activity
+    let testActivityId = "testActivityId"
     
     override init() {
         testUser = User()
@@ -36,6 +38,8 @@ class TestNetwork: Network {
         testLike.id = testLikeId
         testConnections = Connections()
         testConnections.incoming = [testConnection]
+        testActivity = Activity()
+        testActivity.id = testActivityId
     }
     
     override func loginUser(username: String, password: String) -> Observable<User> {
@@ -196,5 +200,9 @@ class TestNetwork: Network {
 
     override func retrievePostFeed() -> Observable<[Post]> {
         return Observable.just([testPost])
+    }
+
+    override func retrieveActivityFeed() -> Observable<[Activity]> {
+        return Observable.just([testActivity])
     }
 }

@@ -217,6 +217,16 @@ class Network {
             self.mapUserToPost($0)
         }
     }
+
+    func retrieveActivityFeed() -> Observable<[Activity]> {
+        return http.execute(Router.get("/me/feed/events")).map { (feed: ActivityFeed) in
+            let activities = feed.activities?.map {activity -> Activity in
+                activity.user = feed.users?[activity.userId ?? ""]
+                return activity
+            }
+            return activities!
+        }
+    }
     
     private func convertToConnections(feed: ConnectionsFeed) -> Connections {
         let connections = Connections()

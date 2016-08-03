@@ -17,6 +17,7 @@ class NetworkTest: XCTestCase {
     let commentId = "commentIdString"
     let likeId = "likeIdString"
     let userId = "someId213"
+    let activityId = "activityId"
     var sampleUser: [String: AnyObject]!
     var samplePost: [String:AnyObject]!
     var samplePostFeed: [String:AnyObject]!
@@ -27,6 +28,7 @@ class NetworkTest: XCTestCase {
     var sampleLikeFeed = [String: AnyObject]()
     var sampleConnection: [String:AnyObject]!
     var sampleConnectionsFeed: [String: AnyObject]!
+    var sampleActivityFeed: [String: AnyObject]!
     var network: Network!
 
     var analyticsSent = false
@@ -48,6 +50,7 @@ class NetworkTest: XCTestCase {
         sampleConnection = ["user_to_id_string": userId, "user_from_id_string": userId, "type":"follow", "state":"confirmed"]
         sampleConnectionsFeed = ["incoming": [sampleConnection], "outgoing": [sampleConnection],
             "users":[sampleUser]]
+        sampleActivityFeed = ["events":[["id_string":activityId, "user_id_string":userId]], "users":[userId: sampleUser]]
     }
     
     override func tearDown() {
@@ -502,5 +505,23 @@ class NetworkTest: XCTestCase {
             networkPosts = posts
         }
         expect(networkPosts?.first?.id).toEventually(equal(postId))
+    }
+
+    func testRetrieveActivityFeed() {
+        stub(http(.GET, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
+        var networkActivities: [Activity]?
+        _ = network.retrieveActivityFeed().subscribeNext { activities in
+            networkActivities = activities
+        }
+        expect(networkActivities?.first?.id).toEventually(equal(activityId))
+    }
+    
+    func testRetrieveActivityFeedMapsUsersToEvents() {
+        stub(http(.GET, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
+        var networkActivities: [Activity]?
+        _ = network.retrieveActivityFeed().subscribeNext { activities in
+            networkActivities = activities
+        }
+        expect(networkActivities?.first?.user?.id).toEventually(equal(userId))
     }
 }

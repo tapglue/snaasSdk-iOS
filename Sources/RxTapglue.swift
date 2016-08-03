@@ -185,4 +185,8 @@ public class RxTapglue {
     public func retrievePostFeed() -> Observable<[Post]> {
         return network.retrievePostFeed()
     }
+
+    public func retrieveActivityFeed() -> Observable<[Activity]> {
+        return network.retrieveActivityFeed()
+    }
 }

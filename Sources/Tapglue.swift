@@ -174,4 +174,9 @@ public class Tapglue {
     public func retrievePostFeed(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
         rxTapglue.retrievePostFeed().unwrap(completionHandler)
     }
+
+    public func retrieveActivityFeed(completionHandler:
+        (activities: [Activity]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveActivityFeed().unwrap(completionHandler)
+    }
 }
