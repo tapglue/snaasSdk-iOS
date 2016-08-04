@@ -27,6 +27,8 @@
 		5274A3391D50CD8700C72378 /* PostFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3381D50CD8700C72378 /* PostFeed.swift */; };
 		5274A33E1D52285600C72378 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A33D1D52285600C72378 /* Activity.swift */; };
 		5274A3401D523DE600C72378 /* AcitivityFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A33F1D523DE600C72378 /* AcitivityFeed.swift */; };
+		5274A3421D536F0D00C72378 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3411D536F0D00C72378 /* NewsFeed.swift */; };
+		5274A3441D53838700C72378 /* NewsFeedEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3431D53838700C72378 /* NewsFeedEndpoint.swift */; };
 		528079C81D474843000194AC /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079C71D474843000194AC /* Connection.swift */; };
 		528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079CC1D47A32F000194AC /* NullableFeed.swift */; };
 		528481D71D2AC6050090BA29 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528481D61D2AC6050090BA29 /* Nimble.framework */; };
@@ -124,6 +126,8 @@
 		5274A3381D50CD8700C72378 /* PostFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostFeed.swift; sourceTree = "<group>"; };
 		5274A33D1D52285600C72378 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		5274A33F1D523DE600C72378 /* AcitivityFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcitivityFeed.swift; sourceTree = "<group>"; };
+		5274A3411D536F0D00C72378 /* NewsFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
+		5274A3431D53838700C72378 /* NewsFeedEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedEndpoint.swift; sourceTree = "<group>"; };
 		528079C71D474843000194AC /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		528079CC1D47A32F000194AC /* NullableFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NullableFeed.swift; sourceTree = "<group>"; };
 		528481D61D2AC6050090BA29 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -265,6 +269,7 @@
 				52D3EFD41D4B7D2100E1BA77 /* ConnectionsFeed.swift */,
 				5274A3381D50CD8700C72378 /* PostFeed.swift */,
 				5274A33F1D523DE600C72378 /* AcitivityFeed.swift */,
+				5274A3431D53838700C72378 /* NewsFeedEndpoint.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 				5274A3321D5086CB00C72378 /* SocialConnections.swift */,
 				5274A3341D508A1E00C72378 /* ConnectionType.swift */,
 				5274A33D1D52285600C72378 /* Activity.swift */,
+				5274A3411D536F0D00C72378 /* NewsFeed.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -463,6 +469,7 @@
 				52D3EFD51D4B7D2100E1BA77 /* ConnectionsFeed.swift in Sources */,
 				5274A33E1D52285600C72378 /* Activity.swift in Sources */,
 				52BA9FE71D2F8098005B4622 /* Http.swift in Sources */,
+				5274A3421D536F0D00C72378 /* NewsFeed.swift in Sources */,
 				528079C81D474843000194AC /* Connection.swift in Sources */,
 				528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */,
 				521DE9001D49F36D00AA5A9F /* DefaultSimsApi.swift in Sources */,
@@ -470,6 +477,7 @@
 				97D3D9761D4A07E7004DC146 /* Like.swift in Sources */,
 				52D3EFD31D4B5F3A00E1BA77 /* Connections.swift in Sources */,
 				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
+				5274A3441D53838700C72378 /* NewsFeedEndpoint.swift in Sources */,
 				52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */,
 				97D3D97A1D4A2AA5004DC146 /* CommentFeed.swift in Sources */,
 				5274A3401D523DE600C72378 /* AcitivityFeed.swift in Sources */,

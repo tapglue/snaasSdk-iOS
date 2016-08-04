@@ -29,6 +29,7 @@ class NetworkTest: XCTestCase {
     var sampleConnection: [String:AnyObject]!
     var sampleConnectionsFeed: [String: AnyObject]!
     var sampleActivityFeed: [String: AnyObject]!
+    var sampleNewsFeed: [String: AnyObject]!
     var network: Network!
 
     var analyticsSent = false
@@ -51,6 +52,8 @@ class NetworkTest: XCTestCase {
         sampleConnectionsFeed = ["incoming": [sampleConnection], "outgoing": [sampleConnection],
             "users":[sampleUser]]
         sampleActivityFeed = ["events":[["id_string":activityId, "user_id_string":userId]], "users":[userId: sampleUser]]
+        sampleNewsFeed = sampleActivityFeed
+        sampleNewsFeed["posts"] = [samplePost]
     }
     
     override func tearDown() {
@@ -523,5 +526,32 @@ class NetworkTest: XCTestCase {
             networkActivities = activities
         }
         expect(networkActivities?.first?.user?.id).toEventually(equal(userId))
+    }
+
+    func testRetrieveNewsFeed() {
+        stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
+        var networkFeed: NewsFeed?
+        _ = network.retrieveNewsFeed().subscribeNext { feed in
+            networkFeed = feed
+        }
+        expect(networkFeed).toEventuallyNot(beNil())
+    }
+
+    func testRetrieveNewsFeedFetchesPosts() {
+        stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
+        var networkFeed: NewsFeed?
+        _ = network.retrieveNewsFeed().subscribeNext { feed in
+            networkFeed = feed
+        }
+        expect(networkFeed?.posts?.first?.id).toEventually(equal(postId))
+    }
+    
+    func testRetrieveNewsFeedFetchesActivities() {
+        stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
+        var networkFeed: NewsFeed?
+        _ = network.retrieveNewsFeed().subscribeNext { feed in
+            networkFeed = feed
+        }
+        expect(networkFeed?.activities?.first?.id).toEventually(equal(activityId))
     }
 }

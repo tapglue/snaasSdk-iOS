@@ -82,4 +82,26 @@ class FeedTest: XCTestCase {
         let activityFeed = try tapglue.retrieveActivityFeed().toBlocking().first()!
         expect(activityFeed.first!.type).to(equal("tg_follow"))
     }
+    
+    func testRetrieveNewsFeed() throws {
+        // login user 1 and create connection to user 2
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow,
+            state: .Confirmed)).toBlocking().first()
+        
+        // login as user 2 and create post and follows user 1
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
+            state: .Confirmed)).toBlocking().first()
+        let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
+        var post = Post(visibility: .Connections, attachments: [attachment])
+        post = try tapglue.createPost(post).toBlocking().first()!
+        
+        // login as user 1 and read post feed
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        let newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
+        
+        expect(newsFeed.posts?.first?.id).to(equal(post.id))
+        expect(newsFeed.activities?.first?.type).to(equal("tg_follow"))
+    }
 }

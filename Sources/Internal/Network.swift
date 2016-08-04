@@ -227,6 +227,21 @@ class Network {
             return activities!
         }
     }
+
+    func retrieveNewsFeed() -> Observable<NewsFeed> {
+        return http.execute(Router.get("/me/feed")).map { (feed: NewsFeedEndpoint) in
+            let newsFeed = NewsFeed()
+            newsFeed.posts = feed.posts?.map { post -> Post in
+                post.user = feed.users?[post.userId ?? ""]
+                return post
+            }
+            newsFeed.activities = feed.activities?.map { activity -> Activity in
+                activity.user = feed.users?[activity.userId ?? ""]
+                return activity
+            }
+            return newsFeed
+        }
+    }
     
     private func convertToConnections(feed: ConnectionsFeed) -> Connections {
         let connections = Connections()
