@@ -19,11 +19,11 @@ class Http {
                 .validate()
                 .debugLog()
                 .responseJSON { (response:Response<AnyObject, NSError>) in
-                    print(response.response?.statusCode)
-                    print(response.result.value)
+                    log(response.response?.statusCode)
+                    log(response.result.value)
                     switch(response.result) {
                     case .Success(let value):
-                        print(value)
+                        log(value)
                         if let object = Mapper<T>().map(value) {
                             observer.on(.Next(object))
                         } else {
@@ -47,7 +47,7 @@ class Http {
                 .validate()
                 .debugLog()
                 .responseJSON { response in
-                    print(response.response?.statusCode)
+                    log(response.response?.statusCode)
                     switch(response.result) {
                     case .Success:
                         observer.on(.Completed)
@@ -64,7 +64,7 @@ class Http {
         if let data = data {
             let json = String(data: data, encoding: NSUTF8StringEncoding)!
             if let errorFeed = Mapper<ErrorFeed>().map(json) {
-                print(errorFeed.toJSONString())
+                log(errorFeed.toJSONString())
                 let tapglueErrors = errorFeed.errors!
                 observer.on(.Error(tapglueErrors[0]))
             } else {
