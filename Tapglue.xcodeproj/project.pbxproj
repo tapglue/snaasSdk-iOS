@@ -30,6 +30,7 @@
 		5274A3421D536F0D00C72378 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3411D536F0D00C72378 /* NewsFeed.swift */; };
 		5274A3441D53838700C72378 /* NewsFeedEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3431D53838700C72378 /* NewsFeedEndpoint.swift */; };
 		5274A3461D5494E400C72378 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3451D5494E400C72378 /* Log.swift */; };
+		5274A3481D5A176700C72378 /* PostTagFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A3471D5A176700C72378 /* PostTagFilter.swift */; };
 		528079C81D474843000194AC /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079C71D474843000194AC /* Connection.swift */; };
 		528079CD1D47A32F000194AC /* NullableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079CC1D47A32F000194AC /* NullableFeed.swift */; };
 		528481D71D2AC6050090BA29 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528481D61D2AC6050090BA29 /* Nimble.framework */; };
@@ -130,6 +131,7 @@
 		5274A3411D536F0D00C72378 /* NewsFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		5274A3431D53838700C72378 /* NewsFeedEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedEndpoint.swift; sourceTree = "<group>"; };
 		5274A3451D5494E400C72378 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Log.swift; path = Internal/Log.swift; sourceTree = "<group>"; };
+		5274A3471D5A176700C72378 /* PostTagFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTagFilter.swift; sourceTree = "<group>"; };
 		528079C71D474843000194AC /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		528079CC1D47A32F000194AC /* NullableFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NullableFeed.swift; sourceTree = "<group>"; };
 		528481D61D2AC6050090BA29 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 				5274A3381D50CD8700C72378 /* PostFeed.swift */,
 				5274A33F1D523DE600C72378 /* AcitivityFeed.swift */,
 				5274A3431D53838700C72378 /* NewsFeedEndpoint.swift */,
+				5274A3471D5A176700C72378 /* PostTagFilter.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				52540EE21D2BE2DC0007A9DB /* Network.swift in Sources */,
 				97D3D9761D4A07E7004DC146 /* Like.swift in Sources */,
 				52D3EFD31D4B5F3A00E1BA77 /* Connections.swift in Sources */,
+				5274A3481D5A176700C72378 /* PostTagFilter.swift in Sources */,
 				5274A3461D5494E400C72378 /* Log.swift in Sources */,
 				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
 				5274A3441D53838700C72378 /* NewsFeedEndpoint.swift in Sources */,

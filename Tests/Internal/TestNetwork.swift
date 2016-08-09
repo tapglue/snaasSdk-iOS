@@ -145,7 +145,7 @@ class TestNetwork: Network {
         return Observable.just(testPost)
     }
     
-    override func updatePost(post: Post) -> Observable<Post> {
+    override func updatePost(id: String, post: Post) -> Observable<Post> {
         return Observable.just(testPost)
     }
     
@@ -154,6 +154,18 @@ class TestNetwork: Network {
             observer.on(.Completed)
             return NopDisposable.instance
         }
+    }
+
+    override func retrievePostsByUser(userId: String) -> Observable<[Post]> {
+        return Observable.just([testPost])
+    }
+
+    override func retrieveAllPosts() -> Observable<[Post]> {
+        return Observable.just([testPost])
+    }
+
+    override func filterPostsByTags(tags: [String]) -> Observable<[Post]> {
+        return Observable.just([testPost])
     }
     
     override func createComment(comment: Comment) -> Observable<Comment> {
@@ -173,14 +185,6 @@ class TestNetwork: Network {
             observer.on(.Completed)
             return NopDisposable.instance
         }
-    }
-
-    override func retrievePostsByUser(userId: String) -> Observable<[Post]> {
-        return Observable.just([testPost])
-    }
-
-    override func retrieveAllPosts() -> Observable<[Post]> {
-        return Observable.just([testPost])
     }
     
     override func createLike(forPostId postId: String) -> Observable<Like> {

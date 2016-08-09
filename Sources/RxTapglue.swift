@@ -158,8 +158,8 @@ public class RxTapglue {
     /// update post
     /// - parameter post: the post to replace the old one
     /// - note: post id must be set on the post object
-    public func updatePost(post: Post) -> Observable<Post> {
-        return network.updatePost(post)
+    public func updatePost(id: String, post: Post) -> Observable<Post> {
+        return network.updatePost(id, post: post)
     }
     /// delete post
     /// - parameter id: id of the post to be deleted
@@ -174,6 +174,12 @@ public class RxTapglue {
     /// retrieves all public and global posts
     public func retrieveAllPosts() -> Observable<[Post]> {
         return network.retrieveAllPosts()
+    }
+    /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
+    /// `and` operation
+    /// - parameter tags: tags to filter
+    public func filterPostsByTags(tags: [String]) -> Observable<[Post]> {
+        return network.filterPostsByTags(tags)
     }
     /// Creates a comment on a post
     public func createComment(comment: Comment) -> Observable<Comment> {

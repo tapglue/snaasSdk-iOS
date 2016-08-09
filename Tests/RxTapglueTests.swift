@@ -256,7 +256,7 @@ class RxTapglueTests: XCTestCase {
     
     func testUpdatePost() {
         var updatedPost = Post(visibility: .Connections, attachments: [])
-        _ = tapglue.updatePost(network.testPost).subscribeNext { post in
+        _ = tapglue.updatePost("123", post: network.testPost).subscribeNext { post in
             updatedPost = post
         }
         expect(updatedPost.id).to(equal(network.testPost.id))
@@ -285,7 +285,14 @@ class RxTapglueTests: XCTestCase {
         }
         expect(networkPosts).toEventually(contain(network.testPost))
     }
-    
+
+    func testFilterPostsByTags() {
+        var networkPosts: [Post]?
+        _ = tapglue.filterPostsByTags(["someTag"]).subscribeNext { posts in
+            networkPosts = posts
+        }
+        expect(networkPosts).toEventually(contain(network.testPost))
+    }
     func testCreateComment() {
         let comment = Comment(contents: ["en":"content"], postId: "testPostId")
         var networkComment: Comment?

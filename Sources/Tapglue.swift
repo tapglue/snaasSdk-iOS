@@ -201,8 +201,8 @@ public class Tapglue {
     /// - parameter post: the post to replace the old one
     /// - note: post id must be set on the post object
     /// - parameter completionHander: where the callbacks will be made
-    public func updatePost(post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
-        rxTapglue.updatePost(post).unwrap(completionHandler)
+    public func updatePost(id: String, post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
+        rxTapglue.updatePost(id, post: post).unwrap(completionHandler)
     }
 
     /// delete post
@@ -224,6 +224,14 @@ public class Tapglue {
     /// - parameter completionHander: where the callbacks will be made
     public func retrieveAllPosts(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveAllPosts().unwrap(completionHandler)
+    }
+
+    /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
+    /// `and` operation
+    /// - parameter tags: tags to filter
+    public func filterPostsByTags(tags: [String], 
+        completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
+
     }
     
     /// Creates a comment on a post

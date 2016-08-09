@@ -362,7 +362,7 @@ class NetworkTest: XCTestCase {
         var networkPost: Post?
         let post = Post(visibility: .Private, attachments: [])
         post.id = postId
-        _ = network.updatePost(post).subscribeNext {post in
+        _ = network.updatePost(postId, post: post).subscribeNext {post in
             networkPost = post
         }
         expect(networkPost?.id).toEventually(equal(postId))
@@ -412,6 +412,15 @@ class NetworkTest: XCTestCase {
             networkPosts = posts
         }
         expect(networkPosts?.first?.user?.id).toEventually(equal(userId))
+    }
+
+    func testFilterPostsByTags() {
+        stub(everything, builder: json(samplePostFeed))
+        var networkPosts: [Post]?
+        _ = network.filterPostsByTags(["someTag"]).subscribeNext { posts in
+            networkPosts = posts
+        }
+        expect(networkPosts?.first?.id).toEventually(equal(postId))
     }
 
     func testCreateComment() {

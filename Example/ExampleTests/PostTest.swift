@@ -14,6 +14,7 @@ import RxBlocking
 
 class PostTest: XCTestCase {
 
+    let tag1 =  "someTag"
     let username = "PostTestUser1"
     let password = "PostTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
@@ -76,7 +77,7 @@ class PostTest: XCTestCase {
     func testUpdatePost() throws {
         let createdPost = try tapglue.createPost(post).toBlocking().first()!
         createdPost.attachments!.append(Attachment(contents: ["es":"contenidos"], name: "spanish", type: .Text))
-        let updatedPost = try tapglue.updatePost(createdPost).toBlocking().first()
+        let updatedPost = try tapglue.updatePost(createdPost.id!, post: createdPost).toBlocking().first()
         
         expect(updatedPost?.attachments?.count).to(equal(2))
     }
@@ -127,5 +128,17 @@ class PostTest: XCTestCase {
         expect(retrievedPosts.first?.user?.id).to(equal(user1.id))
         
         try tapglue.deleteCurrentUser().toBlocking().first()
+    }
+
+    func testFilterPostsByTag() throws {
+        post.tags = [tag1]
+        post.visibility = .Public
+        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+
+        let retrievedPosts = try tapglue.filterPostsByTags([tag1]).toBlocking().first()!
+
+        expect(retrievedPosts.first?.id).to(equal(createdPost.id))
+
+        try tapglue.deletePost(createdPost.id!).toBlocking().first()
     }
 }

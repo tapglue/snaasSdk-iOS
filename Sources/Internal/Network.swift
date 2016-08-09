@@ -150,8 +150,8 @@ class Network {
         return http.execute(Router.get("/posts/" + id))
     }
     
-    func updatePost(post: Post) -> Observable<Post> {
-        return http.execute(Router.put("/posts/" + post.id!, payload: post.toJSON()))
+    func updatePost(id: String, post: Post) -> Observable<Post> {
+        return http.execute(Router.put("/posts/" + id, payload: post.toJSON()))
     }
     
     func deletePost(id: String) -> Observable<Void> {
@@ -166,6 +166,16 @@ class Network {
 
     func retrieveAllPosts() -> Observable<[Post]> {
         return http.execute(Router.get("/posts")).map { 
+            self.mapUserToPost($0)
+        }
+    }
+
+    func filterPostsByTags(tags: [String]) -> Observable<[Post]> {
+        let tagsObject = PostTagFilter(tags: tags)
+        let json = "{\"posts\":\(tagsObject.toJSONString() ?? "")}"
+        let query = json.stringByAddingPercentEncodingWithAllowedCharacters(
+                    NSCharacterSet.URLHostAllowedCharacterSet()) ?? ""
+        return http.execute(Router.get("/posts?where=" + query)).map {
             self.mapUserToPost($0)
         }
     }

@@ -221,7 +221,7 @@ class TapglueTest: XCTestCase {
     func testUpdatePost() {
         var callbackPost: Post?
         let post = Post(visibility: .Public, attachments: [Attachment]())
-        tapglue.updatePost(post) { post, error in
+        tapglue.updatePost("id", post: post) { post, error in
             callbackPost = post
         }
         expect(callbackPost).toEventuallyNot(beNil())
