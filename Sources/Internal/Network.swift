@@ -229,14 +229,7 @@ class Network {
     }
 
     func retrieveActivityFeed() -> Observable<[Activity]> {
-        return http.execute(Router.get("/me/feed/events")).map { (feed: ActivityFeed) in
-            let activities = feed.activities?.map {activity -> Activity in
-                activity.user = feed.users?[activity.userId ?? ""]
-                activity.post = feed.posts?[activity.postId ?? ""]
-                return activity
-            }
-            return activities!
-        }
+        return retrieveActivitiesOn("/me/feed/events")
     }
 
     func retrieveNewsFeed() -> Observable<NewsFeed> {
@@ -252,6 +245,21 @@ class Network {
                 return activity
             }
             return newsFeed
+        }
+    }
+
+    func retrieveMeFeed() -> Observable<[Activity]> {
+        return retrieveActivitiesOn("/me/feed/notifications/self")
+    }
+
+    private func retrieveActivitiesOn(path: String) -> Observable<[Activity]> {
+        return http.execute(Router.get(path)).map { (feed: ActivityFeed) in
+            let activities = feed.activities?.map {activity -> Activity in
+                activity.user = feed.users?[activity.userId ?? ""]
+                activity.post = feed.posts?[activity.postId ?? ""]
+                return activity
+            }
+            return activities!
         }
     }
     

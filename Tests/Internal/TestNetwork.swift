@@ -216,4 +216,8 @@ class TestNetwork: Network {
         newsFeed.posts = [testPost]
         return Observable.just(newsFeed)
     }
+
+    override func retrieveMeFeed() -> Observable<[Activity]> {
+        return Observable.just([testActivity])
+    }
 }

@@ -582,4 +582,31 @@ class NetworkTest: XCTestCase {
         }
         expect(newsFeed?.activities?.first?.post?.id).toEventually(equal(postId))
     }
+
+    func testRetrieveMeFeed() {
+        stub(http(.GET, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
+        var networkActivities: [Activity]?
+        _ = network.retrieveMeFeed().subscribeNext { activities in
+            networkActivities = activities
+        }
+        expect(networkActivities?.first?.id).toEventually(equal(activityId))
+    }
+    
+    func testRetrieveMeFeedMapsUsersToEvents() {
+        stub(http(.GET, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
+        var networkActivities: [Activity]?
+        _ = network.retrieveMeFeed().subscribeNext { activities in
+            networkActivities = activities
+        }
+        expect(networkActivities?.first?.user?.id).toEventually(equal(userId))
+    }
+
+    func testRetrieveMeFeedMapsPostsToEvents() {
+        stub(http(.GET, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
+        var networkActivities: [Activity]?
+        _ = network.retrieveMeFeed().subscribeNext { activities in
+            networkActivities = activities
+        }
+        expect(networkActivities?.first?.post?.id).toEventually(equal(postId))
+    }
 }

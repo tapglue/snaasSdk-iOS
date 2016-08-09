@@ -231,7 +231,7 @@ public class Tapglue {
     /// - parameter tags: tags to filter
     public func filterPostsByTags(tags: [String], 
         completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
-
+        rxTapglue.filterPostsByTags(tags).unwrap(completionHandler)
     }
     
     /// Creates a comment on a post
@@ -302,5 +302,11 @@ public class Tapglue {
     /// - parameter completionHander: where the callbacks will be made
     public func retrieveNewsFeed(completionHandler: (feed: NewsFeed?, error:ErrorType?) -> ()) {
         rxTapglue.retrieveNewsFeed().unwrap(completionHandler)
+    }
+
+    /// retrieves a feed of activities tageting the current user
+    public func retrieveMeFeed(completionHandler: 
+        (activities: [Activity]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveMeFeed().unwrap(completionHandler)
     }
 }

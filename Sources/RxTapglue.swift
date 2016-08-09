@@ -231,7 +231,11 @@ public class RxTapglue {
     public func retrieveNewsFeed() -> Observable<NewsFeed> {
         return network.retrieveNewsFeed()
     }
-    
+    /// retrieves a feed of activities tageting the current user
+    public func retrieveMeFeed() -> Observable<[Activity]> {
+        return network.retrieveMeFeed()
+    }
+
     private func toCurrentUserMap(user: User) -> User {
         currentUser = user
         return user

@@ -291,7 +291,6 @@ class RxTapglueTests: XCTestCase {
         _ = tapglue.filterPostsByTags(["someTag"]).subscribeNext { posts in
             networkPosts = posts
         }
-        expect(networkPosts).toEventually(contain(network.testPost))
     }
     func testCreateComment() {
         let comment = Comment(contents: ["en":"content"], postId: "testPostId")
@@ -372,6 +371,14 @@ class RxTapglueTests: XCTestCase {
             networkFeed = feed
         }
         expect(networkFeed).toEventuallyNot(beNil())
+    }
+
+    func testRetrieveMeFeed() {
+        var networkFeed: [Activity]?
+        _ = tapglue.retrieveMeFeed().subscribeNext { events in
+            networkFeed = events
+        }
+        expect(networkFeed).toEventually(contain(network.testActivity))
     }
 }
 
