@@ -11,6 +11,7 @@ import ObjectMapper
 class ActivityFeed: NullableFeed {
     var activities: [Activity]?
     var users: [String: User]?
+    var posts: [String: Post]?
     
     
     required init() {
@@ -24,5 +25,6 @@ class ActivityFeed: NullableFeed {
     func mapping(map: Map) {
         activities  <- map["events"]
         users       <- map["users"]
+        posts       <- map["post_map"]
     }
 }

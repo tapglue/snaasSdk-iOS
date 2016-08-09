@@ -51,7 +51,8 @@ class NetworkTest: XCTestCase {
         sampleConnection = ["user_to_id_string": userId, "user_from_id_string": userId, "type":"follow", "state":"confirmed"]
         sampleConnectionsFeed = ["incoming": [sampleConnection], "outgoing": [sampleConnection],
             "users":[sampleUser]]
-        sampleActivityFeed = ["events":[["id_string":activityId, "user_id_string":userId]], "users":[userId: sampleUser]]
+        sampleActivityFeed = ["events":[["id_string":activityId, "user_id_string":userId,
+            "post_id": postId]], "users":[userId: sampleUser], "post_map":[postId: samplePost]]
         sampleNewsFeed = sampleActivityFeed
         sampleNewsFeed["posts"] = [samplePost]
     }
@@ -528,6 +529,15 @@ class NetworkTest: XCTestCase {
         expect(networkActivities?.first?.user?.id).toEventually(equal(userId))
     }
 
+    func testRetrieveActivityFeedMapsPostsToEvents() {
+        stub(http(.GET, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
+        var networkActivities: [Activity]?
+        _ = network.retrieveActivityFeed().subscribeNext { activities in
+            networkActivities = activities
+        }
+        expect(networkActivities?.first?.post?.id).toEventually(equal(postId))
+    }
+
     func testRetrieveNewsFeed() {
         stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
         var networkFeed: NewsFeed?
@@ -553,5 +563,14 @@ class NetworkTest: XCTestCase {
             networkFeed = feed
         }
         expect(networkFeed?.activities?.first?.id).toEventually(equal(activityId))
+    }
+
+    func testRetrieveNewsFeedMapsPostsToEvents() {
+        stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
+        var newsFeed: NewsFeed?
+        _ = network.retrieveNewsFeed().subscribeNext { feed in
+            newsFeed = feed
+        }
+        expect(newsFeed?.activities?.first?.post?.id).toEventually(equal(postId))
     }
 }

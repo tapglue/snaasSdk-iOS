@@ -23,6 +23,8 @@ public class Activity: Mappable {
     public var target: ActivityObject?
     public var object: ActivityObject?
     public var user: User?
+    public var postId: String?
+    public var post: Post?
 
     init(){}
 
@@ -41,6 +43,7 @@ public class Activity: Mappable {
         images      <- map["images"]
         userId      <- map["user_id_string"]
         tgObjectId  <- map["tgObjectId"]
+        postId      <- map["post_id"]
         target      <- map["target"]
         object      <- map["object"]
     }

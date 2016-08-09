@@ -12,6 +12,7 @@ class NewsFeedEndpoint: NullableFeed {
     var activities: [Activity]?
     var posts: [Post]?
     var users: [String: User]?
+    var postMap: [String: Post]?
     
     required init() {
         posts = [Post]()
@@ -26,5 +27,6 @@ class NewsFeedEndpoint: NullableFeed {
         activities  <- map["events"]
         posts       <- map["posts"]
         users       <- map["users"]
+        postMap     <- map["post_map"]
     }
 }

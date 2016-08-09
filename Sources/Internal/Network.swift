@@ -222,6 +222,7 @@ class Network {
         return http.execute(Router.get("/me/feed/events")).map { (feed: ActivityFeed) in
             let activities = feed.activities?.map {activity -> Activity in
                 activity.user = feed.users?[activity.userId ?? ""]
+                activity.post = feed.posts?[activity.postId ?? ""]
                 return activity
             }
             return activities!
@@ -237,6 +238,7 @@ class Network {
             }
             newsFeed.activities = feed.activities?.map { activity -> Activity in
                 activity.user = feed.users?[activity.userId ?? ""]
+                activity.post = feed.postMap?[activity.postId ?? ""]
                 return activity
             }
             return newsFeed
