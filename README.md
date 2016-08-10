@@ -10,10 +10,6 @@ If you're interested in the iOS SDK Reference Documentation visit our docs on [C
 
 To start using the Tapglue API you need an `APP_TOKEN`. Visit our [Dashboard](https://dashboard.tapglue.com) and login with your credentials or create a new account.
 
-## Quickstart
-
-We created a template with Tapglue already installed for you. Before diving into the specifics of our SDK you can download the [Quickstart-Project](https://github.com/tapglue/ios_quickstart) and start using Tapglue immediately.
-
 ## Sample App
 
 Our [Sample app](https://github.com/tapglue/ios_sample) covers most of the concepts in our SDK and is a great showcase if you want to check implementation details.
@@ -24,7 +20,7 @@ This page will help you get started with Tapglue on iOS step by step guide.
 
 ## Installing with CocoaPods
 
-The easiest way to install Tapglue into your iOS project is to use [CocoaPods](http://cocoapods.org/).
+To install Tapglue with [CocoaPods](http://cocoapods.org/):
 
 1. Install CocoaPods with `gem install cocoapods`
 2. Run `pod setup` to create a local CocoaPods spec mirror, if this is the first time using CocoaPods.
@@ -37,6 +33,16 @@ pod 'Tapglue'
 4. Run `pod install` in your project directory and Tapglue will be downloaded and installed.
 5. Restart your Xcode project
 
+ ## Installing with Carthage
+
+To install Tapglue with [Carthage](https://github.com/Carthage/Carthage):
+
+1. Install Carthage with `brew update` followed by `brew install Carthage`
+2. Create a Cartfile in the root of your project
+3. Add the following line to your Cartfile: `github "Tapglue/ios_sdk" ~> 2.0`
+4. Run Carthage update
+5. Copy binaries into your project, for RxSwift you only need the RxSwift framework file (not RxTest and RxBlocking)
+
 ## Manual Installation
 
 If you don't want to use CocoaPods you download the latest version of [Tapglue from Github](https://github.com/tapglue/ios_sdk/releases) and copy it into your project.
@@ -44,167 +50,150 @@ If you don't want to use CocoaPods you download the latest version of [Tapglue f
 1. Clone the SDK with `git clone https://github.com/tapglue/ios_sdk.git`
 2. Copy the SDK into your Xcode project's folder
 3. Import all dependencies
-4. Integrate `<Tapglue/Tapglue.h>` into your files
 
 ## Initialise the library
 
 To start using Tapglue, you must initialise our SDK with your app token first. You can find your app token in the [Tapglue dashboard](https://dashboard.tapglue.com).
 
-To initialise the library, import `Tapglue.h` and in your AppDelegate’s -`application:didFinishLaunchingWithOptions:` call `setUpWithAppToken:` with your app token as its argument.
+To instatiate Tapglue, simply call the constructor and pass in a Configuration instance with your settings. We recommend having the configuration set at a central place and reuse it, for example in the app delegate.
 
-```objective-c
-#import <Tapglue/Tapglue.h>
-
-#define tapglueToken @"YOUR_APP_TOKEN"
-
-// Initialise the SDK with your app token
-[Tapglue setUpWithAppToken:tapglueToken];
-```
-
-### Bridging header
-
-Our SDK is fully compatible with Swift. If you are using Swift, create a `Objective-C-Bridging-Header.h` file and add `#import <Tapglue/Tapglue.h>` to it. You can learn more about bridging headers on [Apples official documentation](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
-
-You don't need a bridging header if you enable `use_frameworks!` in your Podfile.
+If you plan to use SIMS, please refer to the SIMS integration guide. 
 
 ## SDK Configuration
 
 If you want to initialise SDK with a custom configuration you can specify following attributes:
 
-- `apiBaseUrl`
-- `loggingEnabled`
-- `flushInterval (in seconds)`
-- `showNetworkActivityIndicator`
-- `analyticsEnabled`
+- `baseUrl`
+- `appToken`
+- `log`
 
-Simply call `setUpWithAppToken: andConfig:` and define a config like in the following:
+The following example showcases usage of the configuration and instantiation of Tapglue.
 
-```objective-c
-#import "Tapglue.h"
+```swift
+import Tapglue
 
-#define tapglueToken @"YOUR_APP_TOKEN"
+let configuration = Configuration()
+configuration.baseUrl = "https://api.tapglue.com"
+configuration.appToken = "your app token"
+// setting this to true makes the sdk print http requests and responses
+configuration.log = true
 
-// Create config object
-TGConfiguration *customConfig = [TGConfiguration defaultConfiguration];
-
-// Configure custom settings
-customConfig.loggingEnabled = true;
-
-// Initialize the SDK with app token and config
-[Tapglue setUpWithAppToken:tapglueToken andConfig:customConfig];
+let tapglue = Tapglue(configuration: configuration)
+let rxTapglue = RxTapglue(configuration: configuration)
 ```
 
-In most cases, it makes sense to do this in `application:didFinishLaunchingWithOptions:`.
+We offer two implementations of Tapglue, a default one with callbacks and one that returns RxSwift Observables.
 
 ## Compatibility
 
-Versions of Tapglue greater than 0.1.0 will work for a deployment target of iOS 7.0 and above. You need to be using Xcode 5 and a Base SDK of iOS 7.0 for your app to build.
+The framework is compatible with iOS 8.0 and up
+
+# RxSwift or callbacks??
+
+The SDK offers two interfaces with the exact same functionality. One of them uses callbacks to return results, the other uses RxSwift Observables. If you want to learn more about RxSwift you can read more about it [here](https://github.com/ReactiveX/RxSwift)
+
+If you're familiar to RxSwift and FRP the interactions with the Rx interface are obvious. For the callbacks we always have a similar way of expressing it, for API calls that return entities (users, posts, etc) the methods expect a block with the signature:
+
+
+```swift
+(entity: Entity?, error: ErrorType?) -> ()
+```
+
+When the API request doesn't return an entity the signature will look like:
+
+```swift
+(success: Bool, error: ErrorType?) -> ()
+```
 
 # Create users
 
 After installing Tapglue into your iOS app, creating users is usually the first thing you need to do, to build the basis for your news feed.
 
-## Create and login users
+```swift
+let user = User()
+user.username = "some username"
+user.password = "some password"
 
-Our SDK provides three convenient ways to create users. Creating users will automatically resolve in a login afterwards as you wouldn't ask the users to login again after they registered. Do achieve this, you can call one of the following options:
+tapglue.createUser(user) { user, error in
 
-- `createAndLoginUserWithUsername`
-- `createAndLoginUserWithEmail`
-- `createAndLoginUser`
+}
 
-Here is an example of creating a user with the username:
-
-```objective-c
-[Tapglue createAndLoginUserWithUsername:@"username" andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
-        if (success) {
-            // Implement success after user creation/login.
-        } else {
-            // Implement error handling.
-        }
-}];
+//RxSwift
+tapglue.createUser(user).subscribe()
 ```
 
-In most cases, it makes sense to call this after a signup or login screen and read the data from the values entered in the text fields.
+## login users
 
-## Login users
+There are two ways to login a user: by username or by email. Here's an example of loging in with a username:
 
-Even though `createAndLogin` will automatically login existing users, it's better to call the login only if you are just showing a login screen for example. You can do it with the following call:
+```swift
+tapglue.loginUser("username", password: "password") { user, error in
 
-```objective-c
-[Tapglue loginWithUsernameOrEmail:@"username" andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
-        if (success) {
-            // Implement success after login.
-        } else {
-            // Implement error handling.
-        }
-    }];
+}
+
+//RxSwift
+tapglue.loginUser("username", password: "password").subscribe()
 ```
+
+### Note: migrating from v1
+
+Creating a user no longer will log the user in.
 
 ## Logout users
 
-To logout users you can simply call `logoutWithCompletionBlock`.
+To logout the current user call `logout`.
 
-```objective-c
-[Tapglue logoutWithCompletionBlock:^(BOOL success, NSError *error) {
-	if (success) {
-  	// Implement success.
- 	} else {
-		// Implement error handling.
-  }
-}]
+```swift
+tapglue.logout() { success, error in
+  
+}
+
+//RxSwift
+tapglue.logout().subscribe()
 ```
-
 ## Current User
 
-When you successfully create or login a user, we store it as the `currentUser` by default. To check if a user object is the currentUser you can simply do the following:
+When you successfully login a user, we store it as the `currentUser` by default. The current user is a property on the `Tapglue` and `RxTapglue` instances. Once logged in it is persisted and can be refreshed by calling `refreshCurrentUser()`
 
-```objective-c
-TGUser *user = [[TGUser alloc] init];
+```swift
+var currentUser = tapglue.currentUser
 
-if (user.isCurrentUser) {
-    // User is currentUser
-} else {
-    // User isn't currentUser
+//refreshing the current user
+tapglue.refreshCurrentUser() {user, error in
+  if let user = user {
+    currentUser = user
+  }
+}
+
+//refreshing the current user in RxSwift
+tapglue.refreshCurrentUser().subscribeNext {user in
+  currentUser = user
 }
 ```
-
-If the currentUser is set, you can access it's properties from any place in your project.
-
-```objective-c
-NSString *username = [TGUser currentUser].username;
-```
-
 ## Update Current User
 
-If users want to update their profile information you can update it with the `saveWithCompletionBlock` method.
+To update the current user call `updateCurrentUser(user: User)`.
 
-```objective-c
-TGUser *user = [TGUser currentUser]
+```swift
+let user = tapglue.currentUser
+user.email = "new@email.com"
+tapglue.updateCurrentUser(user) {user, error in
+}
 
-user.username = @"changedUsername";
-[user saveWithCompletionBlock:^(BOOL success, NSError *error) {
-	if (success) {
-  	// Implement success after login.
- 	} else {
-		// Implement error handling.
-  }
-}]
+//RxSwift
+tapglue.updateCurrentUser(user).subscribe()
 ```
 
 ## Delete Current User
 
-To delete the current user you can perform `deleteWithCompletionBlock`.
+This will delete the user from Tapglue. The user cannot be retrieved again after this actions.
 
-```objective-c
-TGUser *user = [TGUser currentUser]
+```swift
+tapglue.deleteCurrentUser() { success, error in
+}
 
-[user deleteWithCompletionBlock:^(BOOL success, NSError *error) {
-	if (success) {
-  	// Implement success after login.
- 	} else {
-		// Implement error handling.
-  }
-}]
+//RxSwift
+tapglue.deleteCurrentUser().subscribe()
 ```
 
 # Search Users
@@ -215,15 +204,13 @@ Connecting users and building a social graph is one of the most challenging part
 
 One way to create connections between users within your app is to do a search. This can be achieved with the following:
 
-```objective-c
-// Search users
-[Tapglue searchUsersWithTerm:@"term" andCompletionBlock:^(NSArray *users, NSError *error) {
-    if (users && !error) {
-        // Update UI with users
-    } else {
-        // Error handling
-    }
-}];
+```swift
+tapglue.searchUsersForTerm("searchTerm") {users, error in
+}
+
+//RxSwift
+tapglue.searchUsersForTerm("searchTerm").subscribeNext { users in
+}
 ```
 
 This will search for the provided term in the `username`, `firstName`, `lastName` and `email`.
@@ -232,44 +219,27 @@ This will search for the provided term in the `username`, `firstName`, `lastName
 
 If you want to search for multiple e-mails and get back a list of users. This is usually the case when you want to sync users from a source like the address-book. To do so use the following:
 
-```objective-c
-// Specify list of emails
-NSArray *emails = @[@"user@mail.com", @"user2@mail.com"];
+```swift
+tapglue.searchEmails(emails) {users, error in
+}
 
-// Search users
-[Tapglue searchUsersWithEmails:emails andCompletionBlock:^(NSArray *users, NSError *error) {
-    if users != nil && error == nil {
-        // Update UI with users
-    } else {
-        // Error handling
-    }
-}];
+//RxSwift
+tapglue.searchEmails(emails).subscribeNext {users in
+}
 ```
-
 ## SocialIds search
 
 A similar behaviour can be achieved if you want to sync users from another network like Facebook or Twitter.
 
-```objective-c
-// Specify list of socialIds
-NSArray *socialIds = @[@"1234567", @"7654321"];
+```swift
+let ids = ["id1", "id2"]
+tapglue.searchSocialIds(ids, onPlatform: "facebook") { users, error in
+}
 
-// Search users
-[Tapglue searchUsersOnSocialPlatform:TGPlatformKeyFacebook withSocialUsersIds:socialIds andCompletionBlock:^(NSArray *users, NSError *error) {
-    if users != nil && error == nil {
-        // Update UI with users
-    } else {
-        // Error handling
-    }
-}];
+//RxSwift
+tapglue.searchSocialIds(ids, onPlatform: "faceboo").subscribeNext { users in
+}
 ```
-
-We used `TGPlatformKeyFacebook` in the example above. We created a couple of platform keys for convenience:
-
-- `TGPlatformKeyFacebook`
-- `TGPlatformKeyTwitter`
-- `TGPlatformKeyGoogle`
--  `TGPlatformKeyCustom`
 
 # Connect Users
 
