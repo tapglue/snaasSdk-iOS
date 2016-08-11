@@ -16,7 +16,7 @@ public class Activity: Mappable {
     public var location: String?
     public var latitude: Double?
     public var longitude: Double?
-    public var visibility: Int?
+    public var visibility: Visibility?
     public var images: [String: Image]?
     public var userId: String?
     public var tgObjectId: String?

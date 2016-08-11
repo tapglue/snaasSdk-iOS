@@ -237,256 +237,107 @@ tapglue.searchSocialIds(ids, onPlatform: "facebook") { users, error in
 }
 
 //RxSwift
-tapglue.searchSocialIds(ids, onPlatform: "faceboo").subscribeNext { users in
+tapglue.searchSocialIds(ids, onPlatform: "facebook").subscribeNext { users in
 }
 ```
 
 # Connect Users
 
-In the example above we create a follow connection. You can also also create a friend connection with `friendUser`.
+To connect users you have to create a Connection entity. The connection entity consists of a `userId` a `ConnectionType` and a `ConnectionState`. The user id represents who the connection is to, the `ConnectionType` can be of type `Follow` or `Friend` and the `ConnectionState` can be either `Pending` for when a request has to be accepted by the other party, `Confirmed` if it does not need to be accepted, or `Rejected` if the other party rejected the request. 
+
+When a `Connection` request is received from another user in a `Pending` state, you can then respond by setting the `ConnectionState` to `Confirmed`
 
 ## Follow or Friend a user
 
-The simplest way to create a connection is to either follow or friend a user. To do so you can use the methods:
+```swift
+let connection = Connection(toUserId: "userId", type: .Follow, state: .Confirmed)
 
-- `followUser`
-- `friendUser`
+tapglue.createConnection(connection) { connection, error in
+}
 
-```objective-c
-[Tapglue followUser:user withCompletionBlock:^(BOOL success, NSError *error) {
-		if (success) {
-		// Update UI with users
-		} else {
-		// Error handling
-		}
-}];
-```
-
-## Social Connections
-
-A much nicer way to connect users is to use Twitter or Facebook and just sync already existing connections. To do so we have two batch methods:
-
-- `followUsersWithSocialsIds`
-- `friendUsersWithSocialsIds`
-
-Here is an example how to follow multiple users with Tapglue:
-
-```objective-c
-NSArray *friendsIds = ... // retrieve users
-[Tapglue followUsersWithSocialsIds:friendsIds
-         onPlatfromWithSocialIdKey:@"twitter"
-               withCompletionBlock:^(BOOL success, NSError *error) {
-                   if (success) {
-                        // friends added successfully
-                   }
-                   else {
-                        // Error handling
-                   }
-               }];
-```
-
-Here is a concrete example, of how to fetch friends from the Facebook SDK:
-
-```objective-c
-// #1 be logged in at Tapglue
-// #2 be logged in at Facebook
-
-FBSDKGraphRequest *myFriendsRequest = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me/friends" parameters:nil];
-
-[myFriendsRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-
-    if (result && !error) {
-        // request succeeded > found frined
-        NSArray *friendsIds = [result valueForKeyPath:@"data.id"];
-        [Tapglue friendUsersWithSocialsIds:friendsIds
-                 onPlatfromWithSocialIdKey:TGUserSocialIdFacebookKey
-                       withCompletionBlock:^(BOOL success, NSError *error) {
-                           if (success) {
-                                // friends added successfully
-                           }
-                           else {
-                                // Error Handling
-                           }
-                       }];           
-    } else {
-        // Error handling (Facebook request)
-    }       
-}];
+//RxSwift
+tapglue.createConnection(connection).subscribeNext { connection in
+}
 ```
 
 ## Delete connections
 
-To delete a connection you can use:
+```swift
+tapglue.deleteConnection(toUserId: "123", type: .Follow) { success, error in 
+}
 
-- `unfollowUser`
-- `unfriendUser`
-
-```objective-c
-[Tapglue unfollowUser:user withCompletionBlock:^(BOOL success, NSError *error) {
-		if (success) {
-		// Update UI with users
-		} else {
-		// Error handling
-		}
-}];
+//RxSwift
+tapglue.deleteConnection(toUserId: "123", type: .Follow).subscribeNext { _ in
+}
 ```
 
 You can learn more about [deleting connections](doc:delete-connection) etc. in the reference documentation below.
-
-# Send events
-
-Once you have users and connections in place, events are the last thing you need to send before retrieving a production-ready activity feed.
-
-## Create Events
-
-There are three ways to create events in the SDK.
-
-1. `createEventWithType: andObjectId`
-2. `createEventWithType: onObject`
-3. `createEvent:`
-
-The first method is for convenience and works best if the only thing you have to specify when triggering an event is the `type` and an `objectId`.
-
-If you use the second option you are able to attach a rich object with multiple attributes to an event.
-
-In the last example you create a `TGEvent` object first that creates all information you can attach to an event. In the following example we will use this option:
-
-```objective-c
-// Create TGEvent object
-TGEvent *event = [[TGEvent alloc] init];
-
-event.type = @"like";
-event.language = @"en";
-event.location = @"berlin";
-event.latitude = 52.520007;
-event.longitude = 13.404954;
-
-// Create object
-TGEventObject *object = [[TGEventObject alloc] init];
-
-object.objectId = @"article_123";
-object.type = @"article";
-object.url = @"app://articles/article_123";
-[object setDisplayName:@"article title" forLanguage:@"en"];
-[object setDisplayName:@"artikel titel" forLanguage:@"de"];
-
-event.object = object;
-
-event.metadata = @{
-                   @"foo" : @"bar",
-                   @"amount" : @12,
-                   @"progress" : @0.95
-   	               };
-
-// Send event
-[Tapglue createEvent:event];
-```
-
-## Event visibilities
-
-Besides the attributes that you attach to each event, you can specify different visibilities. Those
-
-- `TGVisibility.Private`
-- `TGVisibility.Connection`
-- `TGVisibility.Public`
-
-Events will be queued and eventually flushed to send them to Tapglue. That way you can also track events when offline and send them at once when online again. In the [first section](doc:ios) of the iOS Guide you can learn more about configuring the flush settings.
-
-You can learn more about [deleting events](doc:delete-event) etc. in the reference documentation below.
 
 # Create Posts
 
 Events are very powerful to build Notification centers or activity feeds. However, if you wan't to include user generated content to build a proper news feed we provide a much more powerful entity for you: `Posts`.
 
-## Create Posts
+## Post Dependencies
 
-We currently provide two methods to create Posts:
-
-1. `createPostWithText`
-2. `createPost`
-
-The first method is for convenience and works best if the only thing you have to specify when creating a post is the `text`.
-
-If you use the second option you are able to attach a rich object with multiple attributes to a post.
-
-In the last example you create a `TGPost` object first that creates all information you can attach to a post. In the following example we will use this option:
-
-```objective-c
-// Create TGPost Object
-TGPost *post = [TGPost new];
-post.visibility = TGVisibilityPublic;
-post.tags = @[@"fitness",@"running"];
-
-// Create Attachment
-[post addAttachment:[TGAttachment attachmentWithText:@"This is the Text of the Post." andName:@"body"]];
-
-// Create Post
-[Tapglue createPost:post withCompletionBlock:^(BOOL success, NSError *error) {
-		if (success) {
-			// Success handling
-		}
-		else {
-			// Error handling
-		}
-}];
-```
+To create a post you need to specify two things first: Visibility and attachments. The possible values for visibility are `.Private` (only visible for the creator), `.Connections` (only visible for the connections of the creator and the creator), and `.Public` (visible for everybody).
 
 ## Attachments
 
-Each post can have multiple attachments. An attachments of a post can currently be of type text or a url. A text can be used to represent the user generated text. A url is useful for different use-case such as a reference to an image or video. Furthermore you can specify a name for each attachments to add more context to the post. To create attachments of a post we currently provide following methods:
+Each post can have multiple attachments. An attachments of a post can currently be of type text or a url. A text can be used to represent the user generated text. A url is useful for different use-case such as a reference to an image or video. Furthermore you can specify a name for each attachments to add more context to the post.
 
-- `attachmentWithText`
-- `attachmentWithURL`
-- `attachmentWithNSURL`
+The contents property of the Attachment entity is a dictionary where the key represents a BCP47 encoded language and the value the content (text, url or image)
 
+```swift
+let attachment = Attamchment(contents: ["en":"some content"], name: "my attachment", type: .Text)
+```
+
+## Creating a Post
+
+So putting the last couple of concepts creating a post is pretty straight forward:
+
+```swift
+let attachment = Attamchment(contents: ["en":"some content"], name: "my attachment", type: .Text)
+
+let post = Post(visibility: .Connections, attachments: [attachment])
+
+tapglue.createPost(post) { post, error in
+}
+
+//RxSwift
+tapglue.createPost(post).subscribeNext { post in
+}
+```
 # Comments and Likes
 
 Posts are the core entity of a news feed. To provide a richer and more engaging experiences, Tapglue enables you to comment or like posts
 
 ## Create comments
 
-There are ways to create a comment on a post:
+A comment consists of a dictionary of content, where the keys are BCP47 encoded languages and the values the text (similar to the attachments), and a `postId`. To create a comment first you need to create a comment entity and then create it on tapglue.
 
-- `createCommentWithContent`
-- `post.commentWithContent`
+```swift
+let comment = Comment(contents: ["en":"my comment"], postId: "postId")
 
-The first option is the main method to create a comment. This requires to pass the post object. The second option is a convenience method that can be performed on a post object. To create a comment here is an example below:
+tapglue.createComment(comment) { comment, error in
+}
 
-```objective-c
-// Specify comment
-NSString *comment = @"This is the comment of the post.";
-
-// Create comment
-[Tapglue createCommentWithContent:comment forPost:post withCompletionBlock:^(BOOL success, NSError *error) {
-		if (success) {
-			// Success handling
-		}
-		else {
-			// Error handling
-		}
-}];
+//RxSwift
+tapglue.createComment(comment).subscribeNext { comment in
+}
 ```
 
 ## Retrieve comments
 
-To retrieve all comments that have been created on a post there are two methods:
+To retrieve comments on a post:
 
-- `retrieveCommentsForPost`
-- `retrieveCommentsForPostWithId`
+```swift
+tapglue.retrieveComments("postId") { comments, error in
+}
 
-The first one requires a post object, the second one a `postId` only. Comments could be displayed in a post detail page under the post detail itself.
-
-```objective-c
-[Tapglue retrieveCommentsForPost:post withCompletionBlock:^(NSArray *comments, NSError *error) {
-		if (comments) {
-			// Success handling
-		}
-		else {
-			// Error handling
-		}
-}];
+//RxSwift
+tapglue.retrieveComments("postId").subscribeNext { comments in
+}
 ```
-
 ## Update comments
 
 To update or delete a comment you can use:
@@ -494,51 +345,24 @@ To update or delete a comment you can use:
 - `updateComment`
 - `deleteComment`
 
-Both methods require a comment object, that you have to retrieve from a post before.
-
 You can learn more about [deleting comments](doc:delete-comment) etc. in the reference documentation below.
 
 ## Like posts
 
-Besides regular events that you can always use, we've created an explicit like method for posts as this is one of the core interactions of a social network. Similar to comments there are two methods to like a post:
+To like a post you simply have to call `createLike` with a post id:
 
-- `createLikeForPost`
-- `post.likeWithCompletionBlock`
+```swift
+tapglue.createLike(forPostId: "postId") { like, error in
+}
 
-The first option is the main method to create a like. This requires to pass the post object. The second option is a convenience method that can be performed on a post object. To create a like here is an example below:
-
-```objective-c
-[Tapglue createLikeForPost:post withCompletionBlock:^(BOOL success, NSError *error) {
-		if (success) {
-			// Success handling
-		}
-		else {
-			// Error handling
-		}
-}];
+//RxSwift
+tapglue.createLike(forPostId: "postId").subscribeNext { like in
+}
 ```
 
 ## Retrieve likes
 
-To retrieve all likes for a post there are two methods:
-
-- `retrieveLikesForPost`
-- `retrieveLikesForPostWithId`
-
-Simply run the following to retrieve them:
-
-```objective-c
-[Tapglue retrieveLikesForPost:post withCompletionBlock:^(NSArray *likes, NSError *error) {
-		if (likes) {
-			// Success handling
-		}
-		else {
-			// Error handling
-		}
-}];
-```
-
-For convenience we've added the attribute `isLiked` to each post. That values determines wether the post has been like by the currentUser or not.
+To retrieve likes on a post simply call `retrieveLikes` with the post id.
 
 ## Unlike posts
 
