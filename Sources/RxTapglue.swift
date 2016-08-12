@@ -72,7 +72,7 @@ public class RxTapglue {
     }
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
-    public func searchUsers(forSearchTerm term: String) -> Observable<[User]> {
+    public func searchUsersForSearchTerm(term: String) -> Observable<[User]> {
         return network.searchUsers(forSearchTerm: term)
     }
     /// Search tapglue for users with emails

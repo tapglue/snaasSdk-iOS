@@ -80,9 +80,9 @@ public class Tapglue {
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
     /// - parameter completionHander: where the callbacks will be made
-    public func searchUsers(forSearchTerm term: String, completionHandler: (result: [User]?,
+    public func searchUsersForSearchTerm(term: String, completionHandler: (result: [User]?,
         error: ErrorType?) -> ()) {
-        rxTapglue.searchUsers(forSearchTerm: term).unwrap(completionHandler)
+        rxTapglue.searchUsersForSearchTerm(term).unwrap(completionHandler)
     }
 
     /// Search tapglue for users with emails

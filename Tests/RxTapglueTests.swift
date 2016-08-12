@@ -120,7 +120,7 @@ class RxTapglueTests: XCTestCase {
 
     func testSearchUsers() {
         var networkUsers: [User]?
-        _ = tapglue.searchUsers(forSearchTerm: "someTerm").subscribeNext { users in
+        _ = tapglue.searchUsersForSearchTerm("someTerm").subscribeNext { users in
             networkUsers = users
         }
         expect(networkUsers).toEventually(contain(network.testUser))
@@ -291,6 +291,7 @@ class RxTapglueTests: XCTestCase {
         _ = tapglue.filterPostsByTags(["someTag"]).subscribeNext { posts in
             networkPosts = posts
         }
+        expect(networkPosts).toEventuallyNot(beNil())
     }
     func testCreateComment() {
         let comment = Comment(contents: ["en":"content"], postId: "testPostId")

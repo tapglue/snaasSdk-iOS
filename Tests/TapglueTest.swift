@@ -115,7 +115,7 @@ class TapglueTest: XCTestCase {
 
     func testSearchUsers() {
         var searchResult = [User]()
-        tapglue.searchUsers(forSearchTerm: "term") { users, error in
+        tapglue.searchUsersForSearchTerm("term") { users, error in
             searchResult = users!
         }
         expect(searchResult).toEventually(contain(network.testUser))

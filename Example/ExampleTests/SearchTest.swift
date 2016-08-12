@@ -60,7 +60,7 @@ class SearchTest: XCTestCase {
     func testUserSearchWithNoResults() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchUsers(forSearchTerm: "someTerm").subscribeNext { users in
+        _ = tapglue.searchUsersForSearchTerm("someTerm").subscribeNext { users in
             searchResult = users
         }
         expect(searchResult?.count).toEventually(equal(0))
@@ -69,7 +69,7 @@ class SearchTest: XCTestCase {
     func testUserSearchWithResult() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchUsers(forSearchTerm: username2).subscribeNext { users in
+        _ = tapglue.searchUsersForSearchTerm(username2).subscribeNext { users in
             searchResult = users
         }
         expect(searchResult?.count).toEventually(equal(1))
@@ -79,7 +79,7 @@ class SearchTest: XCTestCase {
     func testUserSearchWithInvalidPath() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchUsers(forSearchTerm: "jasd jkshad").subscribeNext { users in
+        _ = tapglue.searchUsersForSearchTerm("jasd jkshad").subscribeNext { users in
             searchResult = users
         }
         expect(searchResult?.count).toEventually(equal(0))
