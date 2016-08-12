@@ -15,6 +15,7 @@ import RxBlocking
 class LoginTest: XCTestCase {
 
     let username = "LoginTestUser1"
+    let email = "email@domain.com"
     let password = "LoginTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
     var user = User()
@@ -23,6 +24,7 @@ class LoginTest: XCTestCase {
         super.setUp()
         user.username = username
         user.password = password
+        user.email = email
         
         do {
             user = try tapglue.createUser(user).toBlocking().first()!
@@ -43,6 +45,14 @@ class LoginTest: XCTestCase {
     func testUserLogin() {
         do {
             user = try tapglue.loginUser(username, password: password).toBlocking().first()!
+        } catch {
+            fail("failed to log in")
+        }
+    }
+
+    func testUserLoginWithEmail() {
+        do {
+            user = try tapglue.loginUserWithEmail(email, password: password).toBlocking().first()!
         } catch {
             fail("failed to log in")
         }

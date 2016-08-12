@@ -38,6 +38,14 @@ class TapglueTest: XCTestCase {
         expect(callbackUser.id).toEventually(equal(userId))
     }
 
+    func testEmailLogin() {
+        var callbackUser: User?
+        tapglue.loginUserWithEmail("email@domain.com", password: "123") { user, error in
+            callbackUser = user
+        }
+        expect(callbackUser?.id).toEventually(equal(userId))
+    }
+
     func testCreateUser() {
         var callbackUser = User()
         tapglue.createUser(User()) { user, error in

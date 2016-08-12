@@ -44,6 +44,20 @@ class RxTapglueTests: XCTestCase {
         _ = tapglue.loginUser("paco", password: "1234").subscribe()
         expect(self.userStore.wasSet).toEventually(beTrue())
     }
+
+    func testLoginWithEmail() {
+        var networkUser = User()
+        _ = tapglue.loginUserWithEmail("email@domain.com", password: "1234")
+            .subscribeNext { user in
+            networkUser = user
+        }
+        expect(networkUser.id).toEventually(equal(network.testUserId))
+    }
+
+    func testEmailLoginSetsCurrentUserToStore() {
+        _ = tapglue.loginUserWithEmail("email@domain.com", password: "1234").subscribe()
+        expect(self.userStore.wasSet).toEventually(beTrue())
+    }
     
     func testCurrentUserFetchFromStore() {
         let currentUser = tapglue.currentUser

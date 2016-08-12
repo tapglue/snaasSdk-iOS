@@ -31,6 +31,15 @@ class Network {
         }
     }
 
+    func loginUserWithEmail(email: String, password: String) -> Observable<User> {
+        let payload = ["email": email, "password": password]
+        return http.execute(Router.post("/users/login", payload: payload))
+            .map { (user:User) in
+                Router.sessionToken = user.sessionToken ?? ""
+                return user
+        }
+    }
+
     func createUser(user: User) -> Observable<User> {
         return http.execute(Router.post("/users", payload: user.toJSON()))
     }

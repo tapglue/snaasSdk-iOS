@@ -89,6 +89,25 @@ class NetworkTest: XCTestCase {
         
         expect(Router.sessionToken).toEventually(equal("someToken"))
     }
+
+    func testEmailLogin() {
+        stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
+
+        var networkUser: User?
+        _ = network.loginUserWithEmail("email@domain.com", password: "1234")
+            .subscribeNext { user in
+            networkUser = user
+        }
+        expect(networkUser?.username).toEventually(equal("user1"))
+    }
+    
+    func testEmailLoginSetsSessionTokenToRouter() {
+        stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
+        
+        _ = network.loginUserWithEmail("email@domain.com", password: "1234").subscribe()
+        
+        expect(Router.sessionToken).toEventually(equal("someToken"))
+    }
     
     func testRefreshCurrentUser() {
         stub(http(.GET, uri: "/0.4/me"), builder: json(sampleUser))

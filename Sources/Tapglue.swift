@@ -35,6 +35,15 @@ public class Tapglue {
         rxTapglue.loginUser(username, password: password).unwrap(completionHandler)
     }
 
+    /// logs in user on tapglue
+    /// - parameter email: email of the user to be logged in
+    /// - parameter password: password of the user to be logged in 
+    /// - parameter completionHander: where the callbacks will be made
+    public func loginUserWithEmail(email: String, password: String, completionHandler: 
+        (user: User?, error: ErrorType?) -> ()) {
+        rxTapglue.loginUserWithEmail(email, password: password).unwrap(completionHandler)
+    }
+
     /// creates a user on tapglue
     /// - parameter user: user to be created
     /// - parameter completionHander: where the callbacks will be made

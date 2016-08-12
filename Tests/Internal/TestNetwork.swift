@@ -45,6 +45,10 @@ class TestNetwork: Network {
     override func loginUser(username: String, password: String) -> Observable<User> {
         return Observable.just(testUser)
     }
+
+    override func loginUserWithEmail(email: String, password: String) -> Observable<User> {
+        return Observable.just(testUser)
+    }
     
     override func createUser(user: User) -> Observable<User> {
         return Observable.just(testUser)

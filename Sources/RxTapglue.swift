@@ -49,6 +49,12 @@ public class RxTapglue {
     public func loginUser(username: String, password: String) -> Observable<User> {
         return network.loginUser(username, password: password).map(toCurrentUserMap)
     }
+    /// logs in user on tapglue
+    /// - parameter email: email of the user to be logged in
+    /// - parameter password: password of the user to be logged in 
+    public func loginUserWithEmail(email: String, password: String) -> Observable<User> {
+        return network.loginUserWithEmail(email, password: password).map(toCurrentUserMap)
+    }
     /// update information on the current user by providing a user entity
     /// - parameter user: entity with the information to be updated
     public func updateCurrentUser(user: User) -> Observable<User> {
