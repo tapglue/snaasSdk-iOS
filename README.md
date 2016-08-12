@@ -366,18 +366,7 @@ To retrieve likes on a post simply call `retrieveLikes` with the post id.
 
 ## Unlike posts
 
-If a user unlikes a post again, use following method:
-
-```objective-c
-[Tapglue deleteLike:post withCompletionBlock:^(BOOL success, NSError *error) {
-		if (success) {
-			// Success handling
-		}
-		else {
-			// Error handling
-		}
-}];
-```
+To remove a like call `deleteLike` with the id of the previously liked post
 
 # Display feeds
 
@@ -385,236 +374,114 @@ In general there are three different types of feeds that Tapglue provides:
 
 - News Feed
 - Posts Feed
-- Events Feed
+- Activity Feed
 
-The News Feed contains both: Posts and Events that have been created in the users social graph.
-The Posts- and Events Feeds only contain entries of their associated type.
+The News Feed contains both: Posts and Activities that have been created in the users social graph.
+The Posts- and Activity Feeds only contain entries of their associated type.
 
-Additionally Tapglue provides lists of Posts and Events for a single user.
+Additionally Tapglue provides lists of Posts and Activities for a single user.
 
 - User posts
-- User events
+- User Activties
 
 Eventually, there is also the opportunity to query the feeds to only get certain types of events.
 
 ## News Feed
 
-When retrieving the news feed you will get to lists: `posts` and `events` to do so run:
+When retrieving the news feed you will get to lists: `posts` and `activities` to do so run:
 
-```objective-c
-[Tapglue retrieveNewsFeedForCurrentUserWithCompletionBlock:^(NSArray *posts, NSArray *events, NSError *error) {
-if (posts && events && !error) {
-      	// Success handling
-    } else {
-    		// Error handling
-    }
-}];
+```swift
+tapglue.retrieveNewsFeed() { newsFeed, error in
+}
+
+//RxSwift
+tapglue.retrieveNewsFeed().subscribeNext { newsFeed in
+}
 ```
-
 ## Posts Feed
 
 To retrieve a Posts Feed there is following method:
 
-```objective-c
-[Tapglue retrievePostsFeedForCurrentUserWithCompletionBlock:^(NSArray *posts, NSError *error) {
-  	if (posts && !error) {
-    		// Success handling
-    } else {
-    		// Error handling
-    }
-}];
+```swift
+tapglue.retrievePostFeed() { posts, error in
+}
+
+//RxSwift
+tapglue.retrievePostFeed().subscribeNext { posts in
+}
 ```
+## Activity Feed
 
-## Events Feed
+Similar to the examples above, you can retrieve an activity feed as shown in the example below:
 
-Similar to the examples above, you can retrieve an events feed as shown in the example below:
+```swift
+tapglue.retrieveActivityFeed() { activities, error in
+}
 
-```objective-c
-[Tapglue retrieveEventsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSInteger unreadCount, NSError *error) {
-  	if (events && !error) {
-      	// Update UI with events
-    } else {
-    		// Error handling
-    }
-}];
-```
-
-Sometimes the users will be offline and it would be bad to have an empty feed. Therefore we provide you a cached feed that provides the items from the latest events feed fetch.
-
-### Cached events feed
-
-```objective-c
-NSArray *events;
-events = [Tapglue cachedEventsFeedForCurrentUser];
-```
-
-### Unread events feed
-
-To retrieve only the latest events that have not been read by the user you can call `` to save bandwidth.
-
-```objective-c
-[Tapglue retrieveUnreadEventsFeedForCurrentUserWithCompletionBlock:^(NSArray *events, NSError *error) {
-  if (events && !error) {
-    		// Success handling
-    } else {
-    		// Error handling
-    }
-}];
-```
-
-### Count of unread events
-
-Sometimes you just want to know how many new events exists to display for a user. You can use that information and display in a badge over an icon. You can retrieve the count with `retrieveUnreadEventsCountForCurrentWithCompletionBlock`.
-
-```objective-c
-[Tapglue retrieveUnreadEventsCountForCurrentWithCompletionBlock:^(NSInteger unreadCount, NSError *error) {
-  if (unreadCount && !error) {
-    		// Success handling
-    } else {
-    		// Error handling
-    }
-}];
+//RxSwift
+tapglue.retrieveActivtiyFeed().subscribeNext { activities in
+}
 ```
 
 ## User posts
 
-You can also retrieve the posts of a single user and display them under a profile screen for example. There are two methods to achieve this:
+You can also retrieve the posts of a single user and display them under a profile screen for example. 
 
-- `retrievePostsForCurrentUser`
-- `retrievePostsForUser`
-- `retrievePostsForUserWithId`
+```swift
+tapglue.retrievePostsByUser("userId") { posts, error in
+}
 
-The first option will retrieve the currentUsers posts. The other two for a user object or id that you pass.
-
-```objective-c
-[Tapglue retrievePostsForUser:user withCompletionBlock:^(NSArray *posts, NSError *error) {
-  	if (posts && !error) {
-    		// Success handling
-    } else {
-    		// Error handling
-    }
-}];
-```
-
-## User events
-
-For retrieving a single users events there are following methods:
-
-- `retrieveEventsForCurrentUser`
-- `retrieveEventsForUser`
-
-The first option will retrieve the currentUsers events. The second one will retrieve events for a user object that you pass.
-
-```objective-c
-[Tapglue retrieveEventsForUser:user withCompletionBlock:^(NSArray *events, NSError *error) {
-  	if (events && !error) {
-    		// Success handling
-    } else {
-    		// Error handling
-    }
-}];
-```
-
-## Queries
-
-For all feeds there is the possibility to specify a query object to narrow down the results. These methods are:
-
-- `retrieveNewsFeedForCurrentUserWithQuery`
-- `retrieveEventsFeedForCurrentUserWithQuery`
-- `retrieveEventsForCurrentUserWithQuery`
-- `retrieveEventsWithQuery`
-
-```objective-c
-// Create Query Object
-TGQuery *query = [TGQuery new];
-[query addEventObjectWithIdEquals:objectId];
-[query addTypeEquals:eventType];
-
-// Retrieve Events with Query
-[Tapglue retrieveEventsWithQuery:query andCompletionBlock:^(NSArray *events, NSError *error) {
- 		if (events && !error) {
-    		// Success handling
-    } else {
-    		// Error handling
-    }
-}];
-```
-
-For convenience we also created some methods if you only want to retrieve certain event types of events for a specific objectId. These are:
-
-- `retrieveNewsFeedForCurrentUserForEventTypes`
-- `retrieveEventsFeedForCurrentUserForEventTypes`
-- `retrieveEventsForCurrentUserForEventTypes``
-
-These methods expect an array that define a set of events, as shown in the example below:
-
-```objective-c
-[Tapglue retrieveEventsForCurrentUserForEventTypes:types withCompletionBlock:^(NSArray *events, NSError *error) {
-  	if (events && !error) {
-    		// Success handling
-    } else {
-    		// Error handling
-    }
-}];
+//RxSwift
+tapglue.retrievePostsByUser("userId").subscribeNext { posts in
+}
 ```
 
 # Friends and Follower Lists
 
-You might want to show friends, follower and following lists to user in your app. Our SDK provides three methods to do so:
+You might want to show friends, follower and following lists to the current user in your app. For this we provide the following methods
 
-- `retrieveFollowersForCurrentUserWithCompletionBlock`
-- `retrieveFollowsForCurrentUserWithCompletionBlock`
-- `retrieveFriendsForCurrentUserWithCompletionBlock`
+- `retrieveFollowers`
+- `retrieveFollowings`
 
 These methods can also be applied to other users with:
 
-- `retrieveFollowsForUser:withCompletionBlock`
-- `retrieveFollowersForUser:withCompletionBlock`
-- `retrieveFriendsForUser:withCompletionBlock`
+- `retrieveFollowersForUserId`
+- `retrieveFollowingsForUserId`
 
 ## Retrieve Follower
 
 Here is an example to retrieve all follower of the currentUser:
 
-```objective-c
-[Tapglue retrieveFollowersForCurrentUserWithCompletionBlock:^(NSArray *users, NSError *error) {
-    if (users && !error) {
-        // Update UI with users
-    } else {
-        // Error handling
-    }
-}];
+```swift
+tapglue.retrieveFollowers() { users, error in
+}
+
+//RxSwift
+tapglue.retrieveFollowers().subscribeNext { users in
+}
 ```
 
 # Debugging and Logging
 
 You can turn on Tapglue logging by initialising the SDK with a custom configuration and setting enabling the logging there.
 
-```objective-c
-// Create config object
-TGConfiguration *customConfig = [TGConfiguration defaultConfiguration];
+```swift
+let configuration = Configuration()
+let configuration.log = true
 
-// Configure custom settings
-customConfig.loggingEnabled = true;
+let tapglue = Tapglue(configuration: configuration)
+
+//RxSwift
+let tapglue = RxTapglue(configuration: configuration)
 ```
-
-Setting `loggingEnabled = true` will cause the Tapglue library to log the users, queuing, and uploading of events, and other fine-grained info that's useful for understanding what the library is doing.
 
 # Error handling
 
-Error handling is an important area when building apps. To always provide the best user-experience to your users we defined custom errors that might happen when implementing Tapglue.
+Error handling is an important area when building apps. To always provide the best user-experience to your users we defined `TapglueError`.
 
-Most methods will provide you either a value or an error. We recommend to always check the `success` or value first and handle errors in case they occur. Each error will contain a `code` and a `message`. You can use the codes do define the behaviour on certain errors. The following example shows an error if the user already exists.
+When using the callbacks most methods will provide you either a value or an error. We recommend to always check the `success` or value first and handle errors in case they occur. When using the Rx Observables the errors will get sent on error event.
 
-```objective-c
-[Tapglue createAndLoginUserWithUsername:@"username" andPassword:@"password" withCompletionBlock:^(BOOL success, NSError *error) {
-    if (error.code == kTGErrorUserAlreadyExists) {
-        // Error handling
-    } else {
-        // Something else
-    }
-}];
-```
+Each error will contain a `code` and a `message`. You can use the codes do define the behaviour on certain errors. 
 
 # License
 
