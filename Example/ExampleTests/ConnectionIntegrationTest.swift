@@ -161,6 +161,18 @@ class ConnectionIntegrationTest: XCTestCase {
         expect(incoming?.first?.userFrom?.id).to(equal(user1.id))
     }
     
+    
+    func testRespondToPendingConnection() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Pending)).toBlocking().first()
+        
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+
+        _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Friend, state: .Confirmed)).toBlocking().first()
+        let connections = try tapglue.retrieveFriends().toBlocking().first()!
+        expect(connections.first?.id).to(equal(user1.id))
+    }
+    
     func testRetrievePendingConnectionsForOutgoing() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Pending)).toBlocking().first()

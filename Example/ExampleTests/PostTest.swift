@@ -90,7 +90,7 @@ class PostTest: XCTestCase {
     }
     
     func testRetrievePostsByUserMapsUsersToPosts() throws {
-        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+        _ = try tapglue.createPost(post).toBlocking().first()!
         let retrievedPosts = try tapglue.retrievePostsByUser(user1.id!).toBlocking().first()!
         
         expect(retrievedPosts.first?.user?.id).to(equal(user1.id))
@@ -115,7 +115,7 @@ class PostTest: XCTestCase {
     
     func testRetrieveAllPostsMapsUsersToPosts() throws {
         post.visibility = .Public
-        let createdPost = try tapglue.createPost(post).toBlocking().first()!
+        _ = try tapglue.createPost(post).toBlocking().first()!
         
         var user2 = User()
         user2.username = "postTestUser2"
