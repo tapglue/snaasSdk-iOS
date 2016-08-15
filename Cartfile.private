@@ -1,0 +1,3 @@
+github "Quick/Nimble" ~> 4.1.0
+github "kylef/Mockingjay" ~> 1.2.2
+github "kylef/URITemplate.swift" ~> 1.3.1
