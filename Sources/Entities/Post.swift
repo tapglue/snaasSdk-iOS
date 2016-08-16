@@ -17,6 +17,8 @@ public class Post: Mappable {
     public var user: User?
     public var counts: [String:Int]?
     public var isLiked: Bool?
+    public var likeCount: Int?
+    public var commentCount: Int?
     public var createdAt: String?
     public var updatedAt: String?
     
@@ -39,6 +41,8 @@ public class Post: Mappable {
         createdAt   <- map["created_at"]
         updatedAt   <- map["updated_at"]
         isLiked     <- map["is_liked"]
+        likeCount   <- map["counts.likes"]
+        commentCount    <- map["counts.comments"]
     }
     
 }

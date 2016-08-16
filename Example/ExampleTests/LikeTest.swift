@@ -57,6 +57,12 @@ class LikeTest: XCTestCase {
         expect(createdLike).toNot(beNil())
     }
     
+    func testLikeCount() throws {
+        _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        post = try tapglue.retrievePost(post.id!).toBlocking().first()!
+        expect(self.post.likeCount).to(equal(1))
+    }
+    
     func testDeleteLike() throws {
         let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
         var wasDeleted = false

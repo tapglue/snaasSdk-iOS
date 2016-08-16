@@ -58,6 +58,13 @@ class CommentTest: XCTestCase {
         expect(createdComment).toNot(beNil())
     }
     
+    func testCommentCount() throws {
+        let comment = Comment(contents: ["en":"content"], postId: post.id!)
+        _ = try tapglue.createComment(comment).toBlocking().first()!
+        post = try tapglue.retrievePost(post.id!).toBlocking().first()!
+        expect(self.post.commentCount).to(equal(1))
+    }
+    
     func testDeleteComment() throws {
         let comment = Comment(contents: ["en":"content"], postId: post.id!)
         let createdComment = try tapglue.createComment(comment).toBlocking().first()!
