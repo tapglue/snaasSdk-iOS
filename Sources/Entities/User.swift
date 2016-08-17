@@ -60,6 +60,10 @@ public class Image: Mappable {
     public var width: Int?
     public var height: Int?
 
+    public init(url: String) {
+        self.url = url
+    }
+
     required public init?(_ map: Map) {
         
     }
