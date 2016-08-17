@@ -18,6 +18,7 @@ public class User: Mappable {
     public var followerCount: Int?
     public var friendCount: Int?
     public var id: String?
+    public var about: String?
     public var isFriend: Bool?
     public var isFollowed: Bool?
     public var isFollowing: Bool?
@@ -49,6 +50,7 @@ public class User: Mappable {
         isFollowing <- map["is_following"]
         socialIds   <- map["social_ids"]
         images      <- map["images"]
+        about       <- map["about"]
         sessionToken    <- map["session_token"]
         updatedAt   <- map["updated_at"]
     }
