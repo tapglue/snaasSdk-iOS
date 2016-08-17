@@ -275,6 +275,14 @@ class TapglueTest: XCTestCase {
         expect(callbackActivities).toEventuallyNot(beNil())
     }
 
+    func testRetrieveActivityByUser() {
+        var callbackActivities: [Activity]?
+        tapglue.retrieveActivitiesByUser("userId") { activities, error in
+            callbackActivities = activities
+        }
+        expect(callbackActivities).toEventuallyNot(beNil())
+    }
+
     func testRetrieveNewsFeed() {
         var callbackFeed: NewsFeed?
         tapglue.retrieveNewsFeed() {feed, error in

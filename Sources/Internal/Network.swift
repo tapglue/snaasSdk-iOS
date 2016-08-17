@@ -231,6 +231,10 @@ class Network {
         return http.execute(Router.delete("/posts/" + postId + "/likes"))
     }
 
+    func retrieveActivitiesByUser(userId: String) -> Observable<[Activity]> {
+        return retrieveActivitiesOn("/users/" + userId + "/events")
+    }
+
     func retrievePostFeed() -> Observable<[Post]> {
         return http.execute(Router.get("/me/feed/posts")).map {
             self.mapUserToPost($0)

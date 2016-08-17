@@ -530,6 +530,24 @@ class NetworkTest: XCTestCase {
         expect(wasDeleted).toEventually(beTrue())
     }
 
+    func testRetrieveActivitiesByUser() {
+        stub(http(.GET, uri: "/0.4/users/123/events"), builder: json(sampleActivityFeed))
+        var networkActivities: [Activity]?
+        _ = network.retrieveActivitiesByUser("123").subscribeNext { activities in
+            networkActivities = activities
+        }
+        expect(networkActivities?.first?.id).toEventually(equal(activityId))
+    }
+
+    func testRetrieveActivitiesByUserMapsUsersToActivities() {
+        stub(http(.GET, uri: "/0.4/users/123/events"), builder: json(sampleActivityFeed))
+        var networkActivities: [Activity]?
+        _ = network.retrieveActivitiesByUser("123").subscribeNext { activities in
+            networkActivities = activities
+        }
+        expect(networkActivities?.first?.user?.id).toEventually(equal(userId))
+    }
+
     func testRetrievePostFeed() {
         stub(http(.GET, uri: "/0.4/me/feed/posts"), builder: json(samplePostFeed))
         var networkPosts: [Post]?

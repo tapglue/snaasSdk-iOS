@@ -293,6 +293,13 @@ public class Tapglue {
         rxTapglue.deleteLike(forPostId: postId).unwrap(completionHandler)
     }
 
+    /// Retrieves activities created by a user
+    /// - parameter userId: user from whom you want the activities
+    public func retrieveActivitiesByUser(userId: String, completionHandler:
+        (activities:[Activity]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveActivitiesByUser(userId).unwrap(completionHandler)
+    }
+
     /// retrieves post feed
     /// - parameter completionHander: where the callbacks will be made
     public func retrievePostFeed(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
