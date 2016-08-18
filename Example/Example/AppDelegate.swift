@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         AppDelegate.config = Configuration()
         AppDelegate.config.appToken = appToken
-//        sims = TapglueSims(withConfiguration: AppDelegate.config, environment: .Sandbox)
-//        registerForPushNotifications(application)
+        sims = TapglueSims(withConfiguration: AppDelegate.config, environment: .Sandbox)
+        registerForPushNotifications(application)
         
         print(launchOptions)
         return true
