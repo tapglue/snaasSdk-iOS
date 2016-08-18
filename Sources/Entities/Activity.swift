@@ -25,6 +25,8 @@ public class Activity: Mappable {
     public var user: User?
     public var postId: String?
     public var post: Post?
+    public var createdAt: String?
+    public var updatedAt: String?
 
     init(){}
 
@@ -46,6 +48,8 @@ public class Activity: Mappable {
         postId      <- map["post_id"]
         target      <- map["target"]
         object      <- map["object"]
+        createdAt   <- map["created_at"]
+        updatedAt   <- map["updated_at"]
     }
 }
 

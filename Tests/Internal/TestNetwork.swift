@@ -206,6 +206,10 @@ class TestNetwork: Network {
         }
     }
 
+    override func retrieveActivitiesByUser(userId: String) -> Observable<[Activity]> {
+        return Observable.just([testActivity])
+    }
+
     override func retrievePostFeed() -> Observable<[Post]> {
         return Observable.just([testPost])
     }
