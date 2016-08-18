@@ -255,6 +255,9 @@ class Network {
             newsFeed.activities = feed.activities?.map { activity -> Activity in
                 activity.user = feed.users?[activity.userId ?? ""]
                 activity.post = feed.postMap?[activity.postId ?? ""]
+                if activity.target?.type == "tg_user" {
+                    activity.targetUser = feed.users?[activity.target!.id ?? ""]
+                }
                 return activity
             }
             return newsFeed
@@ -270,6 +273,9 @@ class Network {
             let activities = feed.activities?.map {activity -> Activity in
                 activity.user = feed.users?[activity.userId ?? ""]
                 activity.post = feed.posts?[activity.postId ?? ""]
+                if activity.target?.type == "tg_user" {
+                    activity.targetUser = feed.users?[activity.target!.id ?? ""]
+                }
                 return activity
             }
             return activities!

@@ -25,6 +25,7 @@ public class Activity: Mappable {
     public var user: User?
     public var postId: String?
     public var post: Post?
+    public var targetUser: User?
     public var createdAt: String?
     public var updatedAt: String?
 

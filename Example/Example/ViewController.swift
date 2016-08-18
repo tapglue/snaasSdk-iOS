@@ -15,21 +15,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let tapglue = RxTapglue(configuration: AppDelegate.config)
-//        let pedro = User()
-//        pedro.username = "pablo"
-//        pedro.password = "supersecret"
-//        
-//        tapglue.createUser(pedro).doOnCompleted {
-//            tapglue.loginUser("pablo", password: "supersecret").subscribeNext { user in
-//                    print("logged in!")
-//                }.addDisposableTo(self.disposeBag)
-//        }.subscribe().addDisposableTo(disposeBag)
-        
-        
-        
-        
-        
+        let tapglue = RxTapglue(configuration: AppDelegate.config)
+        let pedro = User()
+        pedro.username = "pablo"
+        pedro.password = "supersecret"
+
+        tapglue.createUser(pedro).doOnCompleted {
+            tapglue.loginUser("pablo", password: "supersecret").subscribeNext { user in
+                    print("logged in!")
+                }.addDisposableTo(self.disposeBag)
+        }.subscribe().addDisposableTo(disposeBag)
         
 //        let tapglue = RxTapglue(configuration: Configuration())
 //
