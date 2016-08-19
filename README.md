@@ -39,7 +39,7 @@ To install Tapglue with [Carthage](https://github.com/Carthage/Carthage):
 
 1. Install Carthage with `brew update` followed by `brew install Carthage`
 2. Create a Cartfile in the root of your project
-3. Add the following line to your Cartfile: `github "Tapglue/ios_sdk" ~> 2.0`
+3. Add the following line to your Cartfile: `github "Tapglue/ios_sdk" ~> 2.0.1`
 4. Run Carthage update
 5. Copy binaries into your project, for RxSwift you only need the RxSwift framework file (not RxTest and RxBlocking)
 
