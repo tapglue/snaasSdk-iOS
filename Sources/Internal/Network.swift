@@ -181,7 +181,7 @@ class Network {
 
     func filterPostsByTags(tags: [String]) -> Observable<[Post]> {
         let tagsObject = PostTagFilter(tags: tags)
-        let json = "{\"posts\":\(tagsObject.toJSONString() ?? "")}"
+        let json = "{\"post\":\(tagsObject.toJSONString() ?? "")}"
         let query = json.stringByAddingPercentEncodingWithAllowedCharacters(
                     NSCharacterSet.URLHostAllowedCharacterSet()) ?? ""
         return http.execute(Router.get("/posts?where=" + query)).map {
