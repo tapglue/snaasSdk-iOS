@@ -82,4 +82,9 @@ class UserInteractionTest: XCTestCase {
         
         expect(tapglueError?.code ?? -1).toEventually(equal(0))
     }
+    
+    func testRetrieveUser() {
+        let user = tapglue.retrieveUser((tapglue.currentUser?.id)!)
+        expect(user).toNot(beNil())
+    }
 }
