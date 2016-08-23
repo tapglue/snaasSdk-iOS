@@ -55,9 +55,7 @@ If you don't want to use CocoaPods you download the latest version of [Tapglue f
 
 To start using Tapglue, you must initialise our SDK with your app token first. You can find your app token in the [Tapglue dashboard](https://dashboard.tapglue.com).
 
-To instatiate Tapglue, simply call the constructor and pass in a Configuration instance with your settings. We recommend having the configuration set at a central place and reuse it, for example in the app delegate.
-
-If you plan to use SIMS, please refer to the SIMS integration guide. 
+To instantiate Tapglue, simply call the constructor and pass in a Configuration instance with your settings. We recommend having the configuration set at a central place and reuse it, for example in the app delegate.
 
 ## SDK Configuration
 
@@ -84,11 +82,28 @@ let rxTapglue = RxTapglue(configuration: configuration)
 
 We offer two implementations of Tapglue, a default one with callbacks and one that returns RxSwift Observables.
 
+## Notifications
+
+If you plan to use our Notification Service Signals, add the following to the configuration in your app delegate.
+
+```swift
+sims = TapglueSims(appToken: appToken, url: url, environment: .Sandbox)
+registerForPushNotifications(application)
+Tapglue.setSessionTokenNotifier(sims)
+```
+
+Last you just need to provide us your push certificate and configure the parameters.
+
+|Parameter|Description|Example|
+|---------|-----------|-------|
+|`url`|URL where the token should register.|`https://api.tapglue.com`|
+|`environment`|`.Sandbox` or `.Production` depending on the environment of your certificate.|`.Sandbox`
+
 ## Compatibility
 
 The framework is compatible with iOS 8.0 and up
 
-# RxSwift or callbacks??
+# RxSwift or Callbacks
 
 The SDK offers two interfaces with the exact same functionality. One of them uses callbacks to return results, the other uses RxSwift Observables. If you want to learn more about RxSwift you can read more about it [here](https://github.com/ReactiveX/RxSwift)
 
@@ -122,7 +137,7 @@ tapglue.createUser(user) { user, error in
 tapglue.createUser(user).subscribe()
 ```
 
-## login users
+## Login users
 
 There are two ways to login a user: by username or by email. Here's an example of loging in with a username:
 
