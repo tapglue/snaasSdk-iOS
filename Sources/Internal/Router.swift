@@ -19,7 +19,7 @@ class Router: URLRequestConvertible {
         }
     }
     
-    static let sdkVersion = "2.0.1"
+    static let sdkVersion = "2.0.2"
     static var sessionTokenListener: SessionTokenListener? {
         didSet {
             if let sessionToken = sessionToken {
