@@ -9,8 +9,17 @@
 import Foundation
 import RxSwift
 
+var disposeBag: DisposeBag!
+
+private func initDisposeBag() {
+    if disposeBag == nil {
+        disposeBag = DisposeBag()
+    }
+}
+
 extension Observable {
     func unwrap(completionHandler: (object: Element?, error: ErrorType?) -> ()) {
+        initDisposeBag()
         self.subscribe { event in
             switch(event) {
             case .Next(let object):
@@ -20,10 +29,11 @@ extension Observable {
             case .Completed:
                 break
             }
-        }.addDisposableTo(DisposeBag())
+        }.addDisposableTo(disposeBag)
     }
     
     func unwrap(completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+        initDisposeBag()
         self.subscribe { event in
             switch(event) {
             case .Next:
@@ -33,6 +43,6 @@ extension Observable {
             case .Completed:
                 completionHandler(success: true, error: nil)
             }
-        }.addDisposableTo(DisposeBag())
+        }.addDisposableTo(disposeBag)
     }
 }

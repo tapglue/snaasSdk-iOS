@@ -15,30 +15,21 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tapglue = RxTapglue(configuration: AppDelegate.config)
-        let pedro = User()
-        pedro.username = "pablo"
-        pedro.password = "supersecret"
-
-        tapglue.createUser(pedro).doOnCompleted {
-            tapglue.loginUser("pablo", password: "supersecret").subscribeNext { user in
-                    print("logged in!")
-                }.addDisposableTo(self.disposeBag)
-        }.subscribe().addDisposableTo(disposeBag)
-        
-//        let tapglue = RxTapglue(configuration: Configuration())
+//        let tapglue = RxTapglue(configuration: AppDelegate.config)
+//        let pedro = User()
+//        pedro.username = "pablo"
+//        pedro.password = "supersecret"
 //
-//        let user = User()
-//        user.username = "kdkjnkcaklsdmalksdav amcal"
-//        user.password = "1234"
-//        _ = tapglue.createUser(user).subscribeNext { user in
-//            _ = tapglue.loginUser("kdkjnkcaklsdmalksdav amcal", password: "1234").subscribeNext { user in
-//                print(tapglue.currentUser?.username)
-//            }
-//            
-//        }
-//        
-//        print(tapglue.currentUser?.username)
+//        tapglue.createUser(pedro).doOnCompleted {
+//            tapglue.loginUser("pablo", password: "supersecret").subscribeNext { user in
+//                    print("logged in!")
+//                }.addDisposableTo(self.disposeBag)
+//        }.subscribe().addDisposableTo(disposeBag)
+        
+        let tapglue = Tapglue(configuration: AppDelegate.config)
+        tapglue.loginUser("pablo", password: "supersecret") { user, error in
+            print(user?.username ?? "was nil!")
+        }
     }
 
     override func didReceiveMemoryWarning() {
