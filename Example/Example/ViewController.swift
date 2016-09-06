@@ -29,6 +29,9 @@ class ViewController: UIViewController {
         let tapglue = Tapglue(configuration: AppDelegate.config)
         tapglue.loginUser("pablo", password: "supersecret") { user, error in
             print(user?.username ?? "was nil!")
+            tapglue.retrieveActivitiesByUser(user!.id!) { activities, error in
+                
+            }
         }
     }
 

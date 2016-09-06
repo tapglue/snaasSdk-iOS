@@ -295,6 +295,7 @@ public class Tapglue {
 
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
+    @available(*, deprecated, message="use something elseeee")
     public func retrieveActivitiesByUser(userId: String, completionHandler:
         (activities:[Activity]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveActivitiesByUser(userId).unwrap(completionHandler)
