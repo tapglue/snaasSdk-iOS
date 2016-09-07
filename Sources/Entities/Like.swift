@@ -16,6 +16,7 @@ public class Like: Mappable {
     public var createdAt: String?
     public var updatedAt: String?
     public var user: User?
+    public var post: Post?
     
     required public init?(_ map: Map) {
         

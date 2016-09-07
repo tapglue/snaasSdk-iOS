@@ -12,6 +12,7 @@ import ObjectMapper
 class LikeFeed: NullableFeed {
     var likes: [Like]?
     var users: [String: User]?
+    var posts: [String: Post]?
     
     required init?(_ map: Map) {
         
@@ -24,5 +25,6 @@ class LikeFeed: NullableFeed {
     func mapping(map: Map) {
         likes <- map["likes"]
         users <- map["users"]
+        posts <- map["post_map"]
     }
 }

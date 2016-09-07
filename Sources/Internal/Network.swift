@@ -231,6 +231,17 @@ class Network {
         return http.execute(Router.delete("/posts/" + postId + "/likes"))
     }
 
+    func retrieveLikesByUser(userId: String) -> Observable<[Like]> {
+        return http.execute(Router.get("/users/" + userId + "/likes")).map {(likeFeed: LikeFeed) in
+            let likes = likeFeed.likes?.map { like -> Like in
+                like.user = likeFeed.users?[like.userId ?? ""]
+                like.post = likeFeed.posts?[like.postId ?? ""]
+                return like
+            }
+            return likes ?? [Like]()
+        }
+    }
+
     func retrieveActivitiesByUser(userId: String) -> Observable<[Activity]> {
         return retrieveActivitiesOn("/users/" + userId + "/events")
     }
