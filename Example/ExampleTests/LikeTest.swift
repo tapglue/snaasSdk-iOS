@@ -79,4 +79,26 @@ class LikeTest: XCTestCase {
         expect(likes.count).to(equal(1))
         expect(likes.first?.id ?? "").to(equal(createdLike.id!))
     }
+    
+    func testRetrieveLikesByUser() throws {
+        let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        let likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
+        
+        expect(likes.count).to(equal(1))
+        expect(likes.first?.id ?? "").to(equal(createdLike.id!))
+    }
+    
+    func testRetrieveLikesByUserMapsUser() throws {
+        _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        let likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
+        
+        expect(likes.first?.user?.id).to(equal(user.id))
+    }
+    
+    func testRetrieveLikesByUserMapsPost() throws {
+        _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        let likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
+        
+        expect(likes.first?.post?.id).to(equal(post.id))
+    }
 }

@@ -206,6 +206,10 @@ class TestNetwork: Network {
         }
     }
 
+    override func retrieveLikesByUser(userId: String) -> Observable<[Like]> {
+        return Observable.just([testLike])
+    }
+
     override func retrieveActivitiesByUser(userId: String) -> Observable<[Activity]> {
         return Observable.just([testActivity])
     }

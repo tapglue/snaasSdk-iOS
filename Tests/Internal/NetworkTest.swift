@@ -47,7 +47,8 @@ class NetworkTest: XCTestCase {
         sampleComment = ["contents":["en":"content"], "post_id":postId, "id":commentId, "user_id": userId]
         sampleCommentFeed = ["comments": [sampleComment], "users": [userId: sampleUser]]
         sampleLike = ["post_id":postId, "id":likeId, "user_id": userId]
-        sampleLikeFeed = ["likes": [sampleLike], "users": [userId: sampleUser]]
+        sampleLikeFeed = ["likes": [sampleLike], "users": [userId: sampleUser],
+            "post_map":[postId: samplePost]]
         sampleConnection = ["user_to_id_string": userId, "user_from_id_string": userId, "type":"follow", "state":"confirmed"]
         sampleConnectionsFeed = ["incoming": [sampleConnection], "outgoing": [sampleConnection],
             "users":[sampleUser]]
@@ -528,6 +529,33 @@ class NetworkTest: XCTestCase {
             wasDeleted = true
         }
         expect(wasDeleted).toEventually(beTrue())
+    }
+
+    func testRetrieveLikesByUser() {
+        stub(http(.GET, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
+        var networkLikes: [Like]?
+        _ = network.retrieveLikesByUser("123").subscribeNext { likes in
+            networkLikes = likes
+        }
+        expect(networkLikes?.count).toEventually(equal(1))
+    }
+
+    func testRetrieveLikesByUserMapsUsers() {
+        stub(http(.GET, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
+        var networkLikes: [Like]?
+        _ = network.retrieveLikesByUser("123").subscribeNext { likes in
+            networkLikes = likes
+        }
+        expect(networkLikes?.first?.user?.id).toEventually(equal(userId))
+    }
+
+    func testRetrieveLikesByUserMapsPosts() {
+        stub(http(.GET, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
+        var networkLikes: [Like]?
+        _ = network.retrieveLikesByUser("123").subscribeNext { likes in
+            networkLikes = likes
+        }
+        expect(networkLikes?.first?.post?.id).toEventually(equal(postId))
     }
 
     func testRetrieveActivitiesByUser() {

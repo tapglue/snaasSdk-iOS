@@ -364,6 +364,14 @@ class RxTapglueTests: XCTestCase {
         expect(wasDeleted).toEventually(beTruthy())
     }
 
+    func testRetrieveLikesByUser() {
+        var networkLikes = [Like]()
+        _ = tapglue.retrieveLikesByUser("userId").subscribeNext { likes in
+            networkLikes = likes
+        }
+        expect(networkLikes).to(contain(network.testLike))
+    }
+
     func testRetrieveActivitiesByUser() {
         var networkFeed: [Activity]?
         _ = tapglue.retrieveActivitiesByUser("userId").subscribeNext { activities in
