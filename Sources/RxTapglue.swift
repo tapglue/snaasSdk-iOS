@@ -224,6 +224,10 @@ public class RxTapglue {
     public func deleteLike(forPostId postId: String) -> Observable<Void> {
         return network.deleteLike(forPostId: postId)
     }
+
+    public func retrieveLikesByUser(userId: String) -> Observable<[Like]> {
+        return network.retrieveLikesByUser(userId)
+    }
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
     public func retrieveActivitiesByUser(userId: String) -> Observable<[Activity]> {

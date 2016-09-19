@@ -259,6 +259,14 @@ class TapglueTest: XCTestCase {
         expect(callbackPosts).toEventuallyNot(beNil())
     }
 
+    func testRetrieveLikesByUser() {
+        var callbackLikes: [Like]?
+        tapglue.retrieveLikesByUser("userId") {likes, error in
+            callbackLikes = likes
+        }
+        expect(callbackLikes).toEventuallyNot(beNil())
+    }
+
     func testRetrievePostFeed() {
         var callbackPosts: [Post]?
         tapglue.retrievePostFeed() { posts, error in

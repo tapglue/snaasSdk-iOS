@@ -293,6 +293,11 @@ public class Tapglue {
         rxTapglue.deleteLike(forPostId: postId).unwrap(completionHandler)
     }
 
+    public func retrieveLikesByUser(userId: String,
+        completionHandler: (likes: [Like]?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveLikesByUser(userId).unwrap(completionHandler)
+    }
+
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
     @available(*, deprecated, message="use something elseeee")
