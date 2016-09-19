@@ -279,6 +279,25 @@ class Network {
     func retrieveMeFeed() -> Observable<[Activity]> {
         return retrieveActivitiesOn("/me/feed/notifications/self")
     }
+    
+    func retrieveFollowers() -> Observable<RxPage<User>> {
+        return http.execute(Router.get("/me/followers")).map { (feed:UserFeed) in
+            let page = RxPage<User>()
+            page.data = feed.users ?? [User]()
+            page.prevPointer = Router.get("/me/followers?before=" + feed.page!.before!)
+            page.parseFeed = { prevFeed in
+                return self.userFeedToPage(prevFeed)
+            }
+            return page
+        }
+    }
+    
+    func userFeedToPage(feed: Mappable) -> RxPage<User> {
+        let page = RxPage<User>()
+        page.data = feed.users ?? [User]()
+        page.prevPointer = Router.get("/me/followers?before=" + feed.page!.before!)
+        return page
+    }
 
     private func retrieveActivitiesOn(path: String) -> Observable<[Activity]> {
         return http.execute(Router.get(path)).map { (feed: ActivityFeed) in

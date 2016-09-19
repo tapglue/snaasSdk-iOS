@@ -250,6 +250,12 @@ public class RxTapglue {
     public func retrieveMeFeed() -> Observable<[Activity]> {
         return network.retrieveMeFeed()
     }
+    
+    public func retrieveFollowers() -> Observable<RxPage<User>> {
+        return Observable.create { observer in
+            return NopDisposable.instance
+        }
+    }
 
     private func toCurrentUserMap(user: User) -> User {
         currentUser = user

@@ -57,6 +57,7 @@
 		52BF70391D3FAA4100D88AAC /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF70381D3FAA4100D88AAC /* UserStore.swift */; };
 		52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF703C1D40BADF00D88AAC /* TapglueError.swift */; };
 		52BF703F1D40CB0A00D88AAC /* HttpTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF703E1D40CB0A00D88AAC /* HttpTest.swift */; };
+		52C726501D902F8A00C6FAB3 /* InternalPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C7264F1D902F8A00C6FAB3 /* InternalPage.swift */; };
 		52C93EFF1D2BCCFA00E166F7 /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */; };
 		52C93F011D2BD3AC00E166F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C93F001D2BD3AC00E166F7 /* User.swift */; };
 		52D3EFD31D4B5F3A00E1BA77 /* Connections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */; };
@@ -155,6 +156,7 @@
 		52BF70381D3FAA4100D88AAC /* UserStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		52BF703C1D40BADF00D88AAC /* TapglueError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapglueError.swift; sourceTree = "<group>"; };
 		52BF703E1D40CB0A00D88AAC /* HttpTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTest.swift; sourceTree = "<group>"; };
+		52C7264F1D902F8A00C6FAB3 /* InternalPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalPage.swift; sourceTree = "<group>"; };
 		52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		52C93F001D2BD3AC00E166F7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connections.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				52BA9FE61D2F8098005B4622 /* Http.swift */,
 				529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */,
 				52BF70381D3FAA4100D88AAC /* UserStore.swift */,
+				52C7264F1D902F8A00C6FAB3 /* InternalPage.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				5274A3331D5086CB00C72378 /* SocialConnections.swift in Sources */,
 				521DE9011D49F36D00AA5A9F /* SimsApi.swift in Sources */,
 				521DE9021D49F36D00AA5A9F /* TapglueSims.swift in Sources */,
+				52C726501D902F8A00C6FAB3 /* InternalPage.swift in Sources */,
 				52BF70391D3FAA4100D88AAC /* UserStore.swift in Sources */,
 				52483CA91D88290C002BA0A2 /* RxPage.swift in Sources */,
 			);

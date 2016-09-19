@@ -11,6 +11,7 @@ import ObjectMapper
 
 class UserFeed: NullableFeed {
     var users: [User]?
+    var page: ApiPage?
     
     required init?(_ map: Map) {
         
@@ -22,5 +23,6 @@ class UserFeed: NullableFeed {
     
     func mapping(map: Map) {
         users <- map["users"]
+        page <- map["paging"]
     }
 }
