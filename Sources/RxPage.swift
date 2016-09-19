@@ -9,20 +9,19 @@
 import RxSwift
 import ObjectMapper
 
-class RxPage<T, F: NullableFeed> {
+class RxPage<T> {
     var data: [T] = [T]()
-    typealias Feed = Mappable
-    var previous: Observable<RxPage<T, F>> {
+    var previous: Observable<RxPage<T>> {
         get {
-            return Http().execute(prevPointer!).map { (feed: F) in
+            return Http().execute(prevPointer!).map { (feed: NullableFeed) in
                 return self.parseFeed(feed: feed)
             }
         }
     }
     
     var prevPointer: NSMutableURLRequest?
-    var parseFeed: (feed: F) -> RxPage<T, F> = { feed in
-        return RxPage<T, F>()
+    var parseFeed: (feed: NullableFeed) -> RxPage<T> = { feed in
+        return RxPage<T>()
     }
     
  //   var previousPageGenerator: ((observable: Observable<[T]>) -> Observable<RxPage<T>>)?
