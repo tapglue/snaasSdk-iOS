@@ -279,6 +279,13 @@ class Network {
     func retrieveMeFeed() -> Observable<[Activity]> {
         return retrieveActivitiesOn("/me/feed/notifications/self")
     }
+
+    func createSocialConnections(socialConnections: SocialConnections) -> Observable<RxPage<User>>{
+        return http.execute(Router.post("/me/connections/social", 
+            payload: socialConnections.toJSON())).map { (feed: UserFeed) in
+                return feed.rxPage(socialConnections.toJSON())
+            }
+    }
     
     func retrieveFollowers() -> Observable<RxPage<User>> {
         return http.execute(Router.get("/me/followers")).map { (feed:UserFeed) in

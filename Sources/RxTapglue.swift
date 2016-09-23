@@ -107,6 +107,7 @@ public class RxTapglue {
     }
     /// create connections to users by using their ids from another platform
     /// - parameter socialConnections: contains the platform name and list of ids
+    @available(*, deprecated=2.1)
     public func createSocialConnections(socialConnections: SocialConnections) ->
         Observable<[User]> {
         return network.createSocialConnections(socialConnections)
@@ -256,7 +257,14 @@ public class RxTapglue {
     public func retrieveMeFeed() -> Observable<[Activity]> {
         return network.retrieveMeFeed()
     }
-    
+
+    /// create connections to users by using their ids from another platform
+    /// - parameter socialConnections: contains the platform name and list of ids
+    public func createSocialConnections(socialConnections: SocialConnections) ->
+        Observable<RxPage<User>> {
+        return network.createSocialConnections(socialConnections)
+    }
+
     /// retrieves the followers of the current user
     public func retrieveFollowers() -> Observable<RxPage<User>> {
         return network.retrieveFollowers()

@@ -23,12 +23,24 @@ public class RxPage<T> {
     
     var feed: FlattenableFeed<T>?
     var prevPointer: String?
+    var payload: [String: AnyObject]?
     
     func generatePreviousObservable() -> Observable<RxPage<T>> {
-        return Http().execute(Router.getOnURL(prevPointer!)).map { (feed: FlattenableFeed<T>) in
+        guard let prevPointer = prevPointer else {
+            return Observable.just(RxPage<T>())
+        }
+        var request: NSMutableURLRequest
+        if let payload = payload {
+            request = Router.postOnURL(prevPointer, payload: payload)
+        } else {
+            request = Router.getOnURL(prevPointer)
+        }
+        
+        return Http().execute(request).map { (feed: FlattenableFeed<T>) in
             let page = RxPage<T>()
             page.feed = feed
-            page.prevPointer = feed.page?.before ?? ""
+            page.prevPointer = feed.page?.before
+            page.payload = self.payload
             return page
         }
     }

@@ -131,6 +131,7 @@ public class Tapglue {
     /// create connections to users by using their ids from another platform
     /// - parameter socialConnections: contains the platform name and list of ids
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func createSocialConnections(socialConnections: SocialConnections, 
         completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
         rxTapglue.createSocialConnections(socialConnections).unwrap(completionHandler)
@@ -335,6 +336,16 @@ public class Tapglue {
     public func retrieveMeFeed(completionHandler: 
         (activities: [Activity]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveMeFeed().unwrap(completionHandler)
+    }
+
+    /// create connections to users by using their ids from another platform
+    /// - parameter socialConnections: contains the platform name and list of ids
+    /// - parameter completionHander: where the callbacks will be made
+    public func createSocialConnections(socialConnections: SocialConnections, 
+        completionHandler: (Page<User>?, ErrorType?) -> ()) {
+        rxTapglue.createSocialConnections(socialConnections).map { (rxPage: RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
     }
 
     /// retrieves the followers of the current user

@@ -89,6 +89,12 @@ class Router: URLRequestConvertible {
         return request
     }
 
+    class func postOnURL(url: String, payload: [String: AnyObject]) -> NSMutableURLRequest {
+        let request = Router(method: .POST, path: "", payload: payload).URLRequest
+        request.URL = NSURL(string: url)
+        return request
+    }
+
     private init(method: Alamofire.Method, path: String, payload: [String: AnyObject]) {
         self.method = method
         self.path = path

@@ -208,8 +208,28 @@ class ConnectionIntegrationTest: XCTestCase {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         let connections = SocialConnections(platform: socialPlatform, type: .Follow, 
             userSocialId: socialId1, socialIds: [socialId2])
-        let users = try tapglue.createSocialConnections(connections).toBlocking().first()!
+        let users = try (tapglue.createSocialConnections(connections) 
+            as Observable<[User]>).toBlocking().first()!
         expect(users.first?.username).to(equal(username2))
+    }
+
+    func testCreatePaginatedSocialConnections() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        let connections = SocialConnections(platform: socialPlatform, type: .Follow, 
+            userSocialId: socialId1, socialIds: [socialId2])
+        let page = try (tapglue.createSocialConnections(connections) 
+            as Observable<RxPage<User>>).toBlocking().first()!
+        expect(page.data.first?.username).to(equal(username2))
+    }
+
+    func testCreatePaginatedSocialConnectionsSecondPage() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        let connections = SocialConnections(platform: socialPlatform, type: .Follow, 
+            userSocialId: socialId1, socialIds: [socialId2])
+        let page = try (tapglue.createSocialConnections(connections) 
+            as Observable<RxPage<User>>).toBlocking().first()!
+        let secondPage = try page.previous.toBlocking().first()!
+        expect(secondPage.data).toNot(beNil())
     }
     
     func testPaginatedFollowers() throws {

@@ -12,7 +12,13 @@ extension FlattenableFeed {
     func rxPage() -> RxPage<T> {
         let page = RxPage<T>()
         page.feed = self
-        page.prevPointer = self.page?.before ?? ""
+        page.prevPointer = self.page?.before
+        return page
+    }
+
+    func rxPage(payload: [String: AnyObject]) -> RxPage<T> {
+        let page = rxPage()
+        page.payload = payload
         return page
     }
 }
