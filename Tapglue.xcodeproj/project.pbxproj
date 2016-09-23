@@ -15,6 +15,9 @@
 		521DE9001D49F36D00AA5A9F /* DefaultSimsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DE8FD1D49F36D00AA5A9F /* DefaultSimsApi.swift */; };
 		521DE9011D49F36D00AA5A9F /* SimsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DE8FE1D49F36D00AA5A9F /* SimsApi.swift */; };
 		521DE9021D49F36D00AA5A9F /* TapglueSims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521DE8FF1D49F36D00AA5A9F /* TapglueSims.swift */; };
+		5242794A1D94031F00D5173F /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524279491D94031F00D5173F /* Page.swift */; };
+		5242794C1D940EDA00D5173F /* RxPage+Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242794B1D940EDA00D5173F /* RxPage+Page.swift */; };
+		5242794E1D950C4600D5173F /* FlattenableFeed+RxPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242794D1D950C4600D5173F /* FlattenableFeed+RxPage.swift */; };
 		52483CA91D88290C002BA0A2 /* RxPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52483CA81D88290C002BA0A2 /* RxPage.swift */; };
 		5252C94D1D21BFA9009AADBC /* Tapglue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5252C94C1D21BFA9009AADBC /* Tapglue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5252C9541D21BFA9009AADBC /* Tapglue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5252C9491D21BFA9009AADBC /* Tapglue.framework */; };
@@ -57,7 +60,7 @@
 		52BF70391D3FAA4100D88AAC /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF70381D3FAA4100D88AAC /* UserStore.swift */; };
 		52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF703C1D40BADF00D88AAC /* TapglueError.swift */; };
 		52BF703F1D40CB0A00D88AAC /* HttpTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BF703E1D40CB0A00D88AAC /* HttpTest.swift */; };
-		52C726501D902F8A00C6FAB3 /* InternalPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C7264F1D902F8A00C6FAB3 /* InternalPage.swift */; };
+		52C726541D91610700C6FAB3 /* FlattenableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C726531D91610700C6FAB3 /* FlattenableFeed.swift */; };
 		52C93EFF1D2BCCFA00E166F7 /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */; };
 		52C93F011D2BD3AC00E166F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C93F001D2BD3AC00E166F7 /* User.swift */; };
 		52D3EFD31D4B5F3A00E1BA77 /* Connections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */; };
@@ -118,6 +121,9 @@
 		521DE8FF1D49F36D00AA5A9F /* TapglueSims.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapglueSims.swift; sourceTree = "<group>"; };
 		5233AC371D2E32910076CC02 /* Matchers+Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Matchers+Payload.swift"; sourceTree = "<group>"; };
 		5233AC391D2E3B710076CC02 /* NSInputStream+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSInputStream+String.swift"; sourceTree = "<group>"; };
+		524279491D94031F00D5173F /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		5242794B1D940EDA00D5173F /* RxPage+Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxPage+Page.swift"; sourceTree = "<group>"; };
+		5242794D1D950C4600D5173F /* FlattenableFeed+RxPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlattenableFeed+RxPage.swift"; sourceTree = "<group>"; };
 		52483CA81D88290C002BA0A2 /* RxPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxPage.swift; sourceTree = "<group>"; };
 		5252C9491D21BFA9009AADBC /* Tapglue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tapglue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5252C94C1D21BFA9009AADBC /* Tapglue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tapglue.h; sourceTree = "<group>"; };
@@ -156,7 +162,7 @@
 		52BF70381D3FAA4100D88AAC /* UserStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		52BF703C1D40BADF00D88AAC /* TapglueError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapglueError.swift; sourceTree = "<group>"; };
 		52BF703E1D40CB0A00D88AAC /* HttpTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpTest.swift; sourceTree = "<group>"; };
-		52C7264F1D902F8A00C6FAB3 /* InternalPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalPage.swift; sourceTree = "<group>"; };
+		52C726531D91610700C6FAB3 /* FlattenableFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlattenableFeed.swift; sourceTree = "<group>"; };
 		52C93EFE1D2BCCFA00E166F7 /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		52C93F001D2BD3AC00E166F7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connections.swift; sourceTree = "<group>"; };
@@ -253,6 +259,8 @@
 				529A3D2D1D34D97F0069BF10 /* Observable+unwrapping.swift */,
 				5274A3451D5494E400C72378 /* Log.swift */,
 				52483CA81D88290C002BA0A2 /* RxPage.swift */,
+				524279491D94031F00D5173F /* Page.swift */,
+				5242794B1D940EDA00D5173F /* RxPage+Page.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -284,6 +292,8 @@
 				5274A3431D53838700C72378 /* NewsFeedEndpoint.swift */,
 				5274A3471D5A176700C72378 /* PostTagFilter.swift */,
 				5207E25D1D884AE1002EB7F3 /* PageFeed.swift */,
+				52C726531D91610700C6FAB3 /* FlattenableFeed.swift */,
+				5242794D1D950C4600D5173F /* FlattenableFeed+RxPage.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -317,7 +327,6 @@
 				52BA9FE61D2F8098005B4622 /* Http.swift */,
 				529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */,
 				52BF70381D3FAA4100D88AAC /* UserStore.swift */,
-				52C7264F1D902F8A00C6FAB3 /* InternalPage.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -498,16 +507,19 @@
 				5274A3461D5494E400C72378 /* Log.swift in Sources */,
 				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
 				5274A3441D53838700C72378 /* NewsFeedEndpoint.swift in Sources */,
+				5242794E1D950C4600D5173F /* FlattenableFeed+RxPage.swift in Sources */,
 				52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */,
+				5242794C1D940EDA00D5173F /* RxPage+Page.swift in Sources */,
 				97D3D97A1D4A2AA5004DC146 /* CommentFeed.swift in Sources */,
 				5274A3401D523DE600C72378 /* AcitivityFeed.swift in Sources */,
+				52C726541D91610700C6FAB3 /* FlattenableFeed.swift in Sources */,
 				97D3D9741D4A03D0004DC146 /* Comment.swift in Sources */,
 				52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */,
 				5274A3391D50CD8700C72378 /* PostFeed.swift in Sources */,
+				5242794A1D94031F00D5173F /* Page.swift in Sources */,
 				5274A3331D5086CB00C72378 /* SocialConnections.swift in Sources */,
 				521DE9011D49F36D00AA5A9F /* SimsApi.swift in Sources */,
 				521DE9021D49F36D00AA5A9F /* TapglueSims.swift in Sources */,
-				52C726501D902F8A00C6FAB3 /* InternalPage.swift in Sources */,
 				52BF70391D3FAA4100D88AAC /* UserStore.swift in Sources */,
 				52483CA91D88290C002BA0A2 /* RxPage.swift in Sources */,
 			);

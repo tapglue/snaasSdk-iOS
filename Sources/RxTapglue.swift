@@ -112,29 +112,35 @@ public class RxTapglue {
         return network.createSocialConnections(socialConnections)
     }
     /// retrieves the followers of the current user
+    @available(*, deprecated=2.1)
     public func retrieveFollowers() -> Observable<[User]> {
         return network.retrieveFollowers()
     }
     /// retrieves the users followed by the current user
+    @available(*, deprecated=2.1)
     public func retrieveFollowings() -> Observable<[User]> {
         return network.retrieveFollowings()
     }
     /// retrieves followers for a given user
     /// - parameter id: followers of the user of the given id
+    @available(*, deprecated=2.1)
     public func retrieveFollowersForUserId(id: String) -> Observable<[User]> {
         return network.retrieveFollowersForUserId(id)
     }
     /// retrieves users followed by a given user
     /// - parameter id: followings of the user of the given id
+    @available(*, deprecated=2.1)
     public func retrieveFollowingsForUserId(id: String) -> Observable<[User]> {
         return network.retrieveFollowingsForUserId(id)
     }
     /// retrieve friends for current user
+    @available(*, deprecated=2.1)
     public func retrieveFriends() -> Observable<[User]> {
         return network.retrieveFriends()
     }
     /// Retrieve friends for a given user
     /// - parameter id: friends of the user with the given id
+    @available(*, deprecated=2.1)
     public func retrieveFriendsForUserId(id: String) -> Observable<[User]> {
         return network.retrieveFriendsForUserId(id)
     }
@@ -251,10 +257,34 @@ public class RxTapglue {
         return network.retrieveMeFeed()
     }
     
+    /// retrieves the followers of the current user
     public func retrieveFollowers() -> Observable<RxPage<User>> {
-        return Observable.create { observer in
-            return NopDisposable.instance
-        }
+        return network.retrieveFollowers()
+    }
+
+    /// retrieves the users followed by the current user
+    public func retrieveFollowings() -> Observable<RxPage<User>> {
+        return network.retrieveFollowings()
+    }
+
+    /// retrieves followers for a given user
+    /// - parameter id: followers of the user of the given id
+    public func retrieveFollowersForUserId(id: String) -> Observable<RxPage<User>> {
+        return network.retrieveFollowersForUserId(id)
+    }
+    /// retrieves users followed by a given user
+    /// - parameter id: followings of the user of the given id
+    public func retrieveFollowingsForUserId(id: String) -> Observable<RxPage<User>> {
+        return network.retrieveFollowingsForUserId(id)
+    }
+    /// retrieve friends for current user
+    public func retrieveFriends() -> Observable<RxPage<User>> {
+        return network.retrieveFriends()
+    }
+    /// Retrieve friends for a given user
+    /// - parameter id: friends of the user with the given id
+    public func retrieveFriendsForUserId(id: String) -> Observable<RxPage<User>> {
+        return network.retrieveFriendsForUserId(id)
     }
 
     private func toCurrentUserMap(user: User) -> User {

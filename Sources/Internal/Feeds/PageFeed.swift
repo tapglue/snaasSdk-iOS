@@ -27,6 +27,6 @@ class ApiPage: Mappable {
     }
     
     func mapping(map: Map) {
-        before <- map["cursors.before"]
+        before <- map["previous"]
     }
 }

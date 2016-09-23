@@ -282,21 +282,38 @@ class Network {
     
     func retrieveFollowers() -> Observable<RxPage<User>> {
         return http.execute(Router.get("/me/followers")).map { (feed:UserFeed) in
-            let page = RxPage<User>()
-            page.data = feed.users ?? [User]()
-            page.prevPointer = Router.get("/me/followers?before=" + feed.page!.before!)
-            page.parseFeed = { prevFeed in
-                return self.userFeedToPage(prevFeed)
-            }
-            return page
+            return feed.rxPage()
         }
     }
-    
-    func userFeedToPage(feed: Mappable) -> RxPage<User> {
-        let page = RxPage<User>()
-        page.data = feed.users ?? [User]()
-        page.prevPointer = Router.get("/me/followers?before=" + feed.page!.before!)
-        return page
+
+    func retrieveFollowings() -> Observable<RxPage<User>> {
+        return http.execute(Router.get("/me/follows")).map { (feed:UserFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func retrieveFollowersForUserId(id: String) -> Observable<RxPage<User>> {
+        return http.execute(Router.get("/users/" + id + "/followers")).map { (feed:UserFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func retrieveFollowingsForUserId(id: String) -> Observable<RxPage<User>> {
+        return http.execute(Router.get("/users/" + id + "/follows")).map { (feed: UserFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func retrieveFriends() -> Observable<RxPage<User>> {
+        return http.execute(Router.get("/me/friends")).map { (feed: UserFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func retrieveFriendsForUserId(id: String) -> Observable<RxPage<User>> {
+        return http.execute(Router.get("/users/" + id + "/friends")).map { (feed: UserFeed) in
+            return feed.rxPage()
+        }
     }
 
     private func retrieveActivitiesOn(path: String) -> Observable<[Activity]> {

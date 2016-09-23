@@ -9,20 +9,24 @@
 import Foundation
 import ObjectMapper
 
-class UserFeed: NullableFeed {
+class UserFeed: FlattenableFeed<User> {
     var users: [User]?
-    var page: ApiPage?
     
     required init?(_ map: Map) {
-        
+        super.init()
     }
     
     required init() {
         self.users = [User]()
+        super.init()
     }
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         users <- map["users"]
         page <- map["paging"]
+    }
+    
+    override func flatten() -> [User] {
+       return users ?? [User]()
     }
 }

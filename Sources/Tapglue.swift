@@ -138,12 +138,14 @@ public class Tapglue {
 
     /// retrieves the followers of the current user
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveFollowers(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveFollowers().unwrap(completionHandler)
     }
 
     /// retrieves the users followed by the current user
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveFollowings(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveFollowings().unwrap(completionHandler)
     }
@@ -151,6 +153,7 @@ public class Tapglue {
     /// retrieves followers for a given user
     /// - parameter id: followers of the user of the given id
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveFollowersForUserId(id: String, 
             completionHandler: (users: [User]?, error:ErrorType?) -> ()) {
         rxTapglue.retrieveFollowersForUserId(id).unwrap(completionHandler)
@@ -159,6 +162,7 @@ public class Tapglue {
     /// retrieves users followed by a given user
     /// - parameter id: followings of the user of the given id
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveFollowingsForUserId(id: String, 
             completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveFollowingsForUserId(id).unwrap(completionHandler)
@@ -166,6 +170,7 @@ public class Tapglue {
 
     /// retrieve friends for current user
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveFriends(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveFriends().unwrap(completionHandler)
     }
@@ -173,6 +178,7 @@ public class Tapglue {
     /// Retrieve friends for a given user
     /// - parameter id: friends of the user with the given id
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveFriendsForUserId(id: String,
             completionHandler:(users: [User]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveFriendsForUserId(id).unwrap(completionHandler)
@@ -300,7 +306,6 @@ public class Tapglue {
 
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
-    @available(*, deprecated, message="use something elseeee")
     public func retrieveActivitiesByUser(userId: String, completionHandler:
         (activities:[Activity]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveActivitiesByUser(userId).unwrap(completionHandler)
@@ -330,5 +335,59 @@ public class Tapglue {
     public func retrieveMeFeed(completionHandler: 
         (activities: [Activity]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveMeFeed().unwrap(completionHandler)
+    }
+
+    /// retrieves the followers of the current user
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveFollowers(completionHandler: (Page<User>?, error: ErrorType?) -> ()) {
+        rxTapglue.retrieveFollowers().map{ (rxPage: RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieves the users followed by the current user
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveFollowings(completionHandler: (Page<User>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveFollowings().map { (rxPage: RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieves followers for a given user
+    /// - parameter id: followers of the user of the given id
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveFollowersForUserId(id: String, 
+            completionHandler: (Page<User>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveFollowersForUserId(id).map { (rxPage: RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieves users followed by a given user
+    /// - parameter id: followings of the user of the given id
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveFollowingsForUserId(id: String, 
+            completionHandler: (Page<User>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveFollowingsForUserId(id).map { (rxPage: RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieve friends for current user
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveFriends(completionHandler: (Page<User>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveFriends().map { (rxPage: RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// Retrieve friends for a given user
+    /// - parameter id: friends of the user with the given id
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveFriendsForUserId(id: String,
+            completionHandler:(Page<User>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveFriendsForUserId(id).map { (rxPage:RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
     }
 }
