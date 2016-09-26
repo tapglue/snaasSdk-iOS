@@ -16,7 +16,7 @@ class Network {
     init() {
         if !Network.analyticsSent {
             Network.analyticsSent = true
-            http.execute(Router.post("/analytics", payload: [:])).subscribeError({ error in
+            http.execute(Router.post("/analytics", payload: [:])).subscribe(onError: { error in
                 Network.analyticsSent = false
             }).addDisposableTo(DisposeBag())
         }

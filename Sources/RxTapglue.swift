@@ -66,15 +66,15 @@ open class RxTapglue {
     }
     /// logs out the current user
     open func logout() -> Observable<Void> {
-        return network.logout().doOnCompleted {
+        return network.logout().do(onCompleted: {
             self.currentUser = nil
-        }
+        })
     }
     /// deletes current user from tapglue
     open func deleteCurrentUser() -> Observable<Void> {
-        return network.deleteCurrentUser().doOnCompleted {
+        return network.deleteCurrentUser().do(onCompleted: {
             self.currentUser = nil
-        }
+        })
     }
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
