@@ -8,10 +8,10 @@ Pod::Spec.new do |s|
   s.authors  = { 'Tapglue' => 'devs@tapglue.com' }
   s.source   = { :git => 'https://github.com/tapglue/ios_sdk.git', :tag => "v#{s.version}" }
   s.requires_arc = true
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
   s.source_files = 'Sources/**/*.{swift}'
 
-  s.dependency 'RxSwift', '2.6.0'
-  s.dependency 'Alamofire', '3.5.0'
-  s.dependency 'ObjectMapper', '1.3.0'
+  s.dependency 'RxSwift', '3.0.0-beta.1'
+  s.dependency 'Alamofire', '4.0.0'
+  s.dependency 'ObjectMapper', '2.0.0'
 end
