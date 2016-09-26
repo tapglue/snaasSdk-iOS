@@ -32,8 +32,8 @@ class Observable_Unwrappingtest: XCTestCase {
     }
     
     func testUnwrappingError() {
-        var expectedError: ErrorType?
-        Observable.error(TestError()).unwrap { (user: User?, error: ErrorType?) in
+        var expectedError: Error?
+        Observable.error(TestError()).unwrap { (user: User?, error: Error?) in
             expectedError = error
         }
         
@@ -52,7 +52,7 @@ class Observable_Unwrappingtest: XCTestCase {
     func testUnwrappingEmptyErrorObservable() {
         let obs: Observable<Void> = Observable.error(TestError())
         var wasSuccessful = true
-        var expectedError: ErrorType?
+        var expectedError: Error?
         obs.unwrap { (success: Bool, error) in
             wasSuccessful = success
             expectedError = error
@@ -62,6 +62,6 @@ class Observable_Unwrappingtest: XCTestCase {
     }
 }
 
-class TestError: ErrorType {
+class TestError: Error {
     var code: Int = 25
 }

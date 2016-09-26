@@ -9,13 +9,13 @@
 import ObjectMapper
 
 /// Entity that represents a connection on tapglue.
-public class Connection: Mappable {
-    public var userToId: String?
-    public var userFromId: String?
-    public var type: ConnectionType?
-    public var state: ConnectionState?
-    public var userTo: User?
-    public var userFrom: User?
+open class Connection: Mappable {
+    open var userToId: String?
+    open var userFromId: String?
+    open var type: ConnectionType?
+    open var state: ConnectionState?
+    open var userTo: User?
+    open var userFrom: User?
 
     /// Creates an entity representing a connection on tapglue. Connections can be of two types,
     /// Follow or Friend, and can go through three states: Pending, Confirmed, Rejected. 
@@ -35,7 +35,7 @@ public class Connection: Mappable {
     required public init?(_ map: Map) {
         
     }
-    public func mapping(map: Map) {
+    open func mapping(_ map: Map) {
         userToId <- map["user_to_id_string"]
         userFromId <- map["user_from_id_string"]
         type <- map["type"]

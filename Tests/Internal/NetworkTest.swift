@@ -36,20 +36,20 @@ class NetworkTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        stub(http(.POST, uri: "/0.4/analytics"), builder: analyticsBuilder)
+        stub(http(.post, uri: "/0.4/analytics"), builder: analyticsBuilder)
         Network.analyticsSent = false
 
         network = Network()
-        sampleUser = ["user_name":"user1","id_string": userId,"password":"1234", "session_token":"someToken"]
+        sampleUser = ["user_name":"user1" as AnyObject,"id_string": userId as AnyObject,"password":"1234" as AnyObject, "session_token":"someToken" as AnyObject]
         sampleUserFeed["users"] = [sampleUser]
-        samplePost = ["visibility": 20, "attachments": [], "id": postId, "user_id":userId]
+        samplePost = ["visibility": 20 as AnyObject, "attachments": [], "id": postId, "user_id":userId]
         samplePostFeed = ["posts":[samplePost], "users":[userId:sampleUser]]
         sampleComment = ["contents":["en":"content"], "post_id":postId, "id":commentId, "user_id": userId]
         sampleCommentFeed = ["comments": [sampleComment], "users": [userId: sampleUser]]
-        sampleLike = ["post_id":postId, "id":likeId, "user_id": userId]
+        sampleLike = ["post_id":postId as AnyObject, "id":likeId as AnyObject, "user_id": userId as AnyObject]
         sampleLikeFeed = ["likes": [sampleLike], "users": [userId: sampleUser],
             "post_map":[postId: samplePost]]
-        sampleConnection = ["user_to_id_string": userId, "user_from_id_string": userId, "type":"follow", "state":"confirmed"]
+        sampleConnection = ["user_to_id_string": userId as AnyObject, "user_from_id_string": userId as AnyObject, "type":"follow" as AnyObject, "state":"confirmed" as AnyObject]
         sampleConnectionsFeed = ["incoming": [sampleConnection], "outgoing": [sampleConnection],
             "users":[sampleUser]]
         sampleActivityFeed = ["events":[["id_string":activityId, "user_id_string":userId,
@@ -62,10 +62,10 @@ class NetworkTest: XCTestCase {
         super.tearDown()
     }
 
-    func analyticsBuilder(request: NSURLRequest) -> Response {
+    func analyticsBuilder(_ request: URLRequest) -> Response {
         analyticsSent = true
-        let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 200, HTTPVersion: nil, headerFields: nil)!
-        return .Success(response, nil)
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+        return .success(response, nil)
     }
 
     func testAnalyticsSentOnInstantiation() {
@@ -73,7 +73,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testLogin() {
-        stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
+        stub(http(.post, uri: "/0.4/users/login"), builder: json(sampleUser))
         
         var networkUser = User()
         _ = network.loginUser("user2", password: "1234").subscribeNext { user in
@@ -84,7 +84,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testLoginSetsSessionTokenToRouter() {
-        stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
+        stub(http(.post, uri: "/0.4/users/login"), builder: json(sampleUser))
         
         _ = network.loginUser("user2", password: "1234").subscribe()
         
@@ -92,7 +92,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testEmailLogin() {
-        stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
+        stub(http(.post, uri: "/0.4/users/login"), builder: json(sampleUser))
 
         var networkUser: User?
         _ = network.loginUserWithEmail("email@domain.com", password: "1234")
@@ -103,7 +103,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testEmailLoginSetsSessionTokenToRouter() {
-        stub(http(.POST, uri: "/0.4/users/login"), builder: json(sampleUser))
+        stub(http(.post, uri: "/0.4/users/login"), builder: json(sampleUser))
         
         _ = network.loginUserWithEmail("email@domain.com", password: "1234").subscribe()
         
@@ -111,7 +111,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRefreshCurrentUser() {
-        stub(http(.GET, uri: "/0.4/me"), builder: json(sampleUser))
+        stub(http(.get, uri: "/0.4/me"), builder: json(sampleUser))
         
         var networkUser = User()
         _ = network.refreshCurrentUser().subscribeNext({ user in
@@ -123,7 +123,7 @@ class NetworkTest: XCTestCase {
 
     func testRetrieveFollowersReturnsEmptyArrayWhenNone() {
         sampleUserFeed["users"] = [User]()
-        stub(http(.GET, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))
+        stub(http(.get, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))
         var followers: [User]?
         _ = network.retrieveFollowers().subscribeNext { users in
             followers = users
@@ -133,7 +133,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testCreateUser() {
-        stub(http(.POST, uri: "/0.4/users"), builder: json(sampleUser))
+        stub(http(.post, uri: "/0.4/users"), builder: json(sampleUser))
         let userToBeCreated = User()
         userToBeCreated.username = "someUsername"
         userToBeCreated.password = "1234"
@@ -146,7 +146,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testUpdateCurrentUser() {
-        stub(http(.PUT, uri:"/0.4/me"), builder: json(sampleUser))
+        stub(http(.put, uri:"/0.4/me"), builder: json(sampleUser))
         var updatedUser = User();
         _ = network.updateCurrentUser(updatedUser).subscribeNext { user in
             updatedUser = user
@@ -155,7 +155,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testLogout() {
-        stub(http(.DELETE, uri:"/0.4/me/logout"), builder: http(204))
+        stub(http(.delete, uri:"/0.4/me/logout"), builder: http(204))
         var wasLoggedout = false
         _ = network.logout().subscribeCompleted { _ in
             wasLoggedout = true
@@ -164,7 +164,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testDeleteCurrentUser() {
-        stub(http(.DELETE, uri:"/0.4/me"), builder: http(204))
+        stub(http(.delete, uri:"/0.4/me"), builder: http(204))
         var wasDeleted = false
         _ = network.deleteCurrentUser().subscribeCompleted { _ in
             wasDeleted = true
@@ -173,7 +173,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveUser() {
-        stub(http(.GET, uri:"/0.4/users/1234"), builder: json(sampleUser))
+        stub(http(.get, uri:"/0.4/users/1234"), builder: json(sampleUser))
         var networkUser = User()
         _ = network.retrieveUser("1234").subscribeNext { user in
             networkUser = user
@@ -192,7 +192,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testSearchEmail() {
-        stub(http(.POST, uri: "/0.4/users/search/emails"), builder: json(sampleUserFeed))
+        stub(http(.post, uri: "/0.4/users/search/emails"), builder: json(sampleUserFeed))
         var searchResult = [User]()
         _ = network.searchEmails(["john@doe.com"]).subscribeNext { users in
             searchResult = users
@@ -202,7 +202,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testSearchSocialIds() {
-        stub(http(.POST, uri: "/0.4/users/search/facebook"), builder: json(sampleUserFeed))
+        stub(http(.post, uri: "/0.4/users/search/facebook"), builder: json(sampleUserFeed))
         var searchResult = [User]()
         _ = network.searchSocialIds(["someId"], onPlatform: "facebook").subscribeNext { users in
             searchResult = users
@@ -212,7 +212,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testCreateConnection() {
-        stub(http(.PUT, uri: "/0.4/me/connections"), builder: json(sampleConnection))
+        stub(http(.put, uri: "/0.4/me/connections"), builder: json(sampleConnection))
         var networkConnection: Connection?
         let connection = Connection(toUserId: "2123", type: .Follow, state: .Confirmed)
         _ = network.createConnection(connection).subscribeNext { connection in
@@ -223,7 +223,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testDeleteConnection() {
-        stub(http(.DELETE, uri: "/0.4/me/connections/follow/"+userId), builder: http(204))
+        stub(http(.delete, uri: "/0.4/me/connections/follow/"+userId), builder: http(204))
         var wasDeleted = false
         _ = network.deleteConnection(toUserId: userId, type: .Follow).subscribeCompleted {
             wasDeleted = true
@@ -232,7 +232,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testCreateSocialConnections() {
-        stub(http(.POST, uri: "/0.4/me/connections/social"), builder: json(sampleUserFeed))
+        stub(http(.post, uri: "/0.4/me/connections/social"), builder: json(sampleUserFeed))
         var networkUsers: [User]?
         let connections = SocialConnections(platform:"f", type: .Follow, userSocialId: "s",
             socialIds: ["ids"])
@@ -244,7 +244,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveFollowers() {
-        stub(http(.GET, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))
+        stub(http(.get, uri: "/0.4/me/followers"), builder: json(sampleUserFeed))
         var followers = [User]()
         _ = network.retrieveFollowers().subscribeNext { users in
             followers = users
@@ -254,7 +254,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveFollowings() {
-        stub(http(.GET, uri: "/0.4/me/follows"), builder: json(sampleUserFeed))
+        stub(http(.get, uri: "/0.4/me/follows"), builder: json(sampleUserFeed))
         var followings = [User]()
         _ = network.retrieveFollowings().subscribeNext {users in
             followings = users
@@ -264,7 +264,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveFollowersForUserId() {
-        stub(http(.GET, uri: "/0.4/users/" + userId + "/followers"), builder: json(sampleUserFeed))
+        stub(http(.get, uri: "/0.4/users/" + userId + "/followers"), builder: json(sampleUserFeed))
         var followers = [User]()
         _ = network.retrieveFollowersForUserId(userId).subscribeNext { users in
             followers = users
@@ -274,7 +274,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveFollowingsForUserId() {
-        stub(http(.GET, uri: "/0.4/users/" + userId + "/follows"),
+        stub(http(.get, uri: "/0.4/users/" + userId + "/follows"),
                     builder: json(sampleUserFeed))
         var followings = [User]()
         _ = network.retrieveFollowingsForUserId(userId).subscribeNext { users in
@@ -285,7 +285,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveFriends() {
-        stub(http(.GET, uri: "/0.4/me/friends"), builder: json(sampleUserFeed))
+        stub(http(.get, uri: "/0.4/me/friends"), builder: json(sampleUserFeed))
         var friends = [User]()
         _ = network.retrieveFriends().subscribeNext { users in
             friends = users
@@ -295,7 +295,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveFriendsForUserId() {
-        stub(http(.GET, uri: "/0.4/users/"+userId+"/friends"), builder: json(sampleUserFeed))
+        stub(http(.get, uri: "/0.4/users/"+userId+"/friends"), builder: json(sampleUserFeed))
         var friends = [User]()
         _ = network.retrieveFriendsForUserId(userId).subscribeNext { users in
             friends = users
@@ -305,7 +305,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrievePendingConnections() {
-        stub(http(.GET, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
+        stub(http(.get, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
         var networkConnections: Connections?
         _ = network.retrievePendingConnections().subscribeNext { connections in
             networkConnections =  connections
@@ -314,7 +314,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrievePendingConnectionsMapsIncomingUser() {
-        stub(http(.GET, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
+        stub(http(.get, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
         var networkConnections: Connections?
         _ = network.retrievePendingConnections().subscribeNext { connections in
             networkConnections =  connections
@@ -323,7 +323,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrievePendingConnectionsMapsOutgoingUser() {
-        stub(http(.GET, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
+        stub(http(.get, uri: "/0.4/me/connections/pending"), builder: json(sampleConnectionsFeed))
         var networkConnections: Connections?
         _ = network.retrievePendingConnections().subscribeNext { connections in
             networkConnections =  connections
@@ -332,7 +332,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveRejectedConnections() {
-        stub(http(.GET, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
+        stub(http(.get, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
         var networkConnections: Connections?
         _ = network.retrieveRejectedConnections().subscribeNext { connections in
             networkConnections =  connections
@@ -341,7 +341,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveRejectedConnectionsMapsIncomingUser() {
-        stub(http(.GET, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
+        stub(http(.get, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
         var networkConnections: Connections?
         _ = network.retrieveRejectedConnections().subscribeNext { connections in
             networkConnections =  connections
@@ -350,7 +350,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveRejectedConnectionsMapsOutgoingUser() {
-        stub(http(.GET, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
+        stub(http(.get, uri: "/0.4/me/connections/rejected"), builder: json(sampleConnectionsFeed))
         var networkConnections: Connections?
         _ = network.retrieveRejectedConnections().subscribeNext { connections in
             networkConnections =  connections
@@ -359,9 +359,9 @@ class NetworkTest: XCTestCase {
     }
 
     func testCreatePost() {
-        stub(http(.POST, uri: "/0.4/posts"), builder: json(samplePost))
+        stub(http(.post, uri: "/0.4/posts"), builder: json(samplePost))
         var networkPost: Post?
-        let post = Post(visibility: .Public, attachments: [])
+        let post = Post(visibility: .public, attachments: [])
         _ = network.createPost(post).subscribeNext { post in
             networkPost = post
         }
@@ -369,7 +369,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrievePost() {
-        stub(http(.GET, uri: "/0.4/posts/" + postId), builder: json(samplePost))
+        stub(http(.get, uri: "/0.4/posts/" + postId), builder: json(samplePost))
         var networkPost: Post?
         _ = network.retrievePost(postId).subscribeNext { post in
             networkPost = post
@@ -378,9 +378,9 @@ class NetworkTest: XCTestCase {
     }
 
     func testUpdatePost() {
-        stub(http(.PUT, uri: "/0.4/posts/" + postId), builder: json(samplePost))
+        stub(http(.put, uri: "/0.4/posts/" + postId), builder: json(samplePost))
         var networkPost: Post?
-        let post = Post(visibility: .Private, attachments: [])
+        let post = Post(visibility: .private, attachments: [])
         post.id = postId
         _ = network.updatePost(postId, post: post).subscribeNext {post in
             networkPost = post
@@ -389,7 +389,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testDeletePost() {
-        stub(http(.DELETE, uri: "/0.4/posts/" + postId), builder: http(204))
+        stub(http(.delete, uri: "/0.4/posts/" + postId), builder: http(204))
         var wasDeleted = false
         _ = network.deletePost(postId).subscribeCompleted {
             wasDeleted = true
@@ -398,7 +398,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrievePostsByUser() {
-        stub(http(.GET, uri: "/0.4/users/someId/posts"), builder: json(samplePostFeed))
+        stub(http(.get, uri: "/0.4/users/someId/posts"), builder: json(samplePostFeed))
         var networkPosts: [Post]?
         _ = network.retrievePostsByUser("someId").subscribeNext { posts in
             networkPosts = posts
@@ -408,7 +408,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrievePostsByUserMapsUserToPost() {
-        stub(http(.GET, uri: "/0.4/users/someId/posts"), builder: json(samplePostFeed))
+        stub(http(.get, uri: "/0.4/users/someId/posts"), builder: json(samplePostFeed))
         var networkPosts: [Post]?
         _ = network.retrievePostsByUser("someId").subscribeNext { posts in
             networkPosts = posts
@@ -417,7 +417,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveAllPosts() {
-        stub(http(.GET, uri: "/0.4/posts"), builder: json(samplePostFeed))
+        stub(http(.get, uri: "/0.4/posts"), builder: json(samplePostFeed))
         var networkPosts: [Post]?
         _ = network.retrieveAllPosts().subscribeNext { posts in
             networkPosts = posts
@@ -426,7 +426,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveAllPostsMapsUsersToPosts() {
-        stub(http(.GET, uri: "/0.4/posts"), builder: json(samplePostFeed))
+        stub(http(.get, uri: "/0.4/posts"), builder: json(samplePostFeed))
         var networkPosts: [Post]?
         _ = network.retrieveAllPosts().subscribeNext { posts in
             networkPosts = posts
@@ -444,7 +444,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testCreateComment() {
-        stub(http(.POST, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleComment))
+        stub(http(.post, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleComment))
         var networkComment: Comment?
         let comment = Comment(contents: ["en":"content"], postId: postId)
         _ = network.createComment(comment).subscribeNext { comment in
@@ -454,7 +454,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveComments() {
-        stub(http(.GET, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleCommentFeed))
+        stub(http(.get, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleCommentFeed))
         var postComments = [Comment]()
         _ = network.retrieveComments(postId).subscribeNext { comments in
             postComments = comments
@@ -464,7 +464,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveCommentsMapsUsers() {
-        stub(http(.GET, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleCommentFeed))
+        stub(http(.get, uri: "/0.4/posts/" + postId + "/comments"), builder: json(sampleCommentFeed))
         var postComments = [Comment]()
         _ = network.retrieveComments(postId).subscribeNext { comments in
             postComments = comments
@@ -474,7 +474,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testUpdateComment() {
-        stub(http(.PUT, uri: "/0.4/posts/" + postId + "/comments/" + commentId), builder: json(sampleComment))
+        stub(http(.put, uri: "/0.4/posts/" + postId + "/comments/" + commentId), builder: json(sampleComment))
         var networkComment: Comment?
         let comment = Comment(contents: ["en":"content"], postId: postId)
         comment.id = commentId
@@ -485,7 +485,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testDeleteComment() {
-        stub(http(.DELETE, uri: "/0.4/posts/" + postId + "/comments/" + commentId), builder: http(204))
+        stub(http(.delete, uri: "/0.4/posts/" + postId + "/comments/" + commentId), builder: http(204))
         var wasDeleted = false
         _ = network.deleteComment(postId, commentId: commentId).subscribeCompleted {
             wasDeleted = true
@@ -494,7 +494,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testCreateLike() {
-        stub(http(.POST, uri: "/0.4/posts/" + postId + "/likes"), builder: json(sampleLike))
+        stub(http(.post, uri: "/0.4/posts/" + postId + "/likes"), builder: json(sampleLike))
         var networkLike: Like?
         _ = network.createLike(forPostId: postId).subscribeNext { like in
             networkLike = like
@@ -503,7 +503,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrievelikes() {
-        stub(http(.GET, uri: "/0.4/posts/" + postId + "/likes"), builder: json(sampleLikeFeed))
+        stub(http(.get, uri: "/0.4/posts/" + postId + "/likes"), builder: json(sampleLikeFeed))
         var postLikes = [Like]()
         _ = network.retrieveLikes(postId).subscribeNext { likes in
             postLikes = likes
@@ -513,7 +513,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrievelikesMapsUsers() {
-        stub(http(.GET, uri: "/0.4/posts/" + postId + "/likes"), builder: json(sampleLikeFeed))
+        stub(http(.get, uri: "/0.4/posts/" + postId + "/likes"), builder: json(sampleLikeFeed))
         var postLikes = [Like]()
         _ = network.retrieveLikes(postId).subscribeNext { likes in
             postLikes = likes
@@ -523,7 +523,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testDeleteLike() {
-        stub(http(.DELETE, uri: "/0.4/posts/" + postId + "/likes"), builder: http(204))
+        stub(http(.delete, uri: "/0.4/posts/" + postId + "/likes"), builder: http(204))
         var wasDeleted = false
         _ = network.deleteLike(forPostId: postId).subscribeCompleted {
             wasDeleted = true
@@ -532,7 +532,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveLikesByUser() {
-        stub(http(.GET, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
+        stub(http(.get, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
         var networkLikes: [Like]?
         _ = network.retrieveLikesByUser("123").subscribeNext { likes in
             networkLikes = likes
@@ -541,7 +541,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveLikesByUserMapsUsers() {
-        stub(http(.GET, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
+        stub(http(.get, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
         var networkLikes: [Like]?
         _ = network.retrieveLikesByUser("123").subscribeNext { likes in
             networkLikes = likes
@@ -550,7 +550,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveLikesByUserMapsPosts() {
-        stub(http(.GET, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
+        stub(http(.get, uri: "/0.4/users/123/likes"), builder: json(sampleLikeFeed))
         var networkLikes: [Like]?
         _ = network.retrieveLikesByUser("123").subscribeNext { likes in
             networkLikes = likes
@@ -559,7 +559,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveActivitiesByUser() {
-        stub(http(.GET, uri: "/0.4/users/123/events"), builder: json(sampleActivityFeed))
+        stub(http(.get, uri: "/0.4/users/123/events"), builder: json(sampleActivityFeed))
         var networkActivities: [Activity]?
         _ = network.retrieveActivitiesByUser("123").subscribeNext { activities in
             networkActivities = activities
@@ -568,7 +568,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveActivitiesByUserMapsUsersToActivities() {
-        stub(http(.GET, uri: "/0.4/users/123/events"), builder: json(sampleActivityFeed))
+        stub(http(.get, uri: "/0.4/users/123/events"), builder: json(sampleActivityFeed))
         var networkActivities: [Activity]?
         _ = network.retrieveActivitiesByUser("123").subscribeNext { activities in
             networkActivities = activities
@@ -577,7 +577,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrievePostFeed() {
-        stub(http(.GET, uri: "/0.4/me/feed/posts"), builder: json(samplePostFeed))
+        stub(http(.get, uri: "/0.4/me/feed/posts"), builder: json(samplePostFeed))
         var networkPosts: [Post]?
         _ = network.retrievePostFeed().subscribeNext { posts in
             networkPosts = posts
@@ -586,7 +586,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveActivityFeed() {
-        stub(http(.GET, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
+        stub(http(.get, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
         var networkActivities: [Activity]?
         _ = network.retrieveActivityFeed().subscribeNext { activities in
             networkActivities = activities
@@ -595,7 +595,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveActivityFeedMapsUsersToEvents() {
-        stub(http(.GET, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
+        stub(http(.get, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
         var networkActivities: [Activity]?
         _ = network.retrieveActivityFeed().subscribeNext { activities in
             networkActivities = activities
@@ -604,7 +604,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveActivityFeedMapsPostsToEvents() {
-        stub(http(.GET, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
+        stub(http(.get, uri: "/0.4/me/feed/events"), builder: json(sampleActivityFeed))
         var networkActivities: [Activity]?
         _ = network.retrieveActivityFeed().subscribeNext { activities in
             networkActivities = activities
@@ -613,7 +613,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveNewsFeed() {
-        stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
+        stub(http(.get, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
         var networkFeed: NewsFeed?
         _ = network.retrieveNewsFeed().subscribeNext { feed in
             networkFeed = feed
@@ -622,7 +622,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveNewsFeedFetchesPosts() {
-        stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
+        stub(http(.get, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
         var networkFeed: NewsFeed?
         _ = network.retrieveNewsFeed().subscribeNext { feed in
             networkFeed = feed
@@ -631,7 +631,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveNewsFeedFetchesActivities() {
-        stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
+        stub(http(.get, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
         var networkFeed: NewsFeed?
         _ = network.retrieveNewsFeed().subscribeNext { feed in
             networkFeed = feed
@@ -640,7 +640,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveNewsFeedMapsPostsToEvents() {
-        stub(http(.GET, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
+        stub(http(.get, uri: "/0.4/me/feed"), builder: json(sampleNewsFeed))
         var newsFeed: NewsFeed?
         _ = network.retrieveNewsFeed().subscribeNext { feed in
             newsFeed = feed
@@ -649,7 +649,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveMeFeed() {
-        stub(http(.GET, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
+        stub(http(.get, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
         var networkActivities: [Activity]?
         _ = network.retrieveMeFeed().subscribeNext { activities in
             networkActivities = activities
@@ -658,7 +658,7 @@ class NetworkTest: XCTestCase {
     }
     
     func testRetrieveMeFeedMapsUsersToEvents() {
-        stub(http(.GET, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
+        stub(http(.get, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
         var networkActivities: [Activity]?
         _ = network.retrieveMeFeed().subscribeNext { activities in
             networkActivities = activities
@@ -667,7 +667,7 @@ class NetworkTest: XCTestCase {
     }
 
     func testRetrieveMeFeedMapsPostsToEvents() {
-        stub(http(.GET, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
+        stub(http(.get, uri: "/0.4/me/feed/notifications/self"), builder: json(sampleActivityFeed))
         var networkActivities: [Activity]?
         _ = network.retrieveMeFeed().subscribeNext { activities in
             networkActivities = activities

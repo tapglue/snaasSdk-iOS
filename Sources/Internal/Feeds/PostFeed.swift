@@ -20,7 +20,7 @@ class PostFeed: NullableFeed {
         
     }
     
-    func mapping(map: Map) {
+    func mapping(_ map: Map) {
         posts   <- map["posts"]
         users   <- map["users"]
     }

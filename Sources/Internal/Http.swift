@@ -13,7 +13,7 @@ import ObjectMapper
 
 class Http {
     
-    func execute<T:Mappable>(request: NSMutableURLRequest) -> Observable<T> {
+    func execute<T:Mappable>(_ request: NSMutableURLRequest) -> Observable<T> {
         return Observable.create {observer in
             Alamofire.request(request)
                 .validate()
@@ -22,18 +22,18 @@ class Http {
                     log(response.response?.statusCode)
                     log(response.result.value)
                     switch(response.result) {
-                    case .Success(let value):
+                    case .success(let value):
                         log(value)
                         if let object = Mapper<T>().map(value) {
-                            observer.on(.Next(object))
+                            observer.on(.next(object))
                         } else {
                             if let nf = T.self as? NullableFeed.Type {
                                 let defaultObject = nf.init()
-                                observer.on(.Next(defaultObject as! T))
+                                observer.on(.next(defaultObject as! T))
                             }
                         }
-                        observer.on(.Completed)
-                    case .Failure(let error):
+                        observer.on(.completed)
+                    case .failure(let error):
                         self.handleError(response.data, onObserver: observer, withDefaultError:error)
                 }
             }
@@ -41,7 +41,7 @@ class Http {
         }
     }
     
-    func execute(request:NSMutableURLRequest) -> Observable<Void> {
+    func execute(_ request:NSMutableURLRequest) -> Observable<Void> {
         return Observable.create {observer in
             Alamofire.request(request)
                 .validate()
@@ -49,9 +49,9 @@ class Http {
                 .responseJSON { response in
                     log(response.response?.statusCode)
                     switch(response.result) {
-                    case .Success:
-                        observer.on(.Completed)
-                    case .Failure(let error):
+                    case .success:
+                        observer.on(.completed)
+                    case .failure(let error):
                         self.handleError(response.data, onObserver: observer, withDefaultError: error)
                     }
             }
@@ -59,10 +59,10 @@ class Http {
         }
     }
 
-    private func handleError<T>(data: NSData?, onObserver observer: AnyObserver<T>,
+    fileprivate func handleError<T>(_ data: Data?, onObserver observer: AnyObserver<T>,
                                 withDefaultError error: NSError) {
         if let data = data {
-            let json = String(data: data, encoding: NSUTF8StringEncoding)!
+            let json = String(data: data, encoding: String.Encoding.utf8)!
             if let errorFeed = Mapper<ErrorFeed>().map(json) {
                 log(errorFeed.toJSONString())
                 let tapglueErrors = errorFeed.errors!

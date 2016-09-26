@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class TapglueSims : NSObject, SessionTokenListener {
+open class TapglueSims : NSObject, SessionTokenListener {
     let appToken: String
     var sessionToken: String?
     var deviceToken: String?
     var api : SimsApi
     
     public convenience init(withConfiguration config: Configuration) {
-        self.init(withConfiguration: config, environment: Environment.Production)
+        self.init(withConfiguration: config, environment: Environment.production)
     }
     
     public init(withConfiguration config: Configuration, environment: Environment) {
@@ -25,17 +25,17 @@ public class TapglueSims : NSObject, SessionTokenListener {
         Router.sessionTokenListener = self
     }
     
-    public func registerSimsNotificationSettings(application: UIApplication) {
+    open func registerSimsNotificationSettings(_ application: UIApplication) {
         let notificationSettings = UIUserNotificationSettings(
-            forTypes: [.Badge, .Sound, .Alert], categories: nil)
+            types: [.badge, .sound, .alert], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
     }
     
-    public func registerDeviceToken(deviceToken: NSData) {
-        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+    open func registerDeviceToken(_ deviceToken: Data) {
+        let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
         var tokenString = ""
         
-        for i in 0..<deviceToken.length {
+        for i in 0..<deviceToken.count {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
         
@@ -44,13 +44,13 @@ public class TapglueSims : NSObject, SessionTokenListener {
         registerSims()
     }
     
-    func sessionTokenSet(sessionToken: String?) {
+    func sessionTokenSet(_ sessionToken: String?) {
         print("sessionTokenSet: \(sessionToken)")
         self.sessionToken = sessionToken
         registerSims()
     }
     
-    private func registerSims() {
+    fileprivate func registerSims() {
         if let deviceToken = deviceToken {
             if let sessionToken = sessionToken {
                 registerDeviceOnApiWithAppToken(appToken, deviceToken: deviceToken, sessionToken: sessionToken)
@@ -58,12 +58,12 @@ public class TapglueSims : NSObject, SessionTokenListener {
         }
     }
     
-    private func registerDeviceOnApiWithAppToken(appToken: String, deviceToken: String, sessionToken: String) {
+    fileprivate func registerDeviceOnApiWithAppToken(_ appToken: String, deviceToken: String, sessionToken: String) {
         api.registerDevice(appToken, deviceToken: deviceToken, sessionToken: sessionToken)
     }
 }
 
 public enum Environment: Int {
-    case Sandbox = 1
-    case Production = 2
+    case sandbox = 1
+    case production = 2
 }

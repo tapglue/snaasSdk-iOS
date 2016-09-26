@@ -21,7 +21,7 @@ class RxTapglueTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        stub(http(.POST, uri: "/0.4/analytics"), builder: http(204))
+        stub(http(.post, uri: "/0.4/analytics"), builder: http(204))
         
         tapglue = RxTapglue(configuration: Configuration())
         tapglue.network = network
@@ -253,7 +253,7 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testCreatePost() {
-        var createdPost = Post(visibility: .Public, attachments: [])
+        var createdPost = Post(visibility: .public, attachments: [])
         _ = tapglue.createPost(network.testPost).subscribeNext { post in
             createdPost = post
         }
@@ -261,7 +261,7 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testRetrievePost() {
-        var networkPost = Post(visibility: .Private, attachments: [])
+        var networkPost = Post(visibility: .private, attachments: [])
         _ = tapglue.retrievePost("1234").subscribeNext { post in
             networkPost = post
         }
@@ -269,7 +269,7 @@ class RxTapglueTests: XCTestCase {
     }
     
     func testUpdatePost() {
-        var updatedPost = Post(visibility: .Connections, attachments: [])
+        var updatedPost = Post(visibility: .connections, attachments: [])
         _ = tapglue.updatePost("123", post: network.testPost).subscribeNext { post in
             updatedPost = post
         }

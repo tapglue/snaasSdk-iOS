@@ -22,7 +22,7 @@ class ActivityFeed: NullableFeed {
         
     }
     
-    func mapping(map: Map) {
+    func mapping(_ map: Map) {
         activities  <- map["events"]
         users       <- map["users"]
         posts       <- map["post_map"]

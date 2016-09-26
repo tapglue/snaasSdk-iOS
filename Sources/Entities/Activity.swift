@@ -8,33 +8,33 @@
 
 import ObjectMapper
 
-public class Activity: Mappable {
-    public var id: String?
-    public var type: String?
-    public var language: String?
-    public var priority: String?
-    public var location: String?
-    public var latitude: Double?
-    public var longitude: Double?
-    public var visibility: Visibility?
-    public var images: [String: Image]?
-    public var userId: String?
-    public var tgObjectId: String?
-    public var target: ActivityObject?
-    public var object: ActivityObject?
-    public var user: User?
-    public var postId: String?
-    public var post: Post?
-    public var targetUser: User?
-    public var createdAt: String?
-    public var updatedAt: String?
+open class Activity: Mappable {
+    open var id: String?
+    open var type: String?
+    open var language: String?
+    open var priority: String?
+    open var location: String?
+    open var latitude: Double?
+    open var longitude: Double?
+    open var visibility: Visibility?
+    open var images: [String: Image]?
+    open var userId: String?
+    open var tgObjectId: String?
+    open var target: ActivityObject?
+    open var object: ActivityObject?
+    open var user: User?
+    open var postId: String?
+    open var post: Post?
+    open var targetUser: User?
+    open var createdAt: String?
+    open var updatedAt: String?
 
     init(){}
 
     required public init?(_ map: Map) {
     }
     
-    public func mapping(map: Map) {
+    open func mapping(_ map: Map) {
         id      <- map["id_string"]
         type    <- map["type"]
         language    <- map["language"]
@@ -54,16 +54,16 @@ public class Activity: Mappable {
     }
 }
 
-public class ActivityObject: Mappable {
-    public var id: String?
-    public var type: String?
-    public var url: String?
-    public var displayNames: [String: String]?
+open class ActivityObject: Mappable {
+    open var id: String?
+    open var type: String?
+    open var url: String?
+    open var displayNames: [String: String]?
 
     required public init?(_ map: Map) {
     }
     
-    public func mapping(map: Map) {
+    open func mapping(_ map: Map) {
         id      <- map["id"]
         type    <- map["type"]
         url     <- map["url"]

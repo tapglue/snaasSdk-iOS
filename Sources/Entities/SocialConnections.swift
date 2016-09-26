@@ -10,7 +10,7 @@ import ObjectMapper
 
 /// Social connections payload used to create social connections from another social network
 /// on tapglue.
-public class SocialConnections: Mappable {
+open class SocialConnections: Mappable {
     var platform: String?
     var type: ConnectionType?
     var userSocialId: String?
@@ -34,7 +34,7 @@ public class SocialConnections: Mappable {
         
     }
     
-    public func mapping(map: Map) {
+    open func mapping(_ map: Map) {
         platform        <- map["platform"]
         type        <- map ["type"]
         userSocialId    <- map["platform_user_id"]

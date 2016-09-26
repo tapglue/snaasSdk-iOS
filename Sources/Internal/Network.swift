@@ -22,7 +22,7 @@ class Network {
         }
     }
     
-    func loginUser(username: String, password:String) -> Observable<User> {
+    func loginUser(_ username: String, password:String) -> Observable<User> {
         let payload = ["user_name": username, "password": password]
         return http.execute(Router.post("/users/login", payload: payload))
             .map { (user:User) in
@@ -31,7 +31,7 @@ class Network {
         }
     }
 
-    func loginUserWithEmail(email: String, password: String) -> Observable<User> {
+    func loginUserWithEmail(_ email: String, password: String) -> Observable<User> {
         let payload = ["email": email, "password": password]
         return http.execute(Router.post("/users/login", payload: payload))
             .map { (user:User) in
@@ -40,7 +40,7 @@ class Network {
         }
     }
 
-    func createUser(user: User) -> Observable<User> {
+    func createUser(_ user: User) -> Observable<User> {
         return http.execute(Router.post("/users", payload: user.toJSON()))
     }
 
@@ -48,7 +48,7 @@ class Network {
         return http.execute(Router.get("/me"))
     }
 
-    func updateCurrentUser(user: User) -> Observable<User> {
+    func updateCurrentUser(_ user: User) -> Observable<User> {
         return http.execute(Router.put("/me", payload: user.toJSON()))
     }
 
@@ -60,11 +60,11 @@ class Network {
         return http.execute(Router.delete("/me"))
     }
 
-    func retrieveUser(id: String) -> Observable<User> {
+    func retrieveUser(_ id: String) -> Observable<User> {
         return http.execute(Router.get("/users/" + id))
     }
     
-    func createConnection(connection: Connection) -> Observable<Connection> {
+    func createConnection(_ connection: Connection) -> Observable<Connection> {
         return http.execute(Router.put("/me/connections", payload: connection.toJSON()))
     }
 
@@ -72,7 +72,7 @@ class Network {
         return http.execute(Router.delete("/me/connections/" + type.rawValue + "/" + userId))
     }
 
-    func createSocialConnections(socialConnections: SocialConnections) -> Observable<[User]> {
+    func createSocialConnections(_ socialConnections: SocialConnections) -> Observable<[User]> {
         return http.execute(Router.post("/me/connections/social", 
             payload: socialConnections.toJSON())).map { (feed: UserFeed) in
                 return feed.users!
@@ -81,20 +81,20 @@ class Network {
 
     func searchUsers(forSearchTerm term: String) -> Observable<[User]> {
         return http.execute(Router.get("/users/search?q=" +
-                term.stringByAddingPercentEncodingWithAllowedCharacters(
-                    NSCharacterSet.URLHostAllowedCharacterSet())!)).map { (feed:UserFeed) in
+                term.addingPercentEncoding(
+                    withAllowedCharacters: CharacterSet.urlHostAllowed)!)).map { (feed:UserFeed) in
             return feed.users!
         }
     }
 
-    func searchEmails(emails: [String]) -> Observable<[User]> {
+    func searchEmails(_ emails: [String]) -> Observable<[User]> {
         let payload = ["emails": emails]
         return http.execute(Router.post("/users/search/emails", payload: payload)).map { (feed:UserFeed) in
             return feed.users!
         }
     }
 
-    func searchSocialIds(ids: [String], onPlatform platform: String) ->
+    func searchSocialIds(_ ids: [String], onPlatform platform: String) ->
         Observable<[User]> {
         let payload = ["ids":ids]
         return http.execute(Router.post("/users/search/" + platform, payload: payload)).map { 
@@ -115,13 +115,13 @@ class Network {
         }
     }
 
-    func retrieveFollowersForUserId(id: String) -> Observable<[User]> {
+    func retrieveFollowersForUserId(_ id: String) -> Observable<[User]> {
         return http.execute(Router.get("/users/" + id + "/followers")).map { (userFeed: UserFeed) in
             return userFeed.users ?? [User]()
         }
     }
 
-    func retrieveFollowingsForUserId(id: String) -> Observable<[User]> {
+    func retrieveFollowingsForUserId(_ id: String) -> Observable<[User]> {
         return http.execute(Router.get("/users/" + id + "/follows")).map { (userFeed:UserFeed) in
             return userFeed.users ?? [User]()
         }
@@ -133,7 +133,7 @@ class Network {
         }
     }
 
-    func retrieveFriendsForUserId(id: String) -> Observable<[User]> {
+    func retrieveFriendsForUserId(_ id: String) -> Observable<[User]> {
         return http.execute(Router.get("/users/" + id + "/friends")).map { (feed: UserFeed) in
             return feed.users ?? [User]()
         }
@@ -151,23 +151,23 @@ class Network {
         }
     }
     
-    func createPost(post: Post) -> Observable<Post> {
+    func createPost(_ post: Post) -> Observable<Post> {
         return http.execute(Router.post("/posts", payload: post.toJSON()))
     }
     
-    func retrievePost(id: String) -> Observable<Post> {
+    func retrievePost(_ id: String) -> Observable<Post> {
         return http.execute(Router.get("/posts/" + id))
     }
     
-    func updatePost(id: String, post: Post) -> Observable<Post> {
+    func updatePost(_ id: String, post: Post) -> Observable<Post> {
         return http.execute(Router.put("/posts/" + id, payload: post.toJSON()))
     }
     
-    func deletePost(id: String) -> Observable<Void> {
+    func deletePost(_ id: String) -> Observable<Void> {
         return http.execute(Router.delete("/posts/" + id))
     }
 
-    func retrievePostsByUser(userId: String) -> Observable<[Post]> {
+    func retrievePostsByUser(_ userId: String) -> Observable<[Post]> {
         return http.execute(Router.get("/users/" + userId + "/posts")).map { 
             self.mapUserToPost($0)
         }
@@ -179,22 +179,22 @@ class Network {
         }
     }
 
-    func filterPostsByTags(tags: [String]) -> Observable<[Post]> {
+    func filterPostsByTags(_ tags: [String]) -> Observable<[Post]> {
         let tagsObject = PostTagFilter(tags: tags)
         let json = "{\"post\":\(tagsObject.toJSONString() ?? "")}"
-        let query = json.stringByAddingPercentEncodingWithAllowedCharacters(
-                    NSCharacterSet.URLHostAllowedCharacterSet()) ?? ""
+        let query = json.addingPercentEncoding(
+                    withAllowedCharacters: CharacterSet.urlHostAllowed) ?? ""
         return http.execute(Router.get("/posts?where=" + query)).map {
             self.mapUserToPost($0)
         }
     }
     
-    func createComment(comment: Comment) -> Observable<Comment> {
+    func createComment(_ comment: Comment) -> Observable<Comment> {
         return http.execute(Router.post("/posts/" + comment.postId! + "/comments", payload: comment.toJSON()))
     }
     
 
-    func retrieveComments(postId: String) -> Observable<[Comment]> {
+    func retrieveComments(_ postId: String) -> Observable<[Comment]> {
         return http.execute(Router.get("/posts/" + postId + "/comments")).map { (commentFeed:CommentFeed) in
             let comments = commentFeed.comments?.map { comment -> Comment in
                 comment.user = commentFeed.users?[comment.userId ?? ""]
@@ -204,11 +204,11 @@ class Network {
         }
     }
     
-    func updateComment(postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
+    func updateComment(_ postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
         return http.execute(Router.put("/posts/" + postId + "/comments/" + commentId, payload: comment.toJSON()))
     }
     
-    func deleteComment(postId: String, commentId: String) -> Observable<Void> {
+    func deleteComment(_ postId: String, commentId: String) -> Observable<Void> {
         return http.execute(Router.delete("/posts/" + postId + "/comments/" + commentId))
     }
     
@@ -217,7 +217,7 @@ class Network {
         return http.execute(Router.post("/posts/" + postId + "/likes", payload: like.toJSON()))
     }
     
-    func retrieveLikes(postId: String) -> Observable<[Like]> {
+    func retrieveLikes(_ postId: String) -> Observable<[Like]> {
         return http.execute(Router.get("/posts/" + postId + "/likes")).map { (likeFeed:LikeFeed) in
             let likes = likeFeed.likes?.map { like -> Like in
                 like.user = likeFeed.users?[like.userId ?? ""]
@@ -231,7 +231,7 @@ class Network {
         return http.execute(Router.delete("/posts/" + postId + "/likes"))
     }
 
-    func retrieveLikesByUser(userId: String) -> Observable<[Like]> {
+    func retrieveLikesByUser(_ userId: String) -> Observable<[Like]> {
         return http.execute(Router.get("/users/" + userId + "/likes")).map {(likeFeed: LikeFeed) in
             let likes = likeFeed.likes?.map { like -> Like in
                 like.user = likeFeed.users?[like.userId ?? ""]
@@ -242,7 +242,7 @@ class Network {
         }
     }
 
-    func retrieveActivitiesByUser(userId: String) -> Observable<[Activity]> {
+    func retrieveActivitiesByUser(_ userId: String) -> Observable<[Activity]> {
         return retrieveActivitiesOn("/users/" + userId + "/events")
     }
 
@@ -280,7 +280,7 @@ class Network {
         return retrieveActivitiesOn("/me/feed/notifications/self")
     }
 
-    private func retrieveActivitiesOn(path: String) -> Observable<[Activity]> {
+    fileprivate func retrieveActivitiesOn(_ path: String) -> Observable<[Activity]> {
         return http.execute(Router.get(path)).map { (feed: ActivityFeed) in
             let activities = feed.activities?.map {activity -> Activity in
                 activity.user = feed.users?[activity.userId ?? ""]
@@ -295,7 +295,7 @@ class Network {
         }
     }
     
-    private func convertToConnections(feed: ConnectionsFeed) -> Connections {
+    fileprivate func convertToConnections(_ feed: ConnectionsFeed) -> Connections {
         let connections = Connections()
         connections.incoming = feed.incoming?.map { connection -> Connection in
             connection.userFrom = feed.users?.filter { user -> Bool in
@@ -312,7 +312,7 @@ class Network {
         return connections
     }
 
-    private func mapUserToPost(feed: PostFeed) -> [Post] {
+    fileprivate func mapUserToPost(_ feed: PostFeed) -> [Post] {
         let posts = feed.posts?.map { post -> Post in
             post.user = feed.users?[post.userId ?? ""]
             return post

@@ -30,7 +30,7 @@ class TestNetwork: Network {
         testUser = User()
         testConnection = Connection(toUserId: "213", type: .Follow, state: .Confirmed)
         testUser.id = testUserId
-        testPost = Post(visibility: .Connections, attachments: [])
+        testPost = Post(visibility: .connections, attachments: [])
         testPost.id = testPostId
         testComment = Comment(contents: ["en":"myComment"], postId: testPostId)
         testComment.id = testCommentId
@@ -42,15 +42,15 @@ class TestNetwork: Network {
         testActivity.id = testActivityId
     }
     
-    override func loginUser(username: String, password: String) -> Observable<User> {
+    override func loginUser(_ username: String, password: String) -> Observable<User> {
         return Observable.just(testUser)
     }
 
-    override func loginUserWithEmail(email: String, password: String) -> Observable<User> {
+    override func loginUserWithEmail(_ email: String, password: String) -> Observable<User> {
         return Observable.just(testUser)
     }
     
-    override func createUser(user: User) -> Observable<User> {
+    override func createUser(_ user: User) -> Observable<User> {
         return Observable.just(testUser)
     }
     
@@ -58,25 +58,25 @@ class TestNetwork: Network {
         return Observable.just(testUser)
     }
     
-    override func updateCurrentUser(user: User) -> Observable<User> {
+    override func updateCurrentUser(_ user: User) -> Observable<User> {
         return Observable.just(testUser)
     }
     
     override func logout() -> Observable<Void> {
         return Observable.create { observer in
-            observer.on(.Completed)
+            observer.on(.completed)
             return NopDisposable.instance
         }
     }
     
     override func deleteCurrentUser() -> Observable<Void> {
         return Observable.create { observer in
-            observer.on(.Completed)
+            observer.on(.completed)
             return NopDisposable.instance
         }
     }
     
-    override func retrieveUser(id: String) -> Observable<User> {
+    override func retrieveUser(_ id: String) -> Observable<User> {
         return Observable.just(testUser)
     }
     
@@ -84,27 +84,27 @@ class TestNetwork: Network {
         return Observable.just([testUser])
     }
     
-    override func searchEmails(emails: [String]) -> Observable<[User]> {
+    override func searchEmails(_ emails: [String]) -> Observable<[User]> {
         return Observable.just([testUser])
     }
     
-    override func searchSocialIds(ids: [String], onPlatform platform: String) ->
+    override func searchSocialIds(_ ids: [String], onPlatform platform: String) ->
         Observable<[User]> {
             return Observable.just([testUser])
     }
     
-    override func createConnection(connection: Connection) -> Observable<Connection> {
+    override func createConnection(_ connection: Connection) -> Observable<Connection> {
         return Observable.just(testConnection)
     }
     
     override func deleteConnection(toUserId userId: String, type: ConnectionType) -> Observable<Void> {
         return Observable.create {observer in
-            observer.on(.Completed)
+            observer.on(.completed)
             return NopDisposable.instance
         }
     }
 
-    override func createSocialConnections(socialConnections: SocialConnections) -> 
+    override func createSocialConnections(_ socialConnections: SocialConnections) -> 
         Observable<[User]> {
         return Observable.just([testUser])
     }
@@ -117,15 +117,15 @@ class TestNetwork: Network {
         return Observable.just([testUser])
     }
     
-    override func retrieveFollowersForUserId(id: String) -> Observable<[User]> {
+    override func retrieveFollowersForUserId(_ id: String) -> Observable<[User]> {
         return Observable.just([testUser])
     }
     
-    override func retrieveFollowingsForUserId(id: String) -> Observable<[User]> {
+    override func retrieveFollowingsForUserId(_ id: String) -> Observable<[User]> {
         return Observable.just([testUser])
     }
     
-    override func retrieveFriendsForUserId(id: String) -> Observable<[User]> {
+    override func retrieveFriendsForUserId(_ id: String) -> Observable<[User]> {
         return Observable.just([testUser])
     }
     
@@ -141,26 +141,26 @@ class TestNetwork: Network {
         return Observable.just(testConnections)
     }
     
-    override func createPost(post: Post) -> Observable<Post> {
+    override func createPost(_ post: Post) -> Observable<Post> {
         return Observable.just(testPost)
     }
     
-    override func retrievePost(id: String) -> Observable<Post> {
+    override func retrievePost(_ id: String) -> Observable<Post> {
         return Observable.just(testPost)
     }
     
-    override func updatePost(id: String, post: Post) -> Observable<Post> {
+    override func updatePost(_ id: String, post: Post) -> Observable<Post> {
         return Observable.just(testPost)
     }
     
-    override func deletePost(id: String) -> Observable<Void> {
+    override func deletePost(_ id: String) -> Observable<Void> {
         return Observable.create { observer in
-            observer.on(.Completed)
+            observer.on(.completed)
             return NopDisposable.instance
         }
     }
 
-    override func retrievePostsByUser(userId: String) -> Observable<[Post]> {
+    override func retrievePostsByUser(_ userId: String) -> Observable<[Post]> {
         return Observable.just([testPost])
     }
 
@@ -168,25 +168,25 @@ class TestNetwork: Network {
         return Observable.just([testPost])
     }
 
-    override func filterPostsByTags(tags: [String]) -> Observable<[Post]> {
+    override func filterPostsByTags(_ tags: [String]) -> Observable<[Post]> {
         return Observable.just([testPost])
     }
     
-    override func createComment(comment: Comment) -> Observable<Comment> {
+    override func createComment(_ comment: Comment) -> Observable<Comment> {
         return Observable.just(testComment)
     }
     
-    override func retrieveComments(postId: String) -> Observable<[Comment]> {
+    override func retrieveComments(_ postId: String) -> Observable<[Comment]> {
         return Observable.just([testComment])
     }
     
-    override func updateComment(postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
+    override func updateComment(_ postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
         return Observable.just(testComment)
     }
     
-    override func deleteComment(postId: String, commentId: String) -> Observable<Void> {
+    override func deleteComment(_ postId: String, commentId: String) -> Observable<Void> {
         return Observable.create { observer in
-            observer.on(.Completed)
+            observer.on(.completed)
             return NopDisposable.instance
         }
     }
@@ -195,22 +195,22 @@ class TestNetwork: Network {
         return Observable.just(testLike)
     }
     
-    override func retrieveLikes(postId: String) -> Observable<[Like]> {
+    override func retrieveLikes(_ postId: String) -> Observable<[Like]> {
         return Observable.just([testLike])
     }
     
     override func deleteLike(forPostId postId: String) -> Observable<Void> {
         return Observable.create { observer in
-            observer.on(.Completed)
+            observer.on(.completed)
             return NopDisposable.instance
         }
     }
 
-    override func retrieveLikesByUser(userId: String) -> Observable<[Like]> {
+    override func retrieveLikesByUser(_ userId: String) -> Observable<[Like]> {
         return Observable.just([testLike])
     }
 
-    override func retrieveActivitiesByUser(userId: String) -> Observable<[Activity]> {
+    override func retrieveActivitiesByUser(_ userId: String) -> Observable<[Activity]> {
         return Observable.just([testActivity])
     }
 

@@ -7,11 +7,11 @@
 //
 
 /// List of connections
-public class Connections {
+open class Connections {
     /// connections that were created by other users
-    public var incoming: [Connection]?
+    open var incoming: [Connection]?
     /// connections that were created by current user
-    public var outgoing: [Connection]?
+    open var outgoing: [Connection]?
     
     init() {
         

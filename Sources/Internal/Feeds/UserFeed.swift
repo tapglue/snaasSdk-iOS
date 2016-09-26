@@ -20,7 +20,7 @@ class UserFeed: NullableFeed {
         self.users = [User]()
     }
     
-    func mapping(map: Map) {
+    func mapping(_ map: Map) {
         users <- map["users"]
     }
 }

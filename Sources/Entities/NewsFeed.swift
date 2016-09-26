@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NewsFeed {
+open class NewsFeed {
     var activities: [Activity]?
     var posts: [Post]?
 }

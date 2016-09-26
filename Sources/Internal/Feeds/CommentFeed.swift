@@ -21,7 +21,7 @@ class CommentFeed: NullableFeed {
         self.comments = [Comment]()
     }
     
-    func mapping(map: Map) {
+    func mapping(_ map: Map) {
         comments <- map["comments"]
         users <- map["users"]
     }

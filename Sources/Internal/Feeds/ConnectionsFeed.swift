@@ -23,7 +23,7 @@ class ConnectionsFeed: NullableFeed {
         
     }
     
-    func mapping(map: Map) {
+    func mapping(_ map: Map) {
         incoming <- map["incoming"]
         outgoing <- map["outgoing"]
         users <- map["users"]

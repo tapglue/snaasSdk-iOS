@@ -22,7 +22,7 @@ class LikeFeed: NullableFeed {
         self.likes = [Like]()
     }
     
-    func mapping(map: Map) {
+    func mapping(_ map: Map) {
         likes <- map["likes"]
         users <- map["users"]
         posts <- map["post_map"]

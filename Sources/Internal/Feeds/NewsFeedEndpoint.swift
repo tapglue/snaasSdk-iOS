@@ -23,7 +23,7 @@ class NewsFeedEndpoint: NullableFeed {
         
     }
     
-    func mapping(map: Map) {
+    func mapping(_ map: Map) {
         activities  <- map["events"]
         posts       <- map["posts"]
         users       <- map["users"]

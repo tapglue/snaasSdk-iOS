@@ -8,9 +8,9 @@
 
 import ObjectMapper
 
-public class TapglueError: Mappable, ErrorType {
-    public var code: Int?
-    public var message: String?
+open class TapglueError: Mappable, Error {
+    open var code: Int?
+    open var message: String?
     
     init() {
         
@@ -20,7 +20,7 @@ public class TapglueError: Mappable, ErrorType {
         
     }
     
-    public func mapping(map: Map) {
+    open func mapping(_ map: Map) {
         code <- map["code"]
         message <- map["message"]
     }

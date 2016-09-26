@@ -20,21 +20,21 @@ class DefaultSimsApi: SimsApi {
         self.environment = environment
     }
 
-    func registerDevice(appToken: String, deviceToken: String, sessionToken: String) {
+    func registerDevice(_ appToken: String, deviceToken: String, sessionToken: String) {
         let authorizationToken = appToken + ":" + sessionToken
-        let utf8authToken = authorizationToken.dataUsingEncoding(NSUTF8StringEncoding)
-        let encodedAuthString = utf8authToken?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue:0))
-        let language = NSLocale.preferredLanguages()[0] ?? "en-EN"
+        let utf8authToken = authorizationToken.data(using: String.Encoding.utf8)
+        let encodedAuthString = utf8authToken?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue:0))
+        let language = Locale.preferredLanguages[0] ?? "en-EN"
         let headers = [
             "Authorization": "Basic " + encodedAuthString!,
             "Accept": "application/json"
         ]
         let parameters = ["token": deviceToken,
                           "platform": environment.rawValue,
-                          "language": language]
+                          "language": language] as [String : Any]
         
-        let idfv = UIDevice.currentDevice().identifierForVendor?.UUIDString
-        _ = Alamofire.request(.PUT, url + deviceRegistrationPath + idfv!, headers:headers, parameters: (parameters as! [String : AnyObject]), encoding: .JSON).responseJSON { response in
+        let idfv = UIDevice.current.identifierForVendor?.uuidString
+        _ = Alamofire.request(.PUT, url + deviceRegistrationPath + idfv!, headers:headers, parameters: (parameters as! [String : AnyObject]), encoding: .json).responseJSON { response in
             debugPrint(response)
         }
     }
