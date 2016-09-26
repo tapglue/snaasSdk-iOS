@@ -18,35 +18,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let url = "https://api.tapglue.com"
     var sims: TapglueSims!
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.config = Configuration()
         AppDelegate.config.appToken = appToken
-        sims = TapglueSims(withConfiguration: AppDelegate.config, environment: .Sandbox)
+        sims = TapglueSims(withConfiguration: AppDelegate.config, environment: .sandbox)
         registerForPushNotifications(application)
         
         print(launchOptions)
         return true
     }
     
-    func registerForPushNotifications(application: UIApplication) {
+    func registerForPushNotifications(_ application: UIApplication) {
         sims.registerSimsNotificationSettings(application)
     }
     
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        if notificationSettings.types != .None {
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != UIUserNotificationType() {
             application.registerForRemoteNotifications()
         }
     }
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         sims.registerDeviceToken(deviceToken)
     }
     
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register:", error)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification notificationSettings: [NSObject : AnyObject]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification notificationSettings: [AnyHashable: Any]) {
         print(notificationSettings)
     }
 }

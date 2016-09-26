@@ -18,14 +18,14 @@ private func initDisposeBag() {
 }
 
 extension Observable {
-    func unwrap(_ completionHandler: (_ object: Element?, _ error: ErrorProtocol?) -> ()) {
+    func unwrap(_ completionHandler: @escaping (_ object: Element?, _ error: Error?) -> ()) {
         initDisposeBag()
         self.subscribe { event in
             switch(event) {
             case .next(let object):
-                completionHandler(object:object, error: nil)
-            case .Error(let error):
-                completionHandler(object:nil, error: error)
+                completionHandler(object, nil)
+            case .error(let error):
+                completionHandler(nil, error)
             case .completed:
                 break
             }
@@ -38,10 +38,10 @@ extension Observable {
             switch(event) {
             case .next:
                 break
-            case .Error(let error):
-                completionHandler(success: false, error: error)
+            case .error(let error):
+                completionHandler(false, error)
             case .completed:
-                completionHandler(success: true, error: nil)
+                completionHandler(true, nil)
             }
         }.addDisposableTo(disposeBag)
     }

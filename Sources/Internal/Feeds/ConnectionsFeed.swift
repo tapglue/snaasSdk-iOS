@@ -19,11 +19,11 @@ class ConnectionsFeed: NullableFeed {
         outgoing = [Connection]()
     }
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     
-    func mapping(_ map: Map) {
+    func mapping(map: Map) {
         incoming <- map["incoming"]
         outgoing <- map["outgoing"]
         users <- map["users"]

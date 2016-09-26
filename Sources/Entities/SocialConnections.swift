@@ -30,11 +30,11 @@ open class SocialConnections: Mappable {
         self.socialIds = socialIds
     }
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         platform        <- map["platform"]
         type        <- map ["type"]
         userSocialId    <- map["platform_user_id"]

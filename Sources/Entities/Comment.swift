@@ -19,7 +19,7 @@ open class Comment: Mappable {
     open var updatedAt: String?
     open var user: User?
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
@@ -28,7 +28,7 @@ open class Comment: Mappable {
         self.postId = postId
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         id              <- map["id"]
         postId          <- map["post_id"]
         externalId      <- map["external_id"]

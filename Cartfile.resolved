@@ -1,6 +1,4 @@
 github "Alamofire/Alamofire" "4.0.1"
-github "kylef/Mockingjay" "4026085c36d4abb184372fdb2c1130b47836dbdf"
-github "Quick/Nimble" "v4.1.0"
+github "Quick/Nimble" "v5.0.0"
 github "Hearst-DD/ObjectMapper" "2.0.0"
-github "ReactiveX/RxSwift" "3.0.0.alpha.1"
-github "kylef/URITemplate.swift" "2.0.0"
+github "ReactiveX/RxSwift" "3.0.0-beta.1"

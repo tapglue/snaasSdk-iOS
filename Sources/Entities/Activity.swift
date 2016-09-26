@@ -31,10 +31,10 @@ open class Activity: Mappable {
 
     init(){}
 
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         id      <- map["id_string"]
         type    <- map["type"]
         language    <- map["language"]
@@ -60,10 +60,10 @@ open class ActivityObject: Mappable {
     open var url: String?
     open var displayNames: [String: String]?
 
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         id      <- map["id"]
         type    <- map["type"]
         url     <- map["url"]

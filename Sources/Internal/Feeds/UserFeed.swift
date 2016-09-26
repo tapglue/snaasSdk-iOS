@@ -12,7 +12,7 @@ import ObjectMapper
 class UserFeed: NullableFeed {
     var users: [User]?
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     
@@ -20,7 +20,7 @@ class UserFeed: NullableFeed {
         self.users = [User]()
     }
     
-    func mapping(_ map: Map) {
+    func mapping(map: Map) {
         users <- map["users"]
     }
 }

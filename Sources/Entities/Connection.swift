@@ -32,10 +32,10 @@ open class Connection: Mappable {
         self.state = state
     }
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         userToId <- map["user_to_id_string"]
         userFromId <- map["user_from_id_string"]
         type <- map["type"]

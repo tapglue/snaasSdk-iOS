@@ -16,10 +16,10 @@ class PostTagFilter: Mappable {
         self.tags = tags
     }
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
-    func mapping(_ map: Map) {
+    func mapping(map: Map) {
         tags <- map["tags"]
     }
 }

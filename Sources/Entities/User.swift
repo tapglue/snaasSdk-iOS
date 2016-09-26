@@ -31,11 +31,11 @@ open class User: Mappable {
         
     }
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         username    <- map["user_name"]
         password    <- map["password"]
         email       <- map["email"]
@@ -66,11 +66,11 @@ open class Image: Mappable {
         self.url = url
     }
 
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         url     <- map["url"]
         width   <- map["width"]
         height  <- map["height"]

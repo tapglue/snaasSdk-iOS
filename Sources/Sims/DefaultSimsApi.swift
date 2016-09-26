@@ -34,7 +34,7 @@ class DefaultSimsApi: SimsApi {
                           "language": language] as [String : Any]
         
         let idfv = UIDevice.current.identifierForVendor?.uuidString
-        _ = Alamofire.request(.PUT, url + deviceRegistrationPath + idfv!, headers:headers, parameters: (parameters as! [String : AnyObject]), encoding: .json).responseJSON { response in
+        _ = Alamofire.request(url + deviceRegistrationPath + idfv!, method: HTTPMethod.put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { response in
             debugPrint(response)
         }
     }

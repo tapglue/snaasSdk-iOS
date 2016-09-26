@@ -24,7 +24,7 @@ class Network {
     
     func loginUser(_ username: String, password:String) -> Observable<User> {
         let payload = ["user_name": username, "password": password]
-        return http.execute(Router.post("/users/login", payload: payload))
+        return http.execute(Router.post("/users/login", payload: payload as [String : AnyObject]))
             .map { (user:User) in
                 Router.sessionToken = user.sessionToken ?? ""
                 return user
@@ -33,7 +33,7 @@ class Network {
 
     func loginUserWithEmail(_ email: String, password: String) -> Observable<User> {
         let payload = ["email": email, "password": password]
-        return http.execute(Router.post("/users/login", payload: payload))
+        return http.execute(Router.post("/users/login", payload: payload as [String : AnyObject]))
             .map { (user:User) in
                 Router.sessionToken = user.sessionToken ?? ""
                 return user
@@ -41,7 +41,7 @@ class Network {
     }
 
     func createUser(_ user: User) -> Observable<User> {
-        return http.execute(Router.post("/users", payload: user.toJSON()))
+        return http.execute(Router.post("/users", payload: user.toJSON() as [String : AnyObject]))
     }
 
     func refreshCurrentUser() -> Observable<User> {
@@ -49,7 +49,7 @@ class Network {
     }
 
     func updateCurrentUser(_ user: User) -> Observable<User> {
-        return http.execute(Router.put("/me", payload: user.toJSON()))
+        return http.execute(Router.put("/me", payload: user.toJSON() as [String : AnyObject]))
     }
 
     func logout() -> Observable<Void> {
@@ -65,7 +65,7 @@ class Network {
     }
     
     func createConnection(_ connection: Connection) -> Observable<Connection> {
-        return http.execute(Router.put("/me/connections", payload: connection.toJSON()))
+        return http.execute(Router.put("/me/connections", payload: connection.toJSON() as [String : AnyObject]))
     }
 
     func deleteConnection(toUserId userId: String, type: ConnectionType) -> Observable<Void> {
@@ -74,7 +74,7 @@ class Network {
 
     func createSocialConnections(_ socialConnections: SocialConnections) -> Observable<[User]> {
         return http.execute(Router.post("/me/connections/social", 
-            payload: socialConnections.toJSON())).map { (feed: UserFeed) in
+            payload: socialConnections.toJSON() as [String : AnyObject])).map { (feed: UserFeed) in
                 return feed.users!
             }
     }
@@ -89,7 +89,7 @@ class Network {
 
     func searchEmails(_ emails: [String]) -> Observable<[User]> {
         let payload = ["emails": emails]
-        return http.execute(Router.post("/users/search/emails", payload: payload)).map { (feed:UserFeed) in
+        return http.execute(Router.post("/users/search/emails", payload: payload as [String : AnyObject])).map { (feed:UserFeed) in
             return feed.users!
         }
     }
@@ -97,7 +97,7 @@ class Network {
     func searchSocialIds(_ ids: [String], onPlatform platform: String) ->
         Observable<[User]> {
         let payload = ["ids":ids]
-        return http.execute(Router.post("/users/search/" + platform, payload: payload)).map { 
+        return http.execute(Router.post("/users/search/" + platform, payload: payload as [String : AnyObject])).map { 
             (feed: UserFeed) in
             return feed.users!
         }
@@ -152,7 +152,7 @@ class Network {
     }
     
     func createPost(_ post: Post) -> Observable<Post> {
-        return http.execute(Router.post("/posts", payload: post.toJSON()))
+        return http.execute(Router.post("/posts", payload: post.toJSON() as [String : AnyObject]))
     }
     
     func retrievePost(_ id: String) -> Observable<Post> {
@@ -160,7 +160,7 @@ class Network {
     }
     
     func updatePost(_ id: String, post: Post) -> Observable<Post> {
-        return http.execute(Router.put("/posts/" + id, payload: post.toJSON()))
+        return http.execute(Router.put("/posts/" + id, payload: post.toJSON() as [String : AnyObject]))
     }
     
     func deletePost(_ id: String) -> Observable<Void> {
@@ -190,7 +190,7 @@ class Network {
     }
     
     func createComment(_ comment: Comment) -> Observable<Comment> {
-        return http.execute(Router.post("/posts/" + comment.postId! + "/comments", payload: comment.toJSON()))
+        return http.execute(Router.post("/posts/" + comment.postId! + "/comments", payload: comment.toJSON() as [String : AnyObject]))
     }
     
 
@@ -205,7 +205,7 @@ class Network {
     }
     
     func updateComment(_ postId: String, commentId: String, comment: Comment) -> Observable<Comment> {
-        return http.execute(Router.put("/posts/" + postId + "/comments/" + commentId, payload: comment.toJSON()))
+        return http.execute(Router.put("/posts/" + postId + "/comments/" + commentId, payload: comment.toJSON() as [String : AnyObject]))
     }
     
     func deleteComment(_ postId: String, commentId: String) -> Observable<Void> {
@@ -214,7 +214,7 @@ class Network {
     
     func createLike(forPostId postId: String) -> Observable<Like> {
         let like = Like(postId: postId)
-        return http.execute(Router.post("/posts/" + postId + "/likes", payload: like.toJSON()))
+        return http.execute(Router.post("/posts/" + postId + "/likes", payload: like.toJSON() as [String : AnyObject]))
     }
     
     func retrieveLikes(_ postId: String) -> Observable<[Like]> {

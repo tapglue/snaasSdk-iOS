@@ -60,7 +60,7 @@ class FeedTest: XCTestCase {
         // login as user 2 and create post
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
-        var post = Post(visibility: .Connections, attachments: [attachment])
+        var post = Post(visibility: .connections, attachments: [attachment])
         post = try tapglue.createPost(post).toBlocking().first()!
 
         // login as user 1 and read post feed
@@ -89,7 +89,7 @@ class FeedTest: XCTestCase {
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow,
             state: .Confirmed)).toBlocking().first()
         let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
-        var post = Post(visibility: .Connections, attachments: [attachment])
+        var post = Post(visibility: .connections, attachments: [attachment])
         post = try tapglue.createPost(post).toBlocking().first()!
         
         // login as user 2, like post of user 1
@@ -111,7 +111,7 @@ class FeedTest: XCTestCase {
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow,
             state: .Confirmed)).toBlocking().first()
         let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
-        var post = Post(visibility: .Connections, attachments: [attachment])
+        var post = Post(visibility: .connections, attachments: [attachment])
         post = try tapglue.createPost(post).toBlocking().first()!
         
         // login as user 2, like post of user 1
@@ -138,7 +138,7 @@ class FeedTest: XCTestCase {
         _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
             state: .Confirmed)).toBlocking().first()
         let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
-        var post = Post(visibility: .Connections, attachments: [attachment])
+        var post = Post(visibility: .connections, attachments: [attachment])
         post = try tapglue.createPost(post).toBlocking().first()!
         
         // login as user 1 and read post feed
@@ -172,7 +172,7 @@ class FeedTest: XCTestCase {
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow,
             state: .Confirmed)).toBlocking().first()
         let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
-        var post = Post(visibility: .Connections, attachments: [attachment])
+        var post = Post(visibility: .connections, attachments: [attachment])
         post = try tapglue.createPost(post).toBlocking().first()!
         
         // login as user 2, like post of user 1

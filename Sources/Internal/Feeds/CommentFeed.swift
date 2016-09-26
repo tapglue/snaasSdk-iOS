@@ -13,7 +13,7 @@ class CommentFeed: NullableFeed {
     var comments: [Comment]?
     var users: [String: User]?
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     
@@ -21,7 +21,7 @@ class CommentFeed: NullableFeed {
         self.comments = [Comment]()
     }
     
-    func mapping(_ map: Map) {
+    func mapping(map: Map) {
         comments <- map["comments"]
         users <- map["users"]
     }

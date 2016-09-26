@@ -11,11 +11,11 @@ import ObjectMapper
 class ErrorFeed: Mappable {
     var errors: [TapglueError]?
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     
-    func mapping(_ map: Map) {
+    func mapping(map: Map) {
         errors <- map["errors"]
     }
 }

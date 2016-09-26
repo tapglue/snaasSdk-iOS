@@ -18,11 +18,11 @@ class ActivityFeed: NullableFeed {
         activities = [Activity]()
     }
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     
-    func mapping(_ map: Map) {
+    func mapping(map: Map) {
         activities  <- map["events"]
         users       <- map["users"]
         posts       <- map["post_map"]

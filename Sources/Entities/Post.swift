@@ -27,11 +27,11 @@ open class Post: Mappable {
         self.attachments = attachments
     }
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         id          <- map["id"]
         visibility  <- map["visibility"]
         tags        <- map["tags"]
@@ -58,11 +58,11 @@ open class Attachment: Mappable {
         self.type = type
     }
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         contents    <- map["contents"]
         name        <- map["name"]
         type        <- map["type"]

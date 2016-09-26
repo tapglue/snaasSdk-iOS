@@ -18,7 +18,7 @@ open class Like: Mappable {
     open var user: User?
     open var post: Post?
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
@@ -26,7 +26,7 @@ open class Like: Mappable {
         self.postId = postId
     }
     
-    open func mapping(_ map: Map) {
+    open func mapping(map: Map) {
         id              <- map["id"]
         postId          <- map["post_id"]
         externalId      <- map["external_id"]
