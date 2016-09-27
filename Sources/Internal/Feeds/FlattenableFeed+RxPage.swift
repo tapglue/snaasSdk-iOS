@@ -10,10 +10,7 @@ import Foundation
 
 extension FlattenableFeed {
     func rxPage() -> RxPage<T> {
-        let page = RxPage<T>()
-        page.feed = self
-        page.prevPointer = self.page?.before
-        return page
+        return RxPage<T>(feed: self, previousPointer: self.page?.before)
     }
 
     func rxPage(payload: [String: AnyObject]) -> RxPage<T> {

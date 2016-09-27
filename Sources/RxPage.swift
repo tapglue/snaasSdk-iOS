@@ -12,7 +12,7 @@ import ObjectMapper
 public class RxPage<T> {
     public var data: [T] {
         get {
-            return feed?.flatten() ?? [T]()
+            return feed.flatten()
         }
     }
     public var previous: Observable<RxPage<T>> {
@@ -21,13 +21,18 @@ public class RxPage<T> {
         }
     }
     
-    var feed: FlattenableFeed<T>?
-    var prevPointer: String?
+    private var feed: FlattenableFeed<T>
+    private var prevPointer: String?
     var payload: [String: AnyObject]?
+
+    init(feed: FlattenableFeed<T>, previousPointer: String?) {
+        self.feed = feed
+        self.prevPointer = previousPointer
+    }
     
     func generatePreviousObservable() -> Observable<RxPage<T>> {
         guard let prevPointer = prevPointer else {
-            return Observable.just(RxPage<T>())
+            return Observable.just(RxPage<T>(feed: FlattenableFeed<T>(), previousPointer: nil))
         }
         var request: NSMutableURLRequest
         if let payload = payload {
@@ -37,9 +42,7 @@ public class RxPage<T> {
         }
         
         return Http().execute(request).map { (feed: FlattenableFeed<T>) in
-            let page = RxPage<T>()
-            page.feed = feed
-            page.prevPointer = feed.page?.before
+            let page = RxPage<T>(feed: feed, previousPointer: feed.page?.before)
             page.payload = self.payload
             return page
         }
