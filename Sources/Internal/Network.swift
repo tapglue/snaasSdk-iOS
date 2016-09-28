@@ -280,6 +280,30 @@ class Network {
         return retrieveActivitiesOn("/me/feed/notifications/self")
     }
 
+    func searchUsers(forSearchTerm term: String) -> Observable<RxPage<User>> {
+        return http.execute(Router.get("/users/search?q=" +
+                term.stringByAddingPercentEncodingWithAllowedCharacters(
+                    NSCharacterSet.URLHostAllowedCharacterSet())!)).map { (feed:UserFeed) in
+                        return feed.rxPage()
+                    }
+    }
+
+    func searchEmails(emails: [String]) -> Observable<RxPage<User>> {
+        let payload = ["emails": emails]
+        return http.execute(Router.post("/users/search/emails", payload: payload)).map { (feed:UserFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func searchSocialIds(ids: [String], onPlatform platform: String) ->
+        Observable<RxPage<User>> {
+        let payload = ["ids":ids]
+        return http.execute(Router.post("/users/search/" + platform, payload: payload)).map { 
+            (feed: UserFeed) in
+            return feed.rxPage()
+        }
+    }
+
     func createSocialConnections(socialConnections: SocialConnections) -> Observable<RxPage<User>>{
         return http.execute(Router.post("/me/connections/social", 
             payload: socialConnections.toJSON())).map { (feed: UserFeed) in

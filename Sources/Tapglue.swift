@@ -89,6 +89,7 @@ public class Tapglue {
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func searchUsersForSearchTerm(term: String, completionHandler: (result: [User]?,
         error: ErrorType?) -> ()) {
         rxTapglue.searchUsersForSearchTerm(term).unwrap(completionHandler)
@@ -97,6 +98,7 @@ public class Tapglue {
     /// Search tapglue for users with emails
     /// - parameter emails: search tapglue for users with emails within this list
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func searchEmails(emails: [String], completionHandler:(result: [User]?, error:
         ErrorType?) -> ()) {
         rxTapglue.searchEmails(emails).unwrap(completionHandler)
@@ -106,6 +108,7 @@ public class Tapglue {
     /// - parameter ids: list of ids to search for
     /// - parameter platform: platform name for which the search is performed
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func searchSocialIds(ids: [String], onPlatform platform: String,
         completionHandler: (result: [User]?, error:ErrorType?) -> ()) {
         rxTapglue.searchSocialIds(ids, onPlatform: platform).unwrap(completionHandler)
@@ -336,6 +339,37 @@ public class Tapglue {
     public func retrieveMeFeed(completionHandler: 
         (activities: [Activity]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveMeFeed().unwrap(completionHandler)
+    }
+
+    /// search for users on tapglue
+    /// - parameter searchTerm: term to search for
+    /// - parameter completionHander: where the callbacks will be made
+    public func searchUsersForSearchTerm(term: String, completionHandler: (Page<User>?,
+        ErrorType?) -> ()) {
+        rxTapglue.searchUsersForSearchTerm(term).map { (rxPage: RxPage<User>) in 
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// Search tapglue for users with emails
+    /// - parameter emails: search tapglue for users with emails within this list
+    /// - parameter completionHander: where the callbacks will be made
+    public func searchEmails(emails: [String], completionHandler:(Page<User>?,
+        ErrorType?) -> ()) {
+        rxTapglue.searchEmails(emails).map { (rxPage:RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// Search tapglue for users with social ids
+    /// - parameter ids: list of ids to search for
+    /// - parameter platform: platform name for which the search is performed
+    /// - parameter completionHander: where the callbacks will be made
+    public func searchSocialIds(ids: [String], onPlatform platform: String,
+        completionHandler: (Page<User>?, ErrorType?) -> ()) {
+        rxTapglue.searchSocialIds(ids, onPlatform: platform).map { (rxPage:RxPage<User>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
     }
 
     /// create connections to users by using their ids from another platform

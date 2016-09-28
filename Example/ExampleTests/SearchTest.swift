@@ -120,4 +120,60 @@ class SearchTest: XCTestCase {
         }
         expect(searchResult?.count).toEventually(equal(1))
     }
+    
+    func testPaginatedUserSearchWithNoResults() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: RxPage<User>?
+        
+        searchResult = try tapglue.searchUsersForSearchTerm("someTerm").toBlocking().first()!
+        expect(searchResult?.data.count).to(equal(0))
+    }
+    
+    func testPaginatedUserSearchWithResult() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        
+        var searchResult: RxPage<User>?
+        
+        searchResult = try tapglue.searchUsersForSearchTerm(username2).toBlocking().first()!
+        expect(searchResult?.data.count).toEventually(equal(1))
+        expect(searchResult?.data.first?.username).to(equal(username2))
+    }
+    
+    func testPaginatedUserSearchWithInvalidPath() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: RxPage<User>
+        searchResult = try tapglue.searchUsersForSearchTerm("jasd jkshad").toBlocking().first()!
+        expect(searchResult.data.count).to(equal(0))
+    }
+    
+    func testPaginatedEmailSearchWithNoResults() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: RxPage<User>
+        searchResult = try tapglue.searchEmails(["somerandom@email.com"]).toBlocking().first()!
+        expect(searchResult.data.count).to(equal(0))
+
+    }
+    
+    func testPaginatedEmailSearchWithResult() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: RxPage<User>
+        searchResult = try tapglue.searchEmails([email2]).toBlocking().first()!
+        expect(searchResult.data.count).to(equal(1))
+    }
+    
+    func testPaginatedSocialIdSearchWithNoResults() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: RxPage<User>
+        searchResult = try tapglue.searchSocialIds(["someRandomSocialId"],
+            onPlatform: socialPlatform).toBlocking().first()!
+        expect(searchResult.data.count).to(equal(0))
+    }
+    
+    func testPaginatedSocialIdSearchWithResult() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: RxPage<User>
+        searchResult = try tapglue.searchSocialIds([socialId2], onPlatform: socialPlatform)
+            .toBlocking().first()!
+        expect(searchResult.data.count).to(equal(1))
+    }
 }

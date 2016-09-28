@@ -78,17 +78,20 @@ public class RxTapglue {
     }
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
+    @available(*, deprecated=2.1)
     public func searchUsersForSearchTerm(term: String) -> Observable<[User]> {
         return network.searchUsers(forSearchTerm: term)
     }
     /// Search tapglue for users with emails
     /// - parameter emails: search tapglue for users with emails within this list
+    @available(*, deprecated=2.1)
     public func searchEmails(emails: [String]) -> Observable<[User]> {
         return network.searchEmails(emails)
     }
     /// Search tapglue for users with social ids
     /// - parameter ids: list of ids to search for
     /// - parameter platform: platform name for which the search is performed
+    @available(*, deprecated=2.1)
     public func searchSocialIds(ids: [String], onPlatform platform: String) ->
         Observable<[User]> {
         return network.searchSocialIds(ids, onPlatform: platform)
@@ -256,6 +259,24 @@ public class RxTapglue {
     /// retrieves a feed of activities tageting the current user
     public func retrieveMeFeed() -> Observable<[Activity]> {
         return network.retrieveMeFeed()
+    }
+
+    /// search for users on tapglue
+    /// - parameter searchTerm: term to search for
+    public func searchUsersForSearchTerm(term: String) -> Observable<RxPage<User>> {
+        return network.searchUsers(forSearchTerm: term)
+    }
+    /// Search tapglue for users with emails
+    /// - parameter emails: search tapglue for users with emails within this list
+    public func searchEmails(emails: [String]) -> Observable<RxPage<User>> {
+        return network.searchEmails(emails)
+    }
+    /// Search tapglue for users with social ids
+    /// - parameter ids: list of ids to search for
+    /// - parameter platform: platform name for which the search is performed
+    public func searchSocialIds(ids: [String], onPlatform platform: String) ->
+        Observable<RxPage<User>> {
+        return network.searchSocialIds(ids, onPlatform: platform)
     }
 
     /// create connections to users by using their ids from another platform
