@@ -184,16 +184,19 @@ public class RxTapglue {
     }
     /// retrieve posts created by a user
     /// - parameter userId: id of the user from whom the posts will be retrieved
+    @available(*, deprecated=2.1)
     public func retrievePostsByUser(userId: String) -> Observable<[Post]> {
         return network.retrievePostsByUser(userId)
     }
     /// retrieves all public and global posts
+    @available(*, deprecated=2.1)
     public func retrieveAllPosts() -> Observable<[Post]> {
         return network.retrieveAllPosts()
     }
     /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
     /// `and` operation
     /// - parameter tags: tags to filter
+    @available(*, deprecated=2.1)
     public func filterPostsByTags(tags: [String]) -> Observable<[Post]> {
         return network.filterPostsByTags(tags)
     }
@@ -314,6 +317,21 @@ public class RxTapglue {
     /// - parameter id: friends of the user with the given id
     public func retrieveFriendsForUserId(id: String) -> Observable<RxPage<User>> {
         return network.retrieveFriendsForUserId(id)
+    }
+    /// retrieve posts created by a user
+    /// - parameter userId: id of the user from whom the posts will be retrieved
+    public func retrievePostsByUser(userId: String) -> Observable<RxPage<Post>> {
+        return network.retrievePostsByUser(userId)
+    }
+    /// retrieves all public and global posts
+    public func retrieveAllPosts() -> Observable<RxPage<Post>> {
+        return network.retrieveAllPosts()
+    }
+    /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
+    /// `and` operation
+    /// - parameter tags: tags to filter
+    public func filterPostsByTags(tags: [String]) -> Observable<RxPage<Post>> {
+        return network.filterPostsByTags(tags)
     }
 
     private func toCurrentUserMap(user: User) -> User {

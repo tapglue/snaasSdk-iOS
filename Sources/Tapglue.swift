@@ -435,4 +435,32 @@ public class Tapglue {
             return rxPage.page()
         }.unwrap(completionHandler)
     }
+
+    /// retrieve posts created by a user
+    /// - parameter userId: id of the user from whom the posts will be retrieved
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrievePostsByUser(userId: String, completionHandler: 
+        (Page<Post>?, ErrorType?) -> ()) {
+        rxTapglue.retrievePostsByUser(userId).map { (rxPage: RxPage<Post>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieves all public and global posts
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveAllPosts(completionHandler: (Page<Post>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveAllPosts().map { (rxPage: RxPage<Post>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
+    /// `and` operation
+    /// - parameter tags: tags to filter
+    public func filterPostsByTags(tags: [String], 
+        completionHandler: (Page<Post>?, ErrorType?) -> ()) {
+        rxTapglue.filterPostsByTags(tags).map { (rxPage:RxPage<Post>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
 }

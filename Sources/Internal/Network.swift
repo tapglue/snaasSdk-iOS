@@ -347,6 +347,28 @@ class Network {
         }
     }
 
+    func retrievePostsByUser(userId: String) -> Observable<RxPage<Post>> {
+        return http.execute(Router.get("/users/" + userId + "/posts")).map { (feed:PostFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func retrieveAllPosts() -> Observable<RxPage<Post>> {
+        return http.execute(Router.get("/posts")).map { (feed:PostFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func filterPostsByTags(tags: [String]) -> Observable<RxPage<Post>> {
+        let tagsObject = PostTagFilter(tags: tags)
+        let json = "{\"post\":\(tagsObject.toJSONString() ?? "")}"
+        let query = json.stringByAddingPercentEncodingWithAllowedCharacters(
+                    NSCharacterSet.URLHostAllowedCharacterSet()) ?? ""
+        return http.execute(Router.get("/posts?where=" + query)).map { (feed:PostFeed) in
+            return feed.rxPage()
+        }
+    }
+
     private func retrieveActivitiesOn(path: String) -> Observable<[Activity]> {
         return http.execute(Router.get(path)).map { (feed: ActivityFeed) in
             let activities = feed.activities?.map {activity -> Activity in
