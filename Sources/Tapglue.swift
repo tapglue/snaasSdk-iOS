@@ -14,7 +14,7 @@ open class Tapglue {
     let disposeBag = DisposeBag()
     let rxTapglue: RxTapglue
     
-    var currentUser: User? {
+    open var currentUser: User? {
         get {
             return rxTapglue.currentUser
         }
