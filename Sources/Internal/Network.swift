@@ -369,6 +369,24 @@ class Network {
         }
     }
 
+    func retrieveComments(postId: String) -> Observable<RxPage<Comment>> {
+        return http.execute(Router.get("/posts/" + postId + "/comments")).map { (feed:CommentFeed) in
+            return feed.rxPage()
+        }
+    }
+    
+    func retrieveLikes(postId: String) -> Observable<RxPage<Like>> {
+        return http.execute(Router.get("/posts/" + postId + "/likes")).map { (feed:LikeFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func retrieveLikesByUser(userId: String) -> Observable<RxPage<Like>> {
+        return http.execute(Router.get("/users/" + userId + "/likes")).map {(feed: LikeFeed) in
+            return feed.rxPage()
+        }
+    }
+
     private func retrieveActivitiesOn(path: String) -> Observable<[Activity]> {
         return http.execute(Router.get(path)).map { (feed: ActivityFeed) in
             let activities = feed.activities?.map {activity -> Activity in

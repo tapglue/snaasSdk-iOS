@@ -205,6 +205,7 @@ public class RxTapglue {
         return network.createComment(comment)
     }
     /// retrieve comments on a post
+    @available(*, deprecated=2.1)
     public func retrieveComments(postId: String) -> Observable<[Comment]> {
         return network.retrieveComments(postId)
     }
@@ -229,6 +230,7 @@ public class RxTapglue {
     }
     /// retrieves likes on a post
     /// - parameter postId: id of the post
+    @available(*, deprecated=2.1)
     public func retrieveLikes(postId: String) -> Observable<[Like]> {
         return network.retrieveLikes(postId)
     }
@@ -238,6 +240,7 @@ public class RxTapglue {
         return network.deleteLike(forPostId: postId)
     }
 
+    @available(*, deprecated=2.1)
     public func retrieveLikesByUser(userId: String) -> Observable<[Like]> {
         return network.retrieveLikesByUser(userId)
     }
@@ -332,6 +335,19 @@ public class RxTapglue {
     /// - parameter tags: tags to filter
     public func filterPostsByTags(tags: [String]) -> Observable<RxPage<Post>> {
         return network.filterPostsByTags(tags)
+    }
+    /// retrieve comments on a post
+    public func retrieveComments(postId: String) -> Observable<RxPage<Comment>> {
+        return network.retrieveComments(postId)
+    }
+    /// retrieves likes on a post
+    /// - parameter postId: id of the post
+    public func retrieveLikes(postId: String) -> Observable<RxPage<Like>> {
+        return network.retrieveLikes(postId)
+    }
+
+    public func retrieveLikesByUser(userId: String) -> Observable<RxPage<Like>> {
+        return network.retrieveLikesByUser(userId)
     }
 
     private func toCurrentUserMap(user: User) -> User {

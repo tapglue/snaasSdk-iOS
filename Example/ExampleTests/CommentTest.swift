@@ -87,9 +87,21 @@ class CommentTest: XCTestCase {
         let comment = Comment(contents: ["en":"content"], postId: post.id!)
         let createdComment = try tapglue.createComment(comment).toBlocking().first()!
         
-        let comments = try tapglue.retrieveComments(post.id!).toBlocking().first()!
+        var comments: [Comment]
+        comments = try tapglue.retrieveComments(post.id!).toBlocking().first()!
         
         expect(comments.count).to(equal(1))
         expect(comments.first?.id ?? "").to(equal(createdComment.id!))
+    }
+    
+    func testPaginatedRetrieveComments() throws {
+        let comment = Comment(contents: ["en":"content"], postId: post.id!)
+        let createdComment = try tapglue.createComment(comment).toBlocking().first()!
+        
+        var comments: RxPage<Comment>
+        comments = try tapglue.retrieveComments(post.id!).toBlocking().first()!
+        
+        expect(comments.data.count).to(equal(1))
+        expect(comments.data.first?.id ?? "").to(equal(createdComment.id!))
     }
 }

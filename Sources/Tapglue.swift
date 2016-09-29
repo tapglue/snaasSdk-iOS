@@ -234,6 +234,7 @@ public class Tapglue {
     /// retrieve posts created by a user
     /// - parameter userId: id of the user from whom the posts will be retrieved
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrievePostsByUser(userId: String, completionHandler: 
         (post: [Post]?, error: ErrorType?) -> ()) {
         rxTapglue.retrievePostsByUser(userId).unwrap(completionHandler)
@@ -241,6 +242,7 @@ public class Tapglue {
 
     /// retrieves all public and global posts
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveAllPosts(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveAllPosts().unwrap(completionHandler)
     }
@@ -248,6 +250,7 @@ public class Tapglue {
     /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
     /// `and` operation
     /// - parameter tags: tags to filter
+    @available(*, deprecated=2.1)
     public func filterPostsByTags(tags: [String], 
         completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
         rxTapglue.filterPostsByTags(tags).unwrap(completionHandler)
@@ -261,6 +264,7 @@ public class Tapglue {
 
     /// retrieve comments on a post
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveComments(postId: String, completionHandler: (comments: [Comment]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveComments(postId).unwrap(completionHandler)
     }
@@ -292,6 +296,7 @@ public class Tapglue {
     /// retrieves likes on a post
     /// - parameter postId: id of the post
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveLikes(postId: String, completionHandler: (likes: [Like]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveLikes(postId).unwrap(completionHandler)
     }
@@ -303,6 +308,7 @@ public class Tapglue {
         rxTapglue.deleteLike(forPostId: postId).unwrap(completionHandler)
     }
 
+    @available(*, deprecated=2.1)
     public func retrieveLikesByUser(userId: String,
         completionHandler: (likes: [Like]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveLikesByUser(userId).unwrap(completionHandler)
@@ -460,6 +466,30 @@ public class Tapglue {
     public func filterPostsByTags(tags: [String], 
         completionHandler: (Page<Post>?, ErrorType?) -> ()) {
         rxTapglue.filterPostsByTags(tags).map { (rxPage:RxPage<Post>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieve comments on a post
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveComments(postId: String, completionHandler: (Page<Comment>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveComments(postId).map { (rxPage: RxPage<Comment>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+    
+    /// retrieves likes on a post
+    /// - parameter postId: id of the post
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveLikes(postId: String, completionHandler: (Page<Like>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveLikes(postId).map { (rxPage: RxPage<Like>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    public func retrieveLikesByUser(userId: String, 
+        completionHandler: (Page<Like>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveLikesByUser(userId).map { (rxPage: RxPage<Like>) in
             return rxPage.page()
         }.unwrap(completionHandler)
     }

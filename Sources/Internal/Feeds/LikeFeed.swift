@@ -9,22 +9,32 @@
 import Foundation
 import ObjectMapper
 
-class LikeFeed: NullableFeed {
+class LikeFeed: FlattenableFeed<Like> {
     var likes: [Like]?
     var users: [String: User]?
     var posts: [String: Post]?
     
     required init?(_ map: Map) {
-        
+        super.init()
     }
     
     required init() {
         self.likes = [Like]()
+        super.init()
     }
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         likes <- map["likes"]
         users <- map["users"]
         posts <- map["post_map"]
+    }
+
+    override func flatten() -> [Like] {
+        let mappedLikes = likes?.map { like -> Like in
+            like.user = users?[like.userId ?? ""]
+            like.post = posts?[like.postId ?? ""]
+            return like
+        }
+        return mappedLikes ?? [Like]()
     }
 }
