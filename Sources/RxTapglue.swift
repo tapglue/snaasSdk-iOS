@@ -246,15 +246,18 @@ public class RxTapglue {
     }
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
+    @available(*, deprecated=2.1)
     public func retrieveActivitiesByUser(userId: String) -> Observable<[Activity]> {
         return network.retrieveActivitiesByUser(userId)
     }
     /// retrieves post feed
+    @available(*, deprecated=2.1)
     public func retrievePostFeed() -> Observable<[Post]> {
         return network.retrievePostFeed()
     }
     /// retrieves activity feed
     /// - note: event feed on the api documentation
+    @available(*, deprecated=2.1)
     public func retrieveActivityFeed() -> Observable<[Activity]> {
         return network.retrieveActivityFeed()
     }
@@ -263,6 +266,7 @@ public class RxTapglue {
         return network.retrieveNewsFeed()
     }
     /// retrieves a feed of activities tageting the current user
+    @available(*, deprecated=2.1)
     public func retrieveMeFeed() -> Observable<[Activity]> {
         return network.retrieveMeFeed()
     }
@@ -348,6 +352,24 @@ public class RxTapglue {
 
     public func retrieveLikesByUser(userId: String) -> Observable<RxPage<Like>> {
         return network.retrieveLikesByUser(userId)
+    }
+    /// Retrieves activities created by a user
+    /// - parameter userId: user from whom you want the activities
+    public func retrieveActivitiesByUser(userId: String) -> Observable<RxPage<Activity>> {
+        return network.retrieveActivitiesByUser(userId)
+    }
+    /// retrieves post feed
+    public func retrievePostFeed() -> Observable<RxPage<Post>> {
+        return network.retrievePostFeed()
+    }
+    /// retrieves activity feed
+    /// - note: event feed on the api documentation
+    public func retrieveActivityFeed() -> Observable<RxPage<Activity>> {
+        return network.retrieveActivityFeed()
+    }
+    /// retrieves a feed of activities tageting the current user
+    public func retrieveMeFeed() -> Observable<RxPage<Activity>> {
+        return network.retrieveMeFeed()
     }
 
     private func toCurrentUserMap(user: User) -> User {

@@ -387,6 +387,24 @@ class Network {
         }
     }
 
+    func retrieveActivitiesByUser(userId: String) -> Observable<RxPage<Activity>> {
+        return retrieveActivitiesOn("/users/" + userId + "/events")
+    }
+
+    func retrievePostFeed() -> Observable<RxPage<Post>> {
+        return http.execute(Router.get("/me/feed/posts")).map { (feed:PostFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func retrieveActivityFeed() -> Observable<RxPage<Activity>> {
+        return retrieveActivitiesOn("/me/feed/events")
+    }
+
+    func retrieveMeFeed() -> Observable<RxPage<Activity>> {
+        return retrieveActivitiesOn("/me/feed/notifications/self")
+    }
+
     private func retrieveActivitiesOn(path: String) -> Observable<[Activity]> {
         return http.execute(Router.get(path)).map { (feed: ActivityFeed) in
             let activities = feed.activities?.map {activity -> Activity in
@@ -399,6 +417,12 @@ class Network {
                 return activity
             }
             return activities!
+        }
+    }
+
+    private func retrieveActivitiesOn(path: String) -> Observable<RxPage<Activity>> {
+        return http.execute(Router.get(path)).map { (feed: ActivityFeed) in
+            return feed.rxPage()
         }
     }
     

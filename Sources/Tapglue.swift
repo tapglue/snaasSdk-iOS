@@ -316,6 +316,7 @@ public class Tapglue {
 
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
+    @available(*, deprecated=2.1)
     public func retrieveActivitiesByUser(userId: String, completionHandler:
         (activities:[Activity]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveActivitiesByUser(userId).unwrap(completionHandler)
@@ -323,6 +324,7 @@ public class Tapglue {
 
     /// retrieves post feed
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrievePostFeed(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
         rxTapglue.retrievePostFeed().unwrap(completionHandler)
     }
@@ -330,6 +332,7 @@ public class Tapglue {
     /// retrieves activity feed
     /// - note: event feed on the api documentation
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveActivityFeed(completionHandler:
         (activities: [Activity]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveActivityFeed().unwrap(completionHandler)
@@ -342,6 +345,7 @@ public class Tapglue {
     }
 
     /// retrieves a feed of activities tageting the current user
+    @available(*, deprecated=2.1)
     public func retrieveMeFeed(completionHandler: 
         (activities: [Activity]?, error: ErrorType?) -> ()) {
         rxTapglue.retrieveMeFeed().unwrap(completionHandler)
@@ -490,6 +494,41 @@ public class Tapglue {
     public func retrieveLikesByUser(userId: String, 
         completionHandler: (Page<Like>?, ErrorType?) -> ()) {
         rxTapglue.retrieveLikesByUser(userId).map { (rxPage: RxPage<Like>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// Retrieves activities created by a user
+    /// - parameter userId: user from whom you want the activities
+    public func retrieveActivitiesByUser(userId: String, completionHandler:
+        (Page<Activity>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveActivitiesByUser(userId).map { (rxPage: RxPage<Activity>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieves post feed
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrievePostFeed(completionHandler: (Page<Post>?, ErrorType?) -> ()) {
+        rxTapglue.retrievePostFeed().map { (rxPage: RxPage<Post>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieves activity feed
+    /// - note: event feed on the api documentation
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveActivityFeed(completionHandler:
+        (Page<Activity>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveActivityFeed().map { (rxPage:RxPage<Activity>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieves a feed of activities tageting the current user
+    public func retrieveMeFeed(completionHandler: 
+        (Page<Activity>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveMeFeed().map { (rxPage:RxPage<Activity>) in
             return rxPage.page()
         }.unwrap(completionHandler)
     }

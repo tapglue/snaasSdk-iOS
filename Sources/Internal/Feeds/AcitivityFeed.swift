@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-class ActivityFeed: NullableFeed {
+class ActivityFeed: FlattenableFeed<Activity> {
     var activities: [Activity]?
     var users: [String: User]?
     var posts: [String: Post]?
@@ -16,15 +16,29 @@ class ActivityFeed: NullableFeed {
     
     required init() {
         activities = [Activity]()
+        super.init()
     }
     
     required init?(_ map: Map) {
-        
+        super.init()
     }
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         activities  <- map["events"]
         users       <- map["users"]
         posts       <- map["post_map"]
+    }
+
+    override func flatten() -> [Activity] {
+        let mappedActivities = activities?.map {activity -> Activity in
+            activity.user = users?[activity.userId ?? ""]
+            activity.post = posts?[activity.postId ?? ""]
+            activity.post?.user = users?[activity.post?.userId ?? ""]
+            if activity.target?.type == "tg_user" {
+                activity.targetUser = users?[activity.target!.id ?? ""]
+            }
+            return activity
+        }
+        return mappedActivities ?? [Activity]()
     }
 }
