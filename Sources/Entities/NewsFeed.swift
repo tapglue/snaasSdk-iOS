@@ -8,7 +8,12 @@
 
 import Foundation
 
-public class NewsFeed {
+public class NewsFeed: DefaultInstanceEntity {
     var activities: [Activity]?
     var posts: [Post]?
+    
+    required public init() {
+        activities = [Activity]()
+        posts = [Post]()
+    }
 }

@@ -10,8 +10,6 @@ import Foundation
 
 extension RxPage {
     func page() -> Page<T> {
-        let page = Page<T>()
-        page.rxPage = self
-        return page
+        return Page<T>(rxPage: self)
     }
 }

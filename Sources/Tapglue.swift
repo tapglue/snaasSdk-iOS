@@ -190,6 +190,7 @@ public class Tapglue {
 
     /// retrieve pending connections
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrievePendingConnections(completionHandler: (connections: Connections?, 
             error: ErrorType?) -> ()) {
         rxTapglue.retrievePendingConnections().unwrap(completionHandler)
@@ -197,6 +198,7 @@ public class Tapglue {
 
     /// retrieve rejected connections
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveRejectedConnections(completionHandler: (connections: Connections?,
             error:ErrorType?) -> ()) {
         rxTapglue.retrieveRejectedConnections().unwrap(completionHandler)
@@ -340,6 +342,7 @@ public class Tapglue {
 
     /// retrieves news feed
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated=2.1)
     public func retrieveNewsFeed(completionHandler: (feed: NewsFeed?, error:ErrorType?) -> ()) {
         rxTapglue.retrieveNewsFeed().unwrap(completionHandler)
     }
@@ -446,6 +449,24 @@ public class Tapglue {
         }.unwrap(completionHandler)
     }
 
+    /// retrieve pending connections
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrievePendingConnections(completionHandler: (CompositePage<Connections>?, 
+            ErrorType?) -> ()) {
+        rxTapglue.retrievePendingConnections().map { (rxPage: RxCompositePage<Connections>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieve rejected connections
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveRejectedConnections(completionHandler: (CompositePage<Connections>?,
+            ErrorType?) -> ()) {
+        rxTapglue.retrieveRejectedConnections().map { (rxPage: RxCompositePage<Connections>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
     /// retrieve posts created by a user
     /// - parameter userId: id of the user from whom the posts will be retrieved
     /// - parameter completionHander: where the callbacks will be made
@@ -529,6 +550,14 @@ public class Tapglue {
     public func retrieveMeFeed(completionHandler: 
         (Page<Activity>?, ErrorType?) -> ()) {
         rxTapglue.retrieveMeFeed().map { (rxPage:RxPage<Activity>) in
+            return rxPage.page()
+        }.unwrap(completionHandler)
+    }
+
+    /// retrieves news feed
+    /// - parameter completionHander: where the callbacks will be made
+    public func retrieveNewsFeed(completionHandler: (CompositePage<NewsFeed>?, ErrorType?) -> ()) {
+        rxTapglue.retrieveNewsFeed().map { (rxPage:RxCompositePage<NewsFeed>) in
             return rxPage.page()
         }.unwrap(completionHandler)
     }

@@ -347,6 +347,18 @@ class Network {
         }
     }
 
+    func retrievePendingConnections() -> Observable<RxCompositePage<Connections>> {
+        return http.execute(Router.get("/me/connections/pending")).map { (feed:ConnectionsFeed) in
+            return feed.rxPage()
+        }
+    }
+
+    func retrieveRejectedConnections() -> Observable<RxCompositePage<Connections>> {
+        return http.execute(Router.get("/me/connections/rejected")).map { (feed:ConnectionsFeed) in
+            return feed.rxPage()
+        }
+    }
+
     func retrievePostsByUser(userId: String) -> Observable<RxPage<Post>> {
         return http.execute(Router.get("/users/" + userId + "/posts")).map { (feed:PostFeed) in
             return feed.rxPage()
@@ -403,6 +415,12 @@ class Network {
 
     func retrieveMeFeed() -> Observable<RxPage<Activity>> {
         return retrieveActivitiesOn("/me/feed/notifications/self")
+    }
+
+    func retrieveNewsFeed() -> Observable<RxCompositePage<NewsFeed>> {
+        return http.execute(Router.get("/me/feed")).map { (feed: NewsFeedEndpoint) in
+            return feed.rxPage()
+        }
     }
 
     private func retrieveActivitiesOn(path: String) -> Observable<[Activity]> {

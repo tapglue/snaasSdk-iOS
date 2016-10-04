@@ -43,6 +43,12 @@
 		528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481D91D2B9ABE0090BA29 /* Configuration.swift */; };
 		528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481DB1D2BAFD80090BA29 /* Encoder.swift */; };
 		528481E01D2BB1A10090BA29 /* EncoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528481DF1D2BB1A10090BA29 /* EncoderTest.swift */; };
+		52970FA91D9EA0CA0055E626 /* RxCompositePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52970FA81D9EA0CA0055E626 /* RxCompositePage.swift */; };
+		52970FAB1D9EA0FE0055E626 /* DefaultInstanceEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52970FAA1D9EA0FE0055E626 /* DefaultInstanceEntity.swift */; };
+		52970FAD1D9EA25C0055E626 /* CompositeFlattenableFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52970FAC1D9EA25C0055E626 /* CompositeFlattenableFeed.swift */; };
+		52970FAF1D9EA4670055E626 /* CompositeFlattenableFeed+RxCompositePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52970FAE1D9EA4670055E626 /* CompositeFlattenableFeed+RxCompositePage.swift */; };
+		52970FB11DA3A35D0055E626 /* CompositePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52970FB01DA3A35D0055E626 /* CompositePage.swift */; };
+		52970FB31DA3A43F0055E626 /* RxCompositePage+CompositePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52970FB21DA3A43F0055E626 /* RxCompositePage+CompositePage.swift */; };
 		529A3D231D2FC6C60069BF10 /* User+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D221D2FC6C60069BF10 /* User+Equatable.swift */; };
 		529A3D261D33C5AB0069BF10 /* UIDevice+Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */; };
 		529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D271D34CB2C0069BF10 /* Tapglue.swift */; };
@@ -149,6 +155,12 @@
 		528481D91D2B9ABE0090BA29 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		528481DB1D2BAFD80090BA29 /* Encoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
 		528481DF1D2BB1A10090BA29 /* EncoderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncoderTest.swift; sourceTree = "<group>"; };
+		52970FA81D9EA0CA0055E626 /* RxCompositePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCompositePage.swift; sourceTree = "<group>"; };
+		52970FAA1D9EA0FE0055E626 /* DefaultInstanceEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultInstanceEntity.swift; sourceTree = "<group>"; };
+		52970FAC1D9EA25C0055E626 /* CompositeFlattenableFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeFlattenableFeed.swift; sourceTree = "<group>"; };
+		52970FAE1D9EA4670055E626 /* CompositeFlattenableFeed+RxCompositePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CompositeFlattenableFeed+RxCompositePage.swift"; sourceTree = "<group>"; };
+		52970FB01DA3A35D0055E626 /* CompositePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositePage.swift; sourceTree = "<group>"; };
+		52970FB21DA3A43F0055E626 /* RxCompositePage+CompositePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxCompositePage+CompositePage.swift"; sourceTree = "<group>"; };
 		529A3D221D2FC6C60069BF10 /* User+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Equatable.swift"; sourceTree = "<group>"; };
 		529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Tapglue.swift"; sourceTree = "<group>"; };
 		529A3D271D34CB2C0069BF10 /* Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tapglue.swift; sourceTree = "<group>"; };
@@ -261,6 +273,9 @@
 				52483CA81D88290C002BA0A2 /* RxPage.swift */,
 				524279491D94031F00D5173F /* Page.swift */,
 				5242794B1D940EDA00D5173F /* RxPage+Page.swift */,
+				52970FA81D9EA0CA0055E626 /* RxCompositePage.swift */,
+				52970FB01DA3A35D0055E626 /* CompositePage.swift */,
+				52970FB21DA3A43F0055E626 /* RxCompositePage+CompositePage.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -294,6 +309,8 @@
 				5207E25D1D884AE1002EB7F3 /* PageFeed.swift */,
 				52C726531D91610700C6FAB3 /* FlattenableFeed.swift */,
 				5242794D1D950C4600D5173F /* FlattenableFeed+RxPage.swift */,
+				52970FAC1D9EA25C0055E626 /* CompositeFlattenableFeed.swift */,
+				52970FAE1D9EA4670055E626 /* CompositeFlattenableFeed+RxCompositePage.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -312,6 +329,7 @@
 				5274A3341D508A1E00C72378 /* ConnectionType.swift */,
 				5274A33D1D52285600C72378 /* Activity.swift */,
 				5274A3411D536F0D00C72378 /* NewsFeed.swift */,
+				52970FAA1D9EA0FE0055E626 /* DefaultInstanceEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -485,14 +503,17 @@
 				529A3D2E1D34D97F0069BF10 /* Observable+unwrapping.swift in Sources */,
 				5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */,
 				5274A3351D508A1E00C72378 /* ConnectionType.swift in Sources */,
+				52970FAB1D9EA0FE0055E626 /* DefaultInstanceEntity.swift in Sources */,
 				52BA9FEA1D2FA56A005B4622 /* UserFeed.swift in Sources */,
 				5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */,
 				52E380381D2A847E003A157E /* Router.swift in Sources */,
+				52970FB11DA3A35D0055E626 /* CompositePage.swift in Sources */,
 				9753AB5D1D40BA22005154F0 /* Post.swift in Sources */,
 				970D29221D4B820200847756 /* LikeFeed.swift in Sources */,
 				52C93F011D2BD3AC00E166F7 /* User.swift in Sources */,
 				528481DC1D2BAFD90090BA29 /* Encoder.swift in Sources */,
 				528481DA1D2B9ABE0090BA29 /* Configuration.swift in Sources */,
+				52970FAD1D9EA25C0055E626 /* CompositeFlattenableFeed.swift in Sources */,
 				52D3EFD51D4B7D2100E1BA77 /* ConnectionsFeed.swift in Sources */,
 				5274A33E1D52285600C72378 /* Activity.swift in Sources */,
 				52BA9FE71D2F8098005B4622 /* Http.swift in Sources */,
@@ -504,11 +525,13 @@
 				97D3D9761D4A07E7004DC146 /* Like.swift in Sources */,
 				52D3EFD31D4B5F3A00E1BA77 /* Connections.swift in Sources */,
 				5274A3481D5A176700C72378 /* PostTagFilter.swift in Sources */,
+				52970FB31DA3A43F0055E626 /* RxCompositePage+CompositePage.swift in Sources */,
 				5274A3461D5494E400C72378 /* Log.swift in Sources */,
 				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
 				5274A3441D53838700C72378 /* NewsFeedEndpoint.swift in Sources */,
 				5242794E1D950C4600D5173F /* FlattenableFeed+RxPage.swift in Sources */,
 				52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */,
+				52970FAF1D9EA4670055E626 /* CompositeFlattenableFeed+RxCompositePage.swift in Sources */,
 				5242794C1D940EDA00D5173F /* RxPage+Page.swift in Sources */,
 				97D3D97A1D4A2AA5004DC146 /* CommentFeed.swift in Sources */,
 				5274A3401D523DE600C72378 /* AcitivityFeed.swift in Sources */,
@@ -517,6 +540,7 @@
 				52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */,
 				5274A3391D50CD8700C72378 /* PostFeed.swift in Sources */,
 				5242794A1D94031F00D5173F /* Page.swift in Sources */,
+				52970FA91D9EA0CA0055E626 /* RxCompositePage.swift in Sources */,
 				5274A3331D5086CB00C72378 /* SocialConnections.swift in Sources */,
 				521DE9011D49F36D00AA5A9F /* SimsApi.swift in Sources */,
 				521DE9021D49F36D00AA5A9F /* TapglueSims.swift in Sources */,

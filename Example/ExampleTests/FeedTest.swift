@@ -147,7 +147,8 @@ class FeedTest: XCTestCase {
         
         // login as user 1 and read post feed
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        let newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
+        let newsFeed: NewsFeed
+        newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
         
         expect(newsFeed.posts?.first?.id).to(equal(post.id))
         expect(newsFeed.activities?.first?.type).to(equal("tg_follow"))
@@ -164,7 +165,8 @@ class FeedTest: XCTestCase {
         
         // login as user 1 and read post feed
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        let newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
+        let newsFeed: NewsFeed
+        newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
         
         expect(newsFeed.activities?.first?.type).to(equal("tg_follow"))
         expect(newsFeed.activities?.first?.targetUser?.id).to(equal(user1.id))
@@ -187,7 +189,8 @@ class FeedTest: XCTestCase {
         
         // login as user 1 and read news feed
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        let newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
+        let newsFeed: NewsFeed
+        newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
         
         expect(newsFeed.activities?.first?.post?.id).to(equal(post.id))
     }
@@ -300,4 +303,70 @@ class FeedTest: XCTestCase {
         activityFeed = try tapglue.retrieveMeFeed().toBlocking().first()!
         expect(activityFeed.data.first!.type).to(equal("tg_follow"))
     }
+    
+    
+    func testPaginatedRetrieveNewsFeed() throws {
+        // login user 1 and create connection to user 2
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow,
+            state: .Confirmed)).toBlocking().first()
+        
+        // login as user 2 and create post and follows user 1
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
+            state: .Confirmed)).toBlocking().first()
+        let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
+        var post = Post(visibility: .Connections, attachments: [attachment])
+        post = try tapglue.createPost(post).toBlocking().first()!
+        
+        // login as user 1 and read post feed
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        let newsFeed: RxCompositePage<NewsFeed>
+        newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
+        
+        expect(newsFeed.data.posts?.first?.id).to(equal(post.id))
+        expect(newsFeed.data.activities?.first?.type).to(equal("tg_follow"))
+    }
+    
+    func testPaginatedRetrieveNewsFeedMapsUserToTargetOnFollowActivity() throws {
+        // login user 1 and create connection to user 2
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        
+        // login as user 2 and create post and follows user 1
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
+            state: .Confirmed)).toBlocking().first()
+        
+        // login as user 1 and read post feed
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        let newsFeed: RxCompositePage<NewsFeed>
+        newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
+        
+        expect(newsFeed.data.activities?.first?.type).to(equal("tg_follow"))
+        expect(newsFeed.data.activities?.first?.targetUser?.id).to(equal(user1.id))
+    }
+    
+    func testPaginatedRetrieveNewsFeedLikeContainsPost() throws {
+        // login user 1, create connection to user 2, create post
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow,
+            state: .Confirmed)).toBlocking().first()
+        let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
+        var post = Post(visibility: .Connections, attachments: [attachment])
+        post = try tapglue.createPost(post).toBlocking().first()!
+        
+        // login as user 2, like post of user 1
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
+            state: .Confirmed)).toBlocking().first()
+        try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        
+        // login as user 1 and read news feed
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        let newsFeed: RxCompositePage<NewsFeed>
+        newsFeed = try tapglue.retrieveNewsFeed().toBlocking().first()!
+        
+        expect(newsFeed.data.activities?.first?.post?.id).to(equal(post.id))
+    }
+
 }

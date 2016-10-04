@@ -149,10 +149,12 @@ public class RxTapglue {
         return network.retrieveFriendsForUserId(id)
     }
     /// retrieve pending connections
+    @available(*, deprecated=2.1)
     public func retrievePendingConnections() -> Observable<Connections> {
         return network.retrievePendingConnections() 
     }
     /// retrieve rejected connections
+    @available(*, deprecated=2.1)
     public func retrieveRejectedConnections() -> Observable<Connections> {
         return network.retrieveRejectedConnections()
     }
@@ -262,6 +264,7 @@ public class RxTapglue {
         return network.retrieveActivityFeed()
     }
     /// retrieves news feed
+    @available(*, deprecated=2.1)
     public func retrieveNewsFeed() -> Observable<NewsFeed> {
         return network.retrieveNewsFeed()
     }
@@ -325,6 +328,14 @@ public class RxTapglue {
     public func retrieveFriendsForUserId(id: String) -> Observable<RxPage<User>> {
         return network.retrieveFriendsForUserId(id)
     }
+    /// retrieve pending connections
+    public func retrievePendingConnections() -> Observable<RxCompositePage<Connections>> {
+        return network.retrievePendingConnections() 
+    }
+    /// retrieve rejected connections
+    public func retrieveRejectedConnections() -> Observable<RxCompositePage<Connections>> {
+        return network.retrieveRejectedConnections()
+    }
     /// retrieve posts created by a user
     /// - parameter userId: id of the user from whom the posts will be retrieved
     public func retrievePostsByUser(userId: String) -> Observable<RxPage<Post>> {
@@ -370,6 +381,10 @@ public class RxTapglue {
     /// retrieves a feed of activities tageting the current user
     public func retrieveMeFeed() -> Observable<RxPage<Activity>> {
         return network.retrieveMeFeed()
+    }
+    /// retrieves news feed
+    public func retrieveNewsFeed() -> Observable<RxCompositePage<NewsFeed>> {
+        return network.retrieveNewsFeed()
     }
 
     private func toCurrentUserMap(user: User) -> User {

@@ -7,13 +7,13 @@
 //
 
 /// List of connections
-public class Connections {
+public class Connections: DefaultInstanceEntity {
     /// connections that were created by other users
     public var incoming: [Connection]?
     /// connections that were created by current user
     public var outgoing: [Connection]?
     
-    init() {
+    required public init() {
         
     }
 }

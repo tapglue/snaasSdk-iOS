@@ -155,7 +155,8 @@ class ConnectionIntegrationTest: XCTestCase {
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Pending)).toBlocking().first()
         
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
-        let connections = try tapglue.retrievePendingConnections().toBlocking().first()!
+        var connections: Connections
+        connections = try tapglue.retrievePendingConnections().toBlocking().first()!
         let incoming = connections.incoming
         expect(incoming?.count).to(equal(1))
         expect(incoming?.first?.userFrom?.id).to(equal(user1.id))
@@ -177,7 +178,8 @@ class ConnectionIntegrationTest: XCTestCase {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Pending)).toBlocking().first()
         
-        let connections = try tapglue.retrievePendingConnections().toBlocking().first()!
+        var connections: Connections
+        connections = try tapglue.retrievePendingConnections().toBlocking().first()!
         let outgoing = connections.outgoing
         expect(outgoing?.count).to(equal(1))
         expect(outgoing?.first?.userTo?.id).to(equal(user2.id))
@@ -188,7 +190,8 @@ class ConnectionIntegrationTest: XCTestCase {
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Rejected)).toBlocking().first()
         
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
-        let connections = try tapglue.retrieveRejectedConnections().toBlocking().first()!
+        var connections: Connections
+        connections = try tapglue.retrieveRejectedConnections().toBlocking().first()!
         let incoming = connections.incoming
         expect(incoming?.count).to(equal(1))
         expect(incoming?.first?.userFrom?.id).to(equal(user1.id))
@@ -198,7 +201,8 @@ class ConnectionIntegrationTest: XCTestCase {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Rejected)).toBlocking().first()
         
-        let connections = try tapglue.retrieveRejectedConnections().toBlocking().first()!
+        var connections: Connections
+        connections = try tapglue.retrieveRejectedConnections().toBlocking().first()!
         let outgoing = connections.outgoing
         expect(outgoing?.count).to(equal(1))
         expect(outgoing?.first?.userTo?.id).to(equal(user2.id))
@@ -352,5 +356,63 @@ class ConnectionIntegrationTest: XCTestCase {
         expect(friends.data[0].id).to(equal((user1.id!)))
         
         _ = try tapglue.deleteConnection(toUserId: user2.id!, type: .Friend).toBlocking().first()
+    }
+    
+    func testPaginatedRetrievePendingConnectionsForIncoming() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Pending)).toBlocking().first()
+        
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+        var connections: RxCompositePage<Connections>
+        connections = try tapglue.retrievePendingConnections().toBlocking().first()!
+        let incoming = connections.data.incoming
+        expect(incoming?.count).to(equal(1))
+        expect(incoming?.first?.userFrom?.id).to(equal(user1.id))
+    }
+    
+    
+    func testPaginatedRespondToPendingConnection() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Pending)).toBlocking().first()
+        
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+
+        _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Friend, state: .Confirmed)).toBlocking().first()
+        let connections = try (tapglue.retrieveFriends() as Observable<[User]>).toBlocking().first()!
+        expect(connections.first?.id).to(equal(user1.id))
+    }
+    
+    func testPaginatedRetrievePendingConnectionsForOutgoing() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Pending)).toBlocking().first()
+        
+        var connections: RxCompositePage<Connections>
+        connections = try tapglue.retrievePendingConnections().toBlocking().first()!
+        let outgoing = connections.data.outgoing
+        expect(outgoing?.count).to(equal(1))
+        expect(outgoing?.first?.userTo?.id).to(equal(user2.id))
+    }
+    
+    func testPaginatedRetrieveRejectedConnectionsForIncoming() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Rejected)).toBlocking().first()
+        
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+        var connections: RxCompositePage<Connections>
+        connections = try tapglue.retrieveRejectedConnections().toBlocking().first()!
+        let incoming = connections.data.incoming
+        expect(incoming?.count).to(equal(1))
+        expect(incoming?.first?.userFrom?.id).to(equal(user1.id))
+    }
+    
+    func testPaginatedRetrieveRejectedConnectionsForOutgoing() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Friend, state: .Rejected)).toBlocking().first()
+        
+        var connections: RxCompositePage<Connections>
+        connections = try tapglue.retrieveRejectedConnections().toBlocking().first()!
+        let outgoing = connections.data.outgoing
+        expect(outgoing?.count).to(equal(1))
+        expect(outgoing?.first?.userTo?.id).to(equal(user2.id))
     }
 }
