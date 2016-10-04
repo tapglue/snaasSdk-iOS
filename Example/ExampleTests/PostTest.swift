@@ -32,7 +32,7 @@ class PostTest: XCTestCase {
             user1 = try tapglue.createUser(user1).toBlocking().first()!
             user1 = try tapglue.loginUser(username, password: password).toBlocking().first()!
 
-            post = Post(visibility: .Connections, attachments: [attachment])
+            post = Post(visibility: .connections, attachments: [attachment])
         } catch {
             fail("failed to create and login user for integration tests")
         }
@@ -99,7 +99,7 @@ class PostTest: XCTestCase {
     }
 
     func testRetrieveAllPosts() throws {
-        post.visibility = .Public
+        post.visibility = .public
         let createdPost = try tapglue.createPost(post).toBlocking().first()!
 
         var user2 = User()
@@ -117,7 +117,7 @@ class PostTest: XCTestCase {
     }
     
     func testRetrieveAllPostsMapsUsersToPosts() throws {
-        post.visibility = .Public
+        post.visibility = .public
         _ = try tapglue.createPost(post).toBlocking().first()!
         
         var user2 = User()
@@ -136,7 +136,7 @@ class PostTest: XCTestCase {
 
     func testFilterPostsByTag() throws {
         post.tags = [tag1]
-        post.visibility = .Public
+        post.visibility = .public
         let createdPost = try tapglue.createPost(post).toBlocking().first()!
 
         var retrievedPosts: [Post]

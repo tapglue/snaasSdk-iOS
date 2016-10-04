@@ -8,7 +8,8 @@
 
 import Alamofire
 
-class Router: URLRequestConvertible {
+class Router {
+
 
     static var configuration: Configuration? {
         didSet {
@@ -19,7 +20,7 @@ class Router: URLRequestConvertible {
         }
     }
     
-    static let sdkVersion = "2.0.3"
+    static let sdkVersion = "2.1.1"
     static var sessionTokenListener: SessionTokenListener? {
         didSet {
             if let sessionToken = sessionToken {
@@ -29,9 +30,9 @@ class Router: URLRequestConvertible {
             }
         }
     }
-    private static let apiVersion = "/0.4"
-    private static var baseUrl = "https://api.tapglue.com/0.4"
-    private static var appToken = ""
+    fileprivate static let apiVersion = "/0.4"
+    fileprivate static var baseUrl = "https://api.tapglue.com/0.4"
+    fileprivate static var appToken = ""
     static var sessionToken: String? {
         didSet {
             if let sessionTokenListener = sessionTokenListener {
@@ -39,48 +40,55 @@ class Router: URLRequestConvertible {
             }
         }
     }
-    let method: Alamofire.Method
+    let method: Method
     let path: String
     let payload: [String: AnyObject]
     var encodedToken: String {
         return Encoder.encode(Router.appToken, sessionToken: Router.sessionToken ?? "")
     }
 
-    var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: Router.baseUrl + path)!
-        let request = NSMutableURLRequest(URL: URL)
-        request.HTTPMethod = method.rawValue
+    var urlRequest: URLRequest {
+        let URL = Foundation.URL(string: Router.baseUrl + path)!
+        var request = URLRequest(url: URL)
+        //let request = NSMutableURLRequest(url: URL)
+        request.httpMethod = method.rawValue
         request.setValue("Basic " + encodedToken, forHTTPHeaderField: "Authorization")
         request.setValue("iOS", forHTTPHeaderField: "X-Tapglue-OS")
         request.setValue("Apple", forHTTPHeaderField: "X-Tapglue-Manufacturer")
         request.setValue(Router.sdkVersion, forHTTPHeaderField: "X-Tapglue-SDKVersion")
-        request.setValue(NSTimeZone.localTimeZone().abbreviation ?? "", 
+        request.setValue(NSTimeZone.local.abbreviation() ?? "", 
             forHTTPHeaderField: "X-Tapglue-Timezone")
-        request.setValue(UIDevice.currentDevice().identifierForVendor?.UUIDString ?? "", forHTTPHeaderField: "X-Tapglue-IDFV")
-        request.setValue(UIDevice.currentDevice().tapglueModelName, forHTTPHeaderField: "X-Tapglue-Model")
-        request.setValue(UIDevice.currentDevice().systemVersion, forHTTPHeaderField: "X-Tapglue-OSVersion")
+        request.setValue(UIDevice.current.identifierForVendor?.uuidString ?? "", forHTTPHeaderField: "X-Tapglue-IDFV")
+        request.setValue(UIDevice.current.tapglueModelName, forHTTPHeaderField: "X-Tapglue-Model")
+        request.setValue(UIDevice.current.systemVersion, forHTTPHeaderField: "X-Tapglue-OSVersion")
         
-        if method == .POST || method == .PUT{
-            return Alamofire.ParameterEncoding.JSON.encode(request, parameters: payload).0
+        if method == .post || method == .put{
+            let convertible = TapglueURLConvertible(request: request)
+            do {
+                return try Alamofire.JSONEncoding.default.encode(convertible, with: payload)
+            } catch {
+                return request
+            }
+            //return Alamofire.ParameterEncoding.json.encode(request, parameters: payload).0
         } else {
             return request
         }
     }
 
-    class func post(path: String, payload: [String: AnyObject]) -> NSMutableURLRequest {
-        return Router(method: .POST, path: path, payload: payload).URLRequest
+    class func post(_ path: String, payload: [String: AnyObject]) -> URLRequest {
+        return Router(method: .post, path: path, payload: payload).urlRequest
     }
 
-    class func get(path: String) -> NSMutableURLRequest {
-        return Router(method: .GET, path: path, payload: [:]).URLRequest
+    class func get(_ path: String) -> URLRequest {
+        return Router(method: .get, path: path, payload: [:]).urlRequest
     }
 
-    class func put(path: String, payload: [String: AnyObject]) -> NSMutableURLRequest {
-        return Router(method: .PUT, path: path, payload: payload).URLRequest
+    class func put(_ path: String, payload: [String: AnyObject]) -> URLRequest {
+        return Router(method: .put, path: path, payload: payload).urlRequest
     }
 
-    class func delete(path: String) -> NSMutableURLRequest {
-        return Router(method: .DELETE, path: path, payload: [:]).URLRequest
+    class func delete(_ path: String) -> URLRequest {
+        return Router(method: .delete, path: path, payload: [:]).urlRequest
     }
 
     class func getOnURL(url: String) -> NSMutableURLRequest {
@@ -95,13 +103,33 @@ class Router: URLRequestConvertible {
         return request
     }
 
-    private init(method: Alamofire.Method, path: String, payload: [String: AnyObject]) {
+    fileprivate init(method: Method, path: String, payload: [String: AnyObject]) {
         self.method = method
         self.path = path
         self.payload = payload
     }
 }
 
+class TapglueURLConvertible: URLRequestConvertible {
+    var request: URLRequest
+    init(request: URLRequest) {
+        self.request = request
+    }
+    
+    /// Returns a URL request or throws if an `Error` was encountered.
+    ///
+    /// - throws: An `Error` if the underlying `URLRequest` is `nil`.
+    ///
+    /// - returns: A URL request.
+    public func asURLRequest() throws -> URLRequest {
+        return request as URLRequest
+    }
+}
+
+enum Method: String {
+    case get = "get", post = "post", put = "put", delete = "delete"
+}
+
 protocol SessionTokenListener {
-    func sessionTokenSet(sessionToken: String?)
+    func sessionTokenSet(_ sessionToken: String?)
 }

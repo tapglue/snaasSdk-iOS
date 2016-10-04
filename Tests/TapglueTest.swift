@@ -19,7 +19,7 @@ class TapglueTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        stub(http(.POST, uri: "/0.4/analytics"), builder: http(204))
+        stub(http(.post, uri: "/0.4/analytics"), builder: http(204))
         
         tapglue = Tapglue(configuration: Configuration())
         tapglue.rxTapglue.network = network
@@ -211,7 +211,7 @@ class TapglueTest: XCTestCase {
 
     func testCreatePost() {
         var callbackPost: Post?
-        let post = Post(visibility: .Private, attachments: [Attachment]())
+        let post = Post(visibility: .private, attachments: [Attachment]())
         tapglue.createPost(post) { post, error in
             callbackPost = post
         }
@@ -228,7 +228,7 @@ class TapglueTest: XCTestCase {
 
     func testUpdatePost() {
         var callbackPost: Post?
-        let post = Post(visibility: .Public, attachments: [Attachment]())
+        let post = Post(visibility: .public, attachments: [Attachment]())
         tapglue.updatePost("id", post: post) { post, error in
             callbackPost = post
         }

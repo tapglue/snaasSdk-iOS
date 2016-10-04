@@ -10,11 +10,11 @@ import Foundation
 import RxSwift
 
 /// Main interface to the taplgue SDK
-public class Tapglue {
+open class Tapglue {
     let disposeBag = DisposeBag()
     let rxTapglue: RxTapglue
     
-    var currentUser: User? {
+    open var currentUser: User? {
         get {
             return rxTapglue.currentUser
         }
@@ -30,8 +30,8 @@ public class Tapglue {
     /// - parameter username: username of the user to be logged in
     /// - parameter password: password of the user to be logged in
     /// - parameter completionHander: where the callbacks will be made
-    public func loginUser(username: String, password: String, completionHandler: 
-        (user: User?, error: ErrorType?) -> ()) {
+    open func loginUser(_ username: String, password: String, completionHandler:
+        @escaping (_ user: User?, _ error: Error?) -> ()) {
         rxTapglue.loginUser(username, password: password).unwrap(completionHandler)
     }
 
@@ -39,8 +39,8 @@ public class Tapglue {
     /// - parameter email: email of the user to be logged in
     /// - parameter password: password of the user to be logged in 
     /// - parameter completionHander: where the callbacks will be made
-    public func loginUserWithEmail(email: String, password: String, completionHandler: 
-        (user: User?, error: ErrorType?) -> ()) {
+    open func loginUserWithEmail(_ email: String, password: String, completionHandler: 
+        @escaping (_ user: User?, _ error: Error?) -> ()) {
         rxTapglue.loginUserWithEmail(email, password: password).unwrap(completionHandler)
     }
 
@@ -50,57 +50,57 @@ public class Tapglue {
     /// - parameter completionHander: where the callbacks will be made
     /// - Note: username or email is required, password is required
     /// - Note: does not login user
-    public func createUser(user: User, completionHandler: (user: User?, error: ErrorType?) -> ()) {
+    open func createUser(_ user: User, completionHandler: @escaping (_ user: User?, _ error: Error?) -> ()) {
         rxTapglue.createUser(user).unwrap(completionHandler)
     }
 
     /// update information on the current user by providing a user entity
     /// - parameter user: entity with the information to be updated
     /// - parameter completionHander: where the callbacks will be made
-    public func updateCurrentUser(user: User, completionHandler: (user: User?, error: ErrorType?) -> ()) {
+    open func updateCurrentUser(_ user: User, completionHandler: @escaping (_ user: User?, _ error: Error?) -> ()) {
         rxTapglue.updateCurrentUser(user).unwrap(completionHandler)
     }
 
     /// refreshes locally stored copy of the current user
     /// - parameter completionHander: where the callbacks will be made
-    public func refreshCurrentUser(completionHandler: (user: User?, error: ErrorType?) -> ()) {
+    open func refreshCurrentUser(_ completionHandler: @escaping (_ user: User?, _ error: Error?) -> ()) {
         rxTapglue.refreshCurrentUser().unwrap(completionHandler)
     }
 
     /// logs out the current user
     /// - parameter completionHander: where the callbacks will be made
-    public func logout(completionHandler: (success:Bool, error:ErrorType?) -> ()) {
+    open func logout(_ completionHandler: @escaping (_ success:Bool, _ error:Error?) -> ()) {
         rxTapglue.logout().unwrap(completionHandler)
     }
 
     /// deletes current user from tapglue
     /// - parameter completionHander: where the callbacks will be made
-    public func deleteCurrentUser(completionHandler: (success:Bool, error:ErrorType?) -> ()) {
+    open func deleteCurrentUser(_ completionHandler: @escaping (_ success:Bool, _ error:Error?) -> ()) {
         rxTapglue.deleteCurrentUser().unwrap(completionHandler)
     }
 
     /// retrieve a user
     /// - parameter id: id of the user to be retrieved
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveUser(id: String, completionHandler: (user:User?, error: ErrorType?) -> ()) {
+    open func retrieveUser(_ id: String, completionHandler: @escaping (_ user:User?, _ error: Error?) -> ()) {
         rxTapglue.retrieveUser(id).unwrap(completionHandler)
     }
 
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func searchUsersForSearchTerm(term: String, completionHandler: (result: [User]?,
-        error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func searchUsersForSearchTerm(_ term: String, completionHandler: @escaping (_ result: [User]?,
+        _ error: Error?) -> ()) {
         rxTapglue.searchUsersForSearchTerm(term).unwrap(completionHandler)
     }
 
     /// Search tapglue for users with emails
     /// - parameter emails: search tapglue for users with emails within this list
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func searchEmails(emails: [String], completionHandler:(result: [User]?, error:
-        ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func searchEmails(_ emails: [String], completionHandler: @escaping (_ result: [User]?, _ error:
+        Error?) -> ()) {
         rxTapglue.searchEmails(emails).unwrap(completionHandler)
     }
 
@@ -108,17 +108,17 @@ public class Tapglue {
     /// - parameter ids: list of ids to search for
     /// - parameter platform: platform name for which the search is performed
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func searchSocialIds(ids: [String], onPlatform platform: String,
-        completionHandler: (result: [User]?, error:ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func searchSocialIds(_ ids: [String], onPlatform platform: String,
+        completionHandler: @escaping (_ result: [User]?, _ error:Error?) -> ()) {
         rxTapglue.searchSocialIds(ids, onPlatform: platform).unwrap(completionHandler)
     }
 
     /// create connection on tapglue
     /// - parameter connection: connection to be created
     /// - parameter completionHander: where the callbacks will be made
-    public func createConnection(connection: Connection, 
-            completionHandler: (connection: Connection?, error: ErrorType?) -> ()) {
+    open func createConnection(_ connection: Connection, 
+            completionHandler: @escaping (_ connection: Connection?, _ error: Error?) -> ()) {
         rxTapglue.createConnection(connection).unwrap(completionHandler)
     }
 
@@ -126,95 +126,95 @@ public class Tapglue {
     /// - parameter userId: user id of the user the connection is
     /// - parameter type: the type of connection to be deleted
     /// - parameter completionHander: where the callbacks will be made
-    public func deleteConnection(toUserId userId: String, type: 
-            ConnectionType, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+    open func deleteConnection(toUserId userId: String, type: 
+            ConnectionType, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> ()) {
         rxTapglue.deleteConnection(toUserId: userId, type: type).unwrap(completionHandler)
     }
 
     /// create connections to users by using their ids from another platform
     /// - parameter socialConnections: contains the platform name and list of ids
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func createSocialConnections(socialConnections: SocialConnections, 
-        completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func createSocialConnections(_ socialConnections: SocialConnections, 
+        completionHandler: @escaping (_ users: [User]?, _ error: Error?) -> ()) {
         rxTapglue.createSocialConnections(socialConnections).unwrap(completionHandler)
     }
 
     /// retrieves the followers of the current user
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveFollowers(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveFollowers(_ completionHandler: @escaping (_ users: [User]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveFollowers().unwrap(completionHandler)
     }
 
     /// retrieves the users followed by the current user
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveFollowings(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveFollowings(_ completionHandler: @escaping (_ users: [User]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveFollowings().unwrap(completionHandler)
     }
 
     /// retrieves followers for a given user
     /// - parameter id: followers of the user of the given id
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveFollowersForUserId(id: String, 
-            completionHandler: (users: [User]?, error:ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveFollowersForUserId(_ id: String, 
+            completionHandler: @escaping (_ users: [User]?, _ error:Error?) -> ()) {
         rxTapglue.retrieveFollowersForUserId(id).unwrap(completionHandler)
     }
 
     /// retrieves users followed by a given user
     /// - parameter id: followings of the user of the given id
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveFollowingsForUserId(id: String, 
-            completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveFollowingsForUserId(_ id: String, 
+            completionHandler: @escaping (_ users: [User]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveFollowingsForUserId(id).unwrap(completionHandler)
     }
 
     /// retrieve friends for current user
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveFriends(completionHandler: (users: [User]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveFriends(_ completionHandler: @escaping (_ users: [User]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveFriends().unwrap(completionHandler)
     }
 
     /// Retrieve friends for a given user
     /// - parameter id: friends of the user with the given id
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveFriendsForUserId(id: String,
-            completionHandler:(users: [User]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveFriendsForUserId(_ id: String,
+            completionHandler: @escaping (_ users: [User]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveFriendsForUserId(id).unwrap(completionHandler)
     }
 
     /// retrieve pending connections
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrievePendingConnections(completionHandler: (connections: Connections?, 
-            error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrievePendingConnections(_ completionHandler: @escaping (_ connections: Connections?,
+            _ error: Error?) -> ()) {
         rxTapglue.retrievePendingConnections().unwrap(completionHandler)
     }
 
     /// retrieve rejected connections
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveRejectedConnections(completionHandler: (connections: Connections?,
-            error:ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveRejectedConnections(_ completionHandler: @escaping (_ connections: Connections?,
+            _ error:Error?) -> ()) {
         rxTapglue.retrieveRejectedConnections().unwrap(completionHandler)
     }
 
     /// creates post
     /// - parameter post: post to be created
     /// - parameter completionHander: where the callbacks will be made
-    public func createPost(post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
+    open func createPost(_ post: Post, completionHandler: @escaping (_ post: Post?, _ error: Error?) -> ()) {
         rxTapglue.createPost(post).unwrap(completionHandler)
     }
 
     /// retrieve a post
     /// - parameter id: id of the post to be retrieved
     /// - parameter completionHander: where the callbacks will be made
-    public func retrievePost(id: String, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
+    open func retrievePost(_ id: String, completionHandler: @escaping (_ post: Post?, _ error: Error?) -> ()) {
         rxTapglue.retrievePost(id).unwrap(completionHandler)
     }
 
@@ -222,52 +222,52 @@ public class Tapglue {
     /// - parameter post: the post to replace the old one
     /// - note: post id must be set on the post object
     /// - parameter completionHander: where the callbacks will be made
-    public func updatePost(id: String, post: Post, completionHandler: (post: Post?, error: ErrorType?) -> ()) {
+    open func updatePost(_ id: String, post: Post, completionHandler: @escaping (_ post: Post?, _ error: Error?) -> ()) {
         rxTapglue.updatePost(id, post: post).unwrap(completionHandler)
     }
 
     /// delete post
     /// - parameter id: id of the post to be deleted
     /// - parameter completionHander: where the callbacks will be made
-    public func deletePost(id: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+    open func deletePost(_ id: String, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> ()) {
         rxTapglue.deletePost(id).unwrap(completionHandler)
     }
 
     /// retrieve posts created by a user
     /// - parameter userId: id of the user from whom the posts will be retrieved
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrievePostsByUser(userId: String, completionHandler: 
-        (post: [Post]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrievePostsByUser(_ userId: String, completionHandler: 
+        @escaping (_ post: [Post]?, _ error: Error?) -> ()) {
         rxTapglue.retrievePostsByUser(userId).unwrap(completionHandler)
     }
 
-    /// retrieves all public and global posts
+    /// retrieves all open and global posts
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveAllPosts(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveAllPosts(_ completionHandler: @escaping (_ posts: [Post]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveAllPosts().unwrap(completionHandler)
     }
 
     /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
     /// `and` operation
     /// - parameter tags: tags to filter
-    @available(*, deprecated=2.1)
-    public func filterPostsByTags(tags: [String], 
-        completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func filterPostsByTags(_ tags: [String], 
+        completionHandler: @escaping (_ posts: [Post]?, _ error: Error?) -> ()) {
         rxTapglue.filterPostsByTags(tags).unwrap(completionHandler)
     }
     
     /// Creates a comment on a post
     /// - parameter completionHander: where the callbacks will be made
-    public func createComment(comment: Comment, completionHandler: (comment: Comment?, error: ErrorType?) -> ()) {
+    open func createComment(_ comment: Comment, completionHandler: @escaping (_ comment: Comment?, _ error: Error?) -> ()) {
         rxTapglue.createComment(comment).unwrap(completionHandler)
     }
 
     /// retrieve comments on a post
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveComments(postId: String, completionHandler: (comments: [Comment]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveComments(_ postId: String, completionHandler: @escaping (_ comments: [Comment]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveComments(postId).unwrap(completionHandler)
     }
     
@@ -276,7 +276,7 @@ public class Tapglue {
     /// - parameter commentId: id of the comment to be updated
     /// - parameter comment: the new comment to replace the old
     /// - parameter completionHander: where the callbacks will be made
-    public func updateComment(postId: String, commentId: String, comment: Comment, completionHandler: (comment: Comment?, error: ErrorType?) -> ()) {
+    open func updateComment(_ postId: String, commentId: String, comment: Comment, completionHandler: @escaping (_ comment: Comment?, _ error: Error?) -> ()) {
         rxTapglue.updateComment(postId, commentId: commentId,comment: comment).unwrap(completionHandler)
     }
     
@@ -284,81 +284,81 @@ public class Tapglue {
     /// - parameter postId: post to which the comment belongs
     /// - parameter commentId: id of the comment to be deleted
     /// - parameter completionHander: where the callbacks will be made
-    public func deleteComment(forPostId postId: String, commentId: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+    open func deleteComment(forPostId postId: String, commentId: String, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> ()) {
         rxTapglue.deleteComment(forPostId: postId, commentId: commentId).unwrap(completionHandler)
     }
     
     /// creates like
     /// - parameter postId: post to be liked
     /// - parameter completionHander: where the callbacks will be made
-    public func createLike(forPostId postId: String, completionHandler: (like: Like?, error: ErrorType?) -> ()) {
+    open func createLike(forPostId postId: String, completionHandler: @escaping (_ like: Like?, _ error: Error?) -> ()) {
         rxTapglue.createLike(forPostId: postId).unwrap(completionHandler)
     }
     
     /// retrieves likes on a post
     /// - parameter postId: id of the post
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveLikes(postId: String, completionHandler: (likes: [Like]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveLikes(_ postId: String, completionHandler: @escaping (_ likes: [Like]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveLikes(postId).unwrap(completionHandler)
     }
     
     /// delete like on a post
     /// - parameter postId: post that was liked
     /// - parameter completionHander: where the callbacks will be made
-    public func deleteLike(forPostId postId: String, completionHandler: (success: Bool, error: ErrorType?) -> ()) {
+    open func deleteLike(forPostId postId: String, completionHandler: @escaping (_ success: Bool, _ error: Error?) -> ()) {
         rxTapglue.deleteLike(forPostId: postId).unwrap(completionHandler)
     }
 
-    @available(*, deprecated=2.1)
-    public func retrieveLikesByUser(userId: String,
-        completionHandler: (likes: [Like]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveLikesByUser(_ userId: String,
+        completionHandler: @escaping (_ likes: [Like]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveLikesByUser(userId).unwrap(completionHandler)
     }
 
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
-    @available(*, deprecated=2.1)
-    public func retrieveActivitiesByUser(userId: String, completionHandler:
-        (activities:[Activity]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveActivitiesByUser(_ userId: String, completionHandler:
+        @escaping (_ activities:[Activity]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveActivitiesByUser(userId).unwrap(completionHandler)
     }
 
     /// retrieves post feed
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrievePostFeed(completionHandler: (posts: [Post]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrievePostFeed(_ completionHandler: @escaping (_ posts: [Post]?, _ error: Error?) -> ()) {
         rxTapglue.retrievePostFeed().unwrap(completionHandler)
     }
 
     /// retrieves activity feed
     /// - note: event feed on the api documentation
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveActivityFeed(completionHandler:
-        (activities: [Activity]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveActivityFeed(_ completionHandler:
+        @escaping (_ activities: [Activity]?, _ error: Error?) -> ()) {
         rxTapglue.retrieveActivityFeed().unwrap(completionHandler)
     }
 
     /// retrieves news feed
     /// - parameter completionHander: where the callbacks will be made
-    @available(*, deprecated=2.1)
-    public func retrieveNewsFeed(completionHandler: (feed: NewsFeed?, error:ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveNewsFeed(_ completionHandler: @escaping (_ feed: NewsFeed?, _ error:Error?) -> ()) {
         rxTapglue.retrieveNewsFeed().unwrap(completionHandler)
     }
 
     /// retrieves a feed of activities tageting the current user
-    @available(*, deprecated=2.1)
-    public func retrieveMeFeed(completionHandler: 
-        (activities: [Activity]?, error: ErrorType?) -> ()) {
+    @available(*, deprecated: 2.1)
+    open func retrieveMeFeed(completionHandler: 
+        ([Activity]?, Error??) -> ()) {
         rxTapglue.retrieveMeFeed().unwrap(completionHandler)
     }
 
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
     /// - parameter completionHander: where the callbacks will be made
-    public func searchUsersForSearchTerm(term: String, completionHandler: (Page<User>?,
-        ErrorType?) -> ()) {
+    open func searchUsersForSearchTerm(term: String, completionHandler: (Page<User>?,
+        Error??) -> ()) {
         rxTapglue.searchUsersForSearchTerm(term).map { (rxPage: RxPage<User>) in 
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -367,8 +367,8 @@ public class Tapglue {
     /// Search tapglue for users with emails
     /// - parameter emails: search tapglue for users with emails within this list
     /// - parameter completionHander: where the callbacks will be made
-    public func searchEmails(emails: [String], completionHandler:(Page<User>?,
-        ErrorType?) -> ()) {
+    open func searchEmails(emails: [String], completionHandler:(Page<User>?,
+        Error??) -> ()) {
         rxTapglue.searchEmails(emails).map { (rxPage:RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -378,8 +378,8 @@ public class Tapglue {
     /// - parameter ids: list of ids to search for
     /// - parameter platform: platform name for which the search is performed
     /// - parameter completionHander: where the callbacks will be made
-    public func searchSocialIds(ids: [String], onPlatform platform: String,
-        completionHandler: (Page<User>?, ErrorType?) -> ()) {
+    open func searchSocialIds(ids: [String], onPlatform platform: String,
+        completionHandler: (Page<User>?, Error??) -> ()) {
         rxTapglue.searchSocialIds(ids, onPlatform: platform).map { (rxPage:RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -388,8 +388,8 @@ public class Tapglue {
     /// create connections to users by using their ids from another platform
     /// - parameter socialConnections: contains the platform name and list of ids
     /// - parameter completionHander: where the callbacks will be made
-    public func createSocialConnections(socialConnections: SocialConnections, 
-        completionHandler: (Page<User>?, ErrorType?) -> ()) {
+    open func createSocialConnections(socialConnections: SocialConnections, 
+        completionHandler: (Page<User>?, Error??) -> ()) {
         rxTapglue.createSocialConnections(socialConnections).map { (rxPage: RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -397,7 +397,7 @@ public class Tapglue {
 
     /// retrieves the followers of the current user
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveFollowers(completionHandler: (Page<User>?, error: ErrorType?) -> ()) {
+    open func retrieveFollowers(completionHandler: (Page<User>?, error: Error??) -> ()) {
         rxTapglue.retrieveFollowers().map{ (rxPage: RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -405,7 +405,7 @@ public class Tapglue {
 
     /// retrieves the users followed by the current user
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveFollowings(completionHandler: (Page<User>?, ErrorType?) -> ()) {
+    open func retrieveFollowings(completionHandler: (Page<User>?, Error??) -> ()) {
         rxTapglue.retrieveFollowings().map { (rxPage: RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -414,8 +414,8 @@ public class Tapglue {
     /// retrieves followers for a given user
     /// - parameter id: followers of the user of the given id
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveFollowersForUserId(id: String, 
-            completionHandler: (Page<User>?, ErrorType?) -> ()) {
+    open func retrieveFollowersForUserId(id: String, 
+            completionHandler: (Page<User>?, Error??) -> ()) {
         rxTapglue.retrieveFollowersForUserId(id).map { (rxPage: RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -424,8 +424,8 @@ public class Tapglue {
     /// retrieves users followed by a given user
     /// - parameter id: followings of the user of the given id
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveFollowingsForUserId(id: String, 
-            completionHandler: (Page<User>?, ErrorType?) -> ()) {
+    open func retrieveFollowingsForUserId(id: String, 
+            completionHandler: (Page<User>?, Error??) -> ()) {
         rxTapglue.retrieveFollowingsForUserId(id).map { (rxPage: RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -433,7 +433,7 @@ public class Tapglue {
 
     /// retrieve friends for current user
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveFriends(completionHandler: (Page<User>?, ErrorType?) -> ()) {
+    open func retrieveFriends(completionHandler: (Page<User>?, Error??) -> ()) {
         rxTapglue.retrieveFriends().map { (rxPage: RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -442,8 +442,8 @@ public class Tapglue {
     /// Retrieve friends for a given user
     /// - parameter id: friends of the user with the given id
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveFriendsForUserId(id: String,
-            completionHandler:(Page<User>?, ErrorType?) -> ()) {
+    open func retrieveFriendsForUserId(id: String,
+            completionHandler:(Page<User>?, Error??) -> ()) {
         rxTapglue.retrieveFriendsForUserId(id).map { (rxPage:RxPage<User>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -451,8 +451,8 @@ public class Tapglue {
 
     /// retrieve pending connections
     /// - parameter completionHander: where the callbacks will be made
-    public func retrievePendingConnections(completionHandler: (CompositePage<Connections>?, 
-            ErrorType?) -> ()) {
+    open func retrievePendingConnections(completionHandler: (CompositePage<Connections>?, 
+            Error??) -> ()) {
         rxTapglue.retrievePendingConnections().map { (rxPage: RxCompositePage<Connections>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -460,8 +460,8 @@ public class Tapglue {
 
     /// retrieve rejected connections
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveRejectedConnections(completionHandler: (CompositePage<Connections>?,
-            ErrorType?) -> ()) {
+    open func retrieveRejectedConnections(completionHandler: (CompositePage<Connections>?,
+            Error??) -> ()) {
         rxTapglue.retrieveRejectedConnections().map { (rxPage: RxCompositePage<Connections>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -470,16 +470,16 @@ public class Tapglue {
     /// retrieve posts created by a user
     /// - parameter userId: id of the user from whom the posts will be retrieved
     /// - parameter completionHander: where the callbacks will be made
-    public func retrievePostsByUser(userId: String, completionHandler: 
-        (Page<Post>?, ErrorType?) -> ()) {
+    open func retrievePostsByUser(userId: String, completionHandler: 
+        (Page<Post>?, Error??) -> ()) {
         rxTapglue.retrievePostsByUser(userId).map { (rxPage: RxPage<Post>) in
             return rxPage.page()
         }.unwrap(completionHandler)
     }
 
-    /// retrieves all public and global posts
+    /// retrieves all open and global posts
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveAllPosts(completionHandler: (Page<Post>?, ErrorType?) -> ()) {
+    open func retrieveAllPosts(completionHandler: (Page<Post>?, Error??) -> ()) {
         rxTapglue.retrieveAllPosts().map { (rxPage: RxPage<Post>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -488,8 +488,8 @@ public class Tapglue {
     /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
     /// `and` operation
     /// - parameter tags: tags to filter
-    public func filterPostsByTags(tags: [String], 
-        completionHandler: (Page<Post>?, ErrorType?) -> ()) {
+    open func filterPostsByTags(tags: [String], 
+        completionHandler: (Page<Post>?, Error??) -> ()) {
         rxTapglue.filterPostsByTags(tags).map { (rxPage:RxPage<Post>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -497,7 +497,7 @@ public class Tapglue {
 
     /// retrieve comments on a post
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveComments(postId: String, completionHandler: (Page<Comment>?, ErrorType?) -> ()) {
+    open func retrieveComments(postId: String, completionHandler: (Page<Comment>?, Error??) -> ()) {
         rxTapglue.retrieveComments(postId).map { (rxPage: RxPage<Comment>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -506,14 +506,14 @@ public class Tapglue {
     /// retrieves likes on a post
     /// - parameter postId: id of the post
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveLikes(postId: String, completionHandler: (Page<Like>?, ErrorType?) -> ()) {
+    open func retrieveLikes(postId: String, completionHandler: (Page<Like>?, Error??) -> ()) {
         rxTapglue.retrieveLikes(postId).map { (rxPage: RxPage<Like>) in
             return rxPage.page()
         }.unwrap(completionHandler)
     }
 
-    public func retrieveLikesByUser(userId: String, 
-        completionHandler: (Page<Like>?, ErrorType?) -> ()) {
+    open func retrieveLikesByUser(userId: String, 
+        completionHandler: (Page<Like>?, Error??) -> ()) {
         rxTapglue.retrieveLikesByUser(userId).map { (rxPage: RxPage<Like>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -521,8 +521,8 @@ public class Tapglue {
 
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
-    public func retrieveActivitiesByUser(userId: String, completionHandler:
-        (Page<Activity>?, ErrorType?) -> ()) {
+    open func retrieveActivitiesByUser(userId: String, completionHandler:
+        (Page<Activity>?, Error??) -> ()) {
         rxTapglue.retrieveActivitiesByUser(userId).map { (rxPage: RxPage<Activity>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -530,7 +530,7 @@ public class Tapglue {
 
     /// retrieves post feed
     /// - parameter completionHander: where the callbacks will be made
-    public func retrievePostFeed(completionHandler: (Page<Post>?, ErrorType?) -> ()) {
+    open func retrievePostFeed(completionHandler: (Page<Post>?, Error??) -> ()) {
         rxTapglue.retrievePostFeed().map { (rxPage: RxPage<Post>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -539,16 +539,16 @@ public class Tapglue {
     /// retrieves activity feed
     /// - note: event feed on the api documentation
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveActivityFeed(completionHandler:
-        (Page<Activity>?, ErrorType?) -> ()) {
+    open func retrieveActivityFeed(completionHandler:
+        (Page<Activity>?, Error??) -> ()) {
         rxTapglue.retrieveActivityFeed().map { (rxPage:RxPage<Activity>) in
             return rxPage.page()
         }.unwrap(completionHandler)
     }
 
     /// retrieves a feed of activities tageting the current user
-    public func retrieveMeFeed(completionHandler: 
-        (Page<Activity>?, ErrorType?) -> ()) {
+    open func retrieveMeFeed(completionHandler: 
+        (Page<Activity>?, Error??) -> ()) {
         rxTapglue.retrieveMeFeed().map { (rxPage:RxPage<Activity>) in
             return rxPage.page()
         }.unwrap(completionHandler)
@@ -556,9 +556,13 @@ public class Tapglue {
 
     /// retrieves news feed
     /// - parameter completionHander: where the callbacks will be made
-    public func retrieveNewsFeed(completionHandler: (CompositePage<NewsFeed>?, ErrorType?) -> ()) {
+    open func retrieveNewsFeed(completionHandler: (CompositePage<NewsFeed>?, Error??) -> ()) {
         rxTapglue.retrieveNewsFeed().map { (rxPage:RxCompositePage<NewsFeed>) in
             return rxPage.page()
         }.unwrap(completionHandler)
+    }
+    open func retrieveMeFeed(_ completionHandler: 
+        @escaping (_ activities: [Activity]?, _ error: Error?) -> ()) {
+        rxTapglue.retrieveMeFeed().unwrap(completionHandler)
     }
 }

@@ -31,7 +31,7 @@ class LikeTest: XCTestCase {
         do {
             user = try tapglue.createUser(user).toBlocking().first()!
             user = try tapglue.loginUser(username, password: password).toBlocking().first()!
-            post = try tapglue.createPost(Post(visibility: .Connections, attachments: [attachment]))
+            post = try tapglue.createPost(Post(visibility: .connections, attachments: [attachment]))
                 .toBlocking().first()!
             
         } catch {

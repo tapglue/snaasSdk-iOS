@@ -8,17 +8,17 @@
 
 import ObjectMapper
 
-public class Like: Mappable {
-    public var id: String?
-    public var postId: String?
-    public var externalId: String?
-    public var userId: String?
-    public var createdAt: String?
-    public var updatedAt: String?
-    public var user: User?
-    public var post: Post?
+open class Like: Mappable {
+    open var id: String?
+    open var postId: String?
+    open var externalId: String?
+    open var userId: String?
+    open var createdAt: String?
+    open var updatedAt: String?
+    open var user: User?
+    open var post: Post?
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
@@ -26,7 +26,7 @@ public class Like: Mappable {
         self.postId = postId
     }
     
-    public func mapping(map: Map) {
+    open func mapping(map: Map) {
         id              <- map["id"]
         postId          <- map["post_id"]
         externalId      <- map["external_id"]

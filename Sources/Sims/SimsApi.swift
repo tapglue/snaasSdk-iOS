@@ -9,5 +9,5 @@
 import Foundation
 
 protocol SimsApi {
-    func registerDevice(appToken: String, deviceToken: String, sessionToken: String)
+    func registerDevice(_ appToken: String, deviceToken: String, sessionToken: String)
 }

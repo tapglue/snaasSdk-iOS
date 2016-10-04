@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension NSInputStream
+extension InputStream
 {
-    public func readString(length:Int) -> String {
+    public func readString(_ length:Int) -> String {
         
         var str = ""
         
         if length > 0 {
-            let readBuffer = UnsafeMutablePointer<UInt8>.alloc(length+1)
+            let readBuffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: length+1)
             
             let numberOfBytesRead = self.read(readBuffer, maxLength: length)
             if numberOfBytesRead == length {
@@ -23,11 +23,11 @@ extension NSInputStream
                 let buf = UnsafeMutablePointer<CChar>(readBuffer)
                 buf[length] = 0
                 // the C String must be null terminated
-                if let utf8String = String.fromCString(buf) {
+                if let utf8String = String(validatingUTF8: buf) {
                     str = utf8String
                 }
             }
-            readBuffer.dealloc(length)
+            readBuffer.deallocate(capacity: length)
         }
         return str
         

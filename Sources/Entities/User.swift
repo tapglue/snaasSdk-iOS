@@ -8,34 +8,34 @@
 
 import ObjectMapper
 
-public class User: Mappable {
-    public var username: String?
-    public var password: String?
-    public var email: String?
-    public var firstName: String?
-    public var lastName: String?
-    public var followedCount: Int?
-    public var followerCount: Int?
-    public var friendCount: Int?
-    public var id: String?
-    public var about: String?
-    public var isFriend: Bool?
-    public var isFollowed: Bool?
-    public var isFollowing: Bool?
-    public var sessionToken: String?
-    public var updatedAt: String?
-    public var socialIds: [String: String]?
-    public var images: [String: Image]?
+open class User: Mappable {
+    open var username: String?
+    open var password: String?
+    open var email: String?
+    open var firstName: String?
+    open var lastName: String?
+    open var followedCount: Int?
+    open var followerCount: Int?
+    open var friendCount: Int?
+    open var id: String?
+    open var about: String?
+    open var isFriend: Bool?
+    open var isFollowed: Bool?
+    open var isFollowing: Bool?
+    open var sessionToken: String?
+    open var updatedAt: String?
+    open var socialIds: [String: String]?
+    open var images: [String: Image]?
     
     public init() {
         
     }
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    public func mapping(map: Map) {
+    open func mapping(map: Map) {
         username    <- map["user_name"]
         password    <- map["password"]
         email       <- map["email"]
@@ -57,20 +57,20 @@ public class User: Mappable {
     
 }
 
-public class Image: Mappable {
-    public var url: String?
-    public var width: Int?
-    public var height: Int?
+open class Image: Mappable {
+    open var url: String?
+    open var width: Int?
+    open var height: Int?
 
     public init(url: String) {
         self.url = url
     }
 
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    public func mapping(map: Map) {
+    open func mapping(map: Map) {
         url     <- map["url"]
         width   <- map["width"]
         height  <- map["height"]

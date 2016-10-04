@@ -8,30 +8,30 @@
 
 import ObjectMapper
 
-public class Post: Mappable {
-    public var id: String?
-    public var visibility: Visibility?
-    public var tags: [String]?
-    public var attachments: [Attachment]?
-    public var userId: String?
-    public var user: User?
-    public var counts: [String:Int]?
-    public var isLiked: Bool?
-    public var likeCount: Int?
-    public var commentCount: Int?
-    public var createdAt: String?
-    public var updatedAt: String?
+open class Post: Mappable {
+    open var id: String?
+    open var visibility: Visibility?
+    open var tags: [String]?
+    open var attachments: [Attachment]?
+    open var userId: String?
+    open var user: User?
+    open var counts: [String:Int]?
+    open var isLiked: Bool?
+    open var likeCount: Int?
+    open var commentCount: Int?
+    open var createdAt: String?
+    open var updatedAt: String?
     
     public init(visibility: Visibility, attachments: [Attachment]) {
         self.visibility = visibility
         self.attachments = attachments
     }
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    public func mapping(map: Map) {
+    open func mapping(map: Map) {
         id          <- map["id"]
         visibility  <- map["visibility"]
         tags        <- map["tags"]
@@ -47,10 +47,10 @@ public class Post: Mappable {
     
 }
 
-public class Attachment: Mappable {
-    public var contents: [String:String]?
-    public var name: String?
-    public var type: Type?
+open class Attachment: Mappable {
+    open var contents: [String:String]?
+    open var name: String?
+    open var type: Type?
     
     public init (contents:[String:String], name: String, type: Type) {
         self.contents = contents
@@ -58,11 +58,11 @@ public class Attachment: Mappable {
         self.type = type
     }
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
-    public func mapping(map: Map) {
+    open func mapping(map: Map) {
         contents    <- map["contents"]
         name        <- map["name"]
         type        <- map["type"]
@@ -70,7 +70,7 @@ public class Attachment: Mappable {
 }
 
 public enum Visibility: Int {
-    case Private = 10, Connections = 20, Public = 30
+    case `private` = 10, connections = 20, `public` = 30
 }
 
 public enum Type: String {

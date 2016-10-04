@@ -21,7 +21,7 @@ class HttpTest: XCTestCase {
     override func setUp() {
         super.setUp()
         errorResponse = ["errors":[["code": errorCode, "message": "some message"]]]
-        stub(http(.GET, uri: "/0.4" + uri), builder: json(errorResponse, status: 400))
+        stub(http(.get, uri: "/0.4" + uri), builder: json(errorResponse, status: 400))
     }
     
     override func tearDown() {

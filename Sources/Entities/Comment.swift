@@ -8,18 +8,18 @@
 
 import ObjectMapper
 
-public class Comment: Mappable {
-    public var id: String?
-    public var postId: String?
-    public var externalId: String?
-    public var userId: String?
-    public var contents: [String:String]?
-    public var privateFields: String?
-    public var createdAt: String?
-    public var updatedAt: String?
-    public var user: User?
+open class Comment: Mappable {
+    open var id: String?
+    open var postId: String?
+    open var externalId: String?
+    open var userId: String?
+    open var contents: [String:String]?
+    open var privateFields: String?
+    open var createdAt: String?
+    open var updatedAt: String?
+    open var user: User?
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
@@ -28,7 +28,7 @@ public class Comment: Mappable {
         self.postId = postId
     }
     
-    public func mapping(map: Map) {
+    open func mapping(map: Map) {
         id              <- map["id"]
         postId          <- map["post_id"]
         externalId      <- map["external_id"]

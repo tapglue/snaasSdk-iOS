@@ -23,7 +23,7 @@ class RouterTest: XCTestCase {
     
     func testRouterPostCreatesRequestWithMethod() {
         let request = Router.post("/login", payload: ["user_name":"paco"])
-        expect(request.HTTPMethod).to(equal("POST"))
+        expect(request.httpMethod).to(equal("POST"))
     }
     
     func testRouterPostCreatesRequestWithPath() {
@@ -34,14 +34,14 @@ class RouterTest: XCTestCase {
     func testRouterPostCreatesRequestWithPayload() {
         let payload = ["user_name":"paco", "password":"1234"]
         let request = Router.post("/login", payload: payload)
-        if request.HTTPBody == nil {
+        if request.httpBody == nil {
             XCTFail("http body was nil!")
             return
         }
         
-        let body = request.HTTPBody!
+        let body = request.httpBody!
         do {
-            let dictionary = try NSJSONSerialization.JSONObjectWithData(body, options: .MutableContainers) as? [String: String]
+            let dictionary = try JSONSerialization.jsonObject(with: body, options: .mutableContainers) as? [String: String]
             expect(dictionary).to(equal(payload))
         } catch {
             XCTFail("could not deserialize JSON")
@@ -58,30 +58,30 @@ class RouterTest: XCTestCase {
     
     func testRouterGetCreatesRequestWithMethod() {
         let request = Router.get("/me")
-        expect(request.HTTPMethod).to(equal("GET"))
+        expect(request.httpMethod).to(equal("GET"))
     }
     
     func testRouterGetBodyNil() {
         let request = Router.get("/me")
-        expect(request.HTTPBody).to(beNil())
+        expect(request.httpBody).to(beNil())
     }
 
     func testRouterPutCreatesRequestWithMethod() {
         let request = Router.put("/me", payload: [:])
-        expect(request.HTTPMethod).to(equal("PUT"))
+        expect(request.httpMethod).to(equal("PUT"))
     }
 
     func testRouterPutCreatesRequestWithPayload() {
         let payload = ["user_name":"paco", "password":"1234"]
         let request = Router.put("/login", payload: payload)
-        if request.HTTPBody == nil {
+        if request.httpBody == nil {
             fail("http body was nil!")
             return
         }
         
-        let body = request.HTTPBody!
+        let body = request.httpBody!
         do {
-            let dictionary = try NSJSONSerialization.JSONObjectWithData(body, options: .MutableContainers) as? [String: String]
+            let dictionary = try JSONSerialization.jsonObject(with: body, options: .mutableContainers) as? [String: String]
             expect(dictionary).to(equal(payload))
         } catch {
             fail("could not deserialize JSON")
@@ -90,7 +90,7 @@ class RouterTest: XCTestCase {
 
     func testRouterDeleteCreatesRequestWithMethod() {
         let request = Router.delete("/me")
-        expect(request.HTTPMethod).to(equal("DELETE"))
+        expect(request.httpMethod).to(equal("DELETE"))
     }
     
     func testRouterAddsOSHeader() {
@@ -122,7 +122,7 @@ class RouterTest: XCTestCase {
         let headers = request.allHTTPHeaderFields!
         let header = headers["X-Tapglue-Timezone"]
         
-        expect(header).to(equal(NSTimeZone.localTimeZone().abbreviation!))
+        expect(header).to(equal(NSTimeZone.localTimeZone().abbreviation()!))
     }
 
     func testRouterAddsDeviceIdHeader() {

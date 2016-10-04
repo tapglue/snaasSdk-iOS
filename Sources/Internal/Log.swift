@@ -12,7 +12,7 @@ class Log {
     static var isDebug = false
 }
 
-func log(log: Any...) {
+func log(_ log: Any...) {
     if Log.isDebug {
         debugPrint(log)
     }

@@ -9,13 +9,13 @@
 import Foundation
 import Mockingjay
 
-public func http(method: HTTPMethod, uri: String, payload: Dictionary<String, AnyObject>) -> (request:NSURLRequest) -> Bool {
-    return { (request: NSURLRequest) in
-        if let body = request.HTTPBody {
+public func http(_ method: HTTPMethod, uri: String, payload: Dictionary<String, AnyObject>) -> (_ request:URLRequest) -> Bool {
+    return { (request: URLRequest) in
+        if let body = request.httpBody {
         do {
-            let dictionary = try NSJSONSerialization.JSONObjectWithData(body, options: .MutableContainers) as? [String: AnyObject]
+            let dictionary = try JSONSerialization.jsonObject(with: body, options: .mutableContainers) as? [String: AnyObject]
             if let dictionary = dictionary {
-                if !NSDictionary(dictionary: payload).isEqualToDictionary(dictionary) {
+                if !NSDictionary(dictionary: payload).isEqual(to: dictionary) {
                     return false
                 }
             } else {

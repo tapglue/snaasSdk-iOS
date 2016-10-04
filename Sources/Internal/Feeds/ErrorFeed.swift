@@ -11,7 +11,7 @@ import ObjectMapper
 class ErrorFeed: Mappable {
     var errors: [TapglueError]?
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     
