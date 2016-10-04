@@ -78,17 +78,20 @@ open class RxTapglue {
     }
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
+    @available(*, deprecated: 2.1)
     open func searchUsersForSearchTerm(_ term: String) -> Observable<[User]> {
         return network.searchUsers(forSearchTerm: term)
     }
     /// Search tapglue for users with emails
     /// - parameter emails: search tapglue for users with emails within this list
+    @available(*, deprecated: 2.1)
     open func searchEmails(_ emails: [String]) -> Observable<[User]> {
         return network.searchEmails(emails)
     }
     /// Search tapglue for users with social ids
     /// - parameter ids: list of ids to search for
     /// - parameter platform: platform name for which the search is performed
+    @available(*, deprecated: 2.1)
     open func searchSocialIds(_ ids: [String], onPlatform platform: String) ->
         Observable<[User]> {
         return network.searchSocialIds(ids, onPlatform: platform)
@@ -107,42 +110,51 @@ open class RxTapglue {
     }
     /// create connections to users by using their ids from another platform
     /// - parameter socialConnections: contains the platform name and list of ids
+    @available(*, deprecated: 2.1)
     open func createSocialConnections(_ socialConnections: SocialConnections) ->
         Observable<[User]> {
         return network.createSocialConnections(socialConnections)
     }
     /// retrieves the followers of the current user
+    @available(*, deprecated: 2.1)
     open func retrieveFollowers() -> Observable<[User]> {
         return network.retrieveFollowers()
     }
     /// retrieves the users followed by the current user
+    @available(*, deprecated: 2.1)
     open func retrieveFollowings() -> Observable<[User]> {
         return network.retrieveFollowings()
     }
     /// retrieves followers for a given user
     /// - parameter id: followers of the user of the given id
+    @available(*, deprecated: 2.1)
     open func retrieveFollowersForUserId(_ id: String) -> Observable<[User]> {
         return network.retrieveFollowersForUserId(id)
     }
     /// retrieves users followed by a given user
     /// - parameter id: followings of the user of the given id
+    @available(*, deprecated: 2.1)
     open func retrieveFollowingsForUserId(_ id: String) -> Observable<[User]> {
         return network.retrieveFollowingsForUserId(id)
     }
     /// retrieve friends for current user
+    @available(*, deprecated: 2.1)
     open func retrieveFriends() -> Observable<[User]> {
         return network.retrieveFriends()
     }
     /// Retrieve friends for a given user
     /// - parameter id: friends of the user with the given id
+    @available(*, deprecated: 2.1)
     open func retrieveFriendsForUserId(_ id: String) -> Observable<[User]> {
         return network.retrieveFriendsForUserId(id)
     }
     /// retrieve pending connections
+    @available(*, deprecated: 2.1)
     open func retrievePendingConnections() -> Observable<Connections> {
         return network.retrievePendingConnections() 
     }
     /// retrieve rejected connections
+    @available(*, deprecated: 2.1)
     open func retrieveRejectedConnections() -> Observable<Connections> {
         return network.retrieveRejectedConnections()
     }
@@ -174,16 +186,19 @@ open class RxTapglue {
     }
     /// retrieve posts created by a user
     /// - parameter userId: id of the user from whom the posts will be retrieved
+    @available(*, deprecated: 2.1)
     open func retrievePostsByUser(_ userId: String) -> Observable<[Post]> {
         return network.retrievePostsByUser(userId)
     }
     /// retrieves all public and global posts
+    @available(*, deprecated: 2.1)
     open func retrieveAllPosts() -> Observable<[Post]> {
         return network.retrieveAllPosts()
     }
     /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
     /// `and` operation
     /// - parameter tags: tags to filter
+    @available(*, deprecated: 2.1)
     open func filterPostsByTags(_ tags: [String]) -> Observable<[Post]> {
         return network.filterPostsByTags(tags)
     }
@@ -192,6 +207,7 @@ open class RxTapglue {
         return network.createComment(comment)
     }
     /// retrieve comments on a post
+    @available(*, deprecated: 2.1)
     open func retrieveComments(_ postId: String) -> Observable<[Comment]> {
         return network.retrieveComments(postId)
     }
@@ -216,6 +232,7 @@ open class RxTapglue {
     }
     /// retrieves likes on a post
     /// - parameter postId: id of the post
+    @available(*, deprecated: 2.1)
     open func retrieveLikes(_ postId: String) -> Observable<[Like]> {
         return network.retrieveLikes(postId)
     }
@@ -225,30 +242,149 @@ open class RxTapglue {
         return network.deleteLike(forPostId: postId)
     }
 
+    @available(*, deprecated: 2.1)
     open func retrieveLikesByUser(_ userId: String) -> Observable<[Like]> {
         return network.retrieveLikesByUser(userId)
     }
     /// Retrieves activities created by a user
     /// - parameter userId: user from whom you want the activities
+    @available(*, deprecated: 2.1)
     open func retrieveActivitiesByUser(_ userId: String) -> Observable<[Activity]> {
         return network.retrieveActivitiesByUser(userId)
     }
     /// retrieves post feed
+    @available(*, deprecated: 2.1)
     open func retrievePostFeed() -> Observable<[Post]> {
         return network.retrievePostFeed()
     }
     /// retrieves activity feed
     /// - note: event feed on the api documentation
+    @available(*, deprecated: 2.1)
     open func retrieveActivityFeed() -> Observable<[Activity]> {
         return network.retrieveActivityFeed()
     }
     /// retrieves news feed
+    @available(*, deprecated: 2.1)
     open func retrieveNewsFeed() -> Observable<NewsFeed> {
         return network.retrieveNewsFeed()
     }
     /// retrieves a feed of activities tageting the current user
+    @available(*, deprecated: 2.1)
     open func retrieveMeFeed() -> Observable<[Activity]> {
         return network.retrieveMeFeed()
+    }
+
+    /// search for users on tapglue
+    /// - parameter searchTerm: term to search for
+    open func searchUsersForSearchTerm(_ term: String) -> Observable<RxPage<User>> {
+        return network.searchUsers(forSearchTerm: term)
+    }
+    /// Search tapglue for users with emails
+    /// - parameter emails: search tapglue for users with emails within this list
+    open func searchEmails(_ emails: [String]) -> Observable<RxPage<User>> {
+        return network.searchEmails(emails)
+    }
+    /// Search tapglue for users with social ids
+    /// - parameter ids: list of ids to search for
+    /// - parameter platform: platform name for which the search is performed
+    open func searchSocialIds(_ ids: [String], onPlatform platform: String) ->
+        Observable<RxPage<User>> {
+        return network.searchSocialIds(ids, onPlatform: platform)
+    }
+
+    /// create connections to users by using their ids from another platform
+    /// - parameter socialConnections: contains the platform name and list of ids
+    open func createSocialConnections(_ socialConnections: SocialConnections) ->
+        Observable<RxPage<User>> {
+        return network.createSocialConnections(socialConnections)
+    }
+
+    /// retrieves the followers of the current user
+    open func retrieveFollowers() -> Observable<RxPage<User>> {
+        return network.retrieveFollowers()
+    }
+
+    /// retrieves the users followed by the current user
+    open func retrieveFollowings() -> Observable<RxPage<User>> {
+        return network.retrieveFollowings()
+    }
+
+    /// retrieves followers for a given user
+    /// - parameter id: followers of the user of the given id
+    open func retrieveFollowersForUserId(_ id: String) -> Observable<RxPage<User>> {
+        return network.retrieveFollowersForUserId(id)
+    }
+    /// retrieves users followed by a given user
+    /// - parameter id: followings of the user of the given id
+    open func retrieveFollowingsForUserId(_ id: String) -> Observable<RxPage<User>> {
+        return network.retrieveFollowingsForUserId(id)
+    }
+    /// retrieve friends for current user
+    open func retrieveFriends() -> Observable<RxPage<User>> {
+        return network.retrieveFriends()
+    }
+    /// Retrieve friends for a given user
+    /// - parameter id: friends of the user with the given id
+    open func retrieveFriendsForUserId(_ id: String) -> Observable<RxPage<User>> {
+        return network.retrieveFriendsForUserId(id)
+    }
+    /// retrieve pending connections
+    open func retrievePendingConnections() -> Observable<RxCompositePage<Connections>> {
+        return network.retrievePendingConnections() 
+    }
+    /// retrieve rejected connections
+    open func retrieveRejectedConnections() -> Observable<RxCompositePage<Connections>> {
+        return network.retrieveRejectedConnections()
+    }
+    /// retrieve posts created by a user
+    /// - parameter userId: id of the user from whom the posts will be retrieved
+    open func retrievePostsByUser(_ userId: String) -> Observable<RxPage<Post>> {
+        return network.retrievePostsByUser(userId)
+    }
+    /// retrieves all public and global posts
+    open func retrieveAllPosts() -> Observable<RxPage<Post>> {
+        return network.retrieveAllPosts()
+    }
+    /// Retrieves posts that have all the tags in the tags list. The query behaves like a logical
+    /// `and` operation
+    /// - parameter tags: tags to filter
+    open func filterPostsByTags(_ tags: [String]) -> Observable<RxPage<Post>> {
+        return network.filterPostsByTags(tags)
+    }
+    /// retrieve comments on a post
+    open func retrieveComments(_ postId: String) -> Observable<RxPage<Comment>> {
+        return network.retrieveComments(postId)
+    }
+    /// retrieves likes on a post
+    /// - parameter postId: id of the post
+    open func retrieveLikes(_ postId: String) -> Observable<RxPage<Like>> {
+        return network.retrieveLikes(postId)
+    }
+
+    open func retrieveLikesByUser(_ userId: String) -> Observable<RxPage<Like>> {
+        return network.retrieveLikesByUser(userId)
+    }
+    /// Retrieves activities created by a user
+    /// - parameter userId: user from whom you want the activities
+    open func retrieveActivitiesByUser(_ userId: String) -> Observable<RxPage<Activity>> {
+        return network.retrieveActivitiesByUser(userId)
+    }
+    /// retrieves post feed
+    open func retrievePostFeed() -> Observable<RxPage<Post>> {
+        return network.retrievePostFeed()
+    }
+    /// retrieves activity feed
+    /// - note: event feed on the api documentation
+    open func retrieveActivityFeed() -> Observable<RxPage<Activity>> {
+        return network.retrieveActivityFeed()
+    }
+    /// retrieves a feed of activities tageting the current user
+    open func retrieveMeFeed() -> Observable<RxPage<Activity>> {
+        return network.retrieveMeFeed()
+    }
+    /// retrieves news feed
+    open func retrieveNewsFeed() -> Observable<RxCompositePage<NewsFeed>> {
+        return network.retrieveNewsFeed()
     }
 
     fileprivate func toCurrentUserMap(_ user: User) -> User {

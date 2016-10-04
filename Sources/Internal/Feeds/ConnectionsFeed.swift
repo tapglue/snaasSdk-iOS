@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-class ConnectionsFeed: NullableFeed {
+class ConnectionsFeed: CompositeFlattenableFeed<Connections> {
     
     var incoming: [Connection]?
     var outgoing: [Connection]?
@@ -17,15 +17,34 @@ class ConnectionsFeed: NullableFeed {
     required init() {
         incoming = [Connection]()
         outgoing = [Connection]()
+        super.init()
     }
     
     required init?(map: Map) {
-        
+        super.init()
     }
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         incoming <- map["incoming"]
         outgoing <- map["outgoing"]
         users <- map["users"]
+        page <- map["paging"]
+    }
+    
+    override func flatten() -> Connections {
+        let connections = Connections()
+        connections.incoming = incoming?.map { connection -> Connection in
+            connection.userFrom = users?.filter { user -> Bool in
+                user.id == connection.userFromId
+                }.first
+            return connection
+        }
+        connections.outgoing = outgoing?.map { connection -> Connection in
+            connection.userTo = users?.filter { user -> Bool in
+                user.id == connection.userToId
+                }.first
+            return connection
+        }
+        return connections
     }
 }

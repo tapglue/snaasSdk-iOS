@@ -9,20 +9,29 @@
 import Foundation
 import ObjectMapper
 
-class CommentFeed: NullableFeed {
+class CommentFeed: FlattenableFeed<Comment> {
     var comments: [Comment]?
     var users: [String: User]?
     
     required init?(map: Map) {
-        
+        super.init()
     }
     
     required init() {
         self.comments = [Comment]()
+        super.init()
     }
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         comments <- map["comments"]
         users <- map["users"]
+    }
+
+    override func flatten() -> [Comment] {
+        let mappedComments = comments?.map { comment -> Comment in
+            comment.user = users?[comment.userId ?? ""]
+            return comment
+        }
+        return mappedComments ?? [Comment]()
     }
 }

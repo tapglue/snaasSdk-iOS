@@ -8,20 +8,29 @@
 
 import ObjectMapper
 
-class PostFeed: NullableFeed {
+class PostFeed: FlattenableFeed<Post> {
     var posts: [Post]?
     var users: [String: User]?
     
     required init() {
         self.posts = [Post]()
+        super.init()
     }
     
     required init?(map: Map) {
-        
+        super.init()
     }
     
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         posts   <- map["posts"]
         users   <- map["users"]
+    }
+
+    override func flatten() -> [Post] {
+        let mappedPosts = posts?.map { post -> Post in
+            post.user = users?[post.userId ?? ""]
+            return post
+        }
+        return mappedPosts ?? [Post]()
     }
 }

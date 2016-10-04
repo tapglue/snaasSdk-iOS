@@ -74,7 +74,8 @@ class LikeTest: XCTestCase {
     
     func testRetrieveLikes() throws {
         let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
-        let likes = try tapglue.retrieveLikes(post.id!).toBlocking().first()!
+        var likes: [Like]
+        likes = try tapglue.retrieveLikes(post.id!).toBlocking().first()!
         
         expect(likes.count).to(equal(1))
         expect(likes.first?.id ?? "").to(equal(createdLike.id!))
@@ -82,7 +83,8 @@ class LikeTest: XCTestCase {
     
     func testRetrieveLikesByUser() throws {
         let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
-        let likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
+        var likes: [Like]
+        likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
         
         expect(likes.count).to(equal(1))
         expect(likes.first?.id ?? "").to(equal(createdLike.id!))
@@ -90,15 +92,43 @@ class LikeTest: XCTestCase {
     
     func testRetrieveLikesByUserMapsUser() throws {
         _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
-        let likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
+        var likes: [Like]
+        likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
         
         expect(likes.first?.user?.id).to(equal(user.id))
     }
     
     func testRetrieveLikesByUserMapsPost() throws {
         _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
-        let likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
+        var likes: [Like]
+        likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
         
         expect(likes.first?.post?.id).to(equal(post.id))
+    }
+    
+    func testPaginatedRetrieveLikes() throws {
+        let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        var likes: RxPage<Like>
+        likes = try tapglue.retrieveLikes(post.id!).toBlocking().first()!
+        
+        expect(likes.data.count).to(equal(1))
+        expect(likes.data.first?.id ?? "").to(equal(createdLike.id!))
+    }
+    
+    func testPaginatedRetrieveLikesByUser() throws {
+        let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        var likes: RxPage<Like>
+        likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
+        
+        expect(likes.data.count).to(equal(1))
+        expect(likes.data.first?.id ?? "").to(equal(createdLike.id!))
+    }
+    
+    func testPaginatedRetrieveLikesByUserMapsUser() throws {
+        _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        var likes: RxPage<Like>
+        likes = try tapglue.retrieveLikesByUser(user.id!).toBlocking().first()!
+        
+        expect(likes.data.first?.user?.id).to(equal(user.id))
     }
 }
