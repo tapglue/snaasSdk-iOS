@@ -56,7 +56,7 @@ class Router {
         request.setValue("iOS", forHTTPHeaderField: "X-Tapglue-OS")
         request.setValue("Apple", forHTTPHeaderField: "X-Tapglue-Manufacturer")
         request.setValue(Router.sdkVersion, forHTTPHeaderField: "X-Tapglue-SDKVersion")
-        request.setValue(NSTimeZone.local.abbreviation() ?? "", 
+        request.setValue(TimeZone.ReferenceType.local.abbreviation() ?? "",
             forHTTPHeaderField: "X-Tapglue-Timezone")
         request.setValue(UIDevice.current.identifierForVendor?.uuidString ?? "", forHTTPHeaderField: "X-Tapglue-IDFV")
         request.setValue(UIDevice.current.tapglueModelName, forHTTPHeaderField: "X-Tapglue-Model")
@@ -91,15 +91,15 @@ class Router {
         return Router(method: .delete, path: path, payload: [:]).urlRequest
     }
 
-    class func getOnURL(url: String) -> NSMutableURLRequest {
-        let request = Router(method: .GET, path: "", payload: [:]).URLRequest
-        request.URL = NSURL(string: url)
+    class func getOnURL(_ url: String) -> URLRequest {
+        var request = Router(method: .get, path: "", payload: [:]).urlRequest
+        request.url = URL(string: url)
         return request
     }
 
-    class func postOnURL(url: String, payload: [String: AnyObject]) -> NSMutableURLRequest {
-        let request = Router(method: .POST, path: "", payload: payload).URLRequest
-        request.URL = NSURL(string: url)
+    class func postOnURL(_ url: String, payload: [String: AnyObject]) -> URLRequest {
+        var request = Router(method: .post, path: "", payload: payload).urlRequest
+        request.url = URL(string: url)
         return request
     }
 

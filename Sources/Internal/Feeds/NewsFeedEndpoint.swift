@@ -20,7 +20,7 @@ class NewsFeedEndpoint: CompositeFlattenableFeed<NewsFeed> {
         super.init()
     }
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         super.init()
     }
     

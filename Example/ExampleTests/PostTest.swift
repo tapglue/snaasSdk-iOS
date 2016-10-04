@@ -164,7 +164,7 @@ class PostTest: XCTestCase {
     }
 
     func testPaginatedRetrieveAllPosts() throws {
-        post.visibility = .Public
+        post.visibility = .public
         let createdPost = try tapglue.createPost(post).toBlocking().first()!
 
         var user2 = User()
@@ -182,7 +182,7 @@ class PostTest: XCTestCase {
     }
     
     func testPaginatedRetrieveAllPostsMapsUsersToPosts() throws {
-        post.visibility = .Public
+        post.visibility = .public
         _ = try tapglue.createPost(post).toBlocking().first()!
         
         var user2 = User()
@@ -201,7 +201,7 @@ class PostTest: XCTestCase {
 
     func testPaginatedFilterPostsByTag() throws {
         post.tags = [tag1]
-        post.visibility = .Public
+        post.visibility = .public
         let createdPost = try tapglue.createPost(post).toBlocking().first()!
 
         var retrievedPosts: RxPage<Post>

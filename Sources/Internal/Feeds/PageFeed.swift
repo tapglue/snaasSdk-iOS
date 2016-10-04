@@ -10,7 +10,7 @@ import ObjectMapper
 
 class PageFeed: Mappable {
     var page: ApiPage?
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     
@@ -22,7 +22,7 @@ class PageFeed: Mappable {
 class ApiPage: Mappable {
     var before: String?
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     

@@ -14,7 +14,7 @@ class LikeFeed: FlattenableFeed<Like> {
     var users: [String: User]?
     var posts: [String: Post]?
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         super.init()
     }
     

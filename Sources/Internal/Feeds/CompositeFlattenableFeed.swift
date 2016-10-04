@@ -15,7 +15,7 @@ class CompositeFlattenableFeed<T: DefaultInstanceEntity>: NullableFeed {
         
     }
  
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         
     }
     

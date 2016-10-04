@@ -23,7 +23,7 @@ class DefaultSimsApi: SimsApi {
     func registerDevice(_ appToken: String, deviceToken: String, sessionToken: String) {
         let authorizationToken = appToken + ":" + sessionToken
         let utf8authToken = authorizationToken.data(using: String.Encoding.utf8)
-        let encodedAuthString = utf8authToken?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue:0))
+        let encodedAuthString = utf8authToken?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue:0))
         let language = Locale.preferredLanguages[0]
         let headers = [
             "Authorization": "Basic " + encodedAuthString!,

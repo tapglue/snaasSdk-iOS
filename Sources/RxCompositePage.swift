@@ -7,22 +7,23 @@
 //
 
 import RxSwift
+import Alamofire
 
-public class RxCompositePage<T: DefaultInstanceEntity> {
-    public var data: T {
+open class RxCompositePage<T: DefaultInstanceEntity> {
+    open var data: T {
         get {
-            return feed.flatten() ?? T()
+            return feed.flatten() 
         }
     }
     
-    public var previous: Observable<RxCompositePage<T>> {
+    open var previous: Observable<RxCompositePage<T>> {
         get {
             return generatePreviousObservable()
         }
     }
     
-    private var feed: CompositeFlattenableFeed<T>
-    private var prevPointer: String?
+    fileprivate var feed: CompositeFlattenableFeed<T>
+    fileprivate var prevPointer: String?
     
     init(feed: CompositeFlattenableFeed<T>, previousPointer: String?) {
         self.feed = feed
@@ -34,10 +35,10 @@ public class RxCompositePage<T: DefaultInstanceEntity> {
         guard let prevPointer = prevPointer else {
             return Observable.just(RxCompositePage<T>(feed: CompositeFlattenableFeed<T>(), previousPointer: nil))
         }
-        var request: NSMutableURLRequest
+        var request: URLRequest
         request = Router.getOnURL(prevPointer)
         
-        return Http().execute(request).map { (feed: CompositeFlattenableFeed<T>) in
+        return Http().execute(request as URLRequestConvertible).map { (feed: CompositeFlattenableFeed<T>) in
             let page = RxCompositePage<T>(feed: feed, previousPointer: feed.page?.before)
             return page
         }

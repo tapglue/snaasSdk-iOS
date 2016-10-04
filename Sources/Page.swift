@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class Page<T> {
+open class Page<T> {
     var rxPage: RxPage<T>
-    public var data: [T] {
+    open var data: [T] {
         get {
-            return rxPage.data ?? [T]()
+            return rxPage.data 
         }
     }
     
@@ -20,7 +20,7 @@ public class Page<T> {
         self.rxPage = rxPage
     }
 
-    public func previous(completionHandler: (page: Page<T>?, error:ErrorType?) -> ()) {
+    open func previous(_ completionHandler: @escaping (Page<T>?, Error?) -> ()) {
         rxPage.previous.map { (rxPage: RxPage<T>) in
             return rxPage.page()
         }.unwrap(completionHandler)

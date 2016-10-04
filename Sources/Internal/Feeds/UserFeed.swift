@@ -12,7 +12,7 @@ import ObjectMapper
 class UserFeed: FlattenableFeed<User> {
     var users: [User]?
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         super.init()
     }
     

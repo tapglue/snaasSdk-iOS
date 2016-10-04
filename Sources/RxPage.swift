@@ -9,20 +9,20 @@
 import RxSwift
 import ObjectMapper
 
-public class RxPage<T> {
-    public var data: [T] {
+open class RxPage<T> {
+    open var data: [T] {
         get {
             return feed.flatten()
         }
     }
-    public var previous: Observable<RxPage<T>> {
+    open var previous: Observable<RxPage<T>> {
         get {
             return generatePreviousObservable()
         }
     }
     
-    private var feed: FlattenableFeed<T>
-    private var prevPointer: String?
+    fileprivate var feed: FlattenableFeed<T>
+    fileprivate var prevPointer: String?
     var payload: [String: AnyObject]?
 
     init(feed: FlattenableFeed<T>, previousPointer: String?) {
@@ -34,7 +34,7 @@ public class RxPage<T> {
         guard let prevPointer = prevPointer else {
             return Observable.just(RxPage<T>(feed: FlattenableFeed<T>(), previousPointer: nil))
         }
-        var request: NSMutableURLRequest
+        var request: URLRequest
         if let payload = payload {
             request = Router.postOnURL(prevPointer, payload: payload)
         } else {

@@ -13,7 +13,7 @@ class CommentFeed: FlattenableFeed<Comment> {
     var comments: [Comment]?
     var users: [String: User]?
     
-    required init?(_ map: Map) {
+    required init?(map: Map) {
         super.init()
     }
     

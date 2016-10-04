@@ -282,32 +282,32 @@ class Network {
 
     func searchUsers(forSearchTerm term: String) -> Observable<RxPage<User>> {
         return http.execute(Router.get("/users/search?q=" +
-                term.stringByAddingPercentEncodingWithAllowedCharacters(
-                    NSCharacterSet.URLHostAllowedCharacterSet())!)).map { (feed:UserFeed) in
+            term.addingPercentEncoding(
+                withAllowedCharacters: CharacterSet.urlHostAllowed)!)).map { (feed:UserFeed) in
                         return feed.rxPage()
                     }
     }
 
-    func searchEmails(emails: [String]) -> Observable<RxPage<User>> {
+    func searchEmails(_ emails: [String]) -> Observable<RxPage<User>> {
         let payload = ["emails": emails]
-        return http.execute(Router.post("/users/search/emails", payload: payload)).map { (feed:UserFeed) in
+        return http.execute(Router.post("/users/search/emails", payload: payload as [String : AnyObject])).map { (feed:UserFeed) in
             return feed.rxPage()
         }
     }
 
-    func searchSocialIds(ids: [String], onPlatform platform: String) ->
+    func searchSocialIds(_ ids: [String], onPlatform platform: String) ->
         Observable<RxPage<User>> {
         let payload = ["ids":ids]
-        return http.execute(Router.post("/users/search/" + platform, payload: payload)).map { 
+        return http.execute(Router.post("/users/search/" + platform, payload: payload as [String : AnyObject])).map { 
             (feed: UserFeed) in
             return feed.rxPage()
         }
     }
 
-    func createSocialConnections(socialConnections: SocialConnections) -> Observable<RxPage<User>>{
+    func createSocialConnections(_ socialConnections: SocialConnections) -> Observable<RxPage<User>>{
         return http.execute(Router.post("/me/connections/social", 
-            payload: socialConnections.toJSON())).map { (feed: UserFeed) in
-                return feed.rxPage(socialConnections.toJSON())
+            payload: socialConnections.toJSON() as [String : AnyObject])).map { (feed: UserFeed) in
+                return feed.rxPage(socialConnections.toJSON() as [String : AnyObject])
             }
     }
     
@@ -323,13 +323,13 @@ class Network {
         }
     }
 
-    func retrieveFollowersForUserId(id: String) -> Observable<RxPage<User>> {
+    func retrieveFollowersForUserId(_ id: String) -> Observable<RxPage<User>> {
         return http.execute(Router.get("/users/" + id + "/followers")).map { (feed:UserFeed) in
             return feed.rxPage()
         }
     }
 
-    func retrieveFollowingsForUserId(id: String) -> Observable<RxPage<User>> {
+    func retrieveFollowingsForUserId(_ id: String) -> Observable<RxPage<User>> {
         return http.execute(Router.get("/users/" + id + "/follows")).map { (feed: UserFeed) in
             return feed.rxPage()
         }
@@ -341,7 +341,7 @@ class Network {
         }
     }
 
-    func retrieveFriendsForUserId(id: String) -> Observable<RxPage<User>> {
+    func retrieveFriendsForUserId(_ id: String) -> Observable<RxPage<User>> {
         return http.execute(Router.get("/users/" + id + "/friends")).map { (feed: UserFeed) in
             return feed.rxPage()
         }
@@ -359,7 +359,7 @@ class Network {
         }
     }
 
-    func retrievePostsByUser(userId: String) -> Observable<RxPage<Post>> {
+    func retrievePostsByUser(_ userId: String) -> Observable<RxPage<Post>> {
         return http.execute(Router.get("/users/" + userId + "/posts")).map { (feed:PostFeed) in
             return feed.rxPage()
         }
@@ -371,35 +371,35 @@ class Network {
         }
     }
 
-    func filterPostsByTags(tags: [String]) -> Observable<RxPage<Post>> {
+    func filterPostsByTags(_ tags: [String]) -> Observable<RxPage<Post>> {
         let tagsObject = PostTagFilter(tags: tags)
         let json = "{\"post\":\(tagsObject.toJSONString() ?? "")}"
-        let query = json.stringByAddingPercentEncodingWithAllowedCharacters(
-                    NSCharacterSet.URLHostAllowedCharacterSet()) ?? ""
+        let query = json.addingPercentEncoding(
+            withAllowedCharacters: CharacterSet.urlHostAllowed) ?? ""
         return http.execute(Router.get("/posts?where=" + query)).map { (feed:PostFeed) in
             return feed.rxPage()
         }
     }
 
-    func retrieveComments(postId: String) -> Observable<RxPage<Comment>> {
+    func retrieveComments(_ postId: String) -> Observable<RxPage<Comment>> {
         return http.execute(Router.get("/posts/" + postId + "/comments")).map { (feed:CommentFeed) in
             return feed.rxPage()
         }
     }
     
-    func retrieveLikes(postId: String) -> Observable<RxPage<Like>> {
+    func retrieveLikes(_ postId: String) -> Observable<RxPage<Like>> {
         return http.execute(Router.get("/posts/" + postId + "/likes")).map { (feed:LikeFeed) in
             return feed.rxPage()
         }
     }
 
-    func retrieveLikesByUser(userId: String) -> Observable<RxPage<Like>> {
+    func retrieveLikesByUser(_ userId: String) -> Observable<RxPage<Like>> {
         return http.execute(Router.get("/users/" + userId + "/likes")).map {(feed: LikeFeed) in
             return feed.rxPage()
         }
     }
 
-    func retrieveActivitiesByUser(userId: String) -> Observable<RxPage<Activity>> {
+    func retrieveActivitiesByUser(_ userId: String) -> Observable<RxPage<Activity>> {
         return retrieveActivitiesOn("/users/" + userId + "/events")
     }
 
@@ -438,7 +438,7 @@ class Network {
         }
     }
 
-    private func retrieveActivitiesOn(path: String) -> Observable<RxPage<Activity>> {
+    fileprivate func retrieveActivitiesOn(_ path: String) -> Observable<RxPage<Activity>> {
         return http.execute(Router.get(path)).map { (feed: ActivityFeed) in
             return feed.rxPage()
         }

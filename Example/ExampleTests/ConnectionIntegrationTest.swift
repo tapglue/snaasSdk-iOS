@@ -272,7 +272,7 @@ class ConnectionIntegrationTest: XCTestCase {
         
         let tg = Tapglue(configuration: Configuration())
         var networkPage: Page<User>?
-        tg.retrieveFollowers() { (page:Page<User>?, error:ErrorType?) in
+        tg.retrieveFollowers() { (page:Page<User>?, error:Error?) in
             networkPage = page
         }
         expect(networkPage).toEventuallyNot(beNil())
@@ -285,8 +285,8 @@ class ConnectionIntegrationTest: XCTestCase {
         
         let tg = Tapglue(configuration: Configuration())
         var secondPage: Page<User>?
-        tg.retrieveFollowers() { (page: Page<User>?, error: ErrorType?) in
-            page?.previous() { (page:Page<User>?, error: ErrorType?) in
+        tg.retrieveFollowers() { (page: Page<User>?, error: Error?) in
+            page?.previous() { (page:Page<User>?, error: Error?) in
                 secondPage = page
             }
         }
