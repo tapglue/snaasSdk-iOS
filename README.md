@@ -120,6 +120,42 @@ When the API request doesn't return an entity the signature will look like:
 (success: Bool, error: ErrorType?) -> ()
 ```
 
+# Pagination
+
+Our SDK provides paginated endpoints. This means you potentially have to paginate through several pages to get all the information from an endpoint. This applies to endpoints that return data in a list form. The previous page represents content older than the current page.
+
+## Callbacks
+
+```swift
+tapglue.retrieveFollowers() { (page:Page<User>?, error:Error?) in
+  
+}
+```
+
+given you have a page and you want the previous:
+
+```swift
+page.previous() { (page:Page<User>?, error: Error?) in
+    secondPage = page
+}
+```
+
+## RxSwift
+
+```swift
+tapglue.retrieveFollowers().subscribe(onNext: {(page:RxPage<User>) in
+ 
+})
+```
+
+given you have a page and you want the previous:
+
+```swift
+page.previous().subscribe(onNext: {(page:RxPage<User>) in
+ 
+})
+```
+
 # Create users
 
 After installing Tapglue into your iOS app, creating users is usually the first thing you need to do, to build the basis for your news feed.
