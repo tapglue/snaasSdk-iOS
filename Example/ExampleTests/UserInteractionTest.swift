@@ -87,4 +87,11 @@ class UserInteractionTest: XCTestCase {
         let user = tapglue.retrieveUser((tapglue.currentUser?.id)!)
         expect(user).toNot(beNil())
     }
+
+    func testUpdateWithMetadata() throws {
+        user.metadata = ["someKey": "someValue"]
+        let updatedUser = try tapglue.updateCurrentUser(user).toBlocking().first()!
+        expect(updatedUser.metadata).toNot(beNil())
+        expect(updatedUser.metadata?["someKey"]).to(equal("someValue"))
+    }
 }

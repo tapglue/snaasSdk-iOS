@@ -26,6 +26,7 @@ open class User: Mappable {
     open var updatedAt: String?
     open var socialIds: [String: String]?
     open var images: [String: Image]?
+    open var metadata: [String: String]?
     
     public init() {
         
@@ -53,8 +54,8 @@ open class User: Mappable {
         about       <- map["about"]
         sessionToken    <- map["session_token"]
         updatedAt   <- map["updated_at"]
+        metadata    <- map["metadata"]
     }
-    
 }
 
 open class Image: Mappable {
