@@ -6,7 +6,7 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import Alamofire
+import Foundation
 
 class Router {
 
@@ -63,13 +63,13 @@ class Router {
         request.setValue(UIDevice.current.systemVersion, forHTTPHeaderField: "X-Tapglue-OSVersion")
         
         if method == .post || method == .put{
-            let convertible = TapglueURLConvertible(request: request)
             do {
-                return try Alamofire.JSONEncoding.default.encode(convertible, with: payload)
+                request.httpBody = try JSONSerialization.data(withJSONObject: payload, options: [])
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                return request
             } catch {
                 return request
             }
-            //return Alamofire.ParameterEncoding.json.encode(request, parameters: payload).0
         } else {
             return request
         }
@@ -107,22 +107,6 @@ class Router {
         self.method = method
         self.path = path
         self.payload = payload
-    }
-}
-
-class TapglueURLConvertible: URLRequestConvertible {
-    var request: URLRequest
-    init(request: URLRequest) {
-        self.request = request
-    }
-    
-    /// Returns a URL request or throws if an `Error` was encountered.
-    ///
-    /// - throws: An `Error` if the underlying `URLRequest` is `nil`.
-    ///
-    /// - returns: A URL request.
-    public func asURLRequest() throws -> URLRequest {
-        return request as URLRequest
     }
 }
 
