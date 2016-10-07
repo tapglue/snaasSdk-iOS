@@ -10,7 +10,7 @@ import ObjectMapper
 
 open class TapglueError: Mappable, Error {
     open var code: Int?
-    open var message: String?
+    open var message: String = "unknown error"
     
     init() {
         

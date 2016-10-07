@@ -8,59 +8,70 @@
 
 import Foundation
 import RxSwift
-import Alamofire
 import ObjectMapper
 
 class Http {
+    private var successCodes: Range<Int> = 200..<299
     
-    func execute<T:Mappable>(_ request: URLRequestConvertible) -> Observable<T> {
+    func execute<T:Mappable>(_ request: URLRequest) -> Observable<T> {
         return Observable.create {observer in
-            Alamofire.request(request)
-                .validate()
-                .debugLog()
-                .responseJSON { (response:DataResponse<Any>) in
-                    log(response.response?.statusCode)
-                    log(response.result.value)
-                    switch(response.result) {
-                    case .success(let value):
-                        log(value)
-                        if let object = Mapper<T>().map(JSONObject: value) {
-                            observer.on(.next(object))
-                        } else {
-                            if let nf = T.self as? NullableFeed.Type {
-                                let defaultObject = nf.init()
-                                observer.on(.next(defaultObject as! T))
-                            }
+            let session = URLSession.shared
+            var task: URLSessionDataTask?
+            
+            log(request)
+            task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
+                let httpResponse = response as! HTTPURLResponse
+                log(response)
+                guard self.successCodes.contains(httpResponse.statusCode) else {
+                    self.handleError(data, onObserver: observer, withDefaultError: error)
+                    return
+                }
+                if let data = data {
+                    let json = self.dataToJSON(data: data)
+                    log(json)
+                    if let object = Mapper<T>().map(JSONObject: json) {
+                        observer.on(.next(object))
+                    } else {
+                        if let nf = T.self as? NullableFeed.Type {
+                            let defaultObject = nf.init()
+                            observer.on(.next(defaultObject as! T))
                         }
-                        observer.on(.completed)
-                    case .failure(let error):
-                        self.handleError(response.data, onObserver: observer, withDefaultError:error)
+                    }
+                    observer.on(.completed)
                 }
             }
+            
+            task?.resume()
+            
             return Disposables.create()
         }
     }
     
-    func execute(_ request:URLRequestConvertible) -> Observable<Void> {
+    func execute(_ request:URLRequest) -> Observable<Void> {
+        
         return Observable.create {observer in
-            Alamofire.request(request)
-                .validate()
-                .debugLog()
-                .responseJSON { response in
-                    log(response.response?.statusCode)
-                    switch(response.result) {
-                    case .success:
-                        observer.on(.completed)
-                    case .failure(let error):
-                        self.handleError(response.data, onObserver: observer, withDefaultError: error)
-                    }
+            let session = URLSession.shared
+            var task: URLSessionDataTask?
+            
+            log(request)
+            task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
+                let httpResponse = response as! HTTPURLResponse
+                log(response)
+                guard self.successCodes.contains(httpResponse.statusCode) else {
+                    self.handleError(data, onObserver: observer, withDefaultError: error)
+                    return
+                }
+                observer.on(.completed)
             }
+            
+            task?.resume()
+            
             return Disposables.create()
         }
     }
 
     fileprivate func handleError<T>(_ data: Data?, onObserver observer: AnyObserver<T>,
-                                withDefaultError error: Error) {
+                                withDefaultError error: Error?) {
         if let data = data {
             let json = String(data: data, encoding: String.Encoding.utf8)!
             if let errorFeed = Mapper<ErrorFeed>().map(JSONString: json) {
@@ -68,8 +79,21 @@ class Http {
                 let tapglueErrors = errorFeed.errors!
                 observer.on(.error(tapglueErrors[0]))
             } else {
-                observer.on(.error(error))
+                if let error = error {
+                    observer.on(.error(error))
+                } else {
+                    observer.on(.error(TapglueError()))
+                }
             }
         }
+    }
+    
+    fileprivate func dataToJSON(data: Data) -> Any? {
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+        } catch let myJSONError {
+            print(myJSONError)
+        }
+        return nil
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import RxSwift
 
 /// Provides a RxSwift interface to the tapglue sdk

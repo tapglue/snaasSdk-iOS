@@ -6,7 +6,6 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import Alamofire
 import RxSwift
 
 class Network {
