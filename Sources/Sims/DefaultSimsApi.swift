@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 class DefaultSimsApi: SimsApi {
     
@@ -27,15 +26,32 @@ class DefaultSimsApi: SimsApi {
         let language = Locale.preferredLanguages[0]
         let headers = [
             "Authorization": "Basic " + encodedAuthString!,
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "Content-Type": "application/json"
         ]
         let parameters = ["token": deviceToken,
                           "platform": environment.rawValue,
                           "language": language] as [String : Any]
-        
+
         let idfv = UIDevice.current.identifierForVendor?.uuidString
-        _ = Alamofire.request(url + deviceRegistrationPath + idfv!, method: HTTPMethod.put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { response in
-            debugPrint(response)
+        let URL = Foundation.URL(string: self.url + self.deviceRegistrationPath + idfv!)!
+
+        var request = URLRequest(url: URL)
+        request.allHTTPHeaderFields = headers
+        request.httpMethod = "put"
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+
+            let session = URLSession.shared
+            var task: URLSessionDataTask?
+            log(request)
+            task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
+                log(response)
+            }
+
+            task?.resume()
+        } catch {
+            return
         }
     }
 }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5202B7671D266A0A0069BA06 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5202B7661D266A0A0069BA06 /* RxSwift.framework */; };
-		5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */; };
 		5207E25E1D884AE1002EB7F3 /* PageFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5207E25D1D884AE1002EB7F3 /* PageFeed.swift */; };
 		5211EB901D40EB890030CF9C /* ErrorFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */; };
 		5211EB931D460F2B0030CF9C /* Tapglue.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 5211EB921D460F2B0030CF9C /* Tapglue.podspec */; };
@@ -72,7 +71,6 @@
 		52D3EFD31D4B5F3A00E1BA77 /* Connections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D3EFD21D4B5F3A00E1BA77 /* Connections.swift */; };
 		52D3EFD51D4B7D2100E1BA77 /* ConnectionsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D3EFD41D4B7D2100E1BA77 /* ConnectionsFeed.swift */; };
 		52D8AE541D21C4B000AC947E /* RxTapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D8AE531D21C4B000AC947E /* RxTapglue.swift */; };
-		52D8AE561D22978400AC947E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; };
 		52D8AE581D22986300AC947E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; };
 		52D8AE5A1D229A3500AC947E /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE551D22978400AC947E /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52D8AE5C1D229A7D00AC947E /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 52D8AE5B1D229A7D00AC947E /* Cartfile */; };
@@ -118,7 +116,6 @@
 
 /* Begin PBXFileReference section */
 		5202B7661D266A0A0069BA06 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
-		5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+Logging.swift"; sourceTree = "<group>"; };
 		5207E25D1D884AE1002EB7F3 /* PageFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageFeed.swift; sourceTree = "<group>"; };
 		5211EB8F1D40EB890030CF9C /* ErrorFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorFeed.swift; sourceTree = "<group>"; };
 		5211EB921D460F2B0030CF9C /* Tapglue.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tapglue.podspec; sourceTree = "<group>"; };
@@ -197,7 +194,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52D8AE561D22978400AC947E /* Alamofire.framework in Frameworks */,
 				52D8AE641D2557E200AC947E /* ObjectMapper.framework in Frameworks */,
 				5202B7671D266A0A0069BA06 /* RxSwift.framework in Frameworks */,
 			);
@@ -338,7 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				52BA9FE81D2FA55A005B4622 /* Feeds */,
-				5202B76D1D26B30E0069BA06 /* Alamofire+Logging.swift */,
 				52E380371D2A847E003A157E /* Router.swift */,
 				528481DB1D2BAFD80090BA29 /* Encoder.swift */,
 				52540EE11D2BE2DC0007A9DB /* Network.swift */,
@@ -480,7 +475,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ObjectMapper.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 			);
@@ -501,7 +495,6 @@
 				5207E25E1D884AE1002EB7F3 /* PageFeed.swift in Sources */,
 				529A3D261D33C5AB0069BF10 /* UIDevice+Tapglue.swift in Sources */,
 				529A3D2E1D34D97F0069BF10 /* Observable+unwrapping.swift in Sources */,
-				5202B76E1D26B30E0069BA06 /* Alamofire+Logging.swift in Sources */,
 				5274A3351D508A1E00C72378 /* ConnectionType.swift in Sources */,
 				52970FAB1D9EA0FE0055E626 /* DefaultInstanceEntity.swift in Sources */,
 				52BA9FEA1D2FA56A005B4622 /* UserFeed.swift in Sources */,
@@ -689,7 +682,7 @@
 				);
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
@@ -716,7 +709,7 @@
 				);
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapglue.Tapglue;

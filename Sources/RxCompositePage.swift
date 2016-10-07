@@ -7,7 +7,6 @@
 //
 
 import RxSwift
-import Alamofire
 
 open class RxCompositePage<T: DefaultInstanceEntity> {
     open var data: T {
@@ -38,7 +37,7 @@ open class RxCompositePage<T: DefaultInstanceEntity> {
         var request: URLRequest
         request = Router.getOnURL(prevPointer)
         
-        return Http().execute(request as URLRequestConvertible).map { (feed: CompositeFlattenableFeed<T>) in
+        return Http().execute(request).map { (feed: CompositeFlattenableFeed<T>) in
             let page = RxCompositePage<T>(feed: feed, previousPointer: feed.page?.before)
             return page
         }

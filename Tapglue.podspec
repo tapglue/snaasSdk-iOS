@@ -11,7 +11,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.0'
   s.source_files = 'Sources/**/*.{swift}'
 
-  s.dependency 'RxSwift', '3.0.0-beta.1'
-  s.dependency 'Alamofire', '4.0.0'
+  s.dependency 'RxSwift', '3.0.0-beta.2'
   s.dependency 'ObjectMapper', '2.0.0'
 end
