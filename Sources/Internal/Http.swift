@@ -76,14 +76,13 @@ class Http {
             let json = String(data: data, encoding: String.Encoding.utf8)!
             if let errorFeed = Mapper<ErrorFeed>().map(JSONString: json) {
                 log(errorFeed.toJSONString())
-                let tapglueErrors = errorFeed.errors!
-                observer.on(.error(tapglueErrors[0]))
-            } else {
-                if let error = error {
-                    observer.on(.error(error))
+                if let tapglueErrors = errorFeed.errors {
+                    observer.on(.error(tapglueErrors[0]))
                 } else {
-                    observer.on(.error(TapglueError()))
+                    observer.on(.error(error ?? TapglueError()))
                 }
+            } else {
+                observer.on(.error(error ?? TapglueError()))
             }
         }
     }
