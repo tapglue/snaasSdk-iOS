@@ -20,24 +20,31 @@ class Http {
             
             log(request)
             task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
-                let httpResponse = response as! HTTPURLResponse
-                log(response)
-                guard self.successCodes.contains(httpResponse.statusCode) else {
+                guard error == nil else {
                     self.handleError(data, onObserver: observer, withDefaultError: error)
                     return
                 }
-                if let data = data {
-                    let json = self.dataToJSON(data: data)
-                    log(json)
-                    if let object = Mapper<T>().map(JSONObject: json) {
-                        observer.on(.next(object))
-                    } else {
-                        if let nf = T.self as? NullableFeed.Type {
-                            let defaultObject = nf.init()
-                            observer.on(.next(defaultObject as! T))
-                        }
+                if let httpResponse = response as? HTTPURLResponse {
+                    log(response)
+                    guard self.successCodes.contains(httpResponse.statusCode) else {
+                        self.handleError(data, onObserver: observer, withDefaultError: error)
+                        return
                     }
-                    observer.on(.completed)
+                    if let data = data {
+                        let json = self.dataToJSON(data: data)
+                        log(json)
+                        if let object = Mapper<T>().map(JSONObject: json) {
+                            observer.on(.next(object))
+                        } else {
+                            if let nf = T.self as? NullableFeed.Type {
+                                let defaultObject = nf.init()
+                                observer.on(.next(defaultObject as! T))
+                            }
+                        }
+                        observer.on(.completed)
+                    }
+                } else {
+                    self.handleError(data, onObserver: observer, withDefaultError: error)
                 }
             }
             
@@ -55,13 +62,20 @@ class Http {
             
             log(request)
             task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
-                let httpResponse = response as! HTTPURLResponse
-                log(response)
-                guard self.successCodes.contains(httpResponse.statusCode) else {
+                guard error == nil else {
                     self.handleError(data, onObserver: observer, withDefaultError: error)
                     return
                 }
-                observer.on(.completed)
+                if let httpResponse = response as? HTTPURLResponse {
+                    log(response)
+                    guard self.successCodes.contains(httpResponse.statusCode) else {
+                        self.handleError(data, onObserver: observer, withDefaultError: error)
+                        return
+                    }
+                    observer.on(.completed)
+                } else {
+                    self.handleError(data, onObserver: observer, withDefaultError: error)
+                }
             }
             
             task?.resume()
