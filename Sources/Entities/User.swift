@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-open class User: Mappable {
+open class User: NSObject, Mappable {
     open var username: String?
     open var password: String?
     open var email: String?
@@ -28,7 +28,7 @@ open class User: Mappable {
     open var images: [String: Image]?
     open var metadata: [String: String]?
     
-    public init() {
+    public override init() {
         
     }
     
