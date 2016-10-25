@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 /// Provides a RxSwift interface to the tapglue sdk
-open class RxTapglue {
+open class RxTapglue: NSObject {
     
     var userStore = UserStore()
     
@@ -30,7 +30,7 @@ open class RxTapglue {
         Router.configuration = configuration
         Log.isDebug = configuration.log
         network = Network()
-        
+        super.init()
         if let sessionToken = currentUser?.sessionToken {
             Router.sessionToken = sessionToken
         }

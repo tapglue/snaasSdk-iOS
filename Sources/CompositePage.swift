@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class CompositePage<T: DefaultInstanceEntity> {
+open class CompositePage<T: DefaultInstanceEntity>: NSObject {
     open var data: T {
         get {
             return rxPage.data 

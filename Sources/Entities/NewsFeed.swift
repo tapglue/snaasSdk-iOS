@@ -8,11 +8,11 @@
 
 import Foundation
 
-open class NewsFeed: DefaultInstanceEntity {
+open class NewsFeed: NSObject, DefaultInstanceEntity {
     var activities: [Activity]?
     var posts: [Post]?
     
-    required public init() {
+    required public override init() {
         activities = [Activity]()
         posts = [Post]()
     }

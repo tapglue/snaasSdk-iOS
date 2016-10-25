@@ -10,7 +10,7 @@ import ObjectMapper
 
 /// Social connections payload used to create social connections from another social network
 /// on tapglue.
-open class SocialConnections: Mappable {
+open class SocialConnections: NSObject, Mappable {
     var platform: String?
     var type: ConnectionType?
     var userSocialId: String?

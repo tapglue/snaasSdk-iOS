@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-open class Activity: Mappable {
+open class Activity: NSObject, Mappable {
     open var id: String?
     open var type: String?
     open var language: String?
@@ -29,7 +29,7 @@ open class Activity: Mappable {
     open var createdAt: String?
     open var updatedAt: String?
 
-    init(){}
+    override init(){}
 
     required public init?(map: Map) {
     }

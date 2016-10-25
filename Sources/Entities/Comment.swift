@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-open class Comment: Mappable {
+open class Comment: NSObject, Mappable {
     open var id: String?
     open var postId: String?
     open var externalId: String?

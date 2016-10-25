@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-open class Like: Mappable {
+open class Like: NSObject, Mappable {
     open var id: String?
     open var postId: String?
     open var externalId: String?

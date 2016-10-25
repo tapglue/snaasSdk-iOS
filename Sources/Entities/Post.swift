@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-open class Post: Mappable {
+open class Post: NSObject, Mappable {
     open var id: String?
     open var visibility: Visibility?
     open var tags: [String]?

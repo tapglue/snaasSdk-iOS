@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 /// Main interface to the taplgue SDK
-open class Tapglue {
+open class Tapglue: NSObject {
     let disposeBag = DisposeBag()
     let rxTapglue: RxTapglue
     

@@ -9,7 +9,7 @@
 import ObjectMapper
 
 /// Entity that represents a connection on tapglue.
-open class Connection: Mappable {
+open class Connection: NSObject, Mappable {
     open var userToId: String?
     open var userFromId: String?
     open var type: ConnectionType?

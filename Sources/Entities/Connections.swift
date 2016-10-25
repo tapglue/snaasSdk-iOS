@@ -7,13 +7,13 @@
 //
 
 /// List of connections
-open class Connections: DefaultInstanceEntity {
+open class Connections: NSObject, DefaultInstanceEntity {
     /// connections that were created by other users
     open var incoming: [Connection]?
     /// connections that were created by current user
     open var outgoing: [Connection]?
     
-    required public init() {
+    required public override init() {
         
     }
 }

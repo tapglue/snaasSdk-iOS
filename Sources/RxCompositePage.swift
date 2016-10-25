@@ -8,7 +8,7 @@
 
 import RxSwift
 
-open class RxCompositePage<T: DefaultInstanceEntity> {
+open class RxCompositePage<T: DefaultInstanceEntity>: NSObject {
     open var data: T {
         get {
             return feed.flatten() 
