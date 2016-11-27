@@ -9,21 +9,14 @@
 import RxSwift
 
 class Network {
-    static var analyticsSent = false
     let http = Http()
 
     init() {
-        if !Network.analyticsSent {
-            Network.analyticsSent = true
-            http.execute(Router.post("/analytics", payload: [:])).subscribe(onError: { error in
-                Network.analyticsSent = false
-            }).addDisposableTo(DisposeBag())
-        }
     }
     
     func loginUser(_ username: String, password:String) -> Observable<User> {
         let payload = ["user_name": username, "password": password]
-        return http.execute(Router.post("/users/login", payload: payload as [String : AnyObject]))
+        return http.execute(Router.post("/me/login", payload: payload as [String : AnyObject]))
             .map { (user:User) in
                 Router.sessionToken = user.sessionToken ?? ""
                 return user
@@ -32,7 +25,7 @@ class Network {
 
     func loginUserWithEmail(_ email: String, password: String) -> Observable<User> {
         let payload = ["email": email, "password": password]
-        return http.execute(Router.post("/users/login", payload: payload as [String : AnyObject]))
+        return http.execute(Router.post("/me/login", payload: payload as [String : AnyObject]))
             .map { (user:User) in
                 Router.sessionToken = user.sessionToken ?? ""
                 return user
