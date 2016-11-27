@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'Tapglue'
-  s.version  = '2.2.4'
+  s.version  = '2.2.5'
   s.license  = 'Apache License, Version 2.0'
   s.summary  = 'Tapglue enables mobile developers to create products with a social graph and a news feed in hours instead of weeks.'
   s.homepage = 'https://developers.tapglue.com/docs/ios'
@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.0'
   s.source_files = 'Sources/**/*.{swift}'
 
-  s.dependency 'RxSwift', '3.0.0-beta.2'
+  s.dependency 'RxSwift', '3.0.1'
   s.dependency 'ObjectMapper', '2.0.0'
 end

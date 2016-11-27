@@ -25,14 +25,14 @@ class Http {
                     return
                 }
                 if let httpResponse = response as? HTTPURLResponse {
-                    log(response)
+                    log(response ?? "HTTP: no response")
                     guard self.successCodes.contains(httpResponse.statusCode) else {
                         self.handleError(data, onObserver: observer, withDefaultError: error)
                         return
                     }
                     if let data = data {
                         let json = self.dataToJSON(data: data)
-                        log(json)
+                        log(json ?? "HTTP: no json to print")
                         if let object = Mapper<T>().map(JSONObject: json) {
                             observer.on(.next(object))
                         } else {
@@ -67,7 +67,7 @@ class Http {
                     return
                 }
                 if let httpResponse = response as? HTTPURLResponse {
-                    log(response)
+                    log(response ?? "HTTP: no response")
                     guard self.successCodes.contains(httpResponse.statusCode) else {
                         self.handleError(data, onObserver: observer, withDefaultError: error)
                         return
@@ -89,7 +89,7 @@ class Http {
         if let data = data {
             let json = String(data: data, encoding: String.Encoding.utf8)!
             if let errorFeed = Mapper<ErrorFeed>().map(JSONString: json) {
-                log(errorFeed.toJSONString())
+                log(errorFeed.toJSONString() ?? "HTTP: no error json to print")
                 if let tapglueErrors = errorFeed.errors {
                     observer.on(.error(tapglueErrors[0]))
                 } else {

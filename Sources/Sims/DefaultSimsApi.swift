@@ -46,7 +46,7 @@ class DefaultSimsApi: SimsApi {
             var task: URLSessionDataTask?
             log(request)
             task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
-                log(response)
+                log(response ?? "SIMS: no response")
             }
 
             task?.resume()
