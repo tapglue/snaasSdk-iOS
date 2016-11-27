@@ -316,14 +316,6 @@ open class Tapglue {
         rxTapglue.retrieveLikesByUser(userId).unwrap(completionHandler)
     }
 
-    /// Retrieves activities created by a user
-    /// - parameter userId: user from whom you want the activities
-    @available(*, deprecated: 2.1)
-    open func retrieveActivitiesByUser(_ userId: String, completionHandler: @escaping
-        (_ activities:[Activity]?, _ error: Error?) -> ()) {
-        rxTapglue.retrieveActivitiesByUser(userId).unwrap(completionHandler)
-    }
-
     /// retrieves post feed
     /// - parameter completionHander: where the callbacks will be made
     @available(*, deprecated: 2.1)
@@ -516,15 +508,6 @@ open class Tapglue {
     open func retrieveLikesByUser(_ userId: String, 
         completionHandler: @escaping (Page<Like>?, Error?) -> ()) {
         rxTapglue.retrieveLikesByUser(userId).map { (rxPage: RxPage<Like>) in
-            return rxPage.page()
-        }.unwrap(completionHandler)
-    }
-
-    /// Retrieves activities created by a user
-    /// - parameter userId: user from whom you want the activities
-    open func retrieveActivitiesByUser(_ userId: String, completionHandler: @escaping
-        (Page<Activity>?, Error?) -> ()) {
-        rxTapglue.retrieveActivitiesByUser(userId).map { (rxPage: RxPage<Activity>) in
             return rxPage.page()
         }.unwrap(completionHandler)
     }

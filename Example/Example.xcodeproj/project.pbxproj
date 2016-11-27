@@ -19,7 +19,6 @@
 		5274A32E1D4F3F0000C72378 /* SearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A32D1D4F3F0000C72378 /* SearchTest.swift */; };
 		5274A33C1D521C9D00C72378 /* FeedTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A33B1D521C9D00C72378 /* FeedTest.swift */; };
 		528079CA1D477E6B000194AC /* ConnectionIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079C91D477E6B000194AC /* ConnectionIntegrationTest.swift */; };
-		52963E0F1D257B720008CEF8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963E081D257B720008CEF8 /* Alamofire.framework */; };
 		52963E111D257B720008CEF8 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963E0A1D257B720008CEF8 /* ObjectMapper.framework */; };
 		52963E441D2584C20008CEF8 /* Tapglue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963DA91D25699C0008CEF8 /* Tapglue.framework */; };
 		52963E451D2584C20008CEF8 /* Tapglue.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52963DA91D25699C0008CEF8 /* Tapglue.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -103,7 +102,6 @@
 		5274A33B1D521C9D00C72378 /* FeedTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTest.swift; sourceTree = "<group>"; };
 		528079C91D477E6B000194AC /* ConnectionIntegrationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionIntegrationTest.swift; sourceTree = "<group>"; };
 		52963DA31D25699C0008CEF8 /* Tapglue.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tapglue.xcodeproj; path = ../Tapglue.xcodeproj; sourceTree = "<group>"; };
-		52963E081D257B720008CEF8 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		52963E0A1D257B720008CEF8 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		529A3D311D35140B0069BF10 /* LoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTest.swift; sourceTree = "<group>"; };
 		52F3F0801D3532CC00762963 /* UserInteractionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractionTest.swift; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52963E0F1D257B720008CEF8 /* Alamofire.framework in Frameworks */,
 				52963E111D257B720008CEF8 /* ObjectMapper.framework in Frameworks */,
 				5202B76C1D266A920069BA06 /* RxSwift.framework in Frameworks */,
 				52963E441D2584C20008CEF8 /* Tapglue.framework in Frameworks */,
@@ -142,7 +139,6 @@
 				5215FB6B1D3516EE00142FCE /* Nimble.framework */,
 				5215FB681D35152700142FCE /* RxBlocking.framework */,
 				5202B76B1D266A920069BA06 /* RxSwift.framework */,
-				52963E081D257B720008CEF8 /* Alamofire.framework */,
 				52963E0A1D257B720008CEF8 /* ObjectMapper.framework */,
 				52963DA31D25699C0008CEF8 /* Tapglue.xcodeproj */,
 				526B17721D2567DE0086EF95 /* Example */,
@@ -338,7 +334,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/ObjectMapper.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
 			);
