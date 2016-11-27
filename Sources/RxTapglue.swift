@@ -363,11 +363,6 @@ open class RxTapglue {
     open func retrieveLikesByUser(_ userId: String) -> Observable<RxPage<Like>> {
         return network.retrieveLikesByUser(userId)
     }
-    /// Retrieves activities created by a user
-    /// - parameter userId: user from whom you want the activities
-    open func retrieveActivitiesByUser(_ userId: String) -> Observable<RxPage<Activity>> {
-        return network.retrieveActivitiesByUser(userId)
-    }
     /// retrieves post feed
     open func retrievePostFeed() -> Observable<RxPage<Post>> {
         return network.retrievePostFeed()
