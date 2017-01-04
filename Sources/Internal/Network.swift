@@ -208,6 +208,14 @@ class Network {
         let like = Like(postId: postId)
         return http.execute(Router.post("/posts/" + postId + "/likes", payload: like.toJSON() as [String : AnyObject]))
     }
+
+    func createReaction(_ reaction: Reaction, forPostId postId: String) -> Observable<Void> {
+        return http.execute(Router.post("/posts/" + postId + "/reactions/" + reaction.rawValue, payload: [:]))
+    }
+
+    func deleteReaction(_ reaction: Reaction, forPostId postId: String) -> Observable<Void> {
+        return http.execute(Router.delete("/posts/" + postId + "/reactions/" + reaction.rawValue))
+    }
     
     func retrieveLikes(_ postId: String) -> Observable<[Like]> {
         return http.execute(Router.get("/posts/" + postId + "/likes")).map { (likeFeed:LikeFeed) in

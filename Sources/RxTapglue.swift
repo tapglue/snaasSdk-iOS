@@ -226,8 +226,23 @@ open class RxTapglue {
     }
     /// creates like
     /// - parameter postId: post to be liked
+    @available(*, deprecated: 2.2)
     open func createLike(forPostId postId: String) -> Observable<Like> {
         return network.createLike(forPostId: postId)
+    }
+    /// creates reaction on a post
+    /// - parameter reaction: the reaction to be created. Check corresponding class for more 
+    /// information
+    /// - forPostId: post on which the reaction is created
+    open func createReaction(_ reaction: Reaction, forPostId postId: String) -> Observable<Void> {
+        return network.createReaction(reaction, forPostId: postId);
+    }
+    /// deletes reaction
+    /// - parameter reaction: the reaction to be deleted. Check corresponding class for more 
+    /// information
+    /// - forPostId: post on which the reaction is deleted
+    open func deleteReaction(_ reaction: Reaction, forPostId postId: String) -> Observable<Void> {
+        return network.deleteReaction(reaction, forPostId: postId)
     }
     /// retrieves likes on a post
     /// - parameter postId: id of the post

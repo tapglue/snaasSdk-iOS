@@ -42,7 +42,7 @@ class LikeTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         do {
-            try tapglue.loginUser(username, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username, password: password).toBlocking().first()
             
             try tapglue.deletePost(post.id!).toBlocking().first()
             
@@ -56,6 +56,63 @@ class LikeTest: XCTestCase {
         let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
         expect(createdLike).toNot(beNil())
     }
+
+    func testCreateLikeReaction() throws {
+        var wasLiked = false
+        _ = tapglue.createReaction(.like, forPostId: post.id!).subscribe(onCompleted: {
+            wasLiked = true
+        })
+        expect(wasLiked).toEventually(beTrue())
+    }
+
+    func testCreateLoveReaction() throws {
+        var wasLiked = false
+        _ = tapglue.createReaction(.love, forPostId: post.id!).subscribe(onCompleted: {
+            wasLiked = true
+        })
+        expect(wasLiked).toEventually(beTrue())
+    }
+
+    func testCreateHahaReaction() throws {
+        var wasLiked = false
+        _ = tapglue.createReaction(.haha, forPostId: post.id!).subscribe(onCompleted: {
+            wasLiked = true
+        })
+        expect(wasLiked).toEventually(beTrue())
+    }
+
+    func testCreateAngryReaction() throws {
+        var wasLiked = false
+        _ = tapglue.createReaction(.angry, forPostId: post.id!).subscribe(onCompleted: {
+            wasLiked = true
+        })
+        expect(wasLiked).toEventually(beTrue())
+    }
+
+    func testCreateSadReaction() throws {
+        var wasLiked = false
+        _ = tapglue.createReaction(.sad, forPostId: post.id!).subscribe(onCompleted: {
+            wasLiked = true
+        })
+        expect(wasLiked).toEventually(beTrue())
+    }
+
+    func testCreateWowReaction() throws {
+        var wasLiked = false
+        _ = tapglue.createReaction(.wow, forPostId: post.id!).subscribe(onCompleted: {
+            wasLiked = true
+        })
+        expect(wasLiked).toEventually(beTrue())
+    }
+
+    func testDeleteLikeReaction() throws {
+        var wasDeleted = false
+        _ = try tapglue.createReaction(.like, forPostId: post.id!).toBlocking().first()
+        _ = tapglue.deleteReaction(.like, forPostId: post.id!).subscribe(onCompleted: {
+            wasDeleted = true
+        })
+        expect(wasDeleted).toEventually(beTrue())
+    }
     
     func testLikeCount() throws {
         _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
@@ -66,9 +123,9 @@ class LikeTest: XCTestCase {
     func testDeleteLike() throws {
         let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
         var wasDeleted = false
-        _ = tapglue.deleteLike(forPostId: createdLike.postId!).subscribeCompleted {
+        _ = tapglue.deleteLike(forPostId: createdLike.postId!).subscribe(onCompleted: {
             wasDeleted = true
-        }
+        })
         expect(wasDeleted).toEventually(beTrue())
     }
     
