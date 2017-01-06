@@ -291,6 +291,7 @@ open class Tapglue {
     /// creates like
     /// - parameter postId: post to be liked
     /// - parameter completionHander: where the callbacks will be made
+    @available(*, deprecated: 2.2)
     open func createLike(forPostId postId: String, completionHandler: @escaping (_ like: Like?, _ error: Error?) -> ()) {
         rxTapglue.createLike(forPostId: postId).unwrap(completionHandler)
     }
