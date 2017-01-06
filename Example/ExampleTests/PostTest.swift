@@ -41,7 +41,7 @@ class PostTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         do {
-            try tapglue.loginUser(username, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
         } catch {
             fail("failed to login and delete user for integration tests")
@@ -50,9 +50,9 @@ class PostTest: XCTestCase {
     
     func testCreatePost() {
         var networkPost: Post?
-        _ = tapglue.createPost(post).subscribeNext { post in
+        _ = tapglue.createPost(post).subscribe(onNext: { post in
             networkPost = post
-        }
+        })
         
         expect(networkPost?.id).toEventuallyNot(beNil())
     }
@@ -61,9 +61,9 @@ class PostTest: XCTestCase {
         let networkPost = try tapglue.createPost(post).toBlocking().first()!
 
         var wasDeleted = false
-        _ = tapglue.deletePost(networkPost.id!).subscribeCompleted {
+        _ = tapglue.deletePost(networkPost.id!).subscribe(onCompleted: {
             wasDeleted = true
-        }
+        })
 
         expect(wasDeleted).toEventually(beTrue())
     }

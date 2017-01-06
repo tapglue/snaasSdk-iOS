@@ -47,10 +47,10 @@ class ConnectionIntegrationTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         do {
-            try tapglue.loginUser(username1, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username1, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
             
-            try tapglue.loginUser(username2, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username2, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
         } catch {
             fail("failed to login and delete user for integration tests")
@@ -63,9 +63,9 @@ class ConnectionIntegrationTest: XCTestCase {
         expect(connection).toEventuallyNot(beNil())
         
         var wasDeleted = false
-        _ = tapglue.deleteConnection(toUserId: user2.id!, type: .Follow).subscribeCompleted {
+        _ = tapglue.deleteConnection(toUserId: user2.id!, type: .Follow).subscribe(onCompleted: {
             wasDeleted = true
-        }
+        })
         expect(wasDeleted).toEventually(beTrue())
     }
     
@@ -238,7 +238,7 @@ class ConnectionIntegrationTest: XCTestCase {
     
     func testPaginatedFollowers() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         
         let page = try (tapglue.retrieveFollowers() as Observable<RxPage<User>>).toBlocking().first()!
@@ -256,7 +256,7 @@ class ConnectionIntegrationTest: XCTestCase {
     
     func testPaginatedFollowersPreviousPage() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         
         let page = try (tapglue.retrieveFollowers() as Observable<RxPage<User>>).toBlocking().first()!
@@ -267,7 +267,7 @@ class ConnectionIntegrationTest: XCTestCase {
     
     func testPaginatedFollowersCompletionHandler() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         
         let tg = Tapglue(configuration: Configuration())
@@ -280,7 +280,7 @@ class ConnectionIntegrationTest: XCTestCase {
     
     func testPaginatedFollowersPreviousPageCompletionHandler() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         
         let tg = Tapglue(configuration: Configuration())
@@ -296,7 +296,7 @@ class ConnectionIntegrationTest: XCTestCase {
     
     func testPaginatedFollowings() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
         
         let page = try (tapglue.retrieveFollowings() as Observable<RxPage<User>>)
             .toBlocking().first()!

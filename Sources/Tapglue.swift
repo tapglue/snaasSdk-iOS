@@ -294,6 +294,24 @@ open class Tapglue {
     open func createLike(forPostId postId: String, completionHandler: @escaping (_ like: Like?, _ error: Error?) -> ()) {
         rxTapglue.createLike(forPostId: postId).unwrap(completionHandler)
     }
+
+    /// creates reaction on a post
+    /// - parameter reaction: the reaction to be created. Check corresponding class for more 
+    /// information
+    /// - forPostId: post on which the reaction is created
+    open func createReaction(_ reaction: Reaction, forPostId postId: String, completionHandler:
+        @escaping (_ success: Bool, _ error: Error?) -> ()) {
+        rxTapglue.createReaction(reaction, forPostId: postId).unwrap(completionHandler)
+    }
+
+    /// deletes reaction
+    /// - parameter reaction: the reaction to be deleted. Check corresponding class for more 
+    /// information
+    /// - forPostId: post on which the reaction is deleted
+    open func deleteReaction(_ reaction: Reaction, forPostId postId: String, completionHandler:
+        @escaping (_ success: Bool, _ error: Error?) -> ()) {
+        rxTapglue.deleteReaction(reaction, forPostId: postId).unwrap(completionHandler)
+    }
     
     /// retrieves likes on a post
     /// - parameter postId: id of the post
