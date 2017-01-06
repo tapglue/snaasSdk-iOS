@@ -42,7 +42,7 @@ class CommentTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         do {
-            try tapglue.loginUser(username, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username, password: password).toBlocking().first()
             
             try tapglue.deletePost(post.id!).toBlocking().first()
             
@@ -69,9 +69,9 @@ class CommentTest: XCTestCase {
         let comment = Comment(contents: ["en":"content"], postId: post.id!)
         let createdComment = try tapglue.createComment(comment).toBlocking().first()!
         var wasDeleted = false
-        _ = tapglue.deleteComment(forPostId: createdComment.postId!, commentId: createdComment.id!).subscribeCompleted {
+        _ = tapglue.deleteComment(forPostId: createdComment.postId!, commentId: createdComment.id!).subscribe(onCompleted: {
             wasDeleted = true
-        }
+        })
         expect(wasDeleted).toEventually(beTrue())
     }
     

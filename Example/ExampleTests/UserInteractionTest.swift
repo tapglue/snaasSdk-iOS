@@ -35,7 +35,7 @@ class UserInteractionTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         do {
-            try tapglue.loginUser(username, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
         } catch {
             fail("failed to login and delete user for integration tests")
@@ -44,17 +44,17 @@ class UserInteractionTest: XCTestCase {
     
     func testLogout() {
         var wasLoggedOut = false
-        _ = tapglue.logout().subscribeCompleted {
+        _ = tapglue.logout().subscribe(onCompleted: {
             wasLoggedOut = true
-        }
+        })
         expect(wasLoggedOut).toEventually(beTrue())
     }
     
     func testRefreshCurrentUser() {
         var wasRefreshed = false
-        _ = tapglue.refreshCurrentUser().subscribeNext { user in
+        _ = tapglue.refreshCurrentUser().subscribe(onNext: { user in
             wasRefreshed = true
-        }
+        })
         expect(wasRefreshed).toEventually(beTrue())
     }
     
@@ -69,16 +69,15 @@ class UserInteractionTest: XCTestCase {
     }
     
     func testLogoutDeletesCurrentUserProperty() throws {
-        print(tapglue.currentUser?.username)
         try tapglue.logout().toBlocking().first()
         expect(self.tapglue.currentUser).to(beNil())
     }
     
     func testUserLoginError() {
         var tapglueError: TapglueError?
-        _ = tapglue.loginUser(username, password: "wrongPassword").subscribeError { error in
+        _ = tapglue.loginUser(username, password: "wrongPassword").subscribe(onError: { error in
             tapglueError = error as? TapglueError
-        }
+        })
         
         expect(tapglueError?.code ?? -1).toEventually(equal(0))
     }

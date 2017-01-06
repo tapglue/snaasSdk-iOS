@@ -41,10 +41,10 @@ class FeedTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         do {
-            try tapglue.loginUser(username1, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username1, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
             
-            try tapglue.loginUser(username2, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username2, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
         } catch {
             fail("failed to login and delete user for integration tests")
@@ -98,7 +98,7 @@ class FeedTest: XCTestCase {
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
             state: .Confirmed)).toBlocking().first()
-        try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
         
         // login as user 1 and read activity feed
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
@@ -162,7 +162,7 @@ class FeedTest: XCTestCase {
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
             state: .Confirmed)).toBlocking().first()
-        try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
         
         // login as user 1 and read news feed
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
@@ -233,7 +233,7 @@ class FeedTest: XCTestCase {
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
             state: .Confirmed)).toBlocking().first()
-        try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+        _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
         
         // login as user 1 and read activity feed
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
@@ -312,7 +312,9 @@ class FeedTest: XCTestCase {
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
         _ = try tapglue.createConnection(Connection(toUserId: user1.id!, type: .Follow,
             state: .Confirmed)).toBlocking().first()
-        try tapglue.createLike(forPostId: post.id!).toBlocking().first()!
+
+        //_ = try tapglue.createReaction(.like, forPostId: post.id!).toBlocking().first()
+        _ = try tapglue.createLike(forPostId: post.id!).toBlocking().first()
         
         // login as user 1 and read news feed
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!

@@ -47,10 +47,10 @@ class SearchTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         do {
-            try tapglue.loginUser(username1, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username1, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
             
-            try tapglue.loginUser(username2, password: password).toBlocking().first()
+            _ = try tapglue.loginUser(username2, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
         } catch {
             fail("failed to login and delete user for integration tests")
@@ -60,18 +60,18 @@ class SearchTest: XCTestCase {
     func testUserSearchWithNoResults() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchUsersForSearchTerm("someTerm").subscribeNext { users in
+        _ = tapglue.searchUsersForSearchTerm("someTerm").subscribe(onNext: { users in
             searchResult = users
-        }
+        })
         expect(searchResult?.count).toEventually(equal(0))
     }
     
     func testUserSearchWithResult() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchUsersForSearchTerm(username2).subscribeNext { users in
+        _ = tapglue.searchUsersForSearchTerm(username2).subscribe(onNext: { users in
             searchResult = users
-        }
+        })
         expect(searchResult?.count).toEventually(equal(1))
         expect(searchResult?.first?.username).toEventually(equal(username2))
     }
@@ -79,45 +79,45 @@ class SearchTest: XCTestCase {
     func testUserSearchWithInvalidPath() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchUsersForSearchTerm("jasd jkshad").subscribeNext { users in
+        _ = tapglue.searchUsersForSearchTerm("jasd jkshad").subscribe(onNext: { users in
             searchResult = users
-        }
+        })
         expect(searchResult?.count).toEventually(equal(0))
     }
     
     func testEmailSearchWithNoResults() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchEmails(["somerandom@email.com"]).subscribeNext { users in
+        _ = tapglue.searchEmails(["somerandom@email.com"]).subscribe(onNext: { users in
             searchResult = users
-        }
+        })
         expect(searchResult?.count).toEventually(equal(0))
     }
     
     func testEmailSearchWithResult() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchEmails([email2]).subscribeNext { users in
+        _ = tapglue.searchEmails([email2]).subscribe(onNext: { users in
             searchResult = users
-        }
+        })
         expect(searchResult?.count).toEventually(equal(1))
     }
     
     func testSocialIdSearchWithNoResults() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchSocialIds(["someRandomSocialId"], onPlatform: socialPlatform).subscribeNext { users in
+        _ = tapglue.searchSocialIds(["someRandomSocialId"], onPlatform: socialPlatform).subscribe(onNext: { users in
             searchResult = users
-        }
+        })
         expect(searchResult?.count).toEventually(equal(0))
     }
     
     func testSocialIdSearchWithResult() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: [User]?
-        _ = tapglue.searchSocialIds([socialId2], onPlatform: socialPlatform).subscribeNext { users in
+        _ = tapglue.searchSocialIds([socialId2], onPlatform: socialPlatform).subscribe(onNext: { users in
             searchResult = users
-        }
+        })
         expect(searchResult?.count).toEventually(equal(1))
     }
     

@@ -88,6 +88,16 @@ class LikeTest: XCTestCase {
         })
         expect(wasLiked).toEventually(beTrue())
     }
+    
+    func testReactionParsedInPost() throws {
+        var wasLiked = false
+        _ = tapglue.createReaction(.love, forPostId: post.id!).subscribe(onCompleted: {
+            wasLiked = true
+        })
+        expect(wasLiked).toEventually(beTrue())
+        let retrievedPost = try tapglue.retrievePost(post.id!).toBlocking().first()!
+        expect(retrievedPost.reactions?[.love]).to(equal(1))
+    }
 
     func testCreateSadReaction() throws {
         var wasLiked = false
