@@ -265,35 +265,6 @@ class ConnectionIntegrationTest: XCTestCase {
         expect(prevPage.data).toNot(beNil())
     }
     
-    func testPaginatedFollowersCompletionHandler() throws {
-        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
-        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
-        
-        let tg = Tapglue(configuration: Configuration())
-        var networkPage: Page<User>?
-        tg.retrieveFollowers() { (page:Page<User>?, error:Error?) in
-            networkPage = page
-        }
-        expect(networkPage).toEventuallyNot(beNil())
-    }
-    
-    func testPaginatedFollowersPreviousPageCompletionHandler() throws {
-        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()
-        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
-        
-        let tg = Tapglue(configuration: Configuration())
-        var secondPage: Page<User>?
-        tg.retrieveFollowers() { (page: Page<User>?, error: Error?) in
-            page?.previous() { (page:Page<User>?, error: Error?) in
-                secondPage = page
-            }
-        }
-
-        expect(secondPage).toEventuallyNot(beNil())
-    }
-    
     func testPaginatedFollowings() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow, state: .Confirmed)).toBlocking().first()

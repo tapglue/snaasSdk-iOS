@@ -51,8 +51,6 @@
 		52970FB31DA3A43F0055E626 /* RxCompositePage+CompositePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52970FB21DA3A43F0055E626 /* RxCompositePage+CompositePage.swift */; };
 		529A3D231D2FC6C60069BF10 /* User+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D221D2FC6C60069BF10 /* User+Equatable.swift */; };
 		529A3D261D33C5AB0069BF10 /* UIDevice+Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */; };
-		529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D271D34CB2C0069BF10 /* Tapglue.swift */; };
-		529A3D2A1D34D0B80069BF10 /* TapglueTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D291D34D0B80069BF10 /* TapglueTest.swift */; };
 		529A3D2E1D34D97F0069BF10 /* Observable+unwrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D2D1D34D97F0069BF10 /* Observable+unwrapping.swift */; };
 		529A3D301D34E1F20069BF10 /* Observable+UnwrappingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D2F1D34E1F20069BF10 /* Observable+UnwrappingTest.swift */; };
 		52BA9FE01D2E9A3F005B4622 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */; };
@@ -159,8 +157,6 @@
 		52970FB21DA3A43F0055E626 /* RxCompositePage+CompositePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxCompositePage+CompositePage.swift"; sourceTree = "<group>"; };
 		529A3D221D2FC6C60069BF10 /* User+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Equatable.swift"; sourceTree = "<group>"; };
 		529A3D241D33C2C50069BF10 /* UIDevice+Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Tapglue.swift"; sourceTree = "<group>"; };
-		529A3D271D34CB2C0069BF10 /* Tapglue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tapglue.swift; sourceTree = "<group>"; };
-		529A3D291D34D0B80069BF10 /* TapglueTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapglueTest.swift; sourceTree = "<group>"; };
 		529A3D2D1D34D97F0069BF10 /* Observable+unwrapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+unwrapping.swift"; sourceTree = "<group>"; };
 		529A3D2F1D34E1F20069BF10 /* Observable+UnwrappingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+UnwrappingTest.swift"; sourceTree = "<group>"; };
 		52BA9FDE1D2E9A3F005B4622 /* Mockingjay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mockingjay.framework; path = Carthage/Build/iOS/Mockingjay.framework; sourceTree = "<group>"; };
@@ -259,7 +255,6 @@
 				5252C94E1D21BFA9009AADBC /* Info.plist */,
 				52D8AE531D21C4B000AC947E /* RxTapglue.swift */,
 				528481D91D2B9ABE0090BA29 /* Configuration.swift */,
-				529A3D271D34CB2C0069BF10 /* Tapglue.swift */,
 				529A3D2D1D34D97F0069BF10 /* Observable+unwrapping.swift */,
 				5274A3451D5494E400C72378 /* Log.swift */,
 				52483CA81D88290C002BA0A2 /* RxPage.swift */,
@@ -279,7 +274,6 @@
 				5252C95A1D21BFA9009AADBC /* Info.plist */,
 				5252C9581D21BFA9009AADBC /* RxTapglueTests.swift */,
 				529A3D221D2FC6C60069BF10 /* User+Equatable.swift */,
-				529A3D291D34D0B80069BF10 /* TapglueTest.swift */,
 				529A3D2F1D34E1F20069BF10 /* Observable+UnwrappingTest.swift */,
 			);
 			path = Tests;
@@ -517,7 +511,6 @@
 				5274A3481D5A176700C72378 /* PostTagFilter.swift in Sources */,
 				52970FB31DA3A43F0055E626 /* RxCompositePage+CompositePage.swift in Sources */,
 				5274A3461D5494E400C72378 /* Log.swift in Sources */,
-				529A3D281D34CB2C0069BF10 /* Tapglue.swift in Sources */,
 				5274A3441D53838700C72378 /* NewsFeedEndpoint.swift in Sources */,
 				5242794E1D950C4600D5173F /* FlattenableFeed+RxPage.swift in Sources */,
 				52BF703D1D40BADF00D88AAC /* TapglueError.swift in Sources */,
@@ -552,7 +545,6 @@
 				529A3D301D34E1F20069BF10 /* Observable+UnwrappingTest.swift in Sources */,
 				52540EE91D2D4D090007A9DB /* NetworkTest.swift in Sources */,
 				52BF703F1D40CB0A00D88AAC /* HttpTest.swift in Sources */,
-				529A3D2A1D34D0B80069BF10 /* TapglueTest.swift in Sources */,
 				5252C9591D21BFA9009AADBC /* RxTapglueTests.swift in Sources */,
 				5274A3371D508E0A00C72378 /* TestNetwork.swift in Sources */,
 			);
