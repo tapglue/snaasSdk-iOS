@@ -358,9 +358,9 @@ tapglue.createPost(post) { post, error in
 tapglue.createPost(post).subscribeNext { post in
 }
 ```
-# Comments and Likes
+# Comments and Reactions
 
-Posts are the core entity of a news feed. To provide a richer and more engaging experiences, Tapglue enables you to comment or like posts
+Posts are the core entity of a news feed. To provide a richer and more engaging experiences, Tapglue enables you to comment or react on posts
 
 ## Create comments
 
@@ -398,6 +398,22 @@ To update or delete a comment you can use:
 
 You can learn more about [deleting comments](doc:delete-comment) etc. in the reference documentation below.
 
+## Reacting on Posts
+
+The following reactions are supported on posts: `like`, `love`, `wow`, `haha`, `angry`, `sad`. An example of how to create a reaction:
+
+```swift
+tapglue.createReaction(.wow, forPostId: postId).subscribe()
+```
+
+## Deleting a Reaction
+
+To delete reactions call `deleteReaction`.
+
+```swift
+tapglue.deleteReaction(.wow, forPostId: postId).subscribe()
+```
+
 ## Like posts
 
 To like a post you simply have to call `createLike` with a post id:
@@ -410,6 +426,8 @@ tapglue.createLike(forPostId: "postId") { like, error in
 tapglue.createLike(forPostId: "postId").subscribeNext { like in
 }
 ```
+
+NOTE: These likes are not the same as in reactions
 
 ## Retrieve likes
 
