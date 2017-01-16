@@ -36,7 +36,7 @@ open class Post: Mappable {
             return returnValue
         }
     }
-    open var ownReactions: [Reaction:Bool]? {
+    open var hasReacted: [Reaction:Bool]? {
         get {
             var returnValue = [Reaction:Bool]()
             if let raw = rawOwnReactions {
