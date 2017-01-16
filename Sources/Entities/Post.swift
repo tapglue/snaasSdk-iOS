@@ -17,6 +17,7 @@ open class Post: Mappable {
     open var user: User?
     open var counts: [String:Int]?
     private var rawReactions: [String: Int]?
+    private var rawOwnReactions: [String: Bool]?
     open var isLiked: Bool?
     open var likeCount: Int?
     open var commentCount: Int?
@@ -29,6 +30,19 @@ open class Post: Mappable {
                 for (rawReaction, count) in rawReactions {
                     if let reaction = Reaction(rawValue: rawReaction) {
                         returnValue[reaction] = count
+                    }
+                }
+            }
+            return returnValue
+        }
+    }
+    open var ownReactions: [Reaction:Bool]? {
+        get {
+            var returnValue = [Reaction:Bool]()
+            if let raw = rawOwnReactions {
+                for (reaction, isSet) in raw {
+                    if let reaction = Reaction(rawValue: reaction) {
+                        returnValue[reaction] = isSet
                     }
                 }
             }
@@ -53,6 +67,7 @@ open class Post: Mappable {
         userId      <- map["user_id"]
         counts      <- map["counts"]
         rawReactions   <- map["counts.reactions"]
+        rawOwnReactions <- map["has_reacted"]
         createdAt   <- map["created_at"]
         updatedAt   <- map["updated_at"]
         isLiked     <- map["is_liked"]
