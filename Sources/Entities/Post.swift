@@ -54,6 +54,14 @@ open class Post: Mappable {
         self.visibility = visibility
         self.attachments = attachments
     }
+
+    public func setUserReactionLocally(_ reaction: Reaction, _ value: Bool) {
+        rawOwnReactions?[reaction.rawValue] = value
+    }
+
+    public func increaseReactionCountLocally(_ reaction: Reaction) {
+        rawReactions?[reaction.rawValue] = (rawReactions?[reaction.rawValue] ?? 0) + 1
+    }
     
     required public init?(map: Map) {
         
@@ -74,7 +82,6 @@ open class Post: Mappable {
         likeCount   <- map["counts.likes"]
         commentCount    <- map["counts.comments"]
     }
-    
 }
 
 open class Attachment: Mappable {
