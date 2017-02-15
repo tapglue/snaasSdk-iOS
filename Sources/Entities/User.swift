@@ -27,6 +27,7 @@ open class User: Mappable {
     open var socialIds: [String: String]?
     open var images: [String: Image]?
     open var metadata: [String: String]?
+    open var privateUserData: Private?
     
     public init() {
         
@@ -55,6 +56,7 @@ open class User: Mappable {
         sessionToken    <- map["session_token"]
         updatedAt   <- map["updated_at"]
         metadata    <- map["metadata"]
+        privateUserData     <- map["private"]
     }
 }
 
@@ -75,6 +77,20 @@ open class Image: Mappable {
         url     <- map["url"]
         width   <- map["width"]
         height  <- map["height"]
+    }
+}
+
+open class Private: Mappable {
+    open var type: String?
+    open var verified: Bool?
+
+    required public init?(map: Map) {
+        
+    }
+    
+    open func mapping(map: Map) {
+        type     <- map["type"]
+        verified   <- map["verified"]
     }
 }
 

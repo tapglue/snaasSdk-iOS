@@ -10,4 +10,5 @@ import Foundation
 
 protocol SimsApi {
     func registerDevice(_ appToken: String, deviceToken: String, sessionToken: String)
+    func unregisterDevice(_ appToken: String, deviceToken: String, sessionToken: String)
 }
