@@ -206,6 +206,27 @@ class FeedTest: XCTestCase {
         expect(postFeed.data.first?.id).to(equal(post.id))
     }
     
+    func testPaginatedRetrievePostFeedSecondPage() throws {
+        // login user 1 and create connection to user 2
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow,
+                                                    state: .Confirmed)).toBlocking().first()
+        
+        // login as user 2 and create post
+        user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
+        let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
+        var post = Post(visibility: .connections, attachments: [attachment])
+        post = try tapglue.createPost(post).toBlocking().first()!
+        
+        // login as user 1 and read post feed
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var postFeed: RxPage<Post>
+        postFeed = try tapglue.retrievePostFeed().toBlocking().first()!
+        
+        let secondPage: RxPage<Post> = try postFeed.previous.toBlocking().first()!
+        
+        expect(secondPage.data).to(beEmpty())
+    }
     func testPaginatedRetrieveActivityFeed() throws {
         // login user 1 and create connection to user 2
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!

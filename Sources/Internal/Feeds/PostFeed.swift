@@ -24,6 +24,7 @@ class PostFeed: FlattenableFeed<Post> {
     override func mapping(map: Map) {
         posts   <- map["posts"]
         users   <- map["users"]
+        page    <- map["paging"]
     }
 
     override func flatten() -> [Post] {
