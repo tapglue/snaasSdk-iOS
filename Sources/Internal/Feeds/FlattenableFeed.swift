@@ -26,4 +26,8 @@ class FlattenableFeed<T>: NullableFeed {
     func mapping(map: Map) {
         
     }
+    
+    func newCopy(json: [String:Any]?) -> FlattenableFeed<T>? {
+        return nil
+    }
 }

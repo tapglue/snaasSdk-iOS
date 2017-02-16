@@ -49,4 +49,9 @@ class NewsFeedEndpoint: CompositeFlattenableFeed<NewsFeed> {
         }
         return newsFeed
     }
+    
+    override func newCopy(json: [String : Any]?) -> NewsFeedEndpoint? {
+        return Mapper<NewsFeedEndpoint>().map(JSONObject: json)
+    }
+
 }

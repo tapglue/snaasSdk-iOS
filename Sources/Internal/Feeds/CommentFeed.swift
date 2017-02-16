@@ -34,4 +34,8 @@ class CommentFeed: FlattenableFeed<Comment> {
         }
         return mappedComments ?? [Comment]()
     }
+    
+    override func newCopy(json: [String:Any]?) -> CommentFeed? {
+        return Mapper<CommentFeed>().map(JSONObject: json)
+    }
 }

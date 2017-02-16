@@ -34,4 +34,8 @@ class PostFeed: FlattenableFeed<Post> {
         }
         return mappedPosts ?? [Post]()
     }
+
+    override func newCopy(json: [String:Any]?) -> PostFeed? {
+        return Mapper<PostFeed>().map(JSONObject: json)
+    }
 }

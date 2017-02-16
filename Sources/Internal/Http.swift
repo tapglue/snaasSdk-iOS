@@ -54,6 +54,40 @@ class Http {
         }
     }
     
+    func execute(_ request: URLRequest) -> Observable<[String:Any]> {
+        return Observable.create {observer in
+            let session = URLSession.shared
+            var task: URLSessionDataTask?
+            
+            log(request)
+            task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
+                guard error == nil else {
+                    self.handleError(data, onObserver: observer, withDefaultError: error)
+                    return
+                }
+                if let httpResponse = response as? HTTPURLResponse {
+                    log(response ?? "HTTP: no response")
+                    guard self.successCodes.contains(httpResponse.statusCode) else {
+                        self.handleError(data, onObserver: observer, withDefaultError: error)
+                        return
+                    }
+                    if let data = data {
+                        let json = self.dataToJSON(data: data)
+                        log(json ?? "HTTP: no json to print")
+                        observer.on(.next(json as! [String: Any]))
+                        observer.on(.completed)
+                    }
+                } else {
+                    self.handleError(data, onObserver: observer, withDefaultError: error)
+                }
+            }
+            
+            task?.resume()
+            
+            return Disposables.create()
+        }
+    }
+    
     func execute(_ request:URLRequest) -> Observable<Void> {
         
         return Observable.create {observer in

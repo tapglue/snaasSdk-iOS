@@ -47,4 +47,8 @@ class ConnectionsFeed: CompositeFlattenableFeed<Connections> {
         }
         return connections
     }
+    
+    override func newCopy(json: [String : Any]?) -> ConnectionsFeed? {
+         return Mapper<ConnectionsFeed>().map(JSONObject: json)
+    }
 }
