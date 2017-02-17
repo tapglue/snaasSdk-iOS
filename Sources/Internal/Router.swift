@@ -20,7 +20,7 @@ class Router {
         }
     }
     
-    static let sdkVersion = "3.0.2"
+    static let sdkVersion = "3.0.3"
     static var sessionTokenListener: SessionTokenListener? {
         didSet {
             if let sessionToken = sessionToken {
