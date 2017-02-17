@@ -37,4 +37,8 @@ class LikeFeed: FlattenableFeed<Like> {
         }
         return mappedLikes ?? [Like]()
     }
+    
+    override func newCopy(json: [String:Any]?) -> LikeFeed? {
+        return Mapper<LikeFeed>().map(JSONObject: json)
+    }
 }

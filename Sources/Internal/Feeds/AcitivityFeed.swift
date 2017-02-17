@@ -41,4 +41,8 @@ class ActivityFeed: FlattenableFeed<Activity> {
         }
         return mappedActivities ?? [Activity]()
     }
+    
+    override func newCopy(json: [String:Any]?) -> ActivityFeed? {
+        return Mapper<ActivityFeed>().map(JSONObject: json)
+    }
 }

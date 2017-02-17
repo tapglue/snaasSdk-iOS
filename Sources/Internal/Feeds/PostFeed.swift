@@ -24,6 +24,7 @@ class PostFeed: FlattenableFeed<Post> {
     override func mapping(map: Map) {
         posts   <- map["posts"]
         users   <- map["users"]
+        page    <- map["paging"]
     }
 
     override func flatten() -> [Post] {
@@ -32,5 +33,9 @@ class PostFeed: FlattenableFeed<Post> {
             return post
         }
         return mappedPosts ?? [Post]()
+    }
+
+    override func newCopy(json: [String:Any]?) -> PostFeed? {
+        return Mapper<PostFeed>().map(JSONObject: json)
     }
 }

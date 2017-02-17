@@ -41,8 +41,9 @@ open class RxPage<T> {
             request = Router.getOnURL(prevPointer)
         }
         
-        return Http().execute(request).map { (feed: FlattenableFeed<T>) in
-            let page = RxPage<T>(feed: feed, previousPointer: feed.page?.before)
+        return Http().execute(request).map { (newFeed: [String:Any]) in
+            let feed = self.feed.newCopy(json: newFeed)
+            let page = RxPage<T>(feed: feed!, previousPointer: feed!.page?.before)
             page.payload = self.payload
             return page
         }

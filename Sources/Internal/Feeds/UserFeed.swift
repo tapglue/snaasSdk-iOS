@@ -29,4 +29,8 @@ class UserFeed: FlattenableFeed<User> {
     override func flatten() -> [User] {
        return users ?? [User]()
     }
+    
+    override func newCopy(json: [String:Any]?) -> UserFeed? {
+        return Mapper<UserFeed>().map(JSONObject: json)
+    }
 }

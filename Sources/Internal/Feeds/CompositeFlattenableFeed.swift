@@ -26,4 +26,8 @@ class CompositeFlattenableFeed<T: DefaultInstanceEntity>: NullableFeed {
     func flatten() -> T {
         return T()
     }
+    
+    func newCopy(json: [String:Any]?) -> CompositeFlattenableFeed<T>? {
+        return nil
+    }
 }

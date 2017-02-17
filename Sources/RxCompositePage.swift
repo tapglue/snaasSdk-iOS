@@ -37,8 +37,9 @@ open class RxCompositePage<T: DefaultInstanceEntity> {
         var request: URLRequest
         request = Router.getOnURL(prevPointer)
         
-        return Http().execute(request).map { (feed: CompositeFlattenableFeed<T>) in
-            let page = RxCompositePage<T>(feed: feed, previousPointer: feed.page?.before)
+        return Http().execute(request).map { (json: [String: Any]) in
+            let newFeed = self.feed.newCopy(json: json)
+            let page = RxCompositePage<T>(feed: newFeed!, previousPointer: newFeed!.page?.before)
             return page
         }
     }
