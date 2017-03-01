@@ -43,6 +43,15 @@ open class TapglueSims : NSObject, SessionTokenListener {
         self.deviceToken = tokenString
         registerSims()
     }
+
+    open func unregisterDevice() {
+        if let deviceToken = deviceToken {
+            if let sessionToken = sessionToken {
+                api.unregisterDevice(appToken, deviceToken: deviceToken,
+                    sessionToken: sessionToken)
+            }
+        }
+    }
     
     func sessionTokenSet(_ sessionToken: String?) {
         print("sessionTokenSet: \(sessionToken)")

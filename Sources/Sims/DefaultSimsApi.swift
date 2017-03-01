@@ -13,30 +13,27 @@ class DefaultSimsApi: SimsApi {
     let url: String
     let deviceRegistrationPath = "/0.4/me/devices/"
     let environment: Environment
-    
+
+    var deviceUrl: URL {
+        get {
+            let idfv = UIDevice.current.identifierForVendor?.uuidString
+            return Foundation.URL(string: self.url + self.deviceRegistrationPath + idfv!)!
+        }
+    }
+
     init(url: String, environment: Environment) {
         self.url = url
         self.environment = environment
     }
 
     func registerDevice(_ appToken: String, deviceToken: String, sessionToken: String) {
-        let authorizationToken = appToken + ":" + sessionToken
-        let utf8authToken = authorizationToken.data(using: String.Encoding.utf8)
-        let encodedAuthString = utf8authToken?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue:0))
         let language = Locale.preferredLanguages[0]
-        let headers = [
-            "Authorization": "Basic " + encodedAuthString!,
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        ]
+        let headers = generateGenericHeaders(appToken: appToken, sessionToken: sessionToken)
         let parameters = ["token": deviceToken,
                           "platform": environment.rawValue,
                           "language": language] as [String : Any]
 
-        let idfv = UIDevice.current.identifierForVendor?.uuidString
-        let URL = Foundation.URL(string: self.url + self.deviceRegistrationPath + idfv!)!
-
-        var request = URLRequest(url: URL)
+        var request = URLRequest(url: deviceUrl)
         request.allHTTPHeaderFields = headers
         request.httpMethod = "put"
         do {
@@ -53,5 +50,38 @@ class DefaultSimsApi: SimsApi {
         } catch {
             return
         }
+    }
+
+    func unregisterDevice(_ appToken: String, deviceToken: String, sessionToken: String) {
+        let headers = generateGenericHeaders(appToken: appToken, sessionToken: sessionToken)
+
+        var request = URLRequest(url: deviceUrl)
+        request.allHTTPHeaderFields = headers
+        request.httpMethod = "delete"
+        let session = URLSession.shared
+        var task: URLSessionDataTask?
+        log(request)
+        task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
+            log(response ?? "SIMS: no response")
+        }
+
+        task?.resume()
+    }
+
+    fileprivate func generateGenericHeaders(appToken: String, sessionToken: String) -> 
+        [String: String] {
+        return [
+            "Authorization": generateAuthToken(appToken: appToken, sessionToken: sessionToken),
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+            ]
+        }
+
+    fileprivate func generateAuthToken(appToken: String, sessionToken: String) -> String {
+        let authorizationToken = appToken + ":" + sessionToken
+        let utf8authToken = authorizationToken.data(using: String.Encoding.utf8)
+        let encodedAuthString = utf8authToken?.base64EncodedString(options:
+            Data.Base64EncodingOptions(rawValue:0))
+        return "Basic " + encodedAuthString!
     }
 }
