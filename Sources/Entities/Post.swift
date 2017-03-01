@@ -62,6 +62,10 @@ open class Post: Mappable {
     public func increaseReactionCountLocally(_ reaction: Reaction) {
         rawReactions?[reaction.rawValue] = (rawReactions?[reaction.rawValue] ?? 0) + 1
     }
+
+    public func decreaseReactionCountLocally(_ reaction: Reaction) {
+        rawReactions?[reaction.rawValue] = max((rawReactions?[reaction.rawValue] ?? 0) - 1, 0)
+    }
     
     required public init?(map: Map) {
         
