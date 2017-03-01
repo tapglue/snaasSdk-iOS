@@ -131,6 +131,24 @@ class LikeTest: XCTestCase {
         expect(self.post.reactions?[.wow]).to(equal(2))
     }
 
+    func testDecreaseReactionCountLocally() throws {
+        post.decreaseReactionCountLocally(.wow)
+        expect(self.post.reactions?[.wow]).to(equal(0))
+    }
+
+    func testDecreaseReactionCountLocallyIncrease() throws {
+        post.increaseReactionCountLocally(.wow)
+        post.decreaseReactionCountLocally(.wow)
+        expect(self.post.reactions?[.wow]).to(equal(0))
+    }
+
+    func testDecreaseReactionCountLocallyIncreaseTwice() throws {
+        post.increaseReactionCountLocally(.wow)
+        post.increaseReactionCountLocally(.wow)
+        post.decreaseReactionCountLocally(.wow)
+        expect(self.post.reactions?[.wow]).to(equal(1))
+    }
+
     func testDeleteLikeReaction() throws {
         var wasDeleted = false
         _ = try tapglue.createReaction(.like, forPostId: post.id!).toBlocking().first()
