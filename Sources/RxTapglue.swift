@@ -37,10 +37,13 @@ open class RxTapglue {
     }
     /// creates a user on tapglue
     /// - parameter user: user to be created
+    /// - parameter inviteConnections: optional - if user has been invited through friend/follow
     /// - Note: username or email is required, password is required
     /// - Note: does not login user
-    open func createUser(_ user: User) -> Observable<User> {
-        return network.createUser(user)
+    /// - Note: inviteConnection may be used when providing social_ids to the user object
+    ///         to create a pending connection to people who invited that specific social id
+    open func createUser(_ user: User, inviteConnections: String? = nil) -> Observable<User> {
+        return network.createUser(user, inviteConnections: inviteConnections)
     }
     /// logs in user on tapglue
     /// - parameter username: username of the user to be logged in
@@ -63,6 +66,14 @@ open class RxTapglue {
     open func refreshCurrentUser() -> Observable<User> {
         return network.refreshCurrentUser().map(toCurrentUserMap)
     }
+
+    /// creates an invite with a socialid key and value
+    /// - parameter key: social id name or custom key
+    /// - parameter key: social id value or custom value
+    open func createInvite(_ key: String, _ value: String) -> Observable<Void> {
+        return network.createInvite(key, value)
+    }
+
     /// logs out the current user
     open func logout() -> Observable<Void> {
         return network.logout().do(onCompleted: {
