@@ -17,7 +17,12 @@ class UserInteractionTest: XCTestCase {
     let username = "UserInteractionTestUser1"
     let password = "UserInteractionTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
+
+    var username2: String?
+    var password2: String?
+
     var user = User()
+    var user2: User? = nil
 
     override func setUp() {
         super.setUp()
@@ -37,6 +42,13 @@ class UserInteractionTest: XCTestCase {
         do {
             _ = try tapglue.loginUser(username, password: password).toBlocking().first()
             try tapglue.deleteCurrentUser().toBlocking().first()
+
+            if let username2 = username2,
+                let password2 = password2 {
+                _ = try tapglue.loginUser(username2, password: password2).toBlocking().first()
+                try tapglue.deleteCurrentUser().toBlocking().first()
+            }
+
         } catch {
             fail("failed to login and delete user for integration tests")
         }
@@ -92,5 +104,40 @@ class UserInteractionTest: XCTestCase {
         let updatedUser = try tapglue.updateCurrentUser(user).toBlocking().first()!
         expect(updatedUser.metadata).toNot(beNil())
         expect(updatedUser.metadata?["someKey"]).to(equal("someValue"))
+    }
+
+    func testCreateInvite() throws {
+        var error: TapglueError?
+        _ = tapglue.createInvite("invite_code", "asdf_1234").subscribe( onError: { (err) in
+            error = err as? TapglueError
+        })
+
+        expect(error).toEventually(beNil())
+    }
+
+    func testCreateUserWithInvite() throws {
+        let invitecode = "0xff66cc"
+        _ = try tapglue.createInvite("invite_code", invitecode).toBlocking().first()
+
+        username2 = "UserInteractionTestUser1335"
+        password2 = "UserInteractionTestPassword"
+        let u = User()
+        u.username = username2
+        u.password = password2
+        u.socialIds = ["invite_code": invitecode]
+
+        user2 = try tapglue.createUser(u, inviteConnections: "friend").toBlocking().first()!
+        user2 = try tapglue.loginUser(username2!, password: password2!).toBlocking().first()!
+
+        var friends: RxPage<User>
+        friends = try tapglue.retrieveFriends().toBlocking().first()!
+
+        expect(friends.data.count).to(equal(0))
+
+        var connections: RxCompositePage<Connections>
+        connections = try tapglue.retrievePendingConnections().toBlocking().first()!
+        let incoming = connections.data.incoming
+        expect(incoming?.count).to(equal(1))
+        expect(incoming?.first?.userFrom?.id).to(equal(user.id))
     }
 }

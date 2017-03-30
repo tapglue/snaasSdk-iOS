@@ -32,8 +32,12 @@ class Network {
         }
     }
 
-    func createUser(_ user: User) -> Observable<User> {
-        return http.execute(Router.post("/users", payload: user.toJSON() as [String : AnyObject]))
+    func createUser(_ user: User, inviteConnections: String? = nil) -> Observable<User> {
+        var path = "/users"
+        if let inviteConnections = inviteConnections {
+            path = path.appending("?invite-connections=\(inviteConnections)")
+        }
+        return http.execute(Router.post(path, payload: user.toJSON() as [String : AnyObject]))
     }
 
     func refreshCurrentUser() -> Observable<User> {
@@ -42,6 +46,11 @@ class Network {
 
     func updateCurrentUser(_ user: User) -> Observable<User> {
         return http.execute(Router.put("/me", payload: user.toJSON() as [String : AnyObject]))
+    }
+
+    func createInvite(_ key: String, _ value: String) -> Observable<Void> {
+        let payload = ["key": key, "value": value]
+        return http.execute(Router.post("/me/invites", payload: payload as [String : AnyObject]))
     }
 
     func logout() -> Observable<Void> {
