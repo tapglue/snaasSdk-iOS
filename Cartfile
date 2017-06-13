@@ -1,2 +1,2 @@
-github "ReactiveX/RxSwift" "3.0.1"
+github "ReactiveX/RxSwift" "3.5.0"
 github "Hearst-DD/ObjectMapper" ~> 2.0

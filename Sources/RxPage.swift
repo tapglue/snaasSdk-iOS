@@ -23,7 +23,7 @@ open class RxPage<T> {
     
     fileprivate var feed: FlattenableFeed<T>
     fileprivate var prevPointer: String?
-    var payload: [String: AnyObject]?
+    var payload: [String: Any]?
 
     init(feed: FlattenableFeed<T>, previousPointer: String?) {
         self.feed = feed

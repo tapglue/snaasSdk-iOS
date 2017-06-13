@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Encoder {
+class TapglueEncoder {
     static func encode(_ appToken: String, sessionToken: String) -> String {
         let input = appToken + ":" + sessionToken
         let utf8Input = input.data(using: String.Encoding.utf8)

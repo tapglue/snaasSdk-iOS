@@ -19,7 +19,6 @@
 		5274A32E1D4F3F0000C72378 /* SearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A32D1D4F3F0000C72378 /* SearchTest.swift */; };
 		5274A33C1D521C9D00C72378 /* FeedTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5274A33B1D521C9D00C72378 /* FeedTest.swift */; };
 		528079CA1D477E6B000194AC /* ConnectionIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528079C91D477E6B000194AC /* ConnectionIntegrationTest.swift */; };
-		52963E111D257B720008CEF8 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963E0A1D257B720008CEF8 /* ObjectMapper.framework */; };
 		52963E441D2584C20008CEF8 /* Tapglue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52963DA91D25699C0008CEF8 /* Tapglue.framework */; };
 		52963E451D2584C20008CEF8 /* Tapglue.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52963DA91D25699C0008CEF8 /* Tapglue.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		529A3D321D35140B0069BF10 /* LoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3D311D35140B0069BF10 /* LoginTest.swift */; };
@@ -102,7 +101,6 @@
 		5274A33B1D521C9D00C72378 /* FeedTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTest.swift; sourceTree = "<group>"; };
 		528079C91D477E6B000194AC /* ConnectionIntegrationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionIntegrationTest.swift; sourceTree = "<group>"; };
 		52963DA31D25699C0008CEF8 /* Tapglue.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Tapglue.xcodeproj; path = ../Tapglue.xcodeproj; sourceTree = "<group>"; };
-		52963E0A1D257B720008CEF8 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		529A3D311D35140B0069BF10 /* LoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTest.swift; sourceTree = "<group>"; };
 		52F3F0801D3532CC00762963 /* UserInteractionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInteractionTest.swift; sourceTree = "<group>"; };
 		970D29231D4B85D100847756 /* LikeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeTest.swift; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52963E111D257B720008CEF8 /* ObjectMapper.framework in Frameworks */,
 				5202B76C1D266A920069BA06 /* RxSwift.framework in Frameworks */,
 				52963E441D2584C20008CEF8 /* Tapglue.framework in Frameworks */,
 				5215FB691D35152700142FCE /* RxBlocking.framework in Frameworks */,
@@ -139,7 +136,6 @@
 				5215FB6B1D3516EE00142FCE /* Nimble.framework */,
 				5215FB681D35152700142FCE /* RxBlocking.framework */,
 				5202B76B1D266A920069BA06 /* RxSwift.framework */,
-				52963E0A1D257B720008CEF8 /* ObjectMapper.framework */,
 				52963DA31D25699C0008CEF8 /* Tapglue.xcodeproj */,
 				526B17721D2567DE0086EF95 /* Example */,
 				526B17871D2567DE0086EF95 /* ExampleTests */,
@@ -249,11 +245,12 @@
 				TargetAttributes = {
 					526B176F1D2567DE0086EF95 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = P3263GKWK9;
+						DevelopmentTeam = 9FJW54ME26;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -494,9 +491,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Example/Example.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9FJW54ME26;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -505,9 +503,10 @@
 				);
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tapglue.Example;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tapglue.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -516,9 +515,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Example/Example.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9FJW54ME26;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -527,9 +527,10 @@
 				);
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tapglue.Example;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tapglue.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

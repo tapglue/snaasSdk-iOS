@@ -6,8 +6,6 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
 class ConnectionsFeed: CompositeFlattenableFeed<Connections> {
     
     var incoming: [Connection]?
@@ -20,17 +18,17 @@ class ConnectionsFeed: CompositeFlattenableFeed<Connections> {
         super.init()
     }
     
-    required init?(map: Map) {
-        super.init()
-    }
-    
-    override func mapping(map: Map) {
-        incoming <- map["incoming"]
-        outgoing <- map["outgoing"]
-        users <- map["users"]
-        page <- map["paging"]
-    }
-    
+//    required init?(map: Map) {
+//        super.init()
+//    }
+//
+//    override func mapping(map: Map) {
+//        incoming <- map["incoming"]
+//        outgoing <- map["outgoing"]
+//        users <- map["users"]
+//        page <- map["paging"]
+//    }
+
     override func flatten() -> Connections {
         let connections = Connections()
         connections.incoming = incoming?.map { connection -> Connection in
@@ -49,6 +47,13 @@ class ConnectionsFeed: CompositeFlattenableFeed<Connections> {
     }
     
     override func newCopy(json: [String : Any]?) -> ConnectionsFeed? {
-         return Mapper<ConnectionsFeed>().map(JSONObject: json)
+		if let json = json,
+			let jsonData = try? JSONSerialization.data(withJSONObject: json,
+			                                           options: JSONSerialization.WritingOptions.prettyPrinted){
+			let decoder = JSONDecoder()
+			return try? decoder.decode(ConnectionsFeed.self, from: jsonData)
+
+		}
+		return nil
     }
 }

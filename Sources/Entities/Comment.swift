@@ -6,9 +6,7 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
-open class Comment: Mappable {
+open class Comment: Codable {
     open var id: String?
     open var postId: String?
     open var externalId: String?
@@ -19,24 +17,31 @@ open class Comment: Mappable {
     open var updatedAt: String?
     open var user: User?
     
-    required public init?(map: Map) {
-        
-    }
-    
+//    required public init?(map: Map) {
+//
+//    }
+
     public init (contents:[String:String], postId: String) {
         self.contents = contents
         self.postId = postId
     }
     
-    open func mapping(map: Map) {
-        id              <- map["id"]
-        postId          <- map["post_id"]
-        externalId      <- map["external_id"]
-        userId          <- map["user_id"]
-        contents        <- map["contents"]
-        privateFields   <- map["private"]
-        createdAt       <- map["created_at"]
-        updatedAt       <- map["updated_at"]
-    }
-    
+//    open func mapping(map: Map) {
+//        id              <- map["id"]
+//        postId          <- map["post_id"]
+//        externalId      <- map["external_id"]
+//        userId          <- map["user_id"]
+//        contents        <- map["contents"]
+//        privateFields   <- map["private"]
+//        createdAt       <- map["created_at"]
+//        updatedAt       <- map["updated_at"]
+//    }
+
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
 }

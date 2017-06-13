@@ -6,8 +6,6 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
 class CompositeFlattenableFeed<T: DefaultInstanceEntity>: NullableFeed {
     var page: ApiPage?
     
@@ -15,14 +13,14 @@ class CompositeFlattenableFeed<T: DefaultInstanceEntity>: NullableFeed {
         
     }
  
-    required init?(map: Map) {
-        
-    }
-    
-    func mapping(map: Map) {
-        
-    }
-    
+//    required init?(map: Map) {
+//
+//    }
+//
+//    func mapping(map: Map) {
+//
+//    }
+
     func flatten() -> T {
         return T()
     }

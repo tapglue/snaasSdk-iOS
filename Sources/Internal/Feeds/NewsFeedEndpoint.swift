@@ -6,8 +6,6 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
 class NewsFeedEndpoint: CompositeFlattenableFeed<NewsFeed> {
     var activities: [Activity]?
     var posts: [Post]?
@@ -20,17 +18,17 @@ class NewsFeedEndpoint: CompositeFlattenableFeed<NewsFeed> {
         super.init()
     }
     
-    required init?(map: Map) {
-        super.init()
-    }
-    
-    override func mapping(map: Map) {
-        activities  <- map["events"]
-        posts       <- map["posts"]
-        users       <- map["users"]
-        postMap     <- map["post_map"]
-        page        <- map["paging"]
-    }
+//    required init?(map: Map) {
+//        super.init()
+//    }
+//
+//    override func mapping(map: Map) {
+//        activities  <- map["events"]
+//        posts       <- map["posts"]
+//        users       <- map["users"]
+//        postMap     <- map["post_map"]
+//        page        <- map["paging"]
+//    }
 
     override func flatten() -> NewsFeed {
         let newsFeed = NewsFeed()
@@ -51,7 +49,13 @@ class NewsFeedEndpoint: CompositeFlattenableFeed<NewsFeed> {
     }
     
     override func newCopy(json: [String : Any]?) -> NewsFeedEndpoint? {
-        return Mapper<NewsFeedEndpoint>().map(JSONObject: json)
-    }
+		if let json = json,
+			let jsonData = try? JSONSerialization.data(withJSONObject: json,
+			                                           options: JSONSerialization.WritingOptions.prettyPrinted){
+			let decoder = JSONDecoder()
+			return try? decoder.decode(NewsFeedEndpoint.self, from: jsonData)
 
+		}
+		return nil
+    }
 }

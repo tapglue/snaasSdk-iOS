@@ -6,9 +6,7 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
-open class User: Mappable {
+open class User: Codable {
     open var username: String?
     open var password: String?
     open var email: String?
@@ -33,34 +31,42 @@ open class User: Mappable {
         
     }
     
-    required public init?(map: Map) {
-        
-    }
-    
-    open func mapping(map: Map) {
-        username    <- map["user_name"]
-        password    <- map["password"]
-        email       <- map["email"]
-        firstName   <- map["first_name"]
-        lastName    <- map["last_name"]
-        followedCount   <- map["followed_count"]
-        followerCount   <- map["follower_count"]
-        friendCount <- map["friend_count"]
-        id          <- map ["id_string"]
-        isFriend    <- map["is_friend"]
-        isFollowed  <- map["is_followed"]
-        isFollowing <- map["is_following"]
-        socialIds   <- map["social_ids"]
-        images      <- map["images"]
-        about       <- map["about"]
-        sessionToken    <- map["session_token"]
-        updatedAt   <- map["updated_at"]
-        metadata    <- map["metadata"]
-        privateUserData     <- map["private"]
-    }
+//    required public init?(map: Map) {
+//
+//    }
+//
+//    open func mapping(map: Map) {
+//        username    <- map["user_name"]
+//        password    <- map["password"]
+//        email       <- map["email"]
+//        firstName   <- map["first_name"]
+//        lastName    <- map["last_name"]
+//        followedCount   <- map["followed_count"]
+//        followerCount   <- map["follower_count"]
+//        friendCount <- map["friend_count"]
+//        id          <- map ["id_string"]
+//        isFriend    <- map["is_friend"]
+//        isFollowed  <- map["is_followed"]
+//        isFollowing <- map["is_following"]
+//        socialIds   <- map["social_ids"]
+//        images      <- map["images"]
+//        about       <- map["about"]
+//        sessionToken    <- map["session_token"]
+//        updatedAt   <- map["updated_at"]
+//        metadata    <- map["metadata"]
+//        privateUserData     <- map["private"]
+//    }
+
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
 }
 
-open class Image: Mappable {
+open class Image: Codable {
     open var url: String?
     open var width: Int?
     open var height: Int?
@@ -69,29 +75,45 @@ open class Image: Mappable {
         self.url = url
     }
 
-    required public init?(map: Map) {
-        
-    }
-    
-    open func mapping(map: Map) {
-        url     <- map["url"]
-        width   <- map["width"]
-        height  <- map["height"]
-    }
+//    required public init?(map: Map) {
+//
+//    }
+//
+//    open func mapping(map: Map) {
+//        url     <- map["url"]
+//        width   <- map["width"]
+//        height  <- map["height"]
+//    }
+
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
 }
 
-open class Private: Mappable {
+open class Private: Codable {
     open var type: String?
     open var verified: Bool?
 
-    required public init?(map: Map) {
-        
-    }
-    
-    open func mapping(map: Map) {
-        type     <- map["type"]
-        verified   <- map["verified"]
-    }
+//    required public init?(map: Map) {
+//
+//    }
+//
+//    open func mapping(map: Map) {
+//        type     <- map["type"]
+//        verified   <- map["verified"]
+//    }
+
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
 }
 
 func ==(lhs: User, rhs: User) -> Bool {

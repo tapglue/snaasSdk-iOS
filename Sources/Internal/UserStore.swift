@@ -14,16 +14,22 @@ class UserStore {
     
     var user: User? {
         get {
-            let userDictionary = UserDefaults(suiteName: UserStore.tapglueDefaults)?.dictionary(forKey: UserStore.currentUserTag)
+            let userData = UserDefaults(suiteName: UserStore.tapglueDefaults)?.data(forKey: UserStore.currentUserTag)
+			let decoder = JSONDecoder()
+			
             
-            if let userDictionary = userDictionary {
-                return User(JSON: userDictionary)
+            if let userData = userData,
+				let user = try? decoder.decode(User.self, from: userData) {
+                return user
             }
             return nil
         }
         set {
             if let user = newValue {
-                UserDefaults(suiteName: UserStore.tapglueDefaults)?.set(user.toJSON(), forKey: UserStore.currentUserTag)
+				let encoder = JSONEncoder()
+				let encoded = try? encoder.encode(user)
+
+                UserDefaults(suiteName: UserStore.tapglueDefaults)?.set(encoded, forKey: UserStore.currentUserTag)
             } else {
 //                NSUserDefaults(suiteName: UserStore.tapglueDefaults)?
 //                    .setObject(nil, forKey: UserStore.currentUserTag)

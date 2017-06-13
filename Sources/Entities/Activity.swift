@@ -6,9 +6,7 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
-open class Activity: Mappable {
+open class Activity: Codable {
     open var id: String?
     open var type: String?
     open var language: String?
@@ -31,42 +29,58 @@ open class Activity: Mappable {
 
     init(){}
 
-    required public init?(map: Map) {
-    }
+//    required public init?(map: Map) {
+//    }
+
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
     
-    open func mapping(map: Map) {
-        id      <- map["id_string"]
-        type    <- map["type"]
-        language    <- map["language"]
-        priority    <- map["priority"]
-        location    <- map["location"]
-        latitude    <- map["latitude"]
-        longitude   <- map["longitude"]
-        visibility  <- map["visibility"]
-        images      <- map["images"]
-        userId      <- map["user_id_string"]
-        tgObjectId  <- map["tgObjectId"]
-        postId      <- map["post_id"]
-        target      <- map["target"]
-        object      <- map["object"]
-        createdAt   <- map["created_at"]
-        updatedAt   <- map["updated_at"]
-    }
+//    open func mapping(map: Map) {
+//        id      <- map["id_string"]
+//        type    <- map["type"]
+//        language    <- map["language"]
+//        priority    <- map["priority"]
+//        location    <- map["location"]
+//        latitude    <- map["latitude"]
+//        longitude   <- map["longitude"]
+//        visibility  <- map["visibility"]
+//        images      <- map["images"]
+//        userId      <- map["user_id_string"]
+//        tgObjectId  <- map["tgObjectId"]
+//        postId      <- map["post_id"]
+//        target      <- map["target"]
+//        object      <- map["object"]
+//        createdAt   <- map["created_at"]
+//        updatedAt   <- map["updated_at"]
+//    }
 }
 
-open class ActivityObject: Mappable {
+open class ActivityObject: Codable {
     open var id: String?
     open var type: String?
     open var url: String?
     open var displayNames: [String: String]?
 
-    required public init?(map: Map) {
-    }
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
+
+//    required public init?(map: Map) {
+//    }
     
-    open func mapping(map: Map) {
-        id      <- map["id"]
-        type    <- map["type"]
-        url     <- map["url"]
-        displayNames    <- map["display_name"]
-    }
+//    open func mapping(map: Map) {
+//        id      <- map["id"]
+//        type    <- map["type"]
+//        url     <- map["url"]
+//        displayNames    <- map["display_name"]
+//    }
 }

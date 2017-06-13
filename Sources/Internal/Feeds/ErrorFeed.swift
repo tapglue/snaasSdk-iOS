@@ -8,14 +8,14 @@
 
 import ObjectMapper
 
-class ErrorFeed: Mappable {
+class ErrorFeed: Codable {
     var errors: [TapglueError]?
     
-    required init?(map: Map) {
-        
-    }
-    
-    func mapping(map: Map) {
-        errors <- map["errors"]
-    }
+//    required init?(map: Map) {
+//        
+//    }
+//    
+//    func mapping(map: Map) {
+//        errors <- map["errors"]
+//    }
 }

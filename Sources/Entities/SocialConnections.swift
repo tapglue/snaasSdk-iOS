@@ -6,11 +6,9 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
 /// Social connections payload used to create social connections from another social network
 /// on tapglue.
-open class SocialConnections: Mappable {
+open class SocialConnections: Codable {
     var platform: String?
     var type: ConnectionType?
     var userSocialId: String?
@@ -30,14 +28,22 @@ open class SocialConnections: Mappable {
         self.socialIds = socialIds
     }
     
-    required public init?(map: Map) {
-        
-    }
-    
-    open func mapping(map: Map) {
-        platform        <- map["platform"]
-        type        <- map ["type"]
-        userSocialId    <- map["platform_user_id"]
-        socialIds   <- map["connection_ids"]
-    }
+//    required public init?(map: Map) {
+//
+//    }
+//
+//    open func mapping(map: Map) {
+//        platform        <- map["platform"]
+//        type        <- map ["type"]
+//        userSocialId    <- map["platform_user_id"]
+//        socialIds   <- map["connection_ids"]
+//    }
+
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
 }

@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-class PostTagFilter: Mappable {
+class PostTagFilter: Codable {
     
     var tags: [String]?
     
@@ -16,11 +16,11 @@ class PostTagFilter: Mappable {
         self.tags = tags
     }
     
-    required init?(map: Map) {
-        
-    }
-    func mapping(map: Map) {
-        tags <- map["tags"]
-    }
+//    required init?(map: Map) {
+//        
+//    }
+//    func mapping(map: Map) {
+//        tags <- map["tags"]
+//    }
 }
 

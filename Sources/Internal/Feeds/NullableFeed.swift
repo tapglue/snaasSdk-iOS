@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-protocol NullableFeed: Mappable {
+protocol NullableFeed: Codable {
     //use this init to construct a default feed representation. Useful for 204 responses
     init()
 }

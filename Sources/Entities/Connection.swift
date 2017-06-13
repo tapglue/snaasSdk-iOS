@@ -6,10 +6,8 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
 /// Entity that represents a connection on tapglue.
-open class Connection: Mappable {
+open class Connection: Codable {
     open var userToId: String?
     open var userFromId: String?
     open var type: ConnectionType?
@@ -32,15 +30,24 @@ open class Connection: Mappable {
         self.state = state
     }
     
-    required public init?(map: Map) {
-        
-    }
-    open func mapping(map: Map) {
-        userToId <- map["user_to_id_string"]
-        userFromId <- map["user_from_id_string"]
-        type <- map["type"]
-        state <- map["state"]
-    }
+//    required public init?(map: Map) {
+//
+//    }
+//    open func mapping(map: Map) {
+//        userToId <- map["user_to_id_string"]
+//        userFromId <- map["user_from_id_string"]
+//        type <- map["type"]
+//        state <- map["state"]
+//    }
+
+
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
 }
 
 /// ConnectionState represents the states a connection can go through.

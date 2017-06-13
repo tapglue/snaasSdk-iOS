@@ -42,9 +42,9 @@ class Router {
     }
     let method: Method
     let path: String
-    let payload: [String: AnyObject]
+    var payload: [String: Any]?
     var encodedToken: String {
-        return Encoder.encode(Router.appToken, sessionToken: Router.sessionToken ?? "")
+        return TapglueEncoder.encode(Router.appToken, sessionToken: Router.sessionToken ?? "")
     }
 
     var urlRequest: URLRequest {
@@ -62,7 +62,7 @@ class Router {
         request.setValue(UIDevice.current.tapglueModelName, forHTTPHeaderField: "X-Tapglue-Model")
         request.setValue(UIDevice.current.systemVersion, forHTTPHeaderField: "X-Tapglue-OSVersion")
         
-        if method == .post || method == .put{
+        if let payload = payload, method == .post || method == .put {
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: payload, options: [])
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -75,35 +75,35 @@ class Router {
         }
     }
 
-    class func post(_ path: String, payload: [String: AnyObject]) -> URLRequest {
+    class func post(_ path: String, payload: [String: Any]?) -> URLRequest {
         return Router(method: .post, path: path, payload: payload).urlRequest
     }
 
     class func get(_ path: String) -> URLRequest {
-        return Router(method: .get, path: path, payload: [:]).urlRequest
+        return Router(method: .get, path: path, payload: nil).urlRequest
     }
 
-    class func put(_ path: String, payload: [String: AnyObject]) -> URLRequest {
+    class func put(_ path: String, payload: [String: Any]?) -> URLRequest {
         return Router(method: .put, path: path, payload: payload).urlRequest
     }
 
     class func delete(_ path: String) -> URLRequest {
-        return Router(method: .delete, path: path, payload: [:]).urlRequest
+        return Router(method: .delete, path: path, payload: nil).urlRequest
     }
 
     class func getOnURL(_ url: String) -> URLRequest {
-        var request = Router(method: .get, path: "", payload: [:]).urlRequest
+        var request = Router(method: .get, path: "", payload: nil).urlRequest
         request.url = URL(string: url)
         return request
     }
 
-    class func postOnURL(_ url: String, payload: [String: AnyObject]) -> URLRequest {
+    class func postOnURL(_ url: String, payload: [String: Any]?) -> URLRequest {
         var request = Router(method: .post, path: "", payload: payload).urlRequest
         request.url = URL(string: url)
         return request
     }
 
-    fileprivate init(method: Method, path: String, payload: [String: AnyObject]) {
+    fileprivate init(method: Method, path: String, payload: [String: Any]?) {
         self.method = method
         self.path = path
         self.payload = payload

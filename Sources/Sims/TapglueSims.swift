@@ -45,7 +45,7 @@ open class TapglueSims : NSObject, SessionTokenListener {
     }
     
     func sessionTokenSet(_ sessionToken: String?) {
-        print("sessionTokenSet: \(sessionToken)")
+        print("sessionTokenSet: \(sessionToken ?? "no session token")")
         self.sessionToken = sessionToken
         registerSims()
     }

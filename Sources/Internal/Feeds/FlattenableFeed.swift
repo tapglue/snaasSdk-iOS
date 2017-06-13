@@ -19,14 +19,6 @@ class FlattenableFeed<T>: NullableFeed {
         
     }
     
-    required init?(map: Map) {
-        
-    }
-    
-    func mapping(map: Map) {
-        
-    }
-    
     func newCopy(json: [String:Any]?) -> FlattenableFeed<T>? {
         return nil
     }

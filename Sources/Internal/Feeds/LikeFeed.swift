@@ -23,11 +23,11 @@ class LikeFeed: FlattenableFeed<Like> {
         super.init()
     }
     
-    override func mapping(map: Map) {
-        likes <- map["likes"]
-        users <- map["users"]
-        posts <- map["post_map"]
-    }
+//    override func mapping(map: Map) {
+//        likes <- map["likes"]
+//        users <- map["users"]
+//        posts <- map["post_map"]
+//    }
 
     override func flatten() -> [Like] {
         let mappedLikes = likes?.map { like -> Like in
@@ -39,6 +39,13 @@ class LikeFeed: FlattenableFeed<Like> {
     }
     
     override func newCopy(json: [String:Any]?) -> LikeFeed? {
-        return Mapper<LikeFeed>().map(JSONObject: json)
+		if let json = json,
+			let jsonData = try? JSONSerialization.data(withJSONObject: json,
+			                                           options: JSONSerialization.WritingOptions.prettyPrinted){
+			let decoder = JSONDecoder()
+			return try? decoder.decode(LikeFeed.self, from: jsonData)
+
+		}
+		return nil
     }
 }

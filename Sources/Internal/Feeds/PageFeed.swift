@@ -6,27 +6,26 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
-class PageFeed: Mappable {
+class PageFeed: Codable {
     var page: ApiPage?
-    required init?(map: Map) {
-        
-    }
-    
-    func mapping(map: Map) {
-        page <- map["paging"]
-    }
+//    required init?(map: Map) {
+//
+//    }
+
+//    func mapping(map: Map) {
+//        page <- map["paging"]
+//    }
 }
 
-class ApiPage: Mappable {
+class ApiPage: Codable {
     var before: String?
-    
-    required init?(map: Map) {
-        
-    }
-    
-    func mapping(map: Map) {
-        before <- map["previous"]
-    }
+
+
+//    required init?(map: Map) {
+//
+//    }
+
+//    func mapping(map: Map) {
+//        before <- map["previous"]
+//    }
 }

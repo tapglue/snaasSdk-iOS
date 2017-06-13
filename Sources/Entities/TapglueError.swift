@@ -6,22 +6,28 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
-open class TapglueError: Mappable, Error {
+open class TapglueError: Codable, Error {
     open var code: Int?
     open var message: String = "unknown error"
     
     init() {
         
     }
+
+	public required init(from decoder: Decoder) throws {
+
+	}
+
+	public func encode(to encoder: Encoder) throws {
+
+	}
     
-    required public init?(map: Map) {
-        
-    }
-    
-    open func mapping(map: Map) {
-        code <- map["code"]
-        message <- map["message"]
-    }
+//    required public init?(map: Map) {
+//
+//    }
+//
+//    open func mapping(map: Map) {
+//        code <- map["code"]
+//        message <- map["message"]
+//    }
 }

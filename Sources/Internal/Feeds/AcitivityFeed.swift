@@ -6,8 +6,6 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-import ObjectMapper
-
 class ActivityFeed: FlattenableFeed<Activity> {
     var activities: [Activity]?
     var users: [String: User]?
@@ -18,16 +16,16 @@ class ActivityFeed: FlattenableFeed<Activity> {
         activities = [Activity]()
         super.init()
     }
+//    
+//    required init?(map: Map) {
+//        super.init()
+//    }
     
-    required init?(map: Map) {
-        super.init()
-    }
-    
-    override func mapping(map: Map) {
-        activities  <- map["events"]
-        users       <- map["users"]
-        posts       <- map["post_map"]
-    }
+//    override func mapping(map: Map) {
+//        activities  <- map["events"]
+//        users       <- map["users"]
+//        posts       <- map["post_map"]
+//    }
 
     override func flatten() -> [Activity] {
         let mappedActivities = activities?.map {activity -> Activity in
@@ -43,6 +41,13 @@ class ActivityFeed: FlattenableFeed<Activity> {
     }
     
     override func newCopy(json: [String:Any]?) -> ActivityFeed? {
-        return Mapper<ActivityFeed>().map(JSONObject: json)
+		if let json = json,
+			let jsonData = try? JSONSerialization.data(withJSONObject: json,
+			                                           options: JSONSerialization.WritingOptions.prettyPrinted){
+			let decoder = JSONDecoder()
+			return try? decoder.decode(ActivityFeed.self, from: jsonData)
+
+		}
+		return nil
     }
 }
