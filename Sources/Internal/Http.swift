@@ -19,38 +19,34 @@ class Http {
             
             log(request)
 			task = session.dataTask(with: request, completionHandler: { (data, response, error) in
-				
+				guard error == nil else {
+					self.handleError(data, onObserver: observer, withDefaultError: error)
+					return
+				}
+				if let httpResponse = response as? HTTPURLResponse {
+					log(response ?? "HTTP: no response")
+					guard self.successCodes.contains(httpResponse.statusCode) else {
+						self.handleError(data, onObserver: observer, withDefaultError: error)
+						return
+					}
+					if let data = data {
+						let decoder = JSONDecoder()
+						if let object = try? decoder.decode(T.self, from: data) {
+							print(String(describing: object))
+							print(String(describing: T.self))
+							observer.on(.next(object))
+						} else {
+							if let nf = T.self as? NullableFeed.Type {
+								let defaultObject = nf.init()
+								observer.on(.next(defaultObject as! T))
+							}
+						}
+						observer.on(.completed)
+					}
+				} else {
+					self.handleError(data, onObserver: observer, withDefaultError: error)
+				}
 			})
-//            task = session.dataTask(with: request) { (data: Data?, response:URLResponse?, error:Error?) in
-//                guard error == nil else {
-//                    self.handleError(data, onObserver: observer, withDefaultError: error)
-//                    return
-//                }
-//                if let httpResponse = response as? HTTPURLResponse {
-//                    log(response ?? "HTTP: no response")
-//                    guard self.successCodes.contains(httpResponse.statusCode) else {
-//                        self.handleError(data, onObserver: observer, withDefaultError: error)
-//                        return
-//                    }
-//                    if let data = data {
-//						let json = try JSONEncoder()
-//						json.encode(T)
-//                        log(json ?? "HTTP: no json to print")
-//
-//                        if let object = Mapper<T>().map(JSONObject: json) {
-//                            observer.on(.next(object))
-//                        } else {
-//                            if let nf = T.self as? NullableFeed.Type {
-//                                let defaultObject = nf.init()
-//                                observer.on(.next(defaultObject as! T))
-//                            }
-//                        }
-//                        observer.on(.completed)
-//                    }
-//                } else {
-//                    self.handleError(data, onObserver: observer, withDefaultError: error)
-//                }
-//            }
 
             task?.resume()
             
