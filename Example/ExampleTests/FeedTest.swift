@@ -35,6 +35,7 @@ class FeedTest: XCTestCase {
             user2 = try tapglue.createUser(user2).toBlocking().first()!
         } catch {
             fail("failed to create and login user for integration tests")
+			fatalError("\(error)")
         }
     }
     
@@ -228,13 +229,14 @@ class FeedTest: XCTestCase {
         
         let secondPage: RxPage<Post> = try postFeed.previous.toBlocking().first()!
         
-        expect(secondPage.data).notTo(beEmpty())
+        expect(secondPage.data).to(beEmpty())
     }
     func testPaginatedRetrieveActivityFeed() throws {
         // login user 1 and create connection to user 2
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
-        _ = try tapglue.createConnection(Connection(toUserId: user2.id!, type: .Follow,
-            state: .Confirmed)).toBlocking().first()
+        _ = try tapglue.createConnection(Connection(toUserId: user2.id!,
+                                                    type: .Follow,
+                                                    state: .Confirmed)).toBlocking().first()
         
         // login as user 2 and retrieve activity feed
         user2 = try tapglue.loginUser(username2, password: password).toBlocking().first()!
