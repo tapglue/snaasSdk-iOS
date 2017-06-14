@@ -6,7 +6,7 @@
 //  Copyright © 2016 Tapglue. All rights reserved.
 //
 
-class CompositeFlattenableFeed<T: DefaultInstanceEntity>: NullableFeed {
+class CompositeFlattenableFeed<T: DefaultInstanceEntity>: NullableFeed, Codable {
     var page: ApiPage?
     
     required init() {

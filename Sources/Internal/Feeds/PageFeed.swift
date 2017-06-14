@@ -7,25 +7,39 @@
 //
 
 class PageFeed: Codable {
-    var page: ApiPage?
-//    required init?(map: Map) {
-//
-//    }
+	fileprivate enum CodingKeys: String, CodingKey {
+		case page = "paging"
+	}
 
-//    func mapping(map: Map) {
-//        page <- map["paging"]
-//    }
+    var page: ApiPage?
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		page = try container.decodeIfPresent(ApiPage.self, forKey: CodingKeys.page)
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(page, forKey: CodingKeys.page)
+	}
+	
 }
 
 class ApiPage: Codable {
+
+	fileprivate enum CodingKeys: String, CodingKey {
+		case before = "previous"
+	}
+	
     var before: String?
 
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		before = try container.decodeIfPresent(String.self, forKey: CodingKeys.before)
+	}
 
-//    required init?(map: Map) {
-//
-//    }
-
-//    func mapping(map: Map) {
-//        before <- map["previous"]
-//    }
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(before, forKey: CodingKeys.before)
+	}
 }

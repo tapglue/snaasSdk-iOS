@@ -9,21 +9,18 @@
 import Foundation
 
 class UserFeed: FlattenableFeed<User> {
+
+	fileprivate enum CodingKeys: String, CodingKey {
+		case users
+		case page = "paging"
+	}
+
     var users: [User]?
-    
-//    required init?(map: Map) {
-//        super.init()
-//    }
 
     required init() {
         self.users = [User]()
         super.init()
     }
-    
-//    override func mapping(map: Map) {
-//        users <- map["users"]
-//        page <- map["paging"]
-//    }
 
     override func flatten() -> [User] {
        return users ?? [User]()
@@ -39,4 +36,17 @@ class UserFeed: FlattenableFeed<User> {
 		}
 		return nil
     }
+
+	required init(from decoder: Decoder) throws {
+		try super.init(from: decoder)
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		users = try container.decodeIfPresent([User].self, forKey: CodingKeys.users)
+		self.page = try container.decodeIfPresent(ApiPage.self, forKey: CodingKeys.page)
+	}
+
+	override func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(users, forKey: CodingKeys.users)
+		try container.encodeIfPresent(page, forKey: CodingKeys.page)
+	}
 }

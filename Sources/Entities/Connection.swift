@@ -8,6 +8,13 @@
 
 /// Entity that represents a connection on tapglue.
 open class Connection: Codable {
+	fileprivate enum CodingKeys: String, CodingKey {
+		case userToId = "user_to_id_string"
+		case userFromId = "user_from_id_string"
+		case type
+		case state
+	}
+
     open var userToId: String?
     open var userFromId: String?
     open var type: ConnectionType?
@@ -29,24 +36,21 @@ open class Connection: Codable {
         self.type = type
         self.state = state
     }
-    
-//    required public init?(map: Map) {
-//
-//    }
-//    open func mapping(map: Map) {
-//        userToId <- map["user_to_id_string"]
-//        userFromId <- map["user_from_id_string"]
-//        type <- map["type"]
-//        state <- map["state"]
-//    }
-
 
 	public required init(from decoder: Decoder) throws {
-
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		userToId = try container.decodeIfPresent(String.self, forKey: CodingKeys.userToId)
+		userFromId = try container.decodeIfPresent(String.self, forKey: CodingKeys.userFromId)
+		type = try container.decodeIfPresent(ConnectionType.self, forKey: CodingKeys.type)
+		state = try container.decodeIfPresent(ConnectionState.self, forKey: CodingKeys.state)
 	}
 
 	public func encode(to encoder: Encoder) throws {
-
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(userToId, forKey: CodingKeys.userToId)
+		try container.encodeIfPresent(userFromId, forKey: CodingKeys.userFromId)
+		try container.encodeIfPresent(type, forKey: CodingKeys.type)
+		try container.encodeIfPresent(state, forKey: CodingKeys.state)
 	}
 }
 
@@ -54,6 +58,6 @@ open class Connection: Codable {
 /// - Pending: a connection that is jet to be confirmed
 /// - Confirmed: a confirmed connection
 /// - Rejected: a rejected connection
-public enum ConnectionState: String {
+public enum ConnectionState: String, Codable {
     case Pending = "pending", Confirmed = "confirmed", Rejected = "rejected"
 }

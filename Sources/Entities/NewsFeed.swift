@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class NewsFeed: DefaultInstanceEntity {
+open class NewsFeed: DefaultInstanceEntity, Codable {
     var activities: [Activity]?
     var posts: [Post]?
     

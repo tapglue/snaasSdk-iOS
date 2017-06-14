@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-class FlattenableFeed<T>: NullableFeed {
+class FlattenableFeed<T>: NullableFeed, Codable {
     var page: ApiPage?
     
     func flatten() -> [T] {
@@ -22,4 +22,8 @@ class FlattenableFeed<T>: NullableFeed {
     func newCopy(json: [String:Any]?) -> FlattenableFeed<T>? {
         return nil
     }
+
+	required init(from decoder: Decoder) throws { }
+
+	func encode(to encoder: Encoder) throws { }
 }

@@ -8,6 +8,6 @@
 
 import Foundation
 
-public enum ConnectionType: String {
+public enum ConnectionType: String, Codable {
     case Follow = "follow", Friend = "friend"
 }
