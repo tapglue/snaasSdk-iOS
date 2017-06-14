@@ -27,6 +27,16 @@ class CommentTest: XCTestCase {
         super.setUp()
         user.username = username
         user.password = password
+
+		do {
+			_ = try tapglue.loginUser(username, password: password).toBlocking().first()
+			try tapglue.deleteCurrentUser().toBlocking().first()
+		} catch { }
+
+		do {
+			_ = try tapglue.loginUser(username, password: password).toBlocking().first()
+			try tapglue.deletePost(post.id!).toBlocking().first()
+		} catch { }
         
         do {
             user = try tapglue.createUser(user).toBlocking().first()!

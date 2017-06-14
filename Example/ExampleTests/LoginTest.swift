@@ -14,7 +14,7 @@ import RxBlocking
 
 class LoginTest: XCTestCase {
 
-    let username = "LoginTestUser1"
+    let username = "LoginTestUser2"
     let email = "email@domain.com"
     let password = "LoginTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
@@ -22,6 +22,9 @@ class LoginTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
+
+		cleanUp()
+
         user.username = username
         user.password = password
         user.email = email
@@ -41,6 +44,13 @@ class LoginTest: XCTestCase {
             fail("failed to delete user for integration tests")
         }
     }
+
+	func cleanUp() {
+		do {
+			try tapglue.deleteCurrentUser().toBlocking().first()
+		}
+		catch { }
+	}
 
     func testUserLogin() {
         do {

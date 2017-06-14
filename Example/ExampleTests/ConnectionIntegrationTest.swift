@@ -28,6 +28,19 @@ class ConnectionIntegrationTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
+
+
+		do {
+			_ = try tapglue.loginUser(username1, password: password).toBlocking().first()
+			try tapglue.deleteCurrentUser().toBlocking().first()
+		} catch { }
+
+		do {
+			_ = try tapglue.loginUser(username2, password: password).toBlocking().first()
+			try tapglue.deleteCurrentUser().toBlocking().first()
+		} catch { }
+
+
         user1.username = username1
         user1.socialIds = [socialPlatform: socialId1]
         user1.password = password

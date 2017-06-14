@@ -25,6 +25,8 @@ class LikeTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
+		cleanUp()
+
         user.username = username
         user.password = password
         
@@ -51,6 +53,13 @@ class LikeTest: XCTestCase {
             fail("failed to login and delete user for integration tests")
         }
     }
+
+	func cleanUp() {
+		do {
+			_ = try tapglue.loginUser(username, password: password).toBlocking().first()
+			try tapglue.deleteCurrentUser().toBlocking().first()
+		} catch { }
+	}
     
     func testCreateLike() throws {
         let createdLike = try tapglue.createLike(forPostId: post.id!).toBlocking().first()!

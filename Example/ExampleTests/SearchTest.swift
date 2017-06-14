@@ -26,6 +26,9 @@ class SearchTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
+
+		cleanUp()
+
         user1.username = username1
         user1.email = email1
         user1.socialIds = [socialPlatform: socialId1]
@@ -55,6 +58,42 @@ class SearchTest: XCTestCase {
         } catch {
             fail("failed to login and delete user for integration tests")
         }
+    }
+
+	func cleanUp() {
+		do {
+		_ = try tapglue.loginUser(username1, password: password).toBlocking().first()
+		try tapglue.deleteCurrentUser().toBlocking().first()
+
+		_ = try tapglue.loginUser(username2, password: password).toBlocking().first()
+		try tapglue.deleteCurrentUser().toBlocking().first()
+		}
+		catch { }
+	}
+    
+    func testUserSearchWithNoResults() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchUsersForSearchTerm("someTerm").subscribe(onNext: { users in
+            searchResult = users
+        })
+        expect(searchResult?.count).toEventually(equal(0))
+    }
+    
+    func testUserSearchWithResult() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchUsersForSearchTerm(username2).subscribe(onNext: { users in
+            searchResult = users
+        })
+        expect(searchResult?.count).toEventually(equal(1))
+        expect(searchResult?.first?.username).toEventually(equal(username2))
+    }
+    
+    func testUserSearchWithInvalidPath() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        let searchResult: [User] = try tapglue.searchUsersForSearchTerm("hsdfjs skjdhf").toBlocking().first()!
+        expect(searchResult.count).to(equal(0))
     }
     
     func testEmailSearchWithNoResults() throws {
