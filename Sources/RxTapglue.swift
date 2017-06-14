@@ -302,12 +302,17 @@ open class RxTapglue {
     /// search for users on tapglue
     /// - parameter searchTerm: term to search for
     open func searchUsersForSearchTerm(_ term: String) -> Observable<RxPage<User>> {
-        return network.searchUsers(forSearchTerm: term)
+		return network.searchUsers(forSearchTerm: term).map { (feed:UserFeed) in
+			return feed.rxPage()
+		}
     }
     /// Search tapglue for users with emails
     /// - parameter emails: search tapglue for users with emails within this list
     open func searchEmails(_ emails: [String]) -> Observable<RxPage<User>> {
-        return network.searchEmails(emails)
+		return network.searchEmails(emails).map { (feed) in
+			return feed.rxPage()
+		}
+
     }
     /// Search tapglue for users with social ids
     /// - parameter ids: list of ids to search for
