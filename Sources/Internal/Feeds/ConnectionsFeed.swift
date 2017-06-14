@@ -7,6 +7,13 @@
 //
 
 class ConnectionsFeed: CompositeFlattenableFeed<Connections> {
+
+	fileprivate enum CodingKeys: String, CodingKey {
+		case incoming
+		case outgoing
+		case users
+		case page = "paging"
+	}
     
     var incoming: [Connection]?
     var outgoing: [Connection]?
@@ -17,17 +24,6 @@ class ConnectionsFeed: CompositeFlattenableFeed<Connections> {
         outgoing = [Connection]()
         super.init()
     }
-    
-//    required init?(map: Map) {
-//        super.init()
-//    }
-//
-//    override func mapping(map: Map) {
-//        incoming <- map["incoming"]
-//        outgoing <- map["outgoing"]
-//        users <- map["users"]
-//        page <- map["paging"]
-//    }
 
     override func flatten() -> Connections {
         let connections = Connections()
@@ -56,4 +52,21 @@ class ConnectionsFeed: CompositeFlattenableFeed<Connections> {
 		}
 		return nil
     }
+
+	required init(from decoder: Decoder) throws {
+		try super.init(from: decoder)
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		users = try container.decodeIfPresent([User].self, forKey: CodingKeys.users)
+		page = try container.decodeIfPresent(ApiPage.self, forKey: CodingKeys.page)
+		incoming = try container.decodeIfPresent([Connection].self, forKey: CodingKeys.incoming)
+		outgoing = try container.decodeIfPresent([Connection].self, forKey: CodingKeys.outgoing)
+	}
+
+	override func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(users, forKey: CodingKeys.users)
+		try container.encodeIfPresent(page, forKey: CodingKeys.page)
+		try container.encodeIfPresent(incoming, forKey: CodingKeys.incoming)
+		try container.encodeIfPresent(outgoing, forKey: CodingKeys.outgoing)
+	}
 }

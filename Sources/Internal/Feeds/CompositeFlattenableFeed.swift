@@ -7,19 +7,19 @@
 //
 
 class CompositeFlattenableFeed<T: DefaultInstanceEntity>: NullableFeed, Codable {
+
+	fileprivate enum CodingKeys: String, CodingKey {
+		case incoming
+		case outgoing
+		case users
+		case page = "paging"
+	}
+	
     var page: ApiPage?
     
     required init() {
         
     }
- 
-//    required init?(map: Map) {
-//
-//    }
-//
-//    func mapping(map: Map) {
-//
-//    }
 
     func flatten() -> T {
         return T()
@@ -28,4 +28,14 @@ class CompositeFlattenableFeed<T: DefaultInstanceEntity>: NullableFeed, Codable 
     func newCopy(json: [String:Any]?) -> CompositeFlattenableFeed<T>? {
         return nil
     }
+
+	required init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		page = try container.decodeIfPresent(ApiPage.self, forKey: CodingKeys.page)
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(page, forKey: CodingKeys.page)
+	}
 }

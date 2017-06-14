@@ -13,21 +13,4 @@ open class TapglueError: Codable, Error {
     init() {
         
     }
-
-	public required init(from decoder: Decoder) throws {
-
-	}
-
-	public func encode(to encoder: Encoder) throws {
-
-	}
-    
-//    required public init?(map: Map) {
-//
-//    }
-//
-//    open func mapping(map: Map) {
-//        code <- map["code"]
-//        message <- map["message"]
-//    }
 }

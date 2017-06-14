@@ -9,6 +9,12 @@
 import ObjectMapper
 
 class PostFeed: FlattenableFeed<Post> {
+
+	fileprivate enum CodingKeys: String, CodingKey {
+		case posts
+		case users
+	}
+
     var posts: [Post]?
     var users: [String: User]?
     
@@ -16,16 +22,6 @@ class PostFeed: FlattenableFeed<Post> {
         self.posts = [Post]()
         super.init()
     }
-    
-//    required init?(map: Map) {
-//        super.init()
-//    }
-//    
-//    override func mapping(map: Map) {
-//        posts   <- map["posts"]
-//        users   <- map["users"]
-//        page    <- map["paging"]
-//    }
 
     override func flatten() -> [Post] {
         let mappedPosts = posts?.map { post -> Post in
@@ -48,9 +44,15 @@ class PostFeed: FlattenableFeed<Post> {
 
 	required init(from decoder: Decoder) throws {
 		try super.init(from: decoder)
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		posts = try container.decodeIfPresent([Post].self, forKey: CodingKeys.posts)
+		users = try container.decodeIfPresent([String: User].self, forKey: CodingKeys.users)
 	}
 
 	override func encode(to encoder: Encoder) throws {
 		try super.encode(to: encoder)
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(posts, forKey: CodingKeys.posts)
+		try container.encodeIfPresent(users, forKey: CodingKeys.users)
 	}
 }

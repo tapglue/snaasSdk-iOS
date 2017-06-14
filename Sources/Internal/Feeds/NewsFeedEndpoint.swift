@@ -7,6 +7,14 @@
 //
 
 class NewsFeedEndpoint: CompositeFlattenableFeed<NewsFeed> {
+
+	fileprivate enum CodingKeys: String, CodingKey {
+		case posts
+		case users
+		case activities = "events"
+		case postMap = "post_map"
+	}
+
     var activities: [Activity]?
     var posts: [Post]?
     var users: [String: User]?
@@ -17,18 +25,6 @@ class NewsFeedEndpoint: CompositeFlattenableFeed<NewsFeed> {
         activities = [Activity]()
         super.init()
     }
-    
-//    required init?(map: Map) {
-//        super.init()
-//    }
-//
-//    override func mapping(map: Map) {
-//        activities  <- map["events"]
-//        posts       <- map["posts"]
-//        users       <- map["users"]
-//        postMap     <- map["post_map"]
-//        page        <- map["paging"]
-//    }
 
     override func flatten() -> NewsFeed {
         let newsFeed = NewsFeed()
@@ -58,4 +54,21 @@ class NewsFeedEndpoint: CompositeFlattenableFeed<NewsFeed> {
 		}
 		return nil
     }
+
+	required init(from decoder: Decoder) throws {
+		try super.init(from: decoder)
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		users = try container.decodeIfPresent([String: User].self, forKey: CodingKeys.users)
+		posts = try container.decodeIfPresent([Post].self, forKey: CodingKeys.posts)
+		activities = try container.decodeIfPresent([Activity].self, forKey: CodingKeys.activities)
+		postMap = try container.decodeIfPresent([String: Post].self, forKey: CodingKeys.postMap)
+	}
+
+	override func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(users, forKey: CodingKeys.users)
+		try container.encodeIfPresent(posts, forKey: CodingKeys.posts)
+		try container.encodeIfPresent(activities, forKey: CodingKeys.activities)
+		try container.encodeIfPresent(postMap, forKey: CodingKeys.postMap)
+	}
 }

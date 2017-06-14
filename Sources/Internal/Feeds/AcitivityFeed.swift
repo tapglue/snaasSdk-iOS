@@ -7,6 +7,13 @@
 //
 
 class ActivityFeed: FlattenableFeed<Activity> {
+
+	fileprivate enum CodingKeys: String, CodingKey {
+		case users
+		case posts = "post_map"
+		case activities = "events"
+	}
+
     var activities: [Activity]?
     var users: [String: User]?
     var posts: [String: Post]?
@@ -53,9 +60,16 @@ class ActivityFeed: FlattenableFeed<Activity> {
 
 	required init(from decoder: Decoder) throws {
 		try super.init(from: decoder)
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		users = try container.decodeIfPresent([String: User].self, forKey: CodingKeys.users)
+		posts = try container.decodeIfPresent([String: Post].self, forKey: CodingKeys.posts)
+		activities = try container.decodeIfPresent([Activity].self, forKey: CodingKeys.activities)
 	}
 
 	override func encode(to encoder: Encoder) throws {
-		try super.encode(to: encoder)
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(users, forKey: CodingKeys.users)
+		try container.encodeIfPresent(posts, forKey: CodingKeys.posts)
+		try container.encodeIfPresent(activities, forKey: CodingKeys.activities)
 	}
 }

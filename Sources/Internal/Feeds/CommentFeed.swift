@@ -9,22 +9,19 @@
 import Foundation
 
 class CommentFeed: FlattenableFeed<Comment> {
+
+	fileprivate enum CodingKeys: String, CodingKey {
+		case comments
+		case users
+	}
+
     var comments: [Comment]?
     var users: [String: User]?
-    
-//    required init?(map: Map) {
-//        super.init()
-//    }
-    
+
     required init() {
         self.comments = [Comment]()
         super.init()
     }
-    
-//    override func mapping(map: Map) {
-//        comments <- map["comments"]
-//        users <- map["users"]
-//    }
 
     override func flatten() -> [Comment] {
         let mappedComments = comments?.map { comment -> Comment in
@@ -47,9 +44,15 @@ class CommentFeed: FlattenableFeed<Comment> {
 
 	required init(from decoder: Decoder) throws {
 		try super.init(from: decoder)
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		comments = try container.decodeIfPresent([Comment].self, forKey: CodingKeys.comments)
+		users = try container.decodeIfPresent([String: User].self, forKey: CodingKeys.users)
 	}
 
 	override func encode(to encoder: Encoder) throws {
 		try super.encode(to: encoder)
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encodeIfPresent(users, forKey: CodingKeys.users)
+		try container.encodeIfPresent(comments, forKey: CodingKeys.comments)
 	}
 }

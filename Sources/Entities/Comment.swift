@@ -32,17 +32,6 @@ open class Comment: Codable {
         self.contents = contents
         self.postId = postId
     }
-    
-//    open func mapping(map: Map) {
-//        id              <- map["id"]
-//        postId          <- map["post_id"]
-//        externalId      <- map["external_id"]
-//        userId          <- map["user_id"]
-//        contents        <- map["contents"]
-//        privateFields   <- map["private"]
-//        createdAt       <- map["created_at"]
-//        updatedAt       <- map["updated_at"]
-//    }
 
 	public required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
