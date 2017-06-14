@@ -81,26 +81,18 @@ class Network {
     }
 
     func searchUsers(forSearchTerm term: String) -> Observable<[User]> {
-        return http.execute(Router.get("/users/search?q=" +
-                term.addingPercentEncoding(
-                    withAllowedCharacters: CharacterSet.urlHostAllowed)!)).map { (feed:UserFeed) in
-            return feed.users!
-        }
-    }
-
-    func searchEmails(_ emails: [String]) -> Observable<[User]> {
-        let payload = ["emails": emails]
-        return http.execute(Router.post("/users/search/emails", payload: payload)).map { (feed:UserFeed) in
-            return feed.users!
-        }
+		let searchTerm = term.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
+		return http.execute(Router.get("/users/search?q=" + searchTerm)).map({ (users) in
+			return users ?? [User]()
+		})
     }
 
     func searchSocialIds(_ ids: [String], onPlatform platform: String) ->
         Observable<[User]> {
-        let payload = ["ids":ids]
-        return http.execute(Router.post("/users/search/" + platform, payload: payload)).map { 
-            (feed: UserFeed) in
-            return feed.users!
+			let payload = ["ids":ids]
+			return http.execute(Router.post("/users/search/" + platform, payload: payload)).map {
+				(feed: UserFeed) in
+				return feed.users!
         }
     }
 
@@ -289,19 +281,15 @@ class Network {
         return retrieveActivitiesOn("/me/feed/notifications/self")
     }
 
-    func searchUsers(forSearchTerm term: String) -> Observable<RxPage<User>> {
-        return http.execute(Router.get("/users/search?q=" +
-            term.addingPercentEncoding(
-                withAllowedCharacters: CharacterSet.urlHostAllowed)!)).map { (feed:UserFeed) in
-                        return feed.rxPage()
-                    }
+	func searchUsers(forSearchTerm term: String) -> Observable<UserFeed> {
+		return http.execute(Router.get("/users/search?q=" +
+			term.addingPercentEncoding(
+				withAllowedCharacters: CharacterSet.urlHostAllowed)!))
     }
 
-    func searchEmails(_ emails: [String]) -> Observable<RxPage<User>> {
+    func searchEmails(_ emails: [String]) -> Observable<UserFeed> {
         let payload = ["emails": emails]
-        return http.execute(Router.post("/users/search/emails", payload: payload)).map { (feed:UserFeed) in
-            return feed.rxPage()
-        }
+        return http.execute(Router.post("/users/search/emails", payload: payload))
     }
 
     func searchSocialIds(_ ids: [String], onPlatform platform: String) ->

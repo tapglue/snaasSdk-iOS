@@ -12,7 +12,7 @@ import RxSwift
 class Http {
     private var successCodes: Range<Int> = 200..<299
     
-	func execute<T:Codable>(_ request: URLRequest) -> Observable<T> {
+	func execute<T: Codable>(_ request: URLRequest) -> Observable<T> {
         return Observable.create {observer in
             let session = URLSession.shared
             var task: URLSessionDataTask?
@@ -32,13 +32,14 @@ class Http {
 					if let data = data {
 						let decoder = JSONDecoder()
 						if let object = try? decoder.decode(T.self, from: data) {
-							print(String(describing: object))
-							print(String(describing: T.self))
 							observer.on(.next(object))
 						} else {
 							if let nf = T.self as? NullableFeed.Type {
 								let defaultObject = nf.init()
 								observer.on(.next(defaultObject as! T))
+							}
+							else if let empty = [] as? T {
+								observer.on(.next(empty))
 							}
 						}
 						observer.on(.completed)
@@ -71,12 +72,13 @@ class Http {
                         self.handleError(data, onObserver: observer, withDefaultError: error)
                         return
                     }
-                    if let data = data {
-                        let json = self.dataToJSON(data: data)
-                        log(json ?? "HTTP: no json to print")
-                        observer.on(.next(json as! [String: Any]))
-                        observer.on(.completed)
-                    }
+					if let data = data, let json = self.dataToJSON(data: data) as? [String: Any] {
+                        observer.on(.next(json))
+					}
+					else {
+						observer.on(.next([:]))
+					}
+					observer.on(.completed)
                 } else {
                     self.handleError(data, onObserver: observer, withDefaultError: error)
                 }

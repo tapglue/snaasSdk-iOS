@@ -66,13 +66,11 @@ class Router {
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: payload, options: [])
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                return request
             } catch {
-                return request
+				log("Can't encode json")
             }
-        } else {
-            return request
         }
+		return request
     }
 
     class func post(_ path: String, payload: [String: Any]?) -> URLRequest {
