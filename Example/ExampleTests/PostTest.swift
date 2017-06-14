@@ -20,11 +20,13 @@ class PostTest: XCTestCase {
     let tapglue = RxTapglue(configuration: Configuration())
     var user1 = User()
 
-    let attachment = Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)
-    var post: Post!
+    var post: Post = Post(visibility: .connections, attachments: [Attachment(contents: ["en":"contents"], name: "userPost", type: .Text)])
     
     override func setUp() {
         super.setUp()
+
+		cleanUp()
+
         user1.username = username
         user1.password = password
         
@@ -32,7 +34,6 @@ class PostTest: XCTestCase {
             user1 = try tapglue.createUser(user1).toBlocking().first()!
             user1 = try tapglue.loginUser(username, password: password).toBlocking().first()!
 
-            post = Post(visibility: .connections, attachments: [attachment])
         } catch {
             fail("failed to create and login user for integration tests")
         }
@@ -47,6 +48,14 @@ class PostTest: XCTestCase {
             fail("failed to login and delete user for integration tests")
         }
     }
+
+	func cleanUp() {
+		do {
+			_ = try tapglue.loginUser(username, password: password).toBlocking().first()
+			try tapglue.deleteCurrentUser().toBlocking().first()
+		}
+		catch { } 
+	}
     
     func testCreatePost() {
 		var networkPost: Post?
