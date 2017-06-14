@@ -57,6 +57,42 @@ class SearchTest: XCTestCase {
         }
     }
     
+    func testEmailSearchWithNoResults() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchEmails(["somerandom@email.com"]).subscribe(onNext: { users in
+            searchResult = users
+        })
+        expect(searchResult?.count).toEventually(equal(0))
+    }
+    
+    func testEmailSearchWithResult() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchEmails([email2]).subscribe(onNext: { users in
+            searchResult = users
+        })
+        expect(searchResult?.count).toEventually(equal(1))
+    }
+    
+    func testSocialIdSearchWithNoResults() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchSocialIds(["someRandomSocialId"], onPlatform: socialPlatform).subscribe(onNext: { users in
+            searchResult = users
+        })
+        expect(searchResult?.count).toEventually(equal(0))
+    }
+    
+    func testSocialIdSearchWithResult() throws {
+        user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
+        var searchResult: [User]?
+        _ = tapglue.searchSocialIds([socialId2], onPlatform: socialPlatform).subscribe(onNext: { users in
+            searchResult = users
+        })
+        expect(searchResult?.count).toEventually(equal(1))
+    }
+    
     func testPaginatedUserSearchWithNoResults() throws {
         user1 = try tapglue.loginUser(username1, password: password).toBlocking().first()!
         var searchResult: RxPage<User>?
@@ -71,7 +107,7 @@ class SearchTest: XCTestCase {
         var searchResult: RxPage<User>?
         
         searchResult = try tapglue.searchUsersForSearchTerm(username2).toBlocking().first()!
-        expect(searchResult?.data.count).toEventually(equal(1))
+        expect(searchResult?.data.count).to(beGreaterThan(1))
         expect(searchResult?.data.first?.username).to(equal(username2))
     }
     
