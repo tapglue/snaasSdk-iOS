@@ -15,7 +15,7 @@ import RxBlocking
 class PostTest: XCTestCase {
 
     let tag1 =  "someTag"
-    let username = "PostTestUser1"
+    let username = "PostTestUser08"
     let password = "PostTestPassword"
     let tapglue = RxTapglue(configuration: Configuration())
     var user1 = User()
@@ -49,12 +49,12 @@ class PostTest: XCTestCase {
     }
     
     func testCreatePost() {
-        var networkPost: Post?
-        _ = tapglue.createPost(post).subscribe(onNext: { post in
-            networkPost = post
-        })
-        
-        expect(networkPost?.id).toEventuallyNot(beNil())
+		var networkPost: Post?
+		_ = tapglue.createPost(post).subscribe(onNext: { post in
+			networkPost = post
+		})
+
+		expect(networkPost?.id).toEventuallyNot(beNil())
     }
     
     func testDeletePost() throws {
@@ -186,7 +186,7 @@ class PostTest: XCTestCase {
         _ = try tapglue.createPost(post).toBlocking().first()!
         
         var user2 = User()
-        user2.username = "postTestUser2"
+        user2.username = "postTestUser26"
         user2.password = password
         user2 = try tapglue.createUser(user2).toBlocking().first()!
         user2 = try tapglue.loginUser(user2.username!, password: password).toBlocking().first()!

@@ -108,7 +108,7 @@ class UserInteractionTest: XCTestCase {
 
     func testCreateInvite() throws {
         var error: TapglueError?
-        _ = tapglue.createInvite("invite_code", "asdf_1234").subscribe( onError: { (err) in
+        _ = tapglue.createInvite("invite_code", "asdf_12345").subscribe( onError: { (err) in
             error = err as? TapglueError
         })
 
