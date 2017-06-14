@@ -26,9 +26,12 @@ class UserInteractionTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
+		cleanUp()
+
         user.username = username
         user.password = password
-        
+
         do {
             user = try tapglue.createUser(user).toBlocking().first()!
             user = try tapglue.loginUser(username, password: password).toBlocking().first()!
@@ -40,19 +43,32 @@ class UserInteractionTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
         do {
-            _ = try tapglue.loginUser(username, password: password).toBlocking().first()
-            try tapglue.deleteCurrentUser().toBlocking().first()
+			_ = try tapglue.loginUser(username, password: password).toBlocking().first()
+			try tapglue.deleteCurrentUser().toBlocking().first()
 
-            if let username2 = username2,
-                let password2 = password2 {
-                _ = try tapglue.loginUser(username2, password: password2).toBlocking().first()
-                try tapglue.deleteCurrentUser().toBlocking().first()
-            }
-
+			if let username2 = username2,
+				let password2 = password2 {
+				_ = try tapglue.loginUser(username2, password: password2).toBlocking().first()
+				try tapglue.deleteCurrentUser().toBlocking().first()
+			}
         } catch {
             fail("failed to login and delete user for integration tests")
         }
     }
+
+	func cleanUp() {
+		do {
+			_ = try tapglue.loginUser(username, password: password).toBlocking().first()
+			try tapglue.deleteCurrentUser().toBlocking().first()
+
+			if let username2 = username2,
+				let password2 = password2 {
+				_ = try tapglue.loginUser(username2, password: password2).toBlocking().first()
+				try tapglue.deleteCurrentUser().toBlocking().first()
+			}
+		}
+		catch { }
+	}
     
     func testLogout() {
         var wasLoggedOut = false
