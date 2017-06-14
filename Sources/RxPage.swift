@@ -9,7 +9,7 @@
 import RxSwift
 import ObjectMapper
 
-open class RxPage<T> {
+open class RxPage<T>: Codable {
     open var data: [T] {
         get {
             return feed.flatten()
@@ -40,12 +40,18 @@ open class RxPage<T> {
         } else {
             request = Router.getOnURL(prevPointer)
         }
-        
-        return Http().execute(request).map { (newFeed: [String:Any]) in
-            let feed = self.feed.newCopy(json: newFeed)
-            let page = RxPage<T>(feed: feed!, previousPointer: feed!.page?.before)
-            page.payload = self.payload
-            return page
-        }
+
+		return Http().execute(request).map { (newFeed: [String:Any]) in
+			let feed = self.feed.newCopy(json: newFeed)
+			let page = RxPage<T>(feed: feed!, previousPointer: feed!.page?.before)
+			page.payload = self.payload
+			return page
+		}
     }
+
+	public required init(from decoder: Decoder) throws {
+		feed = FlattenableFeed<T>()
+	}
+
+	public func encode(to encoder: Encoder) throws { }
 }
