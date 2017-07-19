@@ -76,6 +76,7 @@
 		52D8AE701D2558C200AC947E /* ObjectMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52E380381D2A847E003A157E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380371D2A847E003A157E /* Router.swift */; };
 		52E3803A1D2A9F3E003A157E /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E380391D2A9F3E003A157E /* RouterTest.swift */; };
+		6D0D7A8D1F1F941E00780CD0 /* Count.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0D7A8C1F1F941E00780CD0 /* Count.swift */; };
 		970D29221D4B820200847756 /* LikeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970D29211D4B820200847756 /* LikeFeed.swift */; };
 		9753AB5D1D40BA22005154F0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9753AB5C1D40BA22005154F0 /* Post.swift */; };
 		97D3D9741D4A03D0004DC146 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3D9731D4A03D0004DC146 /* Comment.swift */; };
@@ -176,6 +177,7 @@
 		52D8AE5E1D2557E200AC947E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		52E380371D2A847E003A157E /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		52E380391D2A9F3E003A157E /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
+		6D0D7A8C1F1F941E00780CD0 /* Count.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Count.swift; sourceTree = "<group>"; };
 		970D29211D4B820200847756 /* LikeFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeFeed.swift; sourceTree = "<group>"; };
 		9753AB5C1D40BA22005154F0 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		97D3D9731D4A03D0004DC146 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				5274A3411D536F0D00C72378 /* NewsFeed.swift */,
 				52970FAA1D9EA0FE0055E626 /* DefaultInstanceEntity.swift */,
 				528ACC331E1CFD330085BFEC /* Reaction.swift */,
+				6D0D7A8C1F1F941E00780CD0 /* Count.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				52BF70391D3FAA4100D88AAC /* UserStore.swift in Sources */,
 				528ACC341E1CFD330085BFEC /* Reaction.swift in Sources */,
 				52483CA91D88290C002BA0A2 /* RxPage.swift in Sources */,
+				6D0D7A8D1F1F941E00780CD0 /* Count.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -433,8 +433,14 @@ class Network {
     }
 
     func updateCount(_ newCount: Int, _ nameSpace: String) -> Observable<Void> {
-        let payload = ["value": "\(newCount)"] as [String: AnyObject]
-        return http.execute(Router.put("/me/counters/" + nameSpace, payload: payload))
+        let payload = ["value": newCount] as [String: AnyObject]
+        return http.execute(Router.put("/me/counters/" + 
+            nameSpace.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!, payload: payload))
+    }
+
+    func getCount(_ nameSpace: String) -> Observable<Count> {
+        return http.execute(Router.get("/counters/" + 
+            nameSpace.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!))
     }
 
     fileprivate func retrieveActivitiesOn(_ path: String) -> Observable<[Activity]> {
