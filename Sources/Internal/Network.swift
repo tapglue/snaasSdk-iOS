@@ -432,6 +432,11 @@ class Network {
         }
     }
 
+    func updateCount(_ newCount: Int, _ nameSpace: String) -> Observable<Void> {
+        let payload = ["value": "\(newCount)"] as [String: AnyObject]
+        return http.execute(Router.put("/me/counters/" + nameSpace, payload: payload))
+    }
+
     fileprivate func retrieveActivitiesOn(_ path: String) -> Observable<[Activity]> {
         return http.execute(Router.get(path)).map { (feed: ActivityFeed) in
             let activities = feed.activities?.map {activity -> Activity in
