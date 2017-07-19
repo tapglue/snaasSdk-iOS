@@ -406,6 +406,14 @@ open class RxTapglue {
     open func retrieveNewsFeed() -> Observable<RxCompositePage<NewsFeed>> {
         return network.retrieveNewsFeed()
     }
+    /// update count to backend
+    open func updateCount(newCount: Int, withNameSpace nameSpace: String) -> Observable<Void> {
+        return network.updateCount(newCount, nameSpace)
+    }
+    /// get count to backend
+    open func getCount(withNameSpace nameSpace: String) -> Observable<Count> {
+        return network.getCount(nameSpace)
+    }
 
     fileprivate func toCurrentUserMap(_ user: User) -> User {
         currentUser = user
